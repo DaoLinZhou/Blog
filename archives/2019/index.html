@@ -346,13 +346,19 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/20/TCP网络基础/" >
+        <a class="abstract-title" href = "/Blog/2019/06/20/TCP报文格式/" >
             
                 <span>TCP网络基础</span>
         </a>
         <div class="abstract-content">
-            
-
+            什么是TCPTCP 是一种安全的网络传输协议, 它安全可靠.  当包丢失时, 具有重传机制
+​    如果发送端实体在合理的往返时延(RTT)内未收到确认，那么对应的数据（假设丢失了）将会被重传。
+优点: 可靠
+缺点: 首部过大, 速度相比与UDP慢一些
+TCP报文格式
+源端口号 (Source Port) &amp; 目的端口号 (Destination Port)源端口 和 目的端口 分别占用 2 字节, 分别包含发送端的端口号和目的主机的端口号
+TCP 和 UDP 都不包含 ip 地址信息, 因为那是ip层的工作
+但是 TCP 和 UDP 都会有源端口和目的端口 (端口号可以唯一标...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -364,6 +370,8 @@
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "tcp">tcp</a>
     
 </div>
             
@@ -533,7 +541,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP网络基础/" >TCP网络基础</a>
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP网络基础</a>
         </li>
     
     
@@ -546,9 +554,11 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
