@@ -346,6 +346,46 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/06/22/tcp-wavehand/" >
+            
+                <span>TCP 四次挥手</span>
+        </a>
+        <div class="abstract-content">
+            “挥手” 的目的是终止连接. “挥手” 又客户端或服务端任意一方执行close触发.
+假设由客户端主动close
+流程图
+第一次挥手: Client 发送一个FIN, 用来关闭Client 到 Server的数据传输, Client 进入FIN_WAIT_1 状态;
+
+
+第二次挥手: Server收到 FIN 后, 发送一个ACK给Client, 确认序号为收到的序号+1(与SYN相同, 一个FIN占用一个序号), Server 进入 CLOSE_WAIT 状态, 这个状态下, 依然会给Client传输数据;
+
+
+第三次握手: Server 发送一个FIN, 用来关闭Server 到 C...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "tcp">tcp</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/Blog/2019/06/22/Selection-Sort/" >
             
                 <span>选择排序 Selection Sort</span>
@@ -600,9 +640,18 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 4
+        Total : 5
         </div>
         <!-- search  -->
         
@@ -615,6 +664,11 @@
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
+        </li>
     
     
         <li class="archive-post-item">
