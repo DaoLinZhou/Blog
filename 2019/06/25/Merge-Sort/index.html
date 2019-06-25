@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>选择排序 Selection Sort · Daolin&#39;s Studio</title>
+    <title>Merge Sort · Daolin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/Blog/" >Daolin&#39;s Repository.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">选择排序 Selection Sort</a>
+                <a href="#" class="post-name">Merge Sort</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            选择排序 Selection Sort
+            Merge Sort
             <!-- 404 -->
             
         </h1>
@@ -272,12 +272,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">710</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/06/22</span>
+                    <span class="post-intro-time">2019/06/25</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -401,55 +401,43 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="选择排序-Selection-Sort-O-n-2"><a href="#选择排序-Selection-Sort-O-n-2" class="headerlink" title="选择排序 (Selection Sort)  O(n^2)"></a>选择排序 (Selection Sort)  O(n^2)</h2><h3 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h3><p>代码复杂程度: 简单</p>
-<p>时间复杂度: O(n^2)</p>
-<p>空间复杂度: O(1)</p>
-<p>稳定性: 不稳定</p>
-<p><strong>特点</strong>:  交换次数最少的排序</p>
-<p>思想:  <strong>遍历n变数组, 每一次找当前乱序部分最小的元素, 把它和乱序部分第一个元素互换</strong></p>
-<a id="more"></a>
+        <p>归并排序分为自顶向下 和 自底向上 两种实现</p>
+<p>分别使用 递归 和 迭代, 性能都是 O(nlogn)</p>
+<p><strong>自底向上(循环)的归并排序，是比自顶向下(递归)的归并排序要快的</strong></p>
+<br>
+
+<h2 id="自顶向下-递归实现"><a href="#自顶向下-递归实现" class="headerlink" title="自顶向下 递归实现"></a>自顶向下 递归实现</h2><p>代码复杂程度: 中等</p>
+<p>时间复杂度: O(nlogn)</p>
+<p>空间复杂度: O(n)</p>
+<p>稳定性: 稳定</p>
+<p>思想: <strong>递归, 将两个排好序的数组归并为一个有序数组</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入排序 arr[l...r], 为归并排序进行优化</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertionSort</span><span class="params">(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=l+<span class="number">1</span>; i&lt;=r; i++)&#123;</span><br><span class="line">        T e = arr[i];</span><br><span class="line">        <span class="keyword">int</span> j;</span><br><span class="line">        <span class="keyword">for</span>( j = i; j &gt; l &amp;&amp; e &lt; arr[j<span class="number">-1</span>]; j -- )</span><br><span class="line">            arr[j] = arr[j<span class="number">-1</span>];</span><br><span class="line">        arr[j] = e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="comment">// 将arr[l...mid] 和 arr[mid+1...r] 两个部分进行归并</span></span><br><span class="line"><span class="keyword">void</span> __merge(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> mid, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    <span class="comment">// 开辟辅助空间</span></span><br><span class="line">    T *aux = <span class="keyword">new</span> T[r-l+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 辅助空间的元素和要merge的元素一样</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = l; i &lt;= r; i++ )</span><br><span class="line">        aux[i-l] = arr[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1</span></span><br><span class="line">    <span class="keyword">int</span> i = l, j = mid+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> k = l ; k &lt;= r; k ++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>( i &gt; mid )&#123;  <span class="comment">// 如果左半部分元素已经全部处理完毕</span></span><br><span class="line">            arr[k] = aux[j-l]; j ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( j &gt; r )&#123;  <span class="comment">// 如果右半部分元素已经全部处理完毕</span></span><br><span class="line">            arr[k] = aux[i-l]; i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( aux[i-l] &lt; aux[j-l] ) &#123;  <span class="comment">// 左半部分所指元素 &lt; 右半部分所指元素</span></span><br><span class="line">            arr[k] = aux[i-l]; i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;  <span class="comment">// 左半部分所指元素 &gt;= 右半部分所指元素</span></span><br><span class="line">            arr[k] = aux[j-l]; j ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] aux;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归使用归并排序, 对 arr [l...r] 范围进行排序</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">void</span> __mergeSort(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    <span class="comment">//if( l &gt;= r )</span></span><br><span class="line">    <span class="comment">//    return;</span></span><br><span class="line">    <span class="comment">//优化: 当小于一定范围时, 近乎有序的可能会变大, 用插入排序进行优化</span></span><br><span class="line">    <span class="keyword">if</span>( r-l &lt;= <span class="number">15</span> )&#123;</span><br><span class="line">        insertionSort(arr, l, r);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (r-l)/<span class="number">2</span>+l;</span><br><span class="line">    __mergeSort(arr, l, mid);</span><br><span class="line">    __mergeSort(arr, mid+<span class="number">1</span>, r);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//优化: 如果两个排好序的数组一个最后一个元素小于另一个的第一个元素</span></span><br><span class="line">    <span class="comment">// 那么这两个本身就是有序的, 反之 则要merge</span></span><br><span class="line">    <span class="keyword">if</span>(arr[mid] &gt;= arr[mid+<span class="number">1</span>])</span><br><span class="line">    	__merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    __mergeSort(arr, <span class="number">0</span>, n<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <br>
 
-<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><p>如果数组的元素为 {3, 8, 2, 5, 1, 4, 7}</p>
-<p>则首先遍历一遍数组, 寻找最小元素, 最小元素为 1, 把 1 和 3 交换位置</p>
-<p>第一次循环:        {<strong>1</strong>, 8, 2, 5, <strong>3</strong>, 4, 7}         排好序的部分为  {1}  乱序部分为 {8, 2, 5, 3, 4, 7}</p>
-<p>第二次循环:        {1, <strong>2</strong>, <strong>8</strong>, 5, 3, 4, 7}        互换2, 8 的位置, 排好序的部分为  {1, 2}  乱序部分为 {8, 5, 3, 4, 7}</p>
-<p>第三次循环:        {1, 2, <strong>3</strong>, 5, <strong>8</strong>, 4, 7}        互换3, 8 的位置, 排好序的部分为  {1, 2, 3}  乱序部分为 {5, 8, 4, 7}</p>
-<p>第四次循环:        {1, 2, 3, <strong>4</strong>, 8, <strong>5</strong>, 7}         互换4, 5 的位置, 排好序的部分为  {1, 2, 3, 4}  乱序部分为 {8, 5, 7}</p>
-<p>第五次循环:        {1, 2, 3, 4, <strong>5</strong>, <strong>8</strong>, 7}         互换5, 8 的位置, 排好序的部分为  {1, 2, 3, 4, 5}  乱序部分为 {8, 7}</p>
-<p>第六次循环:        {1, 2, 3, 4, 5, <strong>7</strong>, <strong>8</strong>}         互换5, 8 的位置, 排好序的部分为  {1, 2, 3, 4, 5, 7}  乱序部分为 {8}</p>
-<p>第七次循环:        {1, 2, 3, 4, 5, 7, <strong>8</strong>}         互换8, 8 的位置, 排好序的部分为  {1, 2, 3, 4, 5, 7, 8}  乱序部分为 {}</p>
-<br>
+<h2 id="自底向上-循环实现"><a href="#自底向上-循环实现" class="headerlink" title="自底向上 循环实现"></a>自底向上 循环实现</h2><p>代码复杂程度: 中等</p>
+<p>时间复杂度: O(nlogn)</p>
+<p>空间复杂度: O(n)</p>
+<p>稳定性: 稳定</p>
+<p>思想: <strong>遍历, 把当前这组元素和相邻的一组元素进行merge</strong></p>
+<p>例如: sz = 1 时, 就是把奇数位元素和他后一个元素比较, 交换位置</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="comment">// 将arr[l...mid] 和 arr[mid+1...r] 两个部分进行归并</span></span><br><span class="line"><span class="keyword">void</span> __merge(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> mid, <span class="keyword">int</span> r)&#123;</span><br><span class="line">    <span class="comment">// 开辟辅助空间</span></span><br><span class="line"><span class="comment">//    T aux[r-l+1];</span></span><br><span class="line">    T *aux = <span class="keyword">new</span> T[r-l+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 辅助空间的元素和要merge的元素一样</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = l; i &lt;= r; i++ )</span><br><span class="line">        aux[i-l] = arr[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1</span></span><br><span class="line">    <span class="keyword">int</span> i = l, j = mid+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> k = l ; k &lt;= r; k ++ )&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( i &gt; mid )&#123;  <span class="comment">// 如果左半部分元素已经全部处理完毕</span></span><br><span class="line">            arr[k] = aux[j-l]; j ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( j &gt; r )&#123;  <span class="comment">// 如果右半部分元素已经全部处理完毕</span></span><br><span class="line">            arr[k] = aux[i-l]; i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( aux[i-l] &lt; aux[j-l] ) &#123;  <span class="comment">// 左半部分所指元素 &lt; 右半部分所指元素</span></span><br><span class="line">            arr[k] = aux[i-l]; i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;  <span class="comment">// 左半部分所指元素 &gt;= 右半部分所指元素</span></span><br><span class="line">            arr[k] = aux[j-l]; j ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] aux;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//没有使用数组的一个特性, 通过下标直接获取元素, 可以用nlogn的时间为链表排序</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSortB2U</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">//sz 为步长</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> sz=<span class="number">1</span>; sz &lt;= n; sz += sz)</span><br><span class="line">        <span class="comment">// 每次 merge i 到 i+sz-1 和 i+sz 到 i+2*sz-1</span></span><br><span class="line">        <span class="comment">// i+sz&lt;n 是确保 mid+1 存在, 即至少有两组数据进行merge</span></span><br><span class="line">        <span class="comment">// 因为 i+sz+sz-1 可能会越界, 所以取它和n-1中较小的一个</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i+sz &lt; n; i += sz+sz)</span><br><span class="line">            __merge(arr, i, i+sz<span class="number">-1</span>, min(i+sz+sz<span class="number">-1</span>,n<span class="number">-1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">selectionSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">// i 为乱序部分第一个元素</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++)&#123;</span><br><span class="line">        <span class="comment">// 找到 [i, n) 中最小值</span></span><br><span class="line">        <span class="keyword">int</span> minIndex = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt; n; j++)</span><br><span class="line">            <span class="comment">// 如果当前小于标记元素, 则把标记当前元素为最小元素</span></span><br><span class="line">            <span class="keyword">if</span>(arr[j] &lt; arr[minIndex])</span><br><span class="line">                minIndex = j;</span><br><span class="line">        <span class="comment">// 把最小值 和 i 互换</span></span><br><span class="line">        swap(arr[i], arr[minIndex]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<video id="video" controls preload="none">
+<source id="mp4" src="/Blog/video/mergeTD.mp4" type="video/mp4">
+</video>
 
-<br>
-
-<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析:"></a>复杂度分析:</h3><h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度:"></a>时间复杂度:</h4><p>一共有两层循环, 内层循环 j 的遍历数量受到 外层循环 i 的影响</p>
-<p>i = 0 时, j 要从 0 遍历到 n-1,    即: n</p>
-<p>i = 1 时, j 要从 1 遍历到 n-1,    即: n-1</p>
-<p>i = 2 时, j 要从 2 遍历到 n-1,    即: n-2</p>
-<p>… …</p>
-<p>i = n-1 时, j 要从 n-1 遍历到 n-1, 即: 1</p>
-<p>所以一共要遍历: n + (n-1) + (n-2) + … + 1 次</p>
-<p>根据等差数列求和公式: (n+1)*n/2 = (n^2 + n)/2</p>
-<p>而对于时间复杂度我们只关注指数最大的那一项, 而忽略常数和其他.</p>
-<p>所以是时间复杂度为 O(n^2)</p>
-<br>
-
-<h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度:"></a>空间复杂度:</h4><p>通过代码可以看到, 我们除了i, j 以外, 只声明了一个 minIndex 变量</p>
-<p>所以空间复杂度为 O(1)</p>
-<p>是常数级别</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/06/22/Selection-Sort/">https://daolinzhou.github.io/Blog/2019/06/22/Selection-Sort/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/06/22/Selection-Sort/">June 22nd 2019, 12:00:08 am</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/06/22/Selection-Sort/">June 22nd 2019, 12:51:10 am</a>
+            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/06/25/Merge-Sort/">https://daolinzhou.github.io/Blog/2019/06/25/Merge-Sort/</a>
+            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/06/25/Merge-Sort/">June 25th 2019, 2:40:00 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/06/25/Merge-Sort/">June 25th 2019, 3:10:50 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -457,17 +445,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/Blog/2019/06/22/tcp-wavehand/" title= "TCP 四次挥手">
-                    <div class="nextTitle">TCP 四次挥手</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2019/06/20/TCP三次握手/" title= "TCP三次握手">
-                    <div class="prevTitle">TCP三次握手</div>
+                <a href= "/Blog/2019/06/24/Tcp-sliding-window/" title= "TCP的滑动窗口">
+                    <div class="prevTitle">TCP的滑动窗口</div>
                 </a>
             
         </li>
@@ -586,7 +569,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#选择排序-Selection-Sort-O-n-2"><span class="toc-number">1.</span> <span class="toc-text">选择排序 (Selection Sort)  O(n^2)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.1.</span> <span class="toc-text">总结:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举个栗子"><span class="toc-number">1.2.</span> <span class="toc-text">举个栗子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上代码"><span class="toc-number">1.3.</span> <span class="toc-text">上代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复杂度分析"><span class="toc-number">1.4.</span> <span class="toc-text">复杂度分析:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#时间复杂度"><span class="toc-number">1.4.1.</span> <span class="toc-text">时间复杂度:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#空间复杂度"><span class="toc-number">1.4.2.</span> <span class="toc-text">空间复杂度:</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#自顶向下-递归实现"><span class="toc-number">1.</span> <span class="toc-text">自顶向下 递归实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自底向上-循环实现"><span class="toc-number">2.</span> <span class="toc-text">自底向上 循环实现</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
