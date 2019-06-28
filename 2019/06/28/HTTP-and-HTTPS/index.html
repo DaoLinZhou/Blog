@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Daolin&#39;s Studio</title>
+    <title>HTTP 和 HTTPS · Daolin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/Blog/" >Daolin&#39;s Repository.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">HTTP 和 HTTPS</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/Blog/>Daolin's Repository.</a>
 </header>
@@ -220,24 +231,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/)"></div>
+    <div class="site-intro-img" style="background-image: url(/Blog/intro/sincegate.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            HTTP 和 HTTPS
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "http">http</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">476</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/06/28</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,111 +401,84 @@
 </script>        
         <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/20/TCP三次握手/" >
-            
-                <span>TCP三次握手</span>
-        </a>
-        <div class="abstract-content">
-            <p>我将通过Wireshark 这款软件对B站进行抓包, 来分析TCP的三次握手</p>
-<p><img src="/Blog/intro/ping.PNG" alt></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "tcp">tcp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/20/TCP报文格式/" >
-            
-                <span>TCP报文格式</span>
-        </a>
-        <div class="abstract-content">
-            <h1 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h1><p>TCP 是一种安全的网络传输协议, 它安全可靠.  当包丢失时, 具有重传机制</p>
-<p>​    如果发送端实体在合理的往返时延(RTT)内未收到确认，那么对应的数据（假设丢失了）将会被重传。</p>
-<p>优点: 可靠</p>
-<p>缺点: 首部过大, 速度相比与UDP慢一些</p>
-<h2 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h2><p><img src="/Blog/intro/tcp.jpeg" alt></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "tcp">tcp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/20/hello-world/" >
-            
-                <span>HelloWorld</span>
-        </a>
-        <div class="abstract-content">
-            HelloWorld今天仅仅是尝试部署, 明天开始真正写文章
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/Blog/intro/httpandhttps.PNG" alt></p>
+<p>Https 相比于 HTTP 多了一个 SSL 层</p>
+<a id="more"></a>
 
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "闲聊">闲聊</a>
-    
-</div>
-            
-        </div>
+<br>
+
+<h3 id="什么是SSL"><a href="#什么是SSL" class="headerlink" title="什么是SSL"></a>什么是SSL</h3><p>SSL(Security Sockets Layer, 安全套接层)</p>
+<ul>
+<li>为网络通信提供安全及服务完整性的一种安全协议</li>
+<li>是操作系统对外的API, SSL3.0后更名为TLS</li>
+<li>采用身份验证和数据加密保证网络通信的安全和数据的完整性</li>
+</ul>
+<br>
+
+<h3 id="加密方式"><a href="#加密方式" class="headerlink" title="加密方式"></a>加密方式</h3><p>对称加密 : 加密和解密都使用同一个密钥</p>
+<p>非对称加密 : 加密使用的密钥和解密使用的密钥是不相同的(公钥和私钥)公钥和算法都是公开的, 而私钥是保密的. (非对称加密性能较低, 但安全性超强)</p>
+<p>哈希算法 : 将任意长度的信息转换为固定长度的值, 算法不可逆, (信息摘要算法), 例如md5</p>
+<p>数字签名 : 在信息后加上一段内容(哈希后的值), 证明某个消息或者文件是某人发出/认同的</p>
+<br>
+
+<h2 id="Https数据传输流程"><a href="#Https数据传输流程" class="headerlink" title="Https数据传输流程"></a>Https数据传输流程</h2><ul>
+<li>浏览器将支持的加密算法信息发送给服务器</li>
+<li>服务器选择一套浏览器支持的加密算法, 以证书的形式回发浏览器</li>
+<li>浏览器验证证书合法性, 并结合证书公钥加密信息发送给服务器</li>
+<li>服务器使用私钥解密信息, 验证哈希, 加密响应消息回发浏览器</li>
+<li>浏览器解密响应消息, 并对消息进行验真, 之后进行加密交互数据</li>
+</ul>
+<br>
+
+<h2 id="HTTP-和-HTTPS区别"><a href="#HTTP-和-HTTPS区别" class="headerlink" title="HTTP 和 HTTPS区别"></a>HTTP 和 HTTPS区别</h2><p>https需要到CA申请证书, http不用</p>
+<p>https密文传输, http明文传输</p>
+<p>连接方式不同, https默认用443端口, http使用80端口</p>
+<p>https = Http + 加密 + 认证 + 完整性保护, 较http安全</p>
+<br>
+
+<h2 id="https是否真的安全"><a href="#https是否真的安全" class="headerlink" title="https是否真的安全?"></a>https是否真的安全?</h2><p>浏览器默认填充http://, 请求需要进行跳转有劫持风险,但可以使用HSTS(HTTP Strict Transport Security)优化</p>
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
+            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/06/28/HTTP-and-HTTPS/">https://daolinzhou.github.io/Blog/2019/06/28/HTTP-and-HTTPS/</a>
+            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/06/28/HTTP-and-HTTPS/">June 28th 2019, 3:33:29 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/06/28/HTTP-and-HTTPS/">June 28th 2019, 4:07:35 pm</a>
+            <p>版权声明：</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/Blog/2019/06/27/Quick-Sort/" title= "快速排序">
+                    <div class="prevTitle">快速排序</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/Blog/archives/2019/">&#60; PREV</a><a class="page-number" href="/Blog/archives/2019/">1</a><span class="page-number current">2</span>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -527,6 +563,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#结构图"><span class="toc-number">1.</span> <span class="toc-text">结构图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是SSL"><span class="toc-number">1.1.</span> <span class="toc-text">什么是SSL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加密方式"><span class="toc-number">1.2.</span> <span class="toc-text">加密方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Https数据传输流程"><span class="toc-number">2.</span> <span class="toc-text">Https数据传输流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-和-HTTPS区别"><span class="toc-number">3.</span> <span class="toc-text">HTTP 和 HTTPS区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#https是否真的安全"><span class="toc-number">4.</span> <span class="toc-text">https是否真的安全?</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -864,6 +918,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/Blog/scripts/share.js" async></script>    
      
     </body>
 </html>
