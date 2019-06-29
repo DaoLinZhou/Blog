@@ -384,6 +384,51 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/06/29/database-structure/" >
+            
+                <span>数据库架构</span>
+        </a>
+        <div class="abstract-content">
+            
+
+从一个面试题说起如何设计一个关系型数据库?
+
+
+开始设计: 
+
+数据库最重要的就是存储模块(文件系统), 将数据持久化存入磁盘中
+但仅仅是存储是不够的, 还要有一些响应的模块来进行管理
+
+
+细分模块
+存储管理: 对数据的格式, 和文件的分隔进行统一管理. 即: 把物理数据通过逻辑的形式表述出来
+
+缓存机制: 把取出来的数据块放在缓存里, 下次需要直接从内存返回, 而不用IO
+
+SQL解析: 为了让外部可以通过SQL进行数据库操作, 需要SQL解析模块, 把sql语句解析并执行.(为了提升效率, 可以把sql 缓存到缓存里, 编译好的SQL方便下一次直接进行解析, 注意缓存不易过大, ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "数据库">数据库</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/Blog/2019/06/28/HTTP-and-HTTPS/" >
             
                 <span>HTTP 和 HTTPS</span>
@@ -653,40 +698,6 @@ height:50vh;
         <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "tcp">tcp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/22/Selection-Sort/" >
-            
-                <span>选择排序 Selection Sort</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="选择排序-Selection-Sort-O-n-2"><a href="#选择排序-Selection-Sort-O-n-2" class="headerlink" title="选择排序 (Selection Sort)  O(n^2)"></a>选择排序 (Selection Sort)  O(n^2)</h2><h3 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h3><p>代码复杂程度: 简单</p>
-<p>时间复杂度: O(n^2)</p>
-<p>空间复杂度: O(1)</p>
-<p>稳定性: 不稳定</p>
-<p><strong>特点</strong>:  交换次数最少的排序</p>
-<p>思想:  <strong>遍历n变数组, 每一次找当前乱序部分最小的元素, 把它和乱序部分第一个元素互换</strong></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
     
 </div>
             
@@ -1026,9 +1037,16 @@ height:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 13
+        Total : 14
         </div>
         <!-- search  -->
         
@@ -1041,6 +1059,11 @@ height:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1121,6 +1144,8 @@ height:50vh;
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
