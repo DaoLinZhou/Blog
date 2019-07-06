@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">317</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">347</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,6 +416,8 @@ height:50vh;
 
 <h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">countingSort</span><span class="params">(T arr[], <span class="keyword">int</span> n, <span class="keyword">int</span> min, <span class="keyword">int</span> max)</span></span>&#123;</span><br><span class="line">    T *aux = <span class="keyword">new</span> T[(max-min+<span class="number">1</span>)];</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;(max-min+<span class="number">1</span>); i++)</span><br><span class="line">        aux[i] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//开始计数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)</span><br><span class="line">        aux[arr[i]-min]++;</span><br><span class="line">    <span class="comment">//填充,i指向aux, index指向arr</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>, index=<span class="number">0</span>; i&lt;(max-min+<span class="number">1</span>); i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;aux[i]; j++, index++)</span><br><span class="line">            arr[index] = i+min;</span><br><span class="line">    <span class="keyword">delete</span>[](aux);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><strong>一道有趣的题目, 在这道题中使用三路快排竟然更加巧妙</strong></p>
+<p><a href="https://www.imooc.com/article/16141" target="_blank" rel="noopener">https://www.imooc.com/article/16141</a></p>
 
     </article>
     <!-- license  -->
@@ -424,13 +426,18 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/07/05/Counting-Sort/">https://daolinzhou.github.io/Blog/2019/07/05/Counting-Sort/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/07/05/Counting-Sort/">July 5th 2019, 12:14:15 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/07/05/Counting-Sort/">July 5th 2019, 3:25:14 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/07/05/Counting-Sort/">July 5th 2019, 6:53:59 pm</a>
             <p>版权声明：</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/Blog/2019/07/06/Heap/" title= "堆 Heap">
+                    <div class="nextTitle">堆 Heap</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -791,9 +798,40 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 18
+        Total : 19
         </div>
         <!-- search  -->
         
@@ -806,6 +844,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -917,6 +960,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
     
