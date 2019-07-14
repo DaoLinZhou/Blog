@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Daolin&#39;s Studio</title>
+    <title>printf 和 scanf 的本质 · Daolin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/Blog/" >Daolin&#39;s Repository.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">printf 和 scanf 的本质</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/Blog/>Daolin's Repository.</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/)"></div>
+    <div class="site-intro-img" style="background-image: url(/Blog/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            printf 和 scanf 的本质
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">400</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/07/13</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,200 +399,68 @@
 </script>        
         <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/07/05/Counting-Sort/" >
-            
-                <span>计数排序 Counting Sort</span>
-        </a>
-        <div class="abstract-content">
-            <p>非基于比较的排序算法, 快于任何比较排序算法</p>
-<p>时间复杂度: Ο(n+k)</p>
-<p>空间复杂度: O(k+k)</p>
-<p><strong>这是一种牺牲空间换取时间的做法，而且当O(k)&gt;O(n*log(n))的时候其效率反而不如基于比较的排序</strong></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>Linux 的主要思想是 : “一切皆文件”</p>
+<p>外接一个打印机, 它会把打印机当做文件</p>
+<p>插入U盘就会把U盘当做文件</p>
+<p>外接摄像头, 也会把摄像头当做文件</p>
+<p>所有的外部设备和磁盘中的文件是一样一样的</p>
+<p><img src="/Blog/intro/file.PNG" alt></p>
+<a id="more"></a>
+
+<h1 id="三个文件"><a href="#三个文件" class="headerlink" title="三个文件"></a>三个文件</h1><p>当我们要启动程序的时候, 就会有三个文件 stdin, stdout, stderr</p>
+<p>这三个文件分别是标准输入流, 标准输出流, 标准错误流.</p>
+<br>
+
+<p>默认stdin的输入设备是键盘, 但其实可以通过流的重定向来进行更改, 让不同设备给应用程序输入数据</p>
+<p>默认stdout的输出设备是显示器终端, 如果切换到网卡上, 就可以向网卡写入数据. 如果切换到打印机上, 就可以让打印机打印数据</p>
+<br>
+
+<p>Linux 认为, 任何一个应用程序, 都会有可能会和文件或设备进行交互</p>
+<p>所以每当启动c语言程序时, 都会创建三个文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//fprintf: 向一个文件里写入数据, 这里让它把数据写到输出文件(流)上, 就是输入一段话, 等价于下面语句</span></span><br><span class="line">    <span class="comment">//如果使用打印机的资源句柄的话, 就是让打印机把这句话打出来</span></span><br><span class="line">	<span class="comment">//printf("please input the value of a:\n")</span></span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"please input the value of a:\n"</span>);</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="comment">//fscanf: 从一个文件中读取数据, 同理</span></span><br><span class="line">	<span class="comment">//scanf("%d", &amp;a);</span></span><br><span class="line">	<span class="built_in">fscanf</span>(<span class="built_in">stdin</span>, <span class="string">"%d"</span>, &amp;a);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(a&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"the value must &gt; 0"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/27/Quick-Sort/" >
-            
-                <span>快速排序</span>
-        </a>
-        <div class="abstract-content">
-            <p>快速排序是21世纪最伟大的算法之一</p>
-<p>许多系统内部就是使用快速排序来进行排序的(有点绕口??)</p>
-<p>本文从最简单的快速排序开始, 演进写出性能较好的快速排序</p>
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
+            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/07/13/what-is-printf-scanf/">https://daolinzhou.github.io/Blog/2019/07/13/what-is-printf-scanf/</a>
+            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/07/13/what-is-printf-scanf/">July 13th 2019, 5:49:40 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/07/13/what-is-printf-scanf/">July 13th 2019, 6:35:05 pm</a>
+            <p>版权声明：</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/25/Merge-Sort/" >
-            
-                <span>归并排序的两种经典实现</span>
-        </a>
-        <div class="abstract-content">
-            <p>归并排序分为 <strong>自顶向下</strong> 和 <strong>自底向上</strong> 两种实现</p>
-<p>分别使用 递归 和 迭代, 性能都是 O(nlogn)</p>
-<p><strong>自底向上(循环)的归并排序，是比自顶向下(递归)的归并排序要快的</strong></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/22/Insert-Sort/" >
-            
-                <span>插入排序 Insert Sort 和 希尔排序 Shell Sort</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="结论"><a href="#结论" class="headerlink" title="结论:"></a>结论:</h2><table>
-<thead>
-<tr>
-<th></th>
-<th>插入排序</th>
-<th>希尔排序</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>代码复杂程度</td>
-<td>简单</td>
-<td>简单</td>
-</tr>
-<tr>
-<td>时间复杂度</td>
-<td>O(n^2) 可以优化</td>
-<td>O(n^(3/2))</td>
-</tr>
-<tr>
-<td>空间复杂度</td>
-<td>O(1)</td>
-<td>O(1)</td>
-</tr>
-<tr>
-<td>稳定性</td>
-<td>稳定</td>
-<td>不稳定</td>
-</tr>
-<tr>
-<td>特点</td>
-<td>可以提前终止第二层循环</td>
-<td></td>
-</tr>
-</tbody></table>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/22/Selection-Sort/" >
-            
-                <span>选择排序 Selection Sort</span>
-        </a>
-        <div class="abstract-content">
-            <h2 id="选择排序-Selection-Sort-O-n-2"><a href="#选择排序-Selection-Sort-O-n-2" class="headerlink" title="选择排序 (Selection Sort)  O(n^2)"></a>选择排序 (Selection Sort)  O(n^2)</h2><h3 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h3><p>代码复杂程度: 简单</p>
-<p>时间复杂度: O(n^2)</p>
-<p>空间复杂度: O(1)</p>
-<p>稳定性: 不稳定</p>
-<p><strong>特点</strong>:  交换次数最少的排序</p>
-<p>思想:  <strong>遍历n变数组, 每一次找当前乱序部分最小的元素, 把它和乱序部分第一个元素互换</strong></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/Blog/2019/07/06/Heap/" title= "堆 Heap">
+                    <div class="prevTitle">堆 Heap</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -616,6 +545,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#三个文件"><span class="toc-number">1.</span> <span class="toc-text">三个文件</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1075,6 +1022,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/Blog/scripts/share.js" async></script>    
      
     </body>
 </html>
