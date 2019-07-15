@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Daolin&#39;s Studio</title>
+    <title>内存管理 · Daolin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/Blog/" >Daolin&#39;s Repository.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">内存管理</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/Blog/>Daolin's Repository.</a>
 </header>
@@ -220,24 +231,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/)"></div>
+    <div class="site-intro-img" style="background-image: url(/Blog/intro/death.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            内存管理
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "操作系统">操作系统</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">854</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/07/15</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,109 +401,118 @@
 </script>        
         <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/07/15/Memory-management/" >
-            
-                <span>内存管理</span>
-        </a>
-        <div class="abstract-content">
-            <p>内存由操作系统统一管理</p>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>内存由操作系统统一管理</p>
 <p>一个字节Byte有8个二进制位</p>
 <p>计算机插两根2G内存条 等同于 插一根4G内存条</p>
 <p>无论插多少根内存条, 计算机会把内存看成是一个整体来计算内存大小</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/15</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "操作系统">操作系统</a>
-    
-</div>
-            
-        </div>
+<a id="more"></a>
+
+<h2 id="32位操作系统"><a href="#32位操作系统" class="headerlink" title="32位操作系统"></a>32位操作系统</h2><p>32 位操作系统最大使用4G内存</p>
+<br>
+
+<p>32 位操作系统上, 地址总线是32位, 即寻址空间是32位</p>
+<p>32 位指的是: 给内存编号只能编到32个二进制位</p>
+<br>
+
+<p>两根地址总线有4种状态</p>
+<p><img src="/Blog/intro/2lines.PNG" alt></p>
+<p>32根地址总线就有2^32个状态, 2^32字节<br>$$<br>2^{32} = 2^{10} * 2^{10} * 2^{10} * 2^2<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">= 1024 * 1024 * 1024 * 4</span><br><span class="line">= 1024 * 1024 * 4K</span><br><span class="line">= 1024 * 4M</span><br><span class="line">= 4G</span><br></pre></td></tr></table></figure>
+
+<p>所以32位操作系统最多只能管理4G内存</p>
+<br>
+
+<h2 id="64位操作系统"><a href="#64位操作系统" class="headerlink" title="64位操作系统"></a>64位操作系统</h2><p>64位主机可以管理 2^64 字节</p>
+<p>2^30 =&gt; GB</p>
+<p>2^40 =&gt; TB</p>
+<p>… …</p>
+<p>64位系统下的内存足够使用了</p>
+<br>
+
+<h2 id="内存地址"><a href="#内存地址" class="headerlink" title="内存地址"></a>内存地址</h2><p>操作系统会对所有的内存进行编号, 编号 = 唯一的内存字节的地址, 1个字节存放8个二进制位的数据</p>
+<p>64 位操作系统内存地址编号, 二进制表示</p>
+<p>0000 0000 … … 0000 0000    (64 个 0)</p>
+<p>1111 1111 … … 1111 1111    (64 个 1)</p>
+<br>
+
+<p><img src="/Blog/intro/memory2.PNG" alt></p>
+<p>右边的每一个格子都代表计算机中的一个字节, 每个字节可以保存8个二进制位的数据, 假设他们都是0</p>
+<p>最高位 0xffffffffffffffff    16个f, 因为一个f 对应 1111 四个一, 16 * 4 = 64, 相当于64 个 1</p>
+<br>
+
+<h3 id="为什么要交给操作系统管理"><a href="#为什么要交给操作系统管理" class="headerlink" title="为什么要交给操作系统管理"></a>为什么要交给操作系统管理</h3><p>计算机中要同时运行多个程序</p>
+<p>如果由程序员对内存直接进行管理, 可能会出现多个程序对同一个地址来操作</p>
+<p>那么该内存应该分给那个程序</p>
+<p>我们不知道用户会在什么时候启用哪些程序, 也不知道哪个程序会占用哪个内存, 所以内存不应由程序员直接管理</p>
+<br>
+
+<p>当我们买计算机时, 第一个应用程序就是操作系统. 其他的应用程序都是安装到操作系统上的. 所以实际上 应用程序是由操作系统来调用的</p>
+<p><img src="/Blog/intro/useapplication.PNG" alt></p>
+<br>
+
+<p>操作系统 不仅能给内存编号, 还可以给内存进行一定的规划</p>
+<p><strong>在64位操作系统中: 系统认为程序员使用的内存只要有前面48位就可以了</strong></p>
+<p><img src="/Blog/intro/memory3.PNG" alt></p>
+<p>即上图红框区域 0x0 到 0x7fffffffffffffff</p>
+<p>而0x7fffffffffffffff 之上的内存空间是给操作系统内核使用的</p>
+<br>
+
+<h3 id="用户内存和操作系统内存隔离的好处"><a href="#用户内存和操作系统内存隔离的好处" class="headerlink" title="用户内存和操作系统内存隔离的好处"></a>用户内存和操作系统内存隔离的好处</h3><ul>
+<li>操作系统的内存不会被大量占用</li>
+<li>避免机器卡住, 卡死, 死机等状态 (哪怕用户内存全部沾满, 操作系统内存也不会受到影响)</li>
+<li>可以通过操作系统把应用程序关闭</li>
+<li>使操作系统更安全</li>
+</ul>
+<p><img src="/Blog/intro/memory4.PNG" alt></p>
+<p>假设我们写了一个c语言代码, 编译后存到磁盘</p>
+<p>一旦我们运行这个程序, 代码编译后的二进制数据就会加载到内存中, 即代码段</p>
+<p>我们可能会声明一些全局变量, 或者常量.这些放在数据段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">int</span> global;</span><br></pre></td></tr></table></figure>
+
+<p>绿色区域为自由可分配内存</p>
+<p>栈: 第一个执行的函数, 如果这个函数调用其他函数会依次往下压栈.</p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/07/13/what-is-printf-scanf/" >
-            
-                <span>printf 和 scanf 的本质及流的重定向</span>
-        </a>
-        <div class="abstract-content">
-            <p>Linux 的主要思想是 : “一切皆文件”</p>
-<p>外接一个打印机, 它会把打印机当做文件</p>
-<p>插入U盘就会把U盘当做文件</p>
-<p>外接摄像头, 也会把摄像头当做文件</p>
-<p>所有的外部设备和磁盘中的文件是一样一样的</p>
-<p><img src="/Blog/intro/file.PNG" alt></p>
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
+            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/07/15/Memory-management/">https://daolinzhou.github.io/Blog/2019/07/15/Memory-management/</a>
+            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/07/15/Memory-management/">July 15th 2019, 12:16:16 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/07/15/Memory-management/">July 15th 2019, 1:51:53 pm</a>
+            <p>版权声明：</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/30/cpp入门学习/" >
-            
-                <span>C++入门学习</span>
-        </a>
-        <div class="abstract-content">
-            <h1 id="C-入门学习"><a href="#C-入门学习" class="headerlink" title="C++入门学习"></a>C++入门学习</h1><p>包含C++ 基础知识</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "c++">c++</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/Blog/2019/07/13/what-is-printf-scanf/" title= "printf 和 scanf 的本质及流的重定向">
+                    <div class="prevTitle">printf 和 scanf 的本质及流的重定向</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -525,6 +597,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#32位操作系统"><span class="toc-number">1.</span> <span class="toc-text">32位操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#64位操作系统"><span class="toc-number">2.</span> <span class="toc-text">64位操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存地址"><span class="toc-number">3.</span> <span class="toc-text">内存地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要交给操作系统管理"><span class="toc-number">3.1.</span> <span class="toc-text">为什么要交给操作系统管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户内存和操作系统内存隔离的好处"><span class="toc-number">3.2.</span> <span class="toc-text">用户内存和操作系统内存隔离的好处</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1012,6 +1102,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/Blog/scripts/share.js" async></script>    
      
     </body>
 </html>
