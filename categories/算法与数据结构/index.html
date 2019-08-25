@@ -346,6 +346,50 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/08/25/Minimum-Span-Trees/" >
+            
+                <span>图论(五)-有权图</span>
+        </a>
+        <div class="abstract-content">
+            之前的图中, 每条边都是没有权重的. 而这次我们要讨论的图每条边要有权重
+
+自然, 存储的方式也要发生改变. 
+
+
+实现的改变邻接矩阵 :
+
+
+邻接表 :
+
+
+更好的一个方式但是这就会导致我们的算法无法同时作用在两种图的实现上(因为它们的边的结构不同)
+一个更好的方法则是封装一个Edge作为边, 同时应用在邻接矩阵和邻接表上
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566#ifndef AL...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/25</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "数据结构">数据结构</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/Blog/2019/08/21/Path/" >
             
                 <span>图论(三)-寻路</span>
@@ -623,37 +667,6 @@
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "排序算法">排序算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/06/25/Merge-Sort/" >
-            
-                <span>归并排序的两种经典实现</span>
-        </a>
-        <div class="abstract-content">
-            <p>归并排序分为 <strong>自顶向下</strong> 和 <strong>自底向上</strong> 两种实现</p>
-<p>分别使用 递归 和 迭代, 性能都是 O(nlogn)</p>
-<p><strong>自底向上(循环)的归并排序，是比自顶向下(递归)的归并排序要快的</strong></p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/25</span>
             </div>
             <!-- tags  -->
             
@@ -1130,9 +1143,18 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 27
+        Total : 28
         </div>
         <!-- search  -->
         
@@ -1145,6 +1167,11 @@
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-有权图</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1288,6 +1315,8 @@
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
@@ -1295,8 +1324,6 @@
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
