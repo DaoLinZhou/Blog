@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">535</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -422,6 +422,40 @@ height:50vh;
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearchLoop</span><span class="params">(T arr[], <span class="keyword">int</span> n, T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>, r=n;		<span class="comment">// 在[l...r)的范围内寻找target</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt; r)&#123;		<span class="comment">// 重新上方看定义, l==r时[l...r)范围没有任何元素</span></span><br><span class="line">        <span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(arr[mid] &gt; target)</span><br><span class="line">            r = mid;	<span class="comment">// mid找过了, 所以mid为右边界</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(arr[mid] &lt; target)</span><br><span class="line">            l = mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>所以, <strong>牢记自己对变量的定义时写好算法的基础</strong></p>
+<br>
+
+<h1 id="对撞指针"><a href="#对撞指针" class="headerlink" title="对撞指针"></a>对撞指针</h1><p>分别在数组<strong>头部</strong>和<strong>尾部</strong>创建指针, 判定某一条件, 根据情况移动两个指针, 直到两个指针碰撞到一起.</p>
+<p><img src="/Blog/intro/twopointer.PNG" alt></p>
+<p>通常对撞指针适合用于<strong>有序数组</strong>, 因为有序性使得指针移动更有意义, 例如: 如果数组是从小到大排列, 如果l(头部指针) + r(尾部指针) 的和小于期望值, 便可以让l右移来增加总和; 反之则让r左移来减少总和.</p>
+<p><img src="/Blog/intro/twopointer2.PNG" alt></p>
+<p>有些题目要求求出所有组合, 此时结束循环的条件就必须是 l &gt;= r, 即 l 与 r 碰撞,</p>
+<p>但有些题目只要求一个解, 那么我们就可以找到一个解就进行返回, 只有最坏的情况下(没有解)指针才会碰撞</p>
+<p>答题时应该根据具体内容来具体分析.</p>
+<br>
+
+<h1 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h1><p>TCP协议中也有相应的技术, 简单地说就是通过向前移动两个指针, 来保证指针之间的区域内的数据符合要求 </p>
+<p><strong>一张TCP的图, 但原理大致是一样的</strong></p>
+<p><img src="/Blog/intro/windowsliding.PNG" alt></p>
+<p>在头部建立两个指针(l, r), 先滑动r指针, 让窗口内有足够元素, 之后根据需求右移l或r, 如果右移l, 窗口内元素会减少, 右移r, 窗口内元素会增多.</p>
+<p>根据题目的不同结束条件也不大相同, 有的题目l到达最右边结束, 有的题目r达到最右边结束, 有的题目会固定窗口大小, 有的题目不会.</p>
+<br>
+
+<h1 id="查找一个元素"><a href="#查找一个元素" class="headerlink" title="查找一个元素"></a>查找一个元素</h1><p>Set 和 Map 是两个用于查找的数据结构. 而且map可以存储额外的信息. </p>
+<p>相比于通过O(n^2)对两个数组进行遍历查找, 不如用O(n)的时间先把一个数组放入map中, 之后再用O(n)的时间遍历另外一个数组, 看map中有没有与之对应的元素. 后者的时间复杂度总体是O(n).</p>
+<br>
+
+<p>leetcode #454 问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">解题思路:</span><br><span class="line">如果使用暴力解法, 4个循环, 当 a+b+c+d == 0 时记录, 时间复杂度是 O(n^4)</span><br><span class="line">一个自然的想法就是先把 A 中所有数放入map中, 循环 B,C,D, 判断 0-(b+c+d) 是否在 map中,</span><br><span class="line">这样时间复杂度就是 O(n^3 + n) = O(n^3)</span><br><span class="line">更进一步, 把 A, B中所有组合都放入map, 之后再循环 C,D, 判断 0-(c+d) 是否在 map中,</span><br><span class="line">时间复杂度是 O(n^2 + n^2) = O(n^2)</span><br><span class="line"></span><br><span class="line">仔细观察这三个思路的时间复杂度 O(n^4), O(n + n^3), O(n^2 + n^2)</span><br><span class="line">就像是把4分到两个n的指数上</span><br><span class="line">能否根据这个思路继续优化呢 ?  不行, 因为如果把ABC的所有组合放入map会是 n^3 复杂度, 退化到第二种情况</span><br></pre></td></tr></table></figure>
+
+<p>具体代码可以参考我的github: <a href="https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/leetcode/0454_4Sum_II/Solution.h" target="_blank" rel="noopener">https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/leetcode/0454_4Sum_II/Solution.h</a></p>
+<br>
+
+<p><strong>注意:</strong> 如果数据量不大且要实现的是对 int 或 char 类型进行查找的话, 我们可以自己实现数组来最为map, 而不用内置的map实现.</p>
+<br>
+
+<p><strong>注意:</strong> 在某些时候, 我们需要查找表的顺序性, 比如说求floor, ceil, upper_bound, lower_bound, 如果像快速求得这些元素, 就需要查找表必须以树形结构进行实现, 而不是hash结构. 所以在C++中就不能使用unordered_map, java里不能使用HashMap</p>
+<br>
+
 
     </article>
     <!-- license  -->
@@ -430,7 +464,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 7th 2019, 10:33:27 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 7th 2019, 11:33:16 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 11th 2019, 10:34:57 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -562,7 +596,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事先声明"><span class="toc-number">1.</span> <span class="toc-text">事先声明:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#牢记自己对变量的定义"><span class="toc-number">2.</span> <span class="toc-text">牢记自己对变量的定义</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事先声明"><span class="toc-number">1.</span> <span class="toc-text">事先声明:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#牢记自己对变量的定义"><span class="toc-number">2.</span> <span class="toc-text">牢记自己对变量的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对撞指针"><span class="toc-number">3.</span> <span class="toc-text">对撞指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滑动窗口"><span class="toc-number">4.</span> <span class="toc-text">滑动窗口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找一个元素"><span class="toc-number">5.</span> <span class="toc-text">查找一个元素</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -575,38 +609,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1176,11 +1178,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
@@ -1194,9 +1196,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
