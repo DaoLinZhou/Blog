@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.9k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -456,6 +456,29 @@ height:50vh;
 <p><strong>注意:</strong> 在某些时候, 我们需要查找表的顺序性, 比如说求floor, ceil, upper_bound, lower_bound, 如果像快速求得这些元素, 就需要查找表必须以树形结构进行实现, 而不是hash结构. 所以在C++中就不能使用unordered_map, java里不能使用HashMap</p>
 <br>
 
+<h1 id="使用链表的一些技巧"><a href="#使用链表的一些技巧" class="headerlink" title="使用链表的一些技巧"></a>使用链表的一些技巧</h1><p><strong>递归</strong>天然地适合链表或者和链表相似的数据结构, 所以有些问题使用递归会更加方便</p>
+<br>
+
+<p><strong>画图</strong>是很有效的整理思路的方法, 如果我们经常弄错应该把哪个节点指向哪个节点, 不妨画画图, 之后照着图进行编程.</p>
+<br>
+
+<p>有时我们需要对链表头进行特殊操作, 此时不妨设立<strong>虚拟头节点</strong>, 这样就可以统一操作, 返回时只要返回这个节点的next就好. 如果虚拟头节点是再堆中创建, 不要忘记delete掉, 这里更建议通过栈创建.</p>
+<br>
+
+<p>如果想把一个链表分成等长的两段, 可以设立两个节点, 一个slow 初始化再第一个节点, 一个fast 初始化再第二个节点, 每一次slow走一步, fast走两步, 直到fast无法再走, slow+1的位置就是第二段链表的头节点. 注意此时从0-slow 的节点个数是大于等于slow+1到最后的节点个数的. 具体为什么可以用笔画一画.</p>
+<br>
+
+<h1 id="栈-队列-以及-优先队列"><a href="#栈-队列-以及-优先队列" class="headerlink" title="栈, 队列 以及 优先队列"></a>栈, 队列 以及 优先队列</h1><p>栈通常用于深度优先遍历, 或者模拟递归</p>
+<p>队列通常用于广度优先遍历, 或是求最短路径</p>
+<p>优先队列通常用于动态选择数据</p>
+<br>
+
+<p>三者都是图和树常用的辅助结构.</p>
+<p>顺带一提, 有些和图相关的算法不需要我们真的建立一张图, 只要心中有图即可</p>
+<p>例如: # 279 题, 和每个数相邻的节点是有规律的, 只要把符合这些规律的元素放入队列中就可以进行广度优先遍历</p>
+<br>
+
+<p>再顺带一提, 我们可以通过维护一个vector or List 来保存是从哪个节点到达当前节点的, 由此在遍历完成后可以通过反向查找来找到来时的路径.</p>
 
     </article>
     <!-- license  -->
@@ -464,7 +487,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 7th 2019, 10:33:27 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 11th 2019, 10:34:57 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 18th 2019, 12:46:18 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -596,7 +619,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事先声明"><span class="toc-number">1.</span> <span class="toc-text">事先声明:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#牢记自己对变量的定义"><span class="toc-number">2.</span> <span class="toc-text">牢记自己对变量的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对撞指针"><span class="toc-number">3.</span> <span class="toc-text">对撞指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滑动窗口"><span class="toc-number">4.</span> <span class="toc-text">滑动窗口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找一个元素"><span class="toc-number">5.</span> <span class="toc-text">查找一个元素</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事先声明"><span class="toc-number">1.</span> <span class="toc-text">事先声明:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#牢记自己对变量的定义"><span class="toc-number">2.</span> <span class="toc-text">牢记自己对变量的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对撞指针"><span class="toc-number">3.</span> <span class="toc-text">对撞指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滑动窗口"><span class="toc-number">4.</span> <span class="toc-text">滑动窗口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找一个元素"><span class="toc-number">5.</span> <span class="toc-text">查找一个元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用链表的一些技巧"><span class="toc-number">6.</span> <span class="toc-text">使用链表的一些技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#栈-队列-以及-优先队列"><span class="toc-number">7.</span> <span class="toc-text">栈, 队列 以及 优先队列</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -609,6 +632,22 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1176,15 +1215,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
@@ -1192,13 +1231,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
