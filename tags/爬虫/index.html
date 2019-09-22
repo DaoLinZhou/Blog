@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>调优sql · Daolin&#39;s Studio</title>
+    <title>Daolin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/Blog/" >Daolin&#39;s Repository.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">调优sql</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/Blog/>Daolin's Repository.</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/intro/lulutiya.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/Blog/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            调优sql
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "数据库">数据库</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">769</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/07/02</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,144 +338,43 @@ height:50vh;
 </script>        
         <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <ul>
-<li>如何定位并优化慢查询SQL</li>
-<li>联合索引的最左匹配原则的成因</li>
-<li>索引是建立得越多越好吗?</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="如何定位并优化慢查询SQL"><a href="#如何定位并优化慢查询SQL" class="headerlink" title="如何定位并优化慢查询SQL"></a>如何定位并优化慢查询SQL</h1><p>开放性问题, 只有大致思路</p>
-<ol>
-<li>通过慢日志定位慢查询sql</li>
-<li>使用explain等工具分析sql</li>
-<li>修改sql或者尽量让sql走索引</li>
-</ol>
-<br>
-
-<h2 id="查看变量"><a href="#查看变量" class="headerlink" title="查看变量"></a>查看变量</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">"%quer%"</span>;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/Blog/intro/sql.PNG" alt></p>
-<p>slow_query_log : 是否开启慢日志</p>
-<p>slow_query_log_file : 慢日志记录位置</p>
-<p>long_query_time : 时限, 上图: 一次如果超过10秒就会被记录(通常超过1秒就是慢sql)</p>
-<br>
-
-<h2 id="显示慢查询数量"><a href="#显示慢查询数量" class="headerlink" title="显示慢查询数量"></a>显示慢查询数量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show status like &quot;%slow_queries%&quot;;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="explain-的使用"><a href="#explain-的使用" class="headerlink" title="explain 的使用"></a>explain 的使用</h2><p>一般explain放在select查询语句的前面, 用于描述mysql如何执行查询操作, 以及mysql成功返回结果集所要执行的函数</p>
- <br>
-
-<h3 id="关键字段"><a href="#关键字段" class="headerlink" title="关键字段:"></a>关键字段:</h3><p><strong>type:</strong></p>
-<p><img src="/Blog/intro/explain_type.PNG" alt></p>
-<p>如果type是最后两个,代表本次走的是全表扫描, 是需要优化的语句</p>
-<br>
-
-<p><strong>extra:</strong></p>
-<p><img src="/Blog/intro/explain_extra.PNG" alt></p>
- <br>
-
-<h2 id="修改sql-让它走索引"><a href="#修改sql-让它走索引" class="headerlink" title="修改sql, 让它走索引"></a>修改sql, 让它走索引</h2><p>例:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span> frm person_info_large <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">name</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/Blog/intro/table.PNG" alt></p>
-<p>可以看到, name没有索引, 而account有索引. 如果用account 替代name就可以让sql走索引</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">account</span> frm person_info_large <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">account</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
-
- <br>
-
-<p>或者直接为name加上索引</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> person_info_large <span class="keyword">add</span> <span class="keyword">index</span> idx_name(<span class="keyword">name</span>);</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<p>还可以通过force index() 测试哪个索引是比较好的</p>
-<br>
-
-<h1 id="联合索引的最左匹配原则的成因"><a href="#联合索引的最左匹配原则的成因" class="headerlink" title="联合索引的最左匹配原则的成因"></a>联合索引的最左匹配原则的成因</h1><p><img src="/Blog/intro/complex_index.PNG" alt></p>
-<p><strong>联合索引</strong>: 由多列组成的索引, 上图中这句话就是联合索引</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KEY `index_area_title` (`area`, `title`)</span><br></pre></td></tr></table></figure>
-
-<p><strong>最左匹配原则</strong>: </p>
-<p>​    假设有A,B 两列, 将A , B 都设置为索引(联合索引), 顺序是A,B. </p>
-<p>​    在where 语句中 </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 走索引</span><br><span class="line">where A = xx and B = xxx</span><br><span class="line">where A = xx</span><br><span class="line">// 不走索引</span><br><span class="line">where B = xxx</span><br></pre></td></tr></table></figure>
-
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义:"></a>定义:</h3><p>​    1. 最左前缀匹配原则, 非常重要的原则, mysql会一直向右匹配直到遇到范围查询 (&gt;, &lt;, between, like) 就停止匹配, 比如</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where a=3 and b=4 and c&gt;5 and d=6</span><br></pre></td></tr></table></figure>
-
-<p>如果建立(a,b,c,d) 顺序的索引, d是用不到索引的, </p>
-<p>如果建立(a,b,d,c)顺序的索引, 则都可以用到.</p>
-<p>a, b, d的顺序可以任意调整.</p>
-<br>
-
-<ol start="2">
-<li>= 和 in 可以乱序, 比如</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where a=1 and b=2 and c=3</span><br></pre></td></tr></table></figure>
-
-<p>建立(a,b,c)索引可以任意顺序,  mysql的查询优化器会帮你优化成索引可以识别的形式</p>
-<br>
-
-<h3 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h3><p>mysql 创建复合索引的规则是会首先对复合索引最左边, 也就是第一</p>
-<p>个索引字段的数据进行排序, 之后再对第二个字段进行排序, 所以第一个字段是绝对有序的, 而第二个字段则是无序的. 因此直接使用第二个字段进行条件判断是用不到索引的</p>
-<br>
-
-<h1 id="索引是建立越多越好吗"><a href="#索引是建立越多越好吗" class="headerlink" title="索引是建立越多越好吗"></a>索引是建立越多越好吗</h1><p>物极必反, 肯定不是建立越多越好</p>
-<ol>
-<li>数据量小的时候不需要建立索引, 建立会增加额外的索引开销</li>
-<li>数据变更需要维护索引, 因此更多的索引意味着更多的维护成本</li>
-<li>更多的索引需要更多的空间</li>
-</ol>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/07/02/optimize-sql/">https://daolinzhou.github.io/Blog/2019/07/02/optimize-sql/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/07/02/optimize-sql/">July 2nd 2019, 2:03:57 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/07/02/optimize-sql/">July 5th 2019, 11:49:30 pm</a>
-            <p>版权声明：</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/09/21/quick-develop-python-spider/" >
+            
+                <span>高速开发小型python爬虫</span>
+        </a>
+        <div class="abstract-content">
+            <p>优点 : 开发速度快</p>
+<p>缺点 : 不适合大型爬虫项目, 没有设置请求头, 没有动态ip 等等</p>
+<p>需要的包: requests, lxml</p>
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "爬虫">爬虫</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python3">python3</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/Blog/2019/07/04/Binary-Search/" title= "二分搜索法">
-                    <div class="nextTitle">二分搜索法</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2019/06/30/cpp入门学习/" title= "C++入门学习">
-                    <div class="prevTitle">C++入门学习</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -621,24 +459,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何定位并优化慢查询SQL"><span class="toc-number">1.</span> <span class="toc-text">如何定位并优化慢查询SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看变量"><span class="toc-number">1.1.</span> <span class="toc-text">查看变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示慢查询数量"><span class="toc-number">1.2.</span> <span class="toc-text">显示慢查询数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#explain-的使用"><span class="toc-number">1.3.</span> <span class="toc-text">explain 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关键字段"><span class="toc-number">1.3.1.</span> <span class="toc-text">关键字段:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改sql-让它走索引"><span class="toc-number">1.4.</span> <span class="toc-text">修改sql, 让它走索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#联合索引的最左匹配原则的成因"><span class="toc-number">2.</span> <span class="toc-text">联合索引的最左匹配原则的成因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">2.0.1.</span> <span class="toc-text">定义:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解答"><span class="toc-number">2.0.2.</span> <span class="toc-text">解答</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#索引是建立越多越好吗"><span class="toc-number">3.</span> <span class="toc-text">索引是建立越多越好吗</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1374,8 +1194,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/Blog/scripts/share.js" async></script>    
      
     </body>
 </html>
