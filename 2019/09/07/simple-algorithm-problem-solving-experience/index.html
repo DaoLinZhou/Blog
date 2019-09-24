@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.9k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.2k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -406,6 +406,20 @@ height:50vh;
 </blockquote>
 <a id="more"></a>
 
+<h1 id="解和特殊情况"><a href="#解和特殊情况" class="headerlink" title="解和特殊情况"></a>解和特殊情况</h1><p>对于所有的算法问题, 我们都一定要考虑到它的特殊情况</p>
+<ol>
+<li>给定的string是否可能为空</li>
+<li>给定的int值是否可能非法</li>
+<li>给定的vector的size是否可能为0</li>
+<li>这道题是否可能没有解</li>
+<li>这道题是否可能有多个解</li>
+<li>如果有多个解, 这写解的排列顺序应该是什么</li>
+<li>如果要删除一个元素, 如果这个元素不存在怎么办</li>
+<li>如果要删除一个元素, 如果存在多个相同的元素怎么办</li>
+<li>删除的元素是否需要返回</li>
+</ol>
+<br>
+
 <h1 id="牢记自己对变量的定义"><a href="#牢记自己对变量的定义" class="headerlink" title="牢记自己对变量的定义"></a>牢记自己对变量的定义</h1><p>算法最容易出错的就是边界. </p>
 <p>如何保证自己的算法没有边界问题? 那就是牢记自己对变量的定义, 时刻保证程序满足这些定义.</p>
 <p>举个栗子: </p>
@@ -479,6 +493,13 @@ height:50vh;
 <br>
 
 <p>再顺带一提, 我们可以通过维护一个vector or List 来保存是从哪个节点到达当前节点的, 由此在遍历完成后可以通过反向查找来找到来时的路径.</p>
+<br>
+
+<h1 id="递归和二叉树"><a href="#递归和二叉树" class="headerlink" title="递归和二叉树"></a>递归和二叉树</h1><p>二叉树天然适合递归, 但是要注意递归的终止条件, 有的时候有多个终止条件, 有的时候终止条件和我们想的不太一样. 二叉树问题大部分情况下使用递归会使得题目的解法更简单, 如果没有循环的思路, 不妨先想想递归的解法</p>
+<p>二分搜索树是二叉树的一种特殊情况(特殊结构), 解题时要充分利用它的特性</p>
+<br>
+
+<p>递归不仅仅可以适用与树形结构, 对于树形问题也可以使用递归.</p>
 
     </article>
     <!-- license  -->
@@ -487,7 +508,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 7th 2019, 10:33:27 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 18th 2019, 12:46:18 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/09/07/simple-algorithm-problem-solving-experience/">September 23rd 2019, 8:17:59 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -624,7 +645,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事先声明"><span class="toc-number">1.</span> <span class="toc-text">事先声明:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#牢记自己对变量的定义"><span class="toc-number">2.</span> <span class="toc-text">牢记自己对变量的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对撞指针"><span class="toc-number">3.</span> <span class="toc-text">对撞指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滑动窗口"><span class="toc-number">4.</span> <span class="toc-text">滑动窗口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找一个元素"><span class="toc-number">5.</span> <span class="toc-text">查找一个元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用链表的一些技巧"><span class="toc-number">6.</span> <span class="toc-text">使用链表的一些技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#栈-队列-以及-优先队列"><span class="toc-number">7.</span> <span class="toc-text">栈, 队列 以及 优先队列</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#事先声明"><span class="toc-number">1.</span> <span class="toc-text">事先声明:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解和特殊情况"><span class="toc-number">2.</span> <span class="toc-text">解和特殊情况</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#牢记自己对变量的定义"><span class="toc-number">3.</span> <span class="toc-text">牢记自己对变量的定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对撞指针"><span class="toc-number">4.</span> <span class="toc-text">对撞指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滑动窗口"><span class="toc-number">5.</span> <span class="toc-text">滑动窗口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找一个元素"><span class="toc-number">6.</span> <span class="toc-text">查找一个元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用链表的一些技巧"><span class="toc-number">7.</span> <span class="toc-text">使用链表的一些技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#栈-队列-以及-优先队列"><span class="toc-number">8.</span> <span class="toc-text">栈, 队列 以及 优先队列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#递归和二叉树"><span class="toc-number">9.</span> <span class="toc-text">递归和二叉树</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -637,26 +658,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1250,15 +1251,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
@@ -1266,13 +1267,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
