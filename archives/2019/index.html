@@ -346,6 +346,183 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/11/28/learn-assembly-language/" >
+            
+                <span>汇编语言学习</span>
+        </a>
+        <div class="abstract-content">
+            <blockquote>
+<p>预先了解:</p>
+<p>什么是汇编语言和寄存器: <a href="http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2018/01/assembly-language-primer.html</a></p>
+<p>windows与linux汇编差异: <a href="https://blog.csdn.net/chuchus/article/details/38469403" target="_blank" rel="noopener">https://blog.csdn.net/chuchus/article/details/38469403</a></p>
+<p>如何使用gdb查看汇编代码: <a href="https://blog.csdn.net/tjcwt2011/article/details/80271871" target="_blank" rel="noopener">https://blog.csdn.net/tjcwt2011/article/details/80271871</a> </p>
+</blockquote>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/28</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "汇编">汇编</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/11/18/IDEA-shortcut-KEY/" >
+            
+                <span>IDEA 快捷键</span>
+        </a>
+        <div class="abstract-content">
+            <blockquote>
+<p>转载自 : <a href="https://www.cnblogs.com/tonycody/p/3257601.html" target="_blank" rel="noopener">https://www.cnblogs.com/tonycody/p/3257601.html</a></p>
+</blockquote>
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/18</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "工具">工具</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/11/08/c-experience/" >
+            
+                <span>c++ 音视频服务器学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            C++ Linux 相关
+
+信号signal安装信号: 两种方式
+12345signal(int sig, void (*func)(int));int sigaction(int sig,               const struct sigaction* act,             struct sigaction* oact);
+
+
+
+12345678910111213141516struct sigaction&#123;    // 处理函数0	void(*sa_handler)(int);        // 处理函数1    void (*sa_sigacti...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/08</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "c++">c++</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/10/20/git-common-command/" >
+            
+                <span>git学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            git 常用命令配置123git config --global user.name 'your_name'git config --global user.email 'your_email@domain.com'git config --list --global 		# 显示配置信息
+
+
+
+提交12git add .		# 跟踪当前目录下的文件, 放出暂存区git commit -m "first commit"	# 提交
+
+
+
+查看123456789101112131415git status		# 查看暂存区的状态git log			# 查看过去commit的状态git log...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/20</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "git">git</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/Blog/2019/10/11/python3-skills-2/" >
+            
+                <span>python3编程技巧(二)</span>
+        </a>
+        <div class="abstract-content">
+            文件I/O相关读写文本文件1234# t这里代表以文本文件格式, python会在内部自动进行编解码# 默认情况下就是这个模式, 所有不写t也行f = open("a.txt", "wt", encoding='gbk')f.write('我爱python')
+
+这也是为什么python3 不用手动进行编解码的原因
+同时python3 的字符串默认就是unicode字符串, 同样不用向python2那样在字符串前面加u
+
+
+处理二进制文件(wav举例)这里以处理wav音频文件为例
+
+12345678910111213141516171819202122232425262728293031...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python3">python3</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/Blog/2019/09/27/python3-skills-1/" >
             
                 <span>python3编程技巧(一)</span>
@@ -516,171 +693,6 @@ and a second task can be performed in...
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/08/28/shortest-path/" >
-            
-                <span>图论(六)-最短路径</span>
-        </a>
-        <div class="abstract-content">
-            <p>带权图还有一种常见问题: 最短路径问题</p>
-<p>对于<strong>最小生成树</strong>问题通常都是作用于<strong>无向图</strong></p>
-<p>而<strong>最短路径</strong>问题则是同时支持<strong>无向图</strong>和<strong>有向图</strong></p>
-<p>所谓最短路径, 就是求出一个节点到另外一个节点耗费最小的路径</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/08/25/Minimum-Span-Trees/" >
-            
-                <span>图论(五)-最小生成树</span>
-        </a>
-        <div class="abstract-content">
-            <p>最小生成树( Minimum Span Trees )是关于有权图的一个重要的算法</p>
-<p><img src="/Blog/intro/mst.PNG" alt></p>
-<p>什么是<strong>生成树</strong> : 对于一个有v个节点的图, 有v-1条边, 连接v个节点</p>
-<p>一个图可以有多个生成树, 而 <strong>最小生成树</strong> , 则是边的权重之和最小的生成树</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/08/25/weight-graph/" >
-            
-                <span>图论(四)-有权图</span>
-        </a>
-        <div class="abstract-content">
-            <p>之前的图中, 每条边都是没有权重的. 而这次我们要讨论的图每条边要有权重</p>
-<p><img src="/Blog/intro/weightGraph.PNG" alt></p>
-<p>自然, 存储的方式也要发生改变. </p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "数据结构">数据结构</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/08/21/Path/" >
-            
-                <span>图论(三)-寻路</span>
-        </a>
-        <div class="abstract-content">
-            <p>为什么寻路算法要单独封装成一个类, 而不是在图内部实现?</p>
-<ol>
-<li>因为效率, 通过创建类, 路的数据可以保存在对象中, 不用每一次寻路都执行一遍逻辑.</li>
-<li>节省空间, 我们并不是要所有路径, 我们所关注的只有少量的路径, 所以需要哪些路径就创建哪些.</li>
-<li>代码复用, 由于稀疏图和稠密图的接口一致, 所以外部实现可以同时对两种图起作用. </li>
-</ol>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/Blog/2019/08/20/Connected-component/" >
-            
-                <span>图论(二)-连通分量</span>
-        </a>
-        <div class="abstract-content">
-            
-
-之前也说过, 一个图中所有节点不一定都是连通的
-那么, 在某些情况下就会需要计算图的连通分量
-注意: 由于图的作用不同, 所以图的实现也会相应地调整, 下面的计算连通分量的算法, 仅适用于上一章的两种实现
-实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172#ifndef ALGORITHM_COMPONENT_H#define ALGORITHM_COMPONEN...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
@@ -698,10 +710,6 @@ and a second task can be performed in...
         
     
         
-            
-                <a href="mailto:466118115@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
     
         
             
@@ -709,13 +717,6 @@ and a second task can be performed in...
             
         
     
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/Blog/assets/fishQrcode.jpg" />
-                </span>
-            
         
     
         
@@ -1280,9 +1281,50 @@ and a second task can be performed in...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 34
+        Total : 39
         </div>
         <!-- search  -->
         
@@ -1295,6 +1337,31 @@ and a second task can be performed in...
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1481,6 +1548,8 @@ and a second task can be performed in...
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
@@ -1491,9 +1560,15 @@ and a second task can be performed in...
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
@@ -1506,8 +1581,6 @@ and a second task can be performed in...
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
         <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1545,6 +1618,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
