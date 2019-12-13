@@ -532,6 +532,9 @@ height:50vh;
 <li>函数调用的本质, 函数调用初始化</li>
 <li>对象成员函数调用本质, (this指针的传入)</li>
 <li>误区: 类默认自动生成无参构造函数</li>
+<li>构造函数互相调用的原理</li>
+<li>虚函数的原理</li>
+<li>模版的原理(是否调用同一个函数)</li>
 </ol>
 <h1 id="x64-AT-amp-T-汇编"><a href="#x64-AT-amp-T-汇编" class="headerlink" title="x64 AT&amp;T 汇编"></a>x64 AT&amp;T 汇编</h1><p>占个位置, 提醒自己以后要写</p>
 
@@ -542,7 +545,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/11/28/learn-assembly-language/">https://daolinzhou.github.io/Blog/2019/11/28/learn-assembly-language/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/11/28/learn-assembly-language/">November 28th 2019, 4:52:47 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/11/28/learn-assembly-language/">December 4th 2019, 8:17:42 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/11/28/learn-assembly-language/">December 11th 2019, 4:54:08 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -681,48 +684,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1482,9 +1443,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
@@ -1492,17 +1453,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
@@ -1567,9 +1528,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     

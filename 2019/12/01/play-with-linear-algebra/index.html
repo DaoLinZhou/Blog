@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">3.6k</span>阅读时长: <span class="post-count reading-time">12 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -528,11 +528,6 @@ height:50vh;
 <p>T其实是运算符号, 表示的是把这个向量进行一下<strong>转置</strong>的操作, 可以简单理解为把行向量颠倒90度成为一个列向量</p>
 <br>
 
-<h2 id="实现属于我们自己的向量"><a href="#实现属于我们自己的向量" class="headerlink" title="实现属于我们自己的向量"></a>实现属于我们自己的向量</h2><p>随着学习的深入我们会不断为这个类添加新的方法和属性</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vector</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, lst)</span>:</span></span><br><span class="line">        self._values = list(lst)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="string">"""取向量中的第index个元素"""</span></span><br><span class="line">        <span class="keyword">return</span> self._values[index]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""返回向量的长度 (维度, 有多少个元素)"""</span></span><br><span class="line">        <span class="keyword">return</span> len(self._values)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        告诉系统如何显示Vector, 通常由系统调用</span></span><br><span class="line"><span class="string">        通常返回的字符串应该表示该对象对应的构造方法应该写成什么样</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Vector(&#123;&#125;)"</span>.format(self._values)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        告诉用户如何显示Vector, 通常由用户调用</span></span><br><span class="line"><span class="string">        返回从用户角度里, 这个对象是什么样子 </span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"(&#123;&#125;)"</span>.format(<span class="string">"."</span>.join(str(e) <span class="keyword">for</span> e <span class="keyword">in</span> self._values))</span><br></pre></td></tr></table></figure>
-
-<br>
-
 <h2 id="向量的两个基本运算"><a href="#向量的两个基本运算" class="headerlink" title="向量的两个基本运算"></a>向量的两个基本运算</h2><h3 id="向量加法"><a href="#向量加法" class="headerlink" title="向量加法"></a>向量加法</h3><p>两个向量之间的运算        </p>
 <br>
 
@@ -578,9 +573,141 @@ height:50vh;
 <p><img src="/Blog/intro/nd_vector_time.PNG" alt></p>
 <br>
 
-<h2 id="实现向量的基本运算"><a href="#实现向量的基本运算" class="headerlink" title="实现向量的基本运算"></a>实现向量的基本运算</h2><p>新添加的方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, another)</span>:</span></span><br><span class="line">    <span class="string">"""向量加法, 返回结果向量"""</span></span><br><span class="line">    <span class="keyword">assert</span> len(self) == len(another), \</span><br><span class="line">        <span class="string">"Error in adding. Length of vectors must be same."</span></span><br><span class="line">    <span class="comment"># 由于已经实现__iter__, Vector就是可迭代的, 可以直接将对象传入zip中</span></span><br><span class="line">    <span class="keyword">return</span> Vector([a + b <span class="keyword">for</span> a, b <span class="keyword">in</span> zip(self, another)])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__sub__</span><span class="params">(self, another)</span>:</span></span><br><span class="line">    <span class="string">"""向量减法, 返回结果向量"""</span></span><br><span class="line">    <span class="keyword">assert</span> len(self) == len(another), \</span><br><span class="line">        <span class="string">"Error in adding. Length of vectors must be same."</span></span><br><span class="line">    <span class="keyword">return</span> Vector([a - b <span class="keyword">for</span> a, b <span class="keyword">in</span> zip(self, another)])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__mul__</span><span class="params">(self, k)</span>:</span></span><br><span class="line">    <span class="string">"""返回数量乘法的结果向量: self * k"""</span></span><br><span class="line">    <span class="keyword">return</span> Vector([k * e <span class="keyword">for</span> e <span class="keyword">in</span> self])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__rmul__</span><span class="params">(self, k)</span>:</span></span><br><span class="line">    <span class="string">"""返回数量乘法的结果向量: k * self"""</span></span><br><span class="line">    <span class="keyword">return</span> self * k</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__pos__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""返回向量取正的结果向量"""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> * self</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__neg__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""返回向量取负的结果向量"""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span> * self</span><br></pre></td></tr></table></figure>
+<h2 id="向量基本运算的性质"><a href="#向量基本运算的性质" class="headerlink" title="向量基本运算的性质"></a>向量基本运算的性质</h2><p><img src="/Blog/intro/vector_operational_properties.PNG" alt></p>
+<p>看起来很白痴, 但其实很重要.</p>
+<p>举个例子, 两个string, s1, s2.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1 + s2 != s2 + s1</span><br></pre></td></tr></table></figure>
 
+<p>而且这些基本性质并不是以定义的形式出现, 而是可以通过严谨的数学证明来证明出来的</p>
+<br>
+
+<p>例子: 证明 k(u + v) = ku + kv , u 和 v 是向量</p>
+<p>我们目前可以使用的 ( 定理 ? 定义 ) </p>
+<ul>
+<li>向量加法</li>
+<li>数量乘法</li>
+</ul>
+<p>假设 u 和 v 是 n 维向量</p>
+<br>
+
+<p><strong>等式左边</strong></p>
+<p><img src="/Blog/intro/proof_k_u_v_time.PNG" alt></p>
+<p>由于un, vn 都是一个一个数, 所以可以直接相乘</p>
+<br>
+
+<p><strong>等式右边</strong></p>
+<p><img src="/Blog/intro/proof_k_u_v_time_R.PNG" alt></p>
+<p>左边 == 右边, 证明成功</p>
+<p>同样其余的性质也可以只使用向量加法和数量乘法来进行证明, 由于过于简单, 所以这里就不再赘述了</p>
+<br>
+
+<h2 id="零向量和负向量"><a href="#零向量和负向量" class="headerlink" title="零向量和负向量"></a>零向量和负向量</h2><h3 id="零向量"><a href="#零向量" class="headerlink" title="零向量"></a>零向量</h3><p>我们不定义什么是零向量, 我们从推导出一个性质出发</p>
+<p>对于任意一个向量u, 都存在一个向量O, 满足 u + O = u</p>
+<br>
+
+<h4 id="证明-零向量存在"><a href="#证明-零向量存在" class="headerlink" title="证明: 零向量存在"></a>证明: 零向量存在</h4><p><img src="/Blog/intro/zero_vector_proof1.PNG" alt></p>
+<p> <img src="/Blog/intro/zero_vector_proof2.PNG" alt></p>
+<p>既然我们已经求出来了向量O, 那么就说明零向量是存在的</p>
+<br>
+
+<p>我们证明出了向量O的存在性, 进而我们<strong>称</strong>这个向量为零向量</p>
+<p>我们不是直接定义的, 而是首先被我们证明一定存在, 而在证明它存在的过程中, 顺手把它的样子求出来了</p>
+<br>
+
+<h4 id="为什么没有零向量箭头"><a href="#为什么没有零向量箭头" class="headerlink" title="为什么没有零向量箭头"></a>为什么没有零向量箭头</h4><p><strong>注意: 这个零向量O没有箭头</strong></p>
+<br>
+
+<p>当我们以方向这一个视角看待向量时, 那么一个向量就可以理解为 : <strong>从坐标原点指向这个向量所代表的数据点的有限的线段</strong></p>
+<p>而原点, 显然就是各个维度都为0的这一点</p>
+<p>而如果使用这样的定义来看待零向量的话, 零向量就是 : <strong>从坐标原点又指向自身</strong></p>
+<p>而显然这不是一个线段, 它是一个点, 因此我们不能说它的方向是在哪里</p>
+<br>
+
+<p>我们称呼它为零向量只是为了称呼上的统一, 但它本质其实是没有方向的, 它本质是一个点, 在整个坐标系的原点</p>
+<br>
+
+<h4 id="零向量和零"><a href="#零向量和零" class="headerlink" title="零向量和零"></a>零向量和零</h4><p>另外, 我们没有说零向量有多少个0, 而它有多少个0是根据当前所研究的空间所决定的</p>
+<p>所以, 零向量和数字0还是有所区别的, 因为数字0是唯一的数字, 而零向量可以<strong>在维度上进行扩充,</strong> 在不同的空间中有唯一的一个0向量</p>
+<p>不过通常我们在研究问题时, 都会限定空间, 所以一般不用特别强调零向量的维度, 在问题的语义中我们自然可以理解讨论的零向量是谁</p>
+<br>
+
+<h3 id="负向量"><a href="#负向量" class="headerlink" title="负向量"></a>负向量</h3><p>而在我们定义好零向量之后, 就可以定义 “负” 这个概念了</p>
+<p><img src="/Blog/intro/def_negative_vector.PNG" alt></p>
+<br>
+
+<h4 id="证明-上述-u-唯一"><a href="#证明-上述-u-唯一" class="headerlink" title="证明: 上述 -u 唯一"></a>证明: 上述 -u 唯一</h4><p>反证法 : 假设负向量不唯一, 则存在另一个向量 v, v != -u, 也满足 u + v = O</p>
+<p><img src="/Blog/intro/proof_negative_vector_unique.PNG" alt></p>
+<p>和假设矛盾, 说明假设错误: -u唯一</p>
+<blockquote>
+<p>在(计算机领域 /  离散数学), 反证法和数学归纳法是经常被使用的两种证明方法, 在证明问题上如果没有思路可以尝试从这两个方法上寻找突破口</p>
+</blockquote>
+<br>
+
+<h4 id="证明-u-1-u"><a href="#证明-u-1-u" class="headerlink" title="证明: -u = -1 * u"></a>证明: -u = -1 * u</h4><p><img src="/Blog/intro/negative_vector_1.PNG" alt></p>
+<p>等式左右同时加上 <strong>u</strong></p>
+<p><strong>u</strong> + (<strong>-u</strong>) = -1 * <strong>u</strong> + <strong>u</strong></p>
+<p>左边, 根据负向量的定义 = O</p>
+<p>右边, 根据数量乘法和向量加法 = O</p>
+<p>左边等于右边, 所以是正确的</p>
+<br>
+
+<h2 id="向量的长度和单位向量"><a href="#向量的长度和单位向量" class="headerlink" title="向量的长度和单位向量"></a>向量的长度和单位向量</h2><p> 我们可以把向量看作是一个有向的线段, 从原点指向空间中的某一个点, </p>
+<p>既然它是一个有向的线段, 那么它除了<strong>方向</strong>也有<strong>大小</strong></p>
+<p>所以在我们看待向量的时候, 除了看待方向之外, 还有一个问题, 它的大小是多少</p>
+<br>
+
+<h3 id="向量的模"><a href="#向量的模" class="headerlink" title="向量的模"></a>向量的模</h3><br>
+
+<h4 id="二维向量的模"><a href="#二维向量的模" class="headerlink" title="二维向量的模"></a>二维向量的模</h4><p><img src="/Blog/intro/length_of_vec.PNG" alt></p>
+<p>在二维的空间中, 实际上求的是原点到向量所代表的点的<strong>欧拉距离</strong>, 而欧拉距离在数学中又被成为<strong>二范数</strong></p>
+<br>
+
+<h4 id="三维向量的模"><a href="#三维向量的模" class="headerlink" title="三维向量的模"></a>三维向量的模</h4><p><img src="/Blog/intro/length_of_3d_vec.PNG" alt></p>
+<p>依然可以表达成: <strong>这个向量在坐标轴上每一个分量的平方和再开根</strong></p>
+<br>
+
+<h4 id="n维向量的模"><a href="#n维向量的模" class="headerlink" title="n维向量的模"></a>n维向量的模</h4><p><img src="/Blog/intro/length_of_nd_vec.PNG" alt></p>
+<br>
+
+<h3 id="单位向量-unit-vector"><a href="#单位向量-unit-vector" class="headerlink" title="单位向量 unit vector"></a>单位向量 unit vector</h3><p>长度为<strong>固定的一个单位</strong></p>
+<br>
+
+<p><strong>求单位向量的方法</strong></p>
+<p><img src="/Blog/intro/unit_vector.PNG" alt></p>
+<p>单位向量的模永远等于1, 它的长度已经不重要了, 单位向量重要的在于: 它只表示方向</p>
+<br>
+
+<p>当我们将向量看作是有向的线段的时候, 我们把它的<strong>大小和方向</strong>拆开了</p>
+<p>大小可以由<strong>向量的模</strong>来表示, 方向可以由<strong>单位向量</strong>来表示</p>
+<br>
+
+<p><strong>单位向量有无数多个</strong></p>
+<p>例如在二维中以原点为圆心, 画一个半径为1的圆, 原点到圆上的任意一点都是一个单位向量. 而在二维空间中, 有两个特殊的单位向量, 下图用蓝色标记出来</p>
+<p><img src="/Blog/intro/infinite_unit_vec.PNG" alt></p>
+<p>约定俗成: 标准单位向量被记为e</p>
+<p>因为单位向量的模固定是1, 更近一步, 在标准单位向量中, 只能有一个维度的值为1, 其他维度的值都应该为0</p>
+<br>
+
+<p><img src="/Blog/intro/standard_unit_vec.PNG" alt></p>
+<p>标准单位向量是很重要的<strong>一组</strong>向量</p>
+<p>由于所有单位向量都指向坐标轴的正方向, 我们甚至可以说, 我们整个坐标系是由这些标准单位向量所组建的</p>
+<br>
+
+<blockquote>
+<p>1.</p>
+<p>“标准单位向量指向的是正方向，那么负方向的岂不是也很重要？”</p>
+<p>负方向不重要了。因为 e1 是正方向的话，-e1 就是负方向。我们可以很容易的靠正方向找到负方向。</p>
+<p>相反，e2 这个方向很重要，因为，我们用 e1 表达不了 e2 这个方向。e2 这个方向蕴含着 e1 不包含的新信息</p>
+<p>2.</p>
+<p>“为什么会说整个空间是标准单位所组建的？我理解的不是应该也会存在负半轴吗？”</p>
+<p>就是因为整个空间的任何一个向量，都可以使用标准单位向量表示。包括你所说的负半轴的任何向量。</p>
+<p>从初等数学的角度理解，就是定义了 x y 两个轴，平面上的任何一个点，就能在这个坐标系中找到相应的位置了。</p>
+</blockquote>
+<br>
+
+<h2 id="向量的点乘与几何意义"><a href="#向量的点乘与几何意义" class="headerlink" title="向量的点乘与几何意义"></a>向量的点乘与几何意义</h2><p><img src="/Blog/intro/vector_point_time.PNG" alt></p>
+<p>两个向量 “相乘”, 结果是一个数(标量)</p>
+<p>更严格的说法, 这是<strong>两个向量的点乘</strong>, 或者成为<strong>两个向量的内积</strong></p>
 
     </article>
     <!-- license  -->
@@ -589,7 +716,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 1st 2019, 9:06:48 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 3rd 2019, 12:00:19 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 12th 2019, 5:53:23 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -710,7 +837,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一切从向量开始"><span class="toc-number">1.</span> <span class="toc-text">一切从向量开始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是向量"><span class="toc-number">1.1.</span> <span class="toc-text">什么是向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入向量"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么要引入向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么基于原点"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么基于原点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序很重要"><span class="toc-number">1.1.3.</span> <span class="toc-text">顺序很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N维向量"><span class="toc-number">1.1.4.</span> <span class="toc-text">N维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#看待向量的两个视角"><span class="toc-number">1.1.5.</span> <span class="toc-text">看待向量的两个视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的更多术语和表示法"><span class="toc-number">1.2.</span> <span class="toc-text">向量的更多术语和表示法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行向量和列向量"><span class="toc-number">1.2.1.</span> <span class="toc-text">行向量和列向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现属于我们自己的向量"><span class="toc-number">1.3.</span> <span class="toc-text">实现属于我们自己的向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的两个基本运算"><span class="toc-number">1.4.</span> <span class="toc-text">向量的两个基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量加法"><span class="toc-number">1.4.1.</span> <span class="toc-text">向量加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数量乘法"><span class="toc-number">1.4.2.</span> <span class="toc-text">数量乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现向量的基本运算"><span class="toc-number">1.5.</span> <span class="toc-text">实现向量的基本运算</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一切从向量开始"><span class="toc-number">1.</span> <span class="toc-text">一切从向量开始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是向量"><span class="toc-number">1.1.</span> <span class="toc-text">什么是向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入向量"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么要引入向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么基于原点"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么基于原点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序很重要"><span class="toc-number">1.1.3.</span> <span class="toc-text">顺序很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N维向量"><span class="toc-number">1.1.4.</span> <span class="toc-text">N维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#看待向量的两个视角"><span class="toc-number">1.1.5.</span> <span class="toc-text">看待向量的两个视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的更多术语和表示法"><span class="toc-number">1.2.</span> <span class="toc-text">向量的更多术语和表示法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行向量和列向量"><span class="toc-number">1.2.1.</span> <span class="toc-text">行向量和列向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的两个基本运算"><span class="toc-number">1.3.</span> <span class="toc-text">向量的两个基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量加法"><span class="toc-number">1.3.1.</span> <span class="toc-text">向量加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数量乘法"><span class="toc-number">1.3.2.</span> <span class="toc-text">数量乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量基本运算的性质"><span class="toc-number">1.4.</span> <span class="toc-text">向量基本运算的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#零向量和负向量"><span class="toc-number">1.5.</span> <span class="toc-text">零向量和负向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#零向量"><span class="toc-number">1.5.1.</span> <span class="toc-text">零向量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-零向量存在"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">证明: 零向量存在</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么没有零向量箭头"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">为什么没有零向量箭头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#零向量和零"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">零向量和零</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负向量"><span class="toc-number">1.5.2.</span> <span class="toc-text">负向量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-上述-u-唯一"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">证明: 上述 -u 唯一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-u-1-u"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">证明: -u = -1 * u</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的长度和单位向量"><span class="toc-number">1.6.</span> <span class="toc-text">向量的长度和单位向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量的模"><span class="toc-number">1.6.1.</span> <span class="toc-text">向量的模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二维向量的模"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">二维向量的模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三维向量的模"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">三维向量的模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#n维向量的模"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">n维向量的模</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单位向量-unit-vector"><span class="toc-number">1.6.2.</span> <span class="toc-text">单位向量 unit vector</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的点乘与几何意义"><span class="toc-number">1.7.</span> <span class="toc-text">向量的点乘与几何意义</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -723,48 +850,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1524,9 +1609,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
@@ -1534,17 +1619,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
@@ -1609,9 +1694,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
