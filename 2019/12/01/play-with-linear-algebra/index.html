@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -409,7 +409,12 @@ height:50vh;
 </blockquote>
 <a id="more"></a>
 
-<h1 id="一切从向量开始"><a href="#一切从向量开始" class="headerlink" title="一切从向量开始"></a>一切从向量开始</h1><br>
+<h1 id="一切从向量开始"><a href="#一切从向量开始" class="headerlink" title="一切从向量开始"></a>一切从向量开始</h1><blockquote>
+<p>github : </p>
+<p>python版本 : <a href="https://github.com/DaoLinZhou/learning-linear-algebra" target="_blank" rel="noopener">https://github.com/DaoLinZhou/learning-linear-algebra</a></p>
+<p>以后可能会实现相应的c++和java版本</p>
+</blockquote>
+<br>
 
 <h2 id="什么是向量"><a href="#什么是向量" class="headerlink" title="什么是向量"></a>什么是向量</h2><br>
 
@@ -522,6 +527,61 @@ height:50vh;
 <p><img src="/Blog/intro/vector_t.PNG" alt></p>
 <p>T其实是运算符号, 表示的是把这个向量进行一下<strong>转置</strong>的操作, 可以简单理解为把行向量颠倒90度成为一个列向量</p>
 <br>
+
+<h2 id="实现属于我们自己的向量"><a href="#实现属于我们自己的向量" class="headerlink" title="实现属于我们自己的向量"></a>实现属于我们自己的向量</h2><p>随着学习的深入我们会不断为这个类添加新的方法和属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vector</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, lst)</span>:</span></span><br><span class="line">        self._values = list(lst)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="string">"""取向量中的第index个元素"""</span></span><br><span class="line">        <span class="keyword">return</span> self._values[index]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""返回向量的长度 (维度, 有多少个元素)"""</span></span><br><span class="line">        <span class="keyword">return</span> len(self._values)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        告诉系统如何显示Vector, 通常由系统调用</span></span><br><span class="line"><span class="string">        通常返回的字符串应该表示该对象对应的构造方法应该写成什么样</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Vector(&#123;&#125;)"</span>.format(self._values)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        告诉用户如何显示Vector, 通常由用户调用</span></span><br><span class="line"><span class="string">        返回从用户角度里, 这个对象是什么样子 </span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"(&#123;&#125;)"</span>.format(<span class="string">"."</span>.join(str(e) <span class="keyword">for</span> e <span class="keyword">in</span> self._values))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="向量的两个基本运算"><a href="#向量的两个基本运算" class="headerlink" title="向量的两个基本运算"></a>向量的两个基本运算</h2><h3 id="向量加法"><a href="#向量加法" class="headerlink" title="向量加法"></a>向量加法</h3><p>两个向量之间的运算        </p>
+<br>
+
+<p>例如: (5, 2)T + (2, 5)T = ? </p>
+<p>在物理中, 有这样一个原则 : 两个向量相加, 他们的和是以a, b 为边所组成的<strong>平行四边形的对角线</strong>的终点</p>
+<p><img src="/Blog/intro/add_vector.PNG" alt></p>
+<p>为什么?</p>
+<p>可以看出, 我们先向x移动5个单位, 再想y移动2个单位</p>
+<p>​                         再向x移动2个单位, 再向y移动5个单位</p>
+<p>同样反过来也是可以的. 这样虚线和实线就形成了一个平行四边形</p>
+<p><img src="/Blog/intro/understanding_add_vector.PNG" alt></p>
+<br>
+
+<p>从数值的角度讲:</p>
+<p>(5, 2)T + (2, 5)T = (7, 7)T</p>
+<p>总共向x移动7个单位, 总共向y移动7个单位</p>
+<p><strong>两个向量相加的结果, 是将这两向量中每一个分量分别相加组合成的向量</strong></p>
+<p>(a,b)T + (c, d)T = (a+c, b+d)T</p>
+<br>
+
+<p>三维(多维)空间同理</p>
+<p><img src="/Blog/intro/3d_vector_add.PNG" alt></p>
+<p><img src="/Blog/intro/nd_vector_add.PNG" alt></p>
+<br>
+
+<h3 id="数量乘法"><a href="#数量乘法" class="headerlink" title="数量乘法"></a>数量乘法</h3><p>一个<strong>标量</strong>和一个向量之间的运算</p>
+<br>
+
+<p>例如: 2 * (5, 2)T = ?</p>
+<p>乘法本身是多次的加法, n * 3 代表 n 个 3 相加</p>
+<p>而这个基本思想同样可以应用在向量的数量乘法中</p>
+<p>2 * (5, 2) = (5, 2) + (5, 2) = (10, 4)</p>
+<p><img src="/Blog/intro/time_vector.PNG" alt></p>
+<br>
+
+<p>抽象一点 : k * (a, b)T = ?</p>
+<p>向 x 移动 k 次 a 个单位, 向 y 移动 k 次 b 个单位</p>
+<p>总共向 x 移动 ka 个单位, y 移动 kb 个单位</p>
+<p> k * (a, b)T = (ka, kb)T</p>
+<br>
+
+<p>n维同理</p>
+<p><img src="/Blog/intro/nd_vector_time.PNG" alt></p>
+<br>
+
+<h2 id="实现向量的基本运算"><a href="#实现向量的基本运算" class="headerlink" title="实现向量的基本运算"></a>实现向量的基本运算</h2><p>新添加的方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, another)</span>:</span></span><br><span class="line">    <span class="string">"""向量加法, 返回结果向量"""</span></span><br><span class="line">    <span class="keyword">assert</span> len(self) == len(another), \</span><br><span class="line">        <span class="string">"Error in adding. Length of vectors must be same."</span></span><br><span class="line">    <span class="comment"># 由于已经实现__iter__, Vector就是可迭代的, 可以直接将对象传入zip中</span></span><br><span class="line">    <span class="keyword">return</span> Vector([a + b <span class="keyword">for</span> a, b <span class="keyword">in</span> zip(self, another)])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__sub__</span><span class="params">(self, another)</span>:</span></span><br><span class="line">    <span class="string">"""向量减法, 返回结果向量"""</span></span><br><span class="line">    <span class="keyword">assert</span> len(self) == len(another), \</span><br><span class="line">        <span class="string">"Error in adding. Length of vectors must be same."</span></span><br><span class="line">    <span class="keyword">return</span> Vector([a - b <span class="keyword">for</span> a, b <span class="keyword">in</span> zip(self, another)])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__mul__</span><span class="params">(self, k)</span>:</span></span><br><span class="line">    <span class="string">"""返回数量乘法的结果向量: self * k"""</span></span><br><span class="line">    <span class="keyword">return</span> Vector([k * e <span class="keyword">for</span> e <span class="keyword">in</span> self])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__rmul__</span><span class="params">(self, k)</span>:</span></span><br><span class="line">    <span class="string">"""返回数量乘法的结果向量: k * self"""</span></span><br><span class="line">    <span class="keyword">return</span> self * k</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__pos__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""返回向量取正的结果向量"""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> * self</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__neg__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""返回向量取负的结果向量"""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span> * self</span><br></pre></td></tr></table></figure>
+
+
     </article>
     <!-- license  -->
     
@@ -529,7 +589,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 1st 2019, 9:06:48 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 2nd 2019, 8:27:54 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 3rd 2019, 12:00:19 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -650,7 +710,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一切从向量开始"><span class="toc-number">1.</span> <span class="toc-text">一切从向量开始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是向量"><span class="toc-number">1.1.</span> <span class="toc-text">什么是向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入向量"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么要引入向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么基于原点"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么基于原点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序很重要"><span class="toc-number">1.1.3.</span> <span class="toc-text">顺序很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N维向量"><span class="toc-number">1.1.4.</span> <span class="toc-text">N维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#看待向量的两个视角"><span class="toc-number">1.1.5.</span> <span class="toc-text">看待向量的两个视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的更多术语和表示法"><span class="toc-number">1.2.</span> <span class="toc-text">向量的更多术语和表示法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行向量和列向量"><span class="toc-number">1.2.1.</span> <span class="toc-text">行向量和列向量</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一切从向量开始"><span class="toc-number">1.</span> <span class="toc-text">一切从向量开始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是向量"><span class="toc-number">1.1.</span> <span class="toc-text">什么是向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入向量"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么要引入向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么基于原点"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么基于原点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序很重要"><span class="toc-number">1.1.3.</span> <span class="toc-text">顺序很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N维向量"><span class="toc-number">1.1.4.</span> <span class="toc-text">N维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#看待向量的两个视角"><span class="toc-number">1.1.5.</span> <span class="toc-text">看待向量的两个视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的更多术语和表示法"><span class="toc-number">1.2.</span> <span class="toc-text">向量的更多术语和表示法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行向量和列向量"><span class="toc-number">1.2.1.</span> <span class="toc-text">行向量和列向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现属于我们自己的向量"><span class="toc-number">1.3.</span> <span class="toc-text">实现属于我们自己的向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的两个基本运算"><span class="toc-number">1.4.</span> <span class="toc-text">向量的两个基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量加法"><span class="toc-number">1.4.1.</span> <span class="toc-text">向量加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数量乘法"><span class="toc-number">1.4.2.</span> <span class="toc-text">数量乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现向量的基本运算"><span class="toc-number">1.5.</span> <span class="toc-text">实现向量的基本运算</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -663,6 +723,16 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1454,9 +1524,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
@@ -1474,29 +1544,29 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
-    
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
     
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
     
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
