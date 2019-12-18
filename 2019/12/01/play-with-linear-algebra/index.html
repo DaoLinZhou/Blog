@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">8.9k</span>阅读时长: <span class="post-count reading-time">30 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">10.4k</span>阅读时长: <span class="post-count reading-time">36 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -1092,6 +1092,190 @@ height:50vh;
 <p><img src="/Blog/intro/matrix_product_trap.PNG" alt></p>
 <br>
 
+<br>
+
+<h2 id="矩阵的转置"><a href="#矩阵的转置" class="headerlink" title="矩阵的转置"></a>矩阵的转置</h2><p>人们习惯以行的形式读取, T 是 transpose 的意思</p>
+<p><img src="/Blog/intro/matrix_transaction.PNG" alt></p>
+<p>简而言之, 矩阵的转置: 行变成列, 列变成行</p>
+<p><img src="/Blog/intro/matrix_ele_transpose.PNG" alt></p>
+<br>
+
+<p>之前介绍向量时也说过, 通常在线性代数中, 说起向量一般是列向量</p>
+<p>但由于横版印刷的原因, 使用T对行向量进行转置</p>
+<p>例如: 行向量 (3, 4), 会印刷为 (3, 4)<em>T</em></p>
+<br>
+
+<h3 id="矩阵转置的性质"><a href="#矩阵转置的性质" class="headerlink" title="矩阵转置的性质"></a>矩阵转置的性质</h3><p><img src="/Blog/intro/property_transpose_matrix.PNG" alt></p>
+<br>
+
+<p>最后一条性质看起来稍微有些不同, 依然可以假设A和B的矩阵, 之后进行严谨地证明</p>
+<p>但在这里, 提供一个视角, 虽然没有严格地证明, 但却可以帮助理解这个性质:</p>
+<br>
+
+<p>关注A和B两个矩阵的<strong>形状</strong></p>
+<p>假设A是 m * k 的矩阵, B是 k * n 的矩阵 </p>
+<p>AB 是 m * n 形状的矩阵, AB的转置是 n * m 的矩阵</p>
+<p>那么A的转置是 k * m 的矩阵, B的转置是 n * k 的矩阵</p>
+<p>(B的转置)(A的转置) 是 n*m的矩阵</p>
+<p>它们的形状是相同的</p>
+<blockquote>
+<p>很多时候, 面对矩阵的运算, 要关注一下矩阵的形状, 这对我们理解这个式子为什么成立可能是非常有帮助的</p>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="更多变换矩阵"><a href="#更多变换矩阵" class="headerlink" title="更多变换矩阵"></a>更多变换矩阵</h2><h3 id="缩放变换"><a href="#缩放变换" class="headerlink" title="缩放变换"></a>缩放变换</h3><p>前文已经举过一个例子</p>
+<p><img src="/Blog/intro/example_matrix_transform.PNG" alt></p>
+<p>更加通用地, 如果让每一个点的横坐标扩大 a 倍, 纵坐标扩大 b 倍</p>
+<p><img src="/Blog/intro/transform_a_b.PNG" alt></p>
+<br>
+
+<p>对于变换矩阵的学习, 通常应用在图形学, 这里只提及一些简单的变换矩阵</p>
+<p><strong>目标:</strong> </p>
+<ol>
+<li><p>深刻地理解<strong>矩阵是怎样表示变换的 ( 理解矩阵是向量的函数 )</strong></p>
+</li>
+<li><p>熟悉矩阵的乘法, 后续很多内容的学习都需要建立在深刻地理解矩阵的乘法的基础上</p>
+</li>
+</ol>
+<br>
+
+<h3 id="进行翻转变化"><a href="#进行翻转变化" class="headerlink" title="进行翻转变化"></a>进行翻转变化</h3><br>
+
+<h4 id="例如-让每个点关于x轴旋转"><a href="#例如-让每个点关于x轴旋转" class="headerlink" title="例如: 让每个点关于x轴旋转"></a>例如: 让每个点关于x轴旋转</h4><p><img src="/Blog/intro/flip_graph_by_matrix.PNG" alt></p>
+<p>很显然, 对于每个点来说, x不变, 但y取反</p>
+<p>我们要找到矩阵 T, 使得</p>
+<p><img src="/Blog/intro/find_matrix_filping.PNG" alt></p>
+<br>
+
+<p>由于矩阵T<strong>乘以的向量</strong>行数为2, 所以 T 要有2列,</p>
+<p>由于<strong>结果向量</strong>的行数为2, 所以 T 要有2行</p>
+<p>所以T应该是 2 * 2 的方阵</p>
+<br>
+
+<p>很自然地, 假设 矩阵T 是这样的 </p>
+<p><img src="/Blog/intro/abcd_T_matrix.PNG" alt></p>
+<p>于是, </p>
+<p><img src="/Blog/intro/product_abcd_T_vector.PNG" alt></p>
+<p>因此求得: a = 1, b = 0, c = 0, d = -1</p>
+<p><img src="/Blog/intro/flip_solution_T.PNG" alt></p>
+<br>
+
+<h4 id="例如-让每个点关于y轴翻转"><a href="#例如-让每个点关于y轴翻转" class="headerlink" title="例如: 让每个点关于y轴翻转"></a>例如: 让每个点关于y轴翻转</h4><p>所有点, y 不变, x 变为 -x</p>
+<p><img src="/Blog/intro/flip_about_y.PNG" alt></p>
+<br>
+
+<h4 id="例如-让每个点关于原点翻转-x轴-y轴均翻转"><a href="#例如-让每个点关于原点翻转-x轴-y轴均翻转" class="headerlink" title="例如: 让每个点关于原点翻转(x轴, y轴均翻转)"></a>例如: 让每个点关于原点翻转(x轴, y轴均翻转)</h4><p><img src="/Blog/intro/flip_about_O.PNG" alt></p>
+<br>
+
+<p>另一种思考方法: 之前已经求过关于x轴翻转和关于y轴翻转.</p>
+<p>我们可以先进行 x 轴翻转, 再进行 y 轴翻转</p>
+<p><img src="/Blog/intro/tx_ty_flip_about_O.PNG" alt></p>
+<p>通过矩阵乘法的结合率, 让两个变换矩阵先相乘</p>
+<p>这里没有假设变换矩阵是 abcd, 而是直接使用已知的矩阵性质进行推导</p>
+<br>
+
+<h3 id="错切"><a href="#错切" class="headerlink" title="错切"></a>错切</h3><h4 id="沿x方向错切"><a href="#沿x方向错切" class="headerlink" title="沿x方向错切"></a>沿x方向错切</h4><p><img src="/Blog/intro/shear_example.PNG" alt></p>
+<p>可以看到, y没有变化, 但x进行了一些偏移, 通常偏移量和y坐标成一定的比例</p>
+<p><img src="/Blog/intro/shear_example_solution.PNG" alt></p>
+<p><img src="/Blog/intro/shear_example_solution2.PNG" alt></p>
+<br>
+
+<h4 id="沿y方向错切"><a href="#沿y方向错切" class="headerlink" title="沿y方向错切"></a>沿y方向错切</h4><p>x没有变化, y根据x成比例偏移</p>
+<p><img src="/Blog/intro/shear_example_y.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="矩阵旋转变换和矩阵在图形学中的应用"><a href="#矩阵旋转变换和矩阵在图形学中的应用" class="headerlink" title="矩阵旋转变换和矩阵在图形学中的应用"></a>矩阵旋转变换和矩阵在图形学中的应用</h2><p><img src="/Blog/intro/routing_matrix.PNG" alt></p>
+<br>
+
+<p>同之前不同, 这次我们想求的是旋转后点的坐标</p>
+<p><img src="/Blog/intro/routing_matrix_0.PNG" alt></p>
+<p>有了旋转后的坐标才能求出 矩阵 T</p>
+<br>
+
+<p>先假设只对一个点进行旋转</p>
+<p><img src="/Blog/intro/routing_matrix_1.PNG" alt></p>
+<br>
+
+<p>假设(x, y) 和 x轴的夹角为 α, (x,y)距离原点 O 的距离(<strong>(x, y)的模</strong>)为 d</p>
+<p><img src="/Blog/intro/find_matrix_after_routing.PNG" alt></p>
+<p>于是我们可以求出</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_1.PNG" alt></p>
+<br>
+
+<p>而(x’, y’) 和 (x, y) 的关系除了旋转θ, 还有一个重要的点, (x’, y’) 的模也是 d 等于(x, y)的模, 因为进行的是旋转操作, 所以旋转前后距离原点的位置是不变的</p>
+<p>因此, 同样可以用x’ 和 y’ 表达出 d</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_2.PNG" alt></p>
+<br>
+
+<p>由于上面这4个式子都代表d, 于是, 我们便可以把它们连起来, 换句话说, 现在可以通过x来表示x’, y来表示y’</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_3.PNG" alt></p>
+<br>
+
+<p>下面就是基于这两个等式, 化简求出x’, y’</p>
+<p>根据两角差的余弦公式</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_4.PNG" alt></p>
+<p>而 tanα = sinα / cosα = 对边 / 邻边 = y / x, 而tanα * x = y</p>
+<p>所以最后可以写成</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_5.PNG" alt></p>
+<br>
+
+<p>同理, 也可以求出 y’ </p>
+<p>根据两角差的正弦公式</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_6.PNG" alt></p>
+<br>
+
+<p>由此: </p>
+<p><img src="/Blog/intro/find_matrix_after_routing_7.PNG" alt></p>
+<p>所以可以求出矩阵T为</p>
+<p><img src="/Blog/intro/find_matrix_after_routing_8.PNG" alt></p>
+<br>
+
+<p>验证: </p>
+<p><img src="/Blog/intro/find_matrix_after_routing_9.PNG" alt></p>
+<blockquote>
+<p>在图形学中, 我们会经常处理一个问题: 动画, 所谓的动画就是把所有点不停地进行这样的变换</p>
+<p>可以尝试用js实现一个动画</p>
+<p>可以思考以下拓展思路</p>
+<ol>
+<li>三维坐标中的应用?</li>
+<li>平移操作? 仿射变换</li>
+<li>图形学</li>
+</ol>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="从缩放变换到单位矩阵"><a href="#从缩放变换到单位矩阵" class="headerlink" title="从缩放变换到单位矩阵"></a>从缩放变换到单位矩阵</h2><p>前面说过</p>
+<p><img src="/Blog/intro/uni_matrix.PNG" alt></p>
+<p>但如果让每个点保持原位, 即让每个点的横坐标扩大1倍, 纵坐标扩大1倍</p>
+<p>a 和 b 都取1, 此时矩阵 T 和 任何坐标相乘得到的都是<strong>自身</strong></p>
+<p><img src="/Blog/intro/uni_matrix_1.PNG" alt></p>
+<p>换句话说, 变换矩阵没有对点坐标所表示的列向量<strong>产生任何变换</strong></p>
+<p>这样的矩阵我们称之为<strong>单位矩阵</strong>, 一般记作 <em>I</em>, 就是 identity 的意思</p>
+<br>
+
+<p>同样, 单位矩阵也是有形状的, 通过下标来标记矩阵的形状</p>
+<p><img src="/Blog/intro/uni_matrix_2.PNG" alt></p>
+<p><img src="/Blog/intro/uni_matrix_3.PNG" alt></p>
+<br>
+
+<p>可以观察到, 单位矩阵的<strong>主对角线(左上至右下)</strong>, 都为1, 更为形式化地定义:</p>
+<p><img src="/Blog/intro/def_uni_matrix.PNG" alt></p>
+<p>单位矩阵一定是方阵, 因为矩阵要和行数为n的矩阵(向量)相乘, 单位矩阵的列数必须为n, 得到的结果是原矩阵, 也有n行的, 所以单位矩阵的行数也必须为n, 因此单位矩阵必须是方阵.</p>
+<p><strong>很多特殊矩阵都是方阵</strong></p>
+<p><img src="/Blog/intro/property_uni_matrix_1.PNG" alt></p>
+<p>由于 ri 中只有第i个元素是1, 其余的都是0, 所以点乘后的结果就相当于从cj中取出第i个元素, </p>
+<p>同理反过来也可以</p>
+<p><img src="/Blog/intro/property_uni_matrix_2.PNG" alt></p>
+<p>但是, 进行乘法的顺序不同, 单位矩阵的<strong>形状</strong>也不同, 这一点和零矩阵是类似的, 例如:</p>
+<p><img src="/Blog/intro/property_uni_matrix_3.PNG" alt></p>
+<br>
+
 
     </article>
     <!-- license  -->
@@ -1100,7 +1284,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 1st 2019, 9:06:48 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 16th 2019, 5:13:18 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 17th 2019, 8:36:31 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -1221,7 +1405,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一切从向量开始"><span class="toc-number">1.</span> <span class="toc-text">一切从向量开始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是向量"><span class="toc-number">1.1.</span> <span class="toc-text">什么是向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入向量"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么要引入向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么基于原点"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么基于原点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序很重要"><span class="toc-number">1.1.3.</span> <span class="toc-text">顺序很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N维向量"><span class="toc-number">1.1.4.</span> <span class="toc-text">N维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#看待向量的两个视角"><span class="toc-number">1.1.5.</span> <span class="toc-text">看待向量的两个视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的更多术语和表示法"><span class="toc-number">1.2.</span> <span class="toc-text">向量的更多术语和表示法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行向量和列向量"><span class="toc-number">1.2.1.</span> <span class="toc-text">行向量和列向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的两个基本运算"><span class="toc-number">1.3.</span> <span class="toc-text">向量的两个基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量加法"><span class="toc-number">1.3.1.</span> <span class="toc-text">向量加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数量乘法"><span class="toc-number">1.3.2.</span> <span class="toc-text">数量乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量基本运算的性质"><span class="toc-number">1.4.</span> <span class="toc-text">向量基本运算的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#零向量和负向量"><span class="toc-number">1.5.</span> <span class="toc-text">零向量和负向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#零向量"><span class="toc-number">1.5.1.</span> <span class="toc-text">零向量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-零向量存在"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">证明: 零向量存在</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么没有零向量箭头"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">为什么没有零向量箭头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#零向量和零"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">零向量和零</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负向量"><span class="toc-number">1.5.2.</span> <span class="toc-text">负向量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-上述-u-唯一"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">证明: 上述 -u 唯一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-u-1-u"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">证明: -u = -1 * u</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的长度和单位向量"><span class="toc-number">1.6.</span> <span class="toc-text">向量的长度和单位向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量的模"><span class="toc-number">1.6.1.</span> <span class="toc-text">向量的模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二维向量的模"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">二维向量的模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三维向量的模"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">三维向量的模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#n维向量的模"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">n维向量的模</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单位向量-unit-vector"><span class="toc-number">1.6.2.</span> <span class="toc-text">单位向量 unit vector</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的点乘与几何意义"><span class="toc-number">1.7.</span> <span class="toc-text">向量的点乘与几何意义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#证明"><span class="toc-number">1.7.1.</span> <span class="toc-text">证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量点乘的直观理解"><span class="toc-number">1.8.</span> <span class="toc-text">向量点乘的直观理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#右侧"><span class="toc-number">1.8.1.</span> <span class="toc-text">右侧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#左侧"><span class="toc-number">1.8.2.</span> <span class="toc-text">左侧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量点乘的应用"><span class="toc-number">1.9.</span> <span class="toc-text">向量点乘的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相似度-推荐系统"><span class="toc-number">1.9.1.</span> <span class="toc-text">相似度(推荐系统)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几何计算"><span class="toc-number">1.9.2.</span> <span class="toc-text">几何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#矩阵不止是-m-n-个数字"><span class="toc-number">2.</span> <span class="toc-text">矩阵不止是 m*n 个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是矩阵"><span class="toc-number">2.1.</span> <span class="toc-text">什么是矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵-Matrix"><span class="toc-number">2.1.1.</span> <span class="toc-text">矩阵 Matrix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的基本运算和基本性质"><span class="toc-number">2.2.</span> <span class="toc-text">矩阵的基本运算和基本性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的基本运算"><span class="toc-number">2.2.1.</span> <span class="toc-text">矩阵的基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵加法"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">矩阵加法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵数量乘法"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">矩阵数量乘法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过矩阵的基本运算可以推导出来的基本性质"><span class="toc-number">2.2.2.</span> <span class="toc-text">通过矩阵的基本运算可以推导出来的基本性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把矩阵看作是对系统的描述"><span class="toc-number">2.3.</span> <span class="toc-text">把矩阵看作是对系统的描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是系统"><span class="toc-number">2.3.1.</span> <span class="toc-text">什么是系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统和矩阵的关系"><span class="toc-number">2.3.2.</span> <span class="toc-text">系统和矩阵的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵和向量的乘法与把矩阵看作向量的函数"><span class="toc-number">2.4.</span> <span class="toc-text">矩阵和向量的乘法与把矩阵看作向量的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵和向量的乘法"><span class="toc-number">2.4.1.</span> <span class="toc-text">矩阵和向量的乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#再回头看向量的点乘"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">再回头看向量的点乘</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重点-把矩阵看作是向量的函数"><span class="toc-number">2.4.2.</span> <span class="toc-text">重点 ! 把矩阵看作是向量的函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵和矩阵的乘法"><span class="toc-number">2.5.</span> <span class="toc-text">矩阵和矩阵的乘法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵乘法的性质和矩阵的幂"><span class="toc-number">2.6.</span> <span class="toc-text">矩阵乘法的性质和矩阵的幂</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵乘法的性质"><span class="toc-number">2.6.1.</span> <span class="toc-text">矩阵乘法的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何证明-A-B-C-A-B-C"><span class="toc-number">2.6.1.1.</span> <span class="toc-text">如何证明: (A * B) * C = A * (B * C)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的幂"><span class="toc-number">2.6.2.</span> <span class="toc-text">矩阵的幂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#陷阱"><span class="toc-number">2.6.3.</span> <span class="toc-text">陷阱</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一切从向量开始"><span class="toc-number">1.</span> <span class="toc-text">一切从向量开始</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是向量"><span class="toc-number">1.1.</span> <span class="toc-text">什么是向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要引入向量"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么要引入向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么基于原点"><span class="toc-number">1.1.2.</span> <span class="toc-text">为什么基于原点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序很重要"><span class="toc-number">1.1.3.</span> <span class="toc-text">顺序很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N维向量"><span class="toc-number">1.1.4.</span> <span class="toc-text">N维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#看待向量的两个视角"><span class="toc-number">1.1.5.</span> <span class="toc-text">看待向量的两个视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的更多术语和表示法"><span class="toc-number">1.2.</span> <span class="toc-text">向量的更多术语和表示法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行向量和列向量"><span class="toc-number">1.2.1.</span> <span class="toc-text">行向量和列向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的两个基本运算"><span class="toc-number">1.3.</span> <span class="toc-text">向量的两个基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量加法"><span class="toc-number">1.3.1.</span> <span class="toc-text">向量加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数量乘法"><span class="toc-number">1.3.2.</span> <span class="toc-text">数量乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量基本运算的性质"><span class="toc-number">1.4.</span> <span class="toc-text">向量基本运算的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#零向量和负向量"><span class="toc-number">1.5.</span> <span class="toc-text">零向量和负向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#零向量"><span class="toc-number">1.5.1.</span> <span class="toc-text">零向量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-零向量存在"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">证明: 零向量存在</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么没有零向量箭头"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">为什么没有零向量箭头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#零向量和零"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">零向量和零</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负向量"><span class="toc-number">1.5.2.</span> <span class="toc-text">负向量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-上述-u-唯一"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">证明: 上述 -u 唯一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-u-1-u"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">证明: -u = -1 * u</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的长度和单位向量"><span class="toc-number">1.6.</span> <span class="toc-text">向量的长度和单位向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向量的模"><span class="toc-number">1.6.1.</span> <span class="toc-text">向量的模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二维向量的模"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">二维向量的模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三维向量的模"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">三维向量的模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#n维向量的模"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">n维向量的模</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单位向量-unit-vector"><span class="toc-number">1.6.2.</span> <span class="toc-text">单位向量 unit vector</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量的点乘与几何意义"><span class="toc-number">1.7.</span> <span class="toc-text">向量的点乘与几何意义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#证明"><span class="toc-number">1.7.1.</span> <span class="toc-text">证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量点乘的直观理解"><span class="toc-number">1.8.</span> <span class="toc-text">向量点乘的直观理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#右侧"><span class="toc-number">1.8.1.</span> <span class="toc-text">右侧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#左侧"><span class="toc-number">1.8.2.</span> <span class="toc-text">左侧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量点乘的应用"><span class="toc-number">1.9.</span> <span class="toc-text">向量点乘的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相似度-推荐系统"><span class="toc-number">1.9.1.</span> <span class="toc-text">相似度(推荐系统)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几何计算"><span class="toc-number">1.9.2.</span> <span class="toc-text">几何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#矩阵不止是-m-n-个数字"><span class="toc-number">2.</span> <span class="toc-text">矩阵不止是 m*n 个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是矩阵"><span class="toc-number">2.1.</span> <span class="toc-text">什么是矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵-Matrix"><span class="toc-number">2.1.1.</span> <span class="toc-text">矩阵 Matrix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的基本运算和基本性质"><span class="toc-number">2.2.</span> <span class="toc-text">矩阵的基本运算和基本性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的基本运算"><span class="toc-number">2.2.1.</span> <span class="toc-text">矩阵的基本运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵加法"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">矩阵加法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵数量乘法"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">矩阵数量乘法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过矩阵的基本运算可以推导出来的基本性质"><span class="toc-number">2.2.2.</span> <span class="toc-text">通过矩阵的基本运算可以推导出来的基本性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把矩阵看作是对系统的描述"><span class="toc-number">2.3.</span> <span class="toc-text">把矩阵看作是对系统的描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是系统"><span class="toc-number">2.3.1.</span> <span class="toc-text">什么是系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统和矩阵的关系"><span class="toc-number">2.3.2.</span> <span class="toc-text">系统和矩阵的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵和向量的乘法与把矩阵看作向量的函数"><span class="toc-number">2.4.</span> <span class="toc-text">矩阵和向量的乘法与把矩阵看作向量的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵和向量的乘法"><span class="toc-number">2.4.1.</span> <span class="toc-text">矩阵和向量的乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#再回头看向量的点乘"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">再回头看向量的点乘</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重点-把矩阵看作是向量的函数"><span class="toc-number">2.4.2.</span> <span class="toc-text">重点 ! 把矩阵看作是向量的函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵和矩阵的乘法"><span class="toc-number">2.5.</span> <span class="toc-text">矩阵和矩阵的乘法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵乘法的性质和矩阵的幂"><span class="toc-number">2.6.</span> <span class="toc-text">矩阵乘法的性质和矩阵的幂</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵乘法的性质"><span class="toc-number">2.6.1.</span> <span class="toc-text">矩阵乘法的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何证明-A-B-C-A-B-C"><span class="toc-number">2.6.1.1.</span> <span class="toc-text">如何证明: (A * B) * C = A * (B * C)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的幂"><span class="toc-number">2.6.2.</span> <span class="toc-text">矩阵的幂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#陷阱"><span class="toc-number">2.6.3.</span> <span class="toc-text">陷阱</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的转置"><span class="toc-number">2.7.</span> <span class="toc-text">矩阵的转置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵转置的性质"><span class="toc-number">2.7.1.</span> <span class="toc-text">矩阵转置的性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多变换矩阵"><span class="toc-number">2.8.</span> <span class="toc-text">更多变换矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#缩放变换"><span class="toc-number">2.8.1.</span> <span class="toc-text">缩放变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进行翻转变化"><span class="toc-number">2.8.2.</span> <span class="toc-text">进行翻转变化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#例如-让每个点关于x轴旋转"><span class="toc-number">2.8.2.1.</span> <span class="toc-text">例如: 让每个点关于x轴旋转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例如-让每个点关于y轴翻转"><span class="toc-number">2.8.2.2.</span> <span class="toc-text">例如: 让每个点关于y轴翻转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例如-让每个点关于原点翻转-x轴-y轴均翻转"><span class="toc-number">2.8.2.3.</span> <span class="toc-text">例如: 让每个点关于原点翻转(x轴, y轴均翻转)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错切"><span class="toc-number">2.8.3.</span> <span class="toc-text">错切</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#沿x方向错切"><span class="toc-number">2.8.3.1.</span> <span class="toc-text">沿x方向错切</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#沿y方向错切"><span class="toc-number">2.8.3.2.</span> <span class="toc-text">沿y方向错切</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵旋转变换和矩阵在图形学中的应用"><span class="toc-number">2.9.</span> <span class="toc-text">矩阵旋转变换和矩阵在图形学中的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从缩放变换到单位矩阵"><span class="toc-number">2.10.</span> <span class="toc-text">从缩放变换到单位矩阵</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1234,10 +1418,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
     
     
     
@@ -2031,15 +2211,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
@@ -2047,17 +2227,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
@@ -2112,9 +2292,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
+    
+        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
