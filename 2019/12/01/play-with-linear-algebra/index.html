@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">12.1k</span>阅读时长: <span class="post-count reading-time">42 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">12.5k</span>阅读时长: <span class="post-count reading-time">43 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -1443,7 +1443,41 @@ height:50vh;
 <p>这就是这个矩阵乘以(2, 2) 所得到的结果</p>
 <br>
 
-<h3 id="回头再看图形变换"><a href="#回头再看图形变换" class="headerlink" title="回头再看图形变换"></a>回头再看图形变换</h3>
+<h3 id="回头再看图形变换"><a href="#回头再看图形变换" class="headerlink" title="回头再看图形变换"></a>回头再看图形变换</h3><p>之前用一个矩阵乘以一个向量, 这个矩阵是这个向量的<strong>函数</strong></p>
+<p>其实我们也可以把这个矩阵看作是<strong>新的空间</strong></p>
+<br>
+
+<p>比如: 让图形沿着y轴进行翻转</p>
+<p><img src="/Blog/intro/matrix_filp_npov.PNG" alt></p>
+<p>我们可以把 T看作是对空间的描述, 这个空间是由(-1, 0)这个轴和(0, 1)这个轴所定义的空间</p>
+<p>所谓地反转图像就是将原来的图像放到新的空间中</p>
+<p><img src="/Blog/intro/matrix_filp_npov_1.PNG" alt></p>
+<br>
+
+<p>同理对于错切变化, 新的空间的样子如下</p>
+<p><img src="/Blog/intro/matrix_filp_npov_2.PNG" alt></p>
+<br>
+
+<p>当有了这个视角之后, 有时我们就不需要过多的计算, 就可以直接推导出我们想要的变换矩阵</p>
+<p>例如我们向将图形F放倒</p>
+<p><img src="/Blog/intro/F_rout.PNG" alt></p>
+<p>就相当于将原先的F放入下面这样的坐标系中</p>
+<p><img src="/Blog/intro/F_grid_sys.PNG" alt></p>
+<p>既然我们直到空间是这个样子, 我们就可以用矩阵表示空间直接写出矩阵来</p>
+<p><img src="/Blog/intro/F_grid_sys_2.PNG" alt></p>
+<p>x轴是(0, 1), y轴是(-1, 0)</p>
+<br>
+
+<p>而且其实这个变换本身是一次旋转变换(顺时针选择3/2 pi, 或逆时针旋转1/2 pi)</p>
+<p>如果我们把这个值代入旋转矩阵中, 得到的是同样的矩阵</p>
+<p><img src="/Blog/intro/F_grid_sys_3.PNG" alt></p>
+<br>
+
+<p>当然这种用矩阵表示空间的思路不仅可以用于二维空间, 3 * 3 的矩阵我们照样可以把它的每一列看作是三维空间中的一个轴</p>
+<p>n维空间就应该由n个轴来定义, 而每个轴也应该是一个n维向量 (参考标准单位向量). 即: <strong>如果用矩阵表示空间, 则必须是n * n的方阵</strong></p>
+<p><img src="/Blog/intro/F_grid_sys_4.PNG" alt></p>
+<p>这一小节中, 矩阵表示空间是很粗糙的, 主要是先理解它的概念, 以后会更加深入学习</p>
+
     </article>
     <!-- license  -->
     
@@ -1451,7 +1485,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 1st 2019, 9:06:48 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 18th 2019, 6:58:26 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/01/play-with-linear-algebra/">December 18th 2019, 7:27:02 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -1585,6 +1619,80 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -2360,41 +2468,41 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
+    
+        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
@@ -2402,11 +2510,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
+        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
+    
         <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
     
         <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -2441,13 +2549,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
+        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
+    
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
