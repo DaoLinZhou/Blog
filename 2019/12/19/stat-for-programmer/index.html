@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">627</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.8k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -404,7 +404,7 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <blockquote>
-<p>bobo老师的妻子的 “专为程序员设计的统计课” 课程的学习笔记</p>
+<p> “专为程序员设计的统计课” 课程的学习笔记</p>
 <p>统计学入门课</p>
 </blockquote>
 <a id="more"></a>
@@ -477,6 +477,161 @@ height:50vh;
 <p>由于是对<strong>性质类别的描述</strong>, 所以只能进行<strong>是否相等</strong>的比较</p>
 <p><strong>无顺序(不能比较大小)或等级(不能比较优劣)</strong></p>
 <p>1, 2只是帮我们区分他们是两个类别, 因此我们把这种变量成为<strong>分类变量</strong>, 更为准确地说是: <strong>无序分类变量</strong></p>
+<br>
+
+<br>
+
+<p>教育程度: 小学(1), 初中(2), 高中(3), 本科(4)…</p>
+<p>评价: 好(5), 良好(4), 中(3), 中下(2), 差评(1)</p>
+<br>
+
+<p>同样, 这两个变量依然是对<strong>类别的描述</strong>, 是<strong>性质</strong>上的差异, 而非<strong>数量</strong>上的差异</p>
+<p>但是可以进行<strong>是否相等</strong>的比较</p>
+<p><strong>有顺序(可以比较大小)或等级(可以比较优劣)</strong></p>
+<p><strong>但是 好评(5) 不等于5倍的 差评(1)</strong></p>
+<br>
+
+<br>
+
+<h3 id="定量-数值变量"><a href="#定量-数值变量" class="headerlink" title="定量 / 数值变量"></a>定量 / 数值变量</h3><p>年份: 2019, 2018…</p>
+<p>温度: 10, 15, 20, 25…</p>
+<br>
+
+<p>这两变量的取值都是<strong>数值</strong></p>
+<p>可以进行<strong>是否相等</strong>的比较, 且是<strong>有顺序的(可以比较大小)</strong></p>
+<p><strong>等间距, 可以进行加减运算</strong></p>
+<p>10度和15度相差的5度等价于30度和35度相差的5度</p>
+<p>这是定性变量所不具备的</p>
+<br>
+
+<br>
+
+<p>身高: 1.60, 1.65…</p>
+<p>体重: 40, 45, 50 …</p>
+<br>
+
+<p>这两个变量同样都是数值</p>
+<p>可以进行<strong>是否相等</strong>的比较, 且是<strong>有顺序的(可以比较大小)</strong></p>
+<p><strong>等间距, 可以进行加减运算</strong></p>
+<p>可以进行<strong>乘除运算</strong></p>
+<p>90 公斤重的人是45公斤重的人的二倍, 以后会讲明是什么决定变量能否进行乘除运算(乘除运算是否是有意义的)</p>
+<br>
+
+<h3 id="观测-变量-与数据矩阵"><a href="#观测-变量-与数据矩阵" class="headerlink" title="观测, 变量, 与数据矩阵"></a>观测, 变量, 与数据矩阵</h3><p>通常会把数据整理成表格</p>
+<p><img src="/Blog/intro/stat_var_data.PNG" alt></p>
+<p>每一行是一次<strong>观测</strong>, 一列是一个<strong>变量</strong></p>
+<p>这样的一个表格我们就称为<strong>数据矩阵(data matrix)</strong></p>
+<br>
+
+<h2 id="测量尺度"><a href="#测量尺度" class="headerlink" title="测量尺度"></a>测量尺度</h2><p>为什么要把变量划分地如此细致</p>
+<p>测量尺度就好像”尺子”, 不同的尺子可以用来测量不同的事物</p>
+<p>直尺可以测量物体的高度, 却不能测量这个物体的重量</p>
+<p>体重秤可以测量物体的重量, 却不能测量物体的长宽高</p>
+<p>… …</p>
+<h3 id="抽象数字系统的属性"><a href="#抽象数字系统的属性" class="headerlink" title="抽象数字系统的属性"></a>抽象数字系统的属性</h3><p>不同的”尺子”具有不同的<strong>属性</strong>, 这些属性使得这些尺子具有去<strong>测量某种特定数据的能力</strong></p>
+<p>在数学中, 使用抽象数字系统, 这个系统有一些重要的属性, 不同的属性集合就对于了不同的尺子 </p>
+<p>或者反过来说, 不同的尺子具有不同的<strong>属性集合</strong>, 因此具有不同的能力</p>
+<br>
+
+<p>抽象数字系统有4个重要的属性</p>
+<ol>
+<li><p>每一个数字有其独特的含义 (<strong>identity</strong>)     例如: 性别 颜色, 我们把1 赋值给男性, 2赋值给女性, 如此, 1 和 2 都有其独特的含义</p>
+</li>
+<li><p>数字具有从小到大的固有顺序 (<strong>magnitude</strong>)         例如: 教育程度 评价</p>
+</li>
+<li><p>任意位置的单位间距是相同的 (<strong>equal intervals</strong>)    例如: 年份 温度</p>
+</li>
+<li><p>零(0)表示被测量的属性不存在 (<strong>absolute/true zero</strong>)    例如: 身高, 体重, 人的身高和体重不可能是0, 如果重量为0就说明重量不存在</p>
+</li>
+</ol>
+<br>
+
+<h3 id="测量"><a href="#测量" class="headerlink" title="测量"></a>测量</h3><ul>
+<li>测量是指根据一定的规则, 把数字(numbers) 分配给观测 (observations)</li>
+</ul>
+<p>比如: 根据一定的规则, 把160这个数字分配给了某一个人的身高</p>
+<ul>
+<li><p>把数字分配给观测的方式, 决定了<strong>测量尺度(scale of measurement)</strong></p>
+</li>
+<li><p>每个测量尺度代表了抽象数字系统的特点属性或属性集合</p>
+</li>
+</ul>
+<br>
+
+<h3 id="名目尺度-nominal-scale"><a href="#名目尺度-nominal-scale" class="headerlink" title="名目尺度(nominal scale)"></a>名目尺度(nominal scale)</h3><br>
+
+<p><strong>名目尺度是根据事物的特征对其进行分类的一种尺度</strong></p>
+<p>它只具备抽象数字系统中的第一个属性, 即每一个数字有其独特的含义</p>
+<p>如果一个变量能用<strong>名目尺度</strong>进行测量, 那么这个变量就被称作<strong>名目变量 (nominal variable)</strong></p>
+<p>例如: 性别, 颜色</p>
+<p>之前说这两个变量<strong>无序分类变量</strong>, 现在又说他们是<strong>名目变量</strong>, 二者有什么关系呢?</p>
+<p>无序分类变量可以理解为这类变量的俗名</p>
+<p>名目变量可以理解为学名</p>
+<p>俗名告诉我们这个变量可以观察到的一些特性, 而学名告诉我们更加本质的一些东西(每一个数字有其独特的含义)</p>
+<br>
+
+<h3 id="次序尺度-ordinal-scale"><a href="#次序尺度-ordinal-scale" class="headerlink" title="次序尺度(ordinal scale)"></a>次序尺度(ordinal scale)</h3><p><strong>次序尺度是根据事物的特征对其进行等级排序的一种尺度</strong></p>
+<p>具备抽象数字系统的前两个属性:</p>
+<ul>
+<li>每个数字尤其独特的含义</li>
+<li>数字具有从小到大的固有顺序</li>
+</ul>
+<p>同理, 如果一个变量是使用<strong>次序尺度</strong>进行测量, 我们便将其称之为<strong>次序变量(ordinal variable)</strong></p>
+<p>例如: 教育程度, 评价, 等</p>
+<br>
+
+<h3 id="等距尺度-interval-scale"><a href="#等距尺度-interval-scale" class="headerlink" title="等距尺度 (interval scale)"></a>等距尺度 (interval scale)</h3><p><strong>等距尺度是指数值之间的单位间隔是等距的一种尺度</strong></p>
+<p>具备抽象数字系统的前三个属性:</p>
+<ul>
+<li>每个数字尤其独特的含义</li>
+<li>数字具有从小到大的固有顺序</li>
+<li>任意位置的单位间距是相同的</li>
+</ul>
+<p>如果一个变量可以使用<strong>等距尺度</strong>测量, 我们则将其称为<strong>等距变量(interval variable)</strong> </p>
+<p>例如: 年份 温度 时间</p>
+<br>
+
+<h3 id="等比尺度-ratio-scale"><a href="#等比尺度-ratio-scale" class="headerlink" title="等比尺度(ratio scale)"></a>等比尺度(ratio scale)</h3><p><strong>等比尺度是具有等距尺度的所有特性, 并且零点有意义的尺度</strong></p>
+<p>具备抽象数字系统的所有4个属性:</p>
+<ul>
+<li>每个数字有其独特的含义</li>
+<li>数字具有从小到大的固有顺序</li>
+<li>任意位置的单位间距是相同的</li>
+<li>零(0)表示被测量的属性不存在</li>
+</ul>
+<p>如果一个变量可以使用<strong>等比尺度</strong>测量, 我们可以将其称为<strong>等比变量(ratio variable)</strong></p>
+<p>例如: 身高 体重</p>
+<p><strong>有真零点, 因此可以进行乘除运算</strong></p>
+<br>
+
+<p>如果没有真零点, 则乘除运算结果不唯一(无意义)</p>
+<p>例如: 温度(摄氏度) 10, 25 vs 温度(华氏度): 50, 77</p>
+<p>对于温度而言, 0是相对的, 在摄氏度下的0和在华氏度下的0并不相等</p>
+<p><strong>对同一客观事物从测量会得到不同的值</strong>, 而这些值的变化是因为<strong>零点的选定</strong>不一样而导致的</p>
+<p>因此做出的乘除运算不唯一, 也就没有意义去做乘除运算</p>
+<br>
+
+<h3 id="测量尺度的重要性"><a href="#测量尺度的重要性" class="headerlink" title="测量尺度的重要性"></a>测量尺度的重要性</h3><p>测量尺度决定了可以进行哪些<strong>逻辑与数学运算</strong>和使用哪种<strong>统计方法</strong></p>
+<p><img src="/Blog/intro/stat_important_sclar.PNG" alt></p>
+<p>数值变量还可以进行<strong>离散型</strong>和<strong>连续型</strong>的划分</p>
+<p>如果一个数值变量的取值是间断的, 两个取值之间在没有其他的值(不可以无限的细分, 就可以将其称为<strong>离散型数值变量</strong>)</p>
+<p>例如: 抛100次硬币, 计算有多少次正面朝上取值只可能是正整数, 不可能是小数. 这就是离散型数值变量</p>
+<br>
+
+<p>而连续型数值变量的任意两个取值之间都可以进行无限地细分. 比如说身高1.60m 和1.61m</p>
+<p>这两个取值之间可以进行无限细分1.601, 1.602…</p>
+<p>变量实在哪种尺度上测量得到的, 决定了这些变量能使用哪些<strong>逻辑与数学运算</strong>, 并且决定了能用哪些<strong>统计方法</strong>进行分析</p>
+<br>
+
+<h3 id="更加系统地看待变量"><a href="#更加系统地看待变量" class="headerlink" title="更加系统地看待变量"></a>更加系统地看待变量</h3><p>当拿到一个变量时可以进行如下判断</p>
+<p><img src="/Blog/intro/stat_see_variable.PNG" alt></p>
+<blockquote>
+<p> 老师，真零值那里没太理解。比如考试的分数从1-100分，这个只能是算等距尺度吧？ </p>
+<br>
+
+<p>如果零点是唯一的，就代表有真零值。比如说身高, 体重, 我们都认同这两个变量的零点是唯一的; 当身高或体重为0的时候, 意味着身高或体重这个客体不存在。零点不唯一的例子是温度, 比如有摄氏0度, 有华氏0度; 当温度为0的时候, 温度这个客体还是存在的。</p>
+<p>你问了一个非常好的问题，对于考试分数这个变量来说, 把它当成等比或者等距都可以, 取决于考试打分的规则。如果分数等于回答正确的问题数目占总问题数目的百分比的话(即 正确数目/总数目),  则0值是唯一的, 可以把分数当成等比变量。其实不用过于纠结一个变量到底是等比还是等距,  有一些变量很难界定到底是等比还是等距。我们在分析数据的时候通常把两者都视为数值变量，不加以区分。但是, 当你拿到了数据分析的结果,  要对结果进行解释的时候, 需要考虑一下儿等距/等比这个问题</p>
+</blockquote>
 
     </article>
     <!-- license  -->
@@ -485,7 +640,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 19th 2019, 1:23:22 am</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 19th 2019, 2:35:24 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 20th 2019, 12:22:18 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -606,7 +761,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是统计"><span class="toc-number">1.</span> <span class="toc-text">什么是统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要学统计"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要学统计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识数据"><span class="toc-number">2.</span> <span class="toc-text">认识数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据和变量"><span class="toc-number">2.1.</span> <span class="toc-text">数据和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定性数据"><span class="toc-number">2.1.1.</span> <span class="toc-text">定性数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">定量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据和变量的关系"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据和变量的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定性-分类变量"><span class="toc-number">2.1.4.</span> <span class="toc-text">定性 / 分类变量</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是统计"><span class="toc-number">1.</span> <span class="toc-text">什么是统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要学统计"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要学统计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识数据"><span class="toc-number">2.</span> <span class="toc-text">认识数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据和变量"><span class="toc-number">2.1.</span> <span class="toc-text">数据和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定性数据"><span class="toc-number">2.1.1.</span> <span class="toc-text">定性数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">定量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据和变量的关系"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据和变量的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定性-分类变量"><span class="toc-number">2.1.4.</span> <span class="toc-text">定性 / 分类变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量-数值变量"><span class="toc-number">2.1.5.</span> <span class="toc-text">定量 / 数值变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观测-变量-与数据矩阵"><span class="toc-number">2.1.6.</span> <span class="toc-text">观测, 变量, 与数据矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测量尺度"><span class="toc-number">2.2.</span> <span class="toc-text">测量尺度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象数字系统的属性"><span class="toc-number">2.2.1.</span> <span class="toc-text">抽象数字系统的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量"><span class="toc-number">2.2.2.</span> <span class="toc-text">测量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名目尺度-nominal-scale"><span class="toc-number">2.2.3.</span> <span class="toc-text">名目尺度(nominal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#次序尺度-ordinal-scale"><span class="toc-number">2.2.4.</span> <span class="toc-text">次序尺度(ordinal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等距尺度-interval-scale"><span class="toc-number">2.2.5.</span> <span class="toc-text">等距尺度 (interval scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比尺度-ratio-scale"><span class="toc-number">2.2.6.</span> <span class="toc-text">等比尺度(ratio scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量尺度的重要性"><span class="toc-number">2.2.7.</span> <span class="toc-text">测量尺度的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更加系统地看待变量"><span class="toc-number">2.2.8.</span> <span class="toc-text">更加系统地看待变量</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -619,74 +774,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1494,13 +1581,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
@@ -1518,9 +1605,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
@@ -1528,13 +1615,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
+    
+        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
     
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
