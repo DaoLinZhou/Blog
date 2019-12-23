@@ -266,15 +266,15 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "数学">数学</a>
-    
         <a class="post-tag" href="javascript:void(0);" data-tags = "统计学">统计学</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "数学">数学</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.4k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">3.9k</span>阅读时长: <span class="post-count reading-time">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -661,7 +661,7 @@ height:50vh;
 </ol>
 <br>
 
-<h2 id="1-数据的可靠性和有效性"><a href="#1-数据的可靠性和有效性" class="headerlink" title="1. 数据的可靠性和有效性"></a>1. 数据的可靠性和有效性</h2><p>在分析数据之前, 一定要闻这样的一个问题, 我手中的数据是否可靠(<strong>reliable</strong>) 和有效(<strong>valid</strong>)?</p>
+<h2 id="数据的可靠性和有效性"><a href="#数据的可靠性和有效性" class="headerlink" title="数据的可靠性和有效性"></a>数据的可靠性和有效性</h2><p>在分析数据之前, 一定要闻这样的一个问题, 我手中的数据是否可靠(<strong>reliable</strong>) 和有效(<strong>valid</strong>)?</p>
 <ul>
 <li>可靠性(reliability) : <strong>多次测量得到的数据是否一致</strong>, 如果多次测量得到的数据不一致, 那么可靠性是存疑的. 同时<strong>可靠的数据不应随着观察者的变化而变化</strong>, 所以当多个观察者给出不同回答时, 可靠性也是存疑的</li>
 <li>有效性(validity) : 实际测量的对象 = 认为 / 希望测量的对象</li>
@@ -674,6 +674,69 @@ height:50vh;
 <li>当数据是有效但不可靠时, 数据会非常<strong>分散</strong>, 数据的<strong>波动性</strong>非常大(不可靠) , 但它们又<strong>相对集中</strong>在靶心周围(相对有效)</li>
 <li>当数据既不可靠也不有效时, 数据分散且远离靶心</li>
 </ul>
+<br>
+
+<h2 id="一个分类变量的特征和可视化"><a href="#一个分类变量的特征和可视化" class="headerlink" title="一个分类变量的特征和可视化"></a>一个分类变量的特征和可视化</h2><h3 id="无序分类变量"><a href="#无序分类变量" class="headerlink" title="无序分类变量"></a>无序分类变量</h3><p>假设调查数据如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">性别(名目; =, !=): 男, 女</span><br><span class="line">	观测12个新生儿的性别</span><br><span class="line">	我们得到的值为: </span><br><span class="line">	女, 男, 女, 女, 男, 男, 男, 男, 女, 男, 男, 女</span><br></pre></td></tr></table></figure>
+
+<p>如果要对这组数据进行可视化处理, 最简单的就是计算男, 女的比例</p>
+<p>针对这个问题我们可以构建一个<strong>频率表(frequency table)</strong>:</p>
+<table>
+<thead>
+<tr>
+<th align="center">性别</th>
+<th align="center">频数(Count)</th>
+<th align="center">频率(Frequency)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">女</td>
+<td align="center">5</td>
+<td align="center">5/12 = 41.7%</td>
+</tr>
+<tr>
+<td align="center">男</td>
+<td align="center">7</td>
+<td align="center">7/12 = 58.3%</td>
+</tr>
+</tbody></table>
+<p>既然已经可以用频数总结特征了, 为什么还要用频率呢?</p>
+<p>人们对数字的感知是很差的(有很大的偏差)</p>
+<br>
+
+<h4 id="条形图-bar-plot"><a href="#条形图-bar-plot" class="headerlink" title="条形图(bar plot)"></a>条形图(bar plot)</h4><p><img src="/Blog/intro/stat_bar_plot.PNG" alt></p>
+<br>
+
+<h4 id="集中趋势-central-tendency"><a href="#集中趋势-central-tendency" class="headerlink" title="集中趋势(central tendency)"></a>集中趋势(central tendency)</h4><p>它描述了一组观测值向其中心集中的倾向和程度</p>
+<p>虽然测量集中趋势的方法有很多种, 但是对于<strong>无序分类变量</strong>来说只有一种:</p>
+<ul>
+<li><strong>众数(mode)</strong>: 一组观测值中出现次数最多的数</li>
+<li>一组观测值可能<strong>存在多个众数</strong>, 也可能<strong>不存在众数</strong></li>
+</ul>
+<p><img src="/Blog/intro/stat_mode.PNG" alt></p>
+<br>
+
+<h3 id="有序分类变量"><a href="#有序分类变量" class="headerlink" title="有序分类变量"></a>有序分类变量</h3><p>假设调查数据如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">教育程度 (次序; =, !=, &gt;, &lt;)</span><br><span class="line">	小学(1), 初中(2), 高中(3), 本科(4), 研究生(5)</span><br><span class="line">	观测19个人的教育程度(n = 19)</span><br><span class="line">	3,3,4,1,5,4,2,1,5,4,4,4,5,3,2,1,4,5,5</span><br></pre></td></tr></table></figure>
+
+<p>频率表</p>
+<p><img src="/Blog/intro/stat_bar_plot_1.PNG" alt></p>
+<br>
+
+<h4 id="条形图-bar-plot-1"><a href="#条形图-bar-plot-1" class="headerlink" title="条形图(bar plot)"></a>条形图(bar plot)</h4><p><img src="/Blog/intro/stat_bar_plot_2.PNG" alt></p>
+<br>
+
+<h4 id="集中趋势"><a href="#集中趋势" class="headerlink" title="集中趋势"></a>集中趋势</h4><p>众数 =&gt; 本科(4)</p>
+<p><strong>中位数(median)</strong></p>
+<ul>
+<li>对于有限的数集, 把所有观测值按照大小排序后, 位于正中间的观测值即为中位数(中值)</li>
+</ul>
+<p><img src="/Blog/intro/stat_median_num_ex.PNG" alt></p>
+<p><img src="/Blog/intro/stat_median_num_ex_1.PNG" alt></p>
+<br>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p><img src="/Blog/intro/stat_cat_var_a.PNG" alt></p>
+<p>由于有序分类变量可以进行大小的比较, 因此可以<strong>排序</strong>, 而中位数要求数值是可以排序的, 因此只有满足这个条件才可以进行中位数的度量</p>
 
     </article>
     <!-- license  -->
@@ -682,7 +745,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 19th 2019, 1:23:22 am</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 21st 2019, 2:25:05 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 23rd 2019, 1:53:40 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -808,7 +871,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是统计"><span class="toc-number">1.</span> <span class="toc-text">什么是统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要学统计"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要学统计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识数据"><span class="toc-number">2.</span> <span class="toc-text">认识数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据和变量"><span class="toc-number">2.1.</span> <span class="toc-text">数据和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定性数据"><span class="toc-number">2.1.1.</span> <span class="toc-text">定性数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">定量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据和变量的关系"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据和变量的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定性-分类变量"><span class="toc-number">2.1.4.</span> <span class="toc-text">定性 / 分类变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量-数值变量"><span class="toc-number">2.1.5.</span> <span class="toc-text">定量 / 数值变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观测-变量-与数据矩阵"><span class="toc-number">2.1.6.</span> <span class="toc-text">观测, 变量, 与数据矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测量尺度"><span class="toc-number">2.2.</span> <span class="toc-text">测量尺度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象数字系统的属性"><span class="toc-number">2.2.1.</span> <span class="toc-text">抽象数字系统的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量"><span class="toc-number">2.2.2.</span> <span class="toc-text">测量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名目尺度-nominal-scale"><span class="toc-number">2.2.3.</span> <span class="toc-text">名目尺度(nominal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#次序尺度-ordinal-scale"><span class="toc-number">2.2.4.</span> <span class="toc-text">次序尺度(ordinal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等距尺度-interval-scale"><span class="toc-number">2.2.5.</span> <span class="toc-text">等距尺度 (interval scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比尺度-ratio-scale"><span class="toc-number">2.2.6.</span> <span class="toc-text">等比尺度(ratio scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量尺度的重要性"><span class="toc-number">2.2.7.</span> <span class="toc-text">测量尺度的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更加系统地看待变量"><span class="toc-number">2.2.8.</span> <span class="toc-text">更加系统地看待变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#描述统计"><span class="toc-number">3.</span> <span class="toc-text">描述统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是描述统计"><span class="toc-number">3.1.</span> <span class="toc-text">什么是描述统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-数据的可靠性和有效性"><span class="toc-number">3.2.</span> <span class="toc-text">1. 数据的可靠性和有效性</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是统计"><span class="toc-number">1.</span> <span class="toc-text">什么是统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要学统计"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要学统计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识数据"><span class="toc-number">2.</span> <span class="toc-text">认识数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据和变量"><span class="toc-number">2.1.</span> <span class="toc-text">数据和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定性数据"><span class="toc-number">2.1.1.</span> <span class="toc-text">定性数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">定量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据和变量的关系"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据和变量的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定性-分类变量"><span class="toc-number">2.1.4.</span> <span class="toc-text">定性 / 分类变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量-数值变量"><span class="toc-number">2.1.5.</span> <span class="toc-text">定量 / 数值变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观测-变量-与数据矩阵"><span class="toc-number">2.1.6.</span> <span class="toc-text">观测, 变量, 与数据矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测量尺度"><span class="toc-number">2.2.</span> <span class="toc-text">测量尺度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象数字系统的属性"><span class="toc-number">2.2.1.</span> <span class="toc-text">抽象数字系统的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量"><span class="toc-number">2.2.2.</span> <span class="toc-text">测量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名目尺度-nominal-scale"><span class="toc-number">2.2.3.</span> <span class="toc-text">名目尺度(nominal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#次序尺度-ordinal-scale"><span class="toc-number">2.2.4.</span> <span class="toc-text">次序尺度(ordinal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等距尺度-interval-scale"><span class="toc-number">2.2.5.</span> <span class="toc-text">等距尺度 (interval scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比尺度-ratio-scale"><span class="toc-number">2.2.6.</span> <span class="toc-text">等比尺度(ratio scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量尺度的重要性"><span class="toc-number">2.2.7.</span> <span class="toc-text">测量尺度的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更加系统地看待变量"><span class="toc-number">2.2.8.</span> <span class="toc-text">更加系统地看待变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#描述统计"><span class="toc-number">3.</span> <span class="toc-text">描述统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是描述统计"><span class="toc-number">3.1.</span> <span class="toc-text">什么是描述统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据的可靠性和有效性"><span class="toc-number">3.2.</span> <span class="toc-text">数据的可靠性和有效性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个分类变量的特征和可视化"><span class="toc-number">3.3.</span> <span class="toc-text">一个分类变量的特征和可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无序分类变量"><span class="toc-number">3.3.1.</span> <span class="toc-text">无序分类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#条形图-bar-plot"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">条形图(bar plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势-central-tendency"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">集中趋势(central tendency)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有序分类变量"><span class="toc-number">3.3.2.</span> <span class="toc-text">有序分类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#条形图-bar-plot-1"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">条形图(bar plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">集中趋势</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">3.3.3.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -821,6 +884,48 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1674,11 +1779,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
@@ -1696,9 +1801,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
@@ -1710,13 +1815,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
     
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
+        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
     
         <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
     
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
     
         <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
     
