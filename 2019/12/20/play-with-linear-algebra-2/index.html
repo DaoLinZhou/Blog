@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">6.4k</span>阅读时长: <span class="post-count reading-time">22 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">7.1k</span>阅读时长: <span class="post-count reading-time">24 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -969,6 +969,57 @@ height:50vh;
 <p>我们之前将求解矩阵逆的问题转换为求解线性系统的问题</p>
 <p>而这一章, 我们把求解矩阵逆的问题和初等变换联系在了一起</p>
 <p>在后续介绍LU分解时会再次用到这个方法.</p>
+<br>
+
+<br>
+
+<h2 id="为什么矩阵的逆这么重要"><a href="#为什么矩阵的逆这么重要" class="headerlink" title="为什么矩阵的逆这么重要"></a>为什么矩阵的逆这么重要</h2><h3 id="计算功能"><a href="#计算功能" class="headerlink" title="计算功能"></a>计算功能</h3><p>首先对于矩阵的逆来说, 它有一个非常重要的计算功能</p>
+<p>线性系统本身是一个应用非常广泛的<strong>描述世界, 描述问题的方式</strong>, 我们可以把很多问题都抽象为: Ax = b 这样的一个式子, 而如果A可逆</p>
+<p><img src="/Blog/intro/why_inv_matrix_important.PNG" alt></p>
+<p>然而求解矩阵的逆和求解一个线性系统的时间复杂度是差不多的, 如果细究甚至可能<strong>求解矩阵的逆</strong>的操作会稍微耗时一些</p>
+<p>但是如果在多次求解线性系统, 在A不变, b会变的情况下, 只要求解一次矩阵的逆, 就可以用A的逆乘以b得到结果, 大大加快了计算速度</p>
+<br>
+
+<h3 id="矩阵的逆和很多重要的命题连接在了一起"><a href="#矩阵的逆和很多重要的命题连接在了一起" class="headerlink" title="矩阵的逆和很多重要的命题连接在了一起"></a>矩阵的逆和很多重要的命题连接在了一起</h3><ol>
+<li>方阵A(只有方阵才有逆), 如果矩阵A可逆, 即A是非奇异矩阵</li>
+<li>对于一个线性系统, Ax = 0 (齐次线性方程组) 只有唯一解, 即x = 0, 因为rref(A) = I, 所以这个线性方程组只有唯一解, 对于齐次线性方程组, 它的唯一解就是0</li>
+<li>rref(A) = I, A的行最简形式等于单位矩阵</li>
+<li>A可以表示为一系列初等矩阵的乘积</li>
+</ol>
+<p>这4个命题是等价的, 随便抽出一个就可以推导出其他三个结论</p>
+<p>若要证明这4个命题等价, 我们要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过 (1) 推导 (2)</span><br><span class="line">通过 (2) 推导 (3)</span><br><span class="line">通过 (3) 推导 (4)</span><br><span class="line">通过 (4) 推导 (1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Blog/intro/why_inv_matrix_important_1.PNG" alt></p>
+<h4 id="通过-1-推导-2"><a href="#通过-1-推导-2" class="headerlink" title="通过 (1) 推导 (2)"></a>通过 (1) 推导 (2)</h4><p>矩阵A可逆 ==&gt; 线性系统Ax=0只有唯一解</p>
+<p><img src="/Blog/intro/why_inv_matrix_important_2.PNG" alt></p>
+<br>
+
+<h4 id="通过-2-推导-3"><a href="#通过-2-推导-3" class="headerlink" title="通过 (2) 推导 (3)"></a>通过 (2) 推导 (3)</h4><p>线性系统Ax=0只有一个解, x=0 ==&gt; rref(A) = I</p>
+<p>假设A为n*n的矩阵</p>
+<p>Ax = 0有唯一解, 则有n个未知数, 且rref(A)有n个非零行</p>
+<p>根据行最简形式定义: rref(A) = I</p>
+<br>
+
+<h4 id="通过-3-推导-4"><a href="#通过-3-推导-4" class="headerlink" title="通过 (3) 推导 (4)"></a>通过 (3) 推导 (4)</h4><p>rref(A) = I ==&gt; A可以表示成一系列初等矩阵的乘积</p>
+<p>之前说过, 把A化为行最简形式的过程相当于寻找到一些列初等矩阵对A进行左乘, 而现在已知行最简形式等于I</p>
+<p><img src="/Blog/intro/why_inv_matrix_important_3.PNG" alt></p>
+<p>初等矩阵的逆矩阵还是初等矩阵</p>
+<br>
+
+<h4 id="通过-4-推导-1"><a href="#通过-4-推导-1" class="headerlink" title="通过 (4) 推导 (1)"></a>通过 (4) 推导 (1)</h4><p>A可以表示成一系列初等矩阵的乘积 ==&gt; A可逆</p>
+<p><img src="/Blog/intro/why_inv_matrix_important_4.PNG" alt></p>
+<br>
+
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>同样我们还可以证明Ax = b有唯一解</p>
+<p><img src="/Blog/intro/why_inv_matrix_important_5.PNG" alt></p>
+<p>更进一步, 当我们说这几个命题是等价的时, 也就意味着这五个命题的反命题也是等价的</p>
+<p><img src="/Blog/intro/why_inv_matrix_important_6.PNG" alt></p>
+<p>例如: </p>
+<p><img src="/Blog/intro/why_inv_matrix_important_7.PNG" alt></p>
+<p>因为</p>
+<p><img src="/Blog/intro/why_inv_matrix_important_8.PNG" alt></p>
+<p>因为右边不可能有0, 所以如果左边出现零行一定矛盾</p>
 
     </article>
     <!-- license  -->
@@ -977,7 +1028,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">December 20th 2019, 1:11:18 am</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">December 24th 2019, 12:57:31 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">December 25th 2019, 1:47:25 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -1098,7 +1149,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性系统"><span class="toc-number">1.</span> <span class="toc-text">线性系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与消元法"><span class="toc-number">1.1.</span> <span class="toc-text">线性系统与消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性系统-1"><span class="toc-number">1.1.1.</span> <span class="toc-text">线性系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消元法"><span class="toc-number">1.1.2.</span> <span class="toc-text">消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯消元法"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增广矩阵"><span class="toc-number">1.2.1.</span> <span class="toc-text">增广矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯消元法-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">高斯消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯-约旦消元法"><span class="toc-number">1.3.</span> <span class="toc-text">高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行最简形式和线性方程组解的结构"><span class="toc-number">1.4.</span> <span class="toc-text">行最简形式和线性方程组解的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组解的结构"><span class="toc-number">1.4.1.</span> <span class="toc-text">线性方程组解的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行最简形式"><span class="toc-number">1.4.2.</span> <span class="toc-text">行最简形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解线性方程组解的结构"><span class="toc-number">1.5.</span> <span class="toc-text">直观理解线性方程组解的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更一般化的高斯-约旦消元法"><span class="toc-number">1.6.</span> <span class="toc-text">更一般化的高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次线性方程组"><span class="toc-number">1.7.</span> <span class="toc-text">齐次线性方程组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初等矩阵和矩阵的可逆性"><span class="toc-number">2.</span> <span class="toc-text">初等矩阵和矩阵的可逆性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与矩阵的逆"><span class="toc-number">2.1.</span> <span class="toc-text">线性系统与矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初等矩阵"><span class="toc-number">2.2.</span> <span class="toc-text">初等矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的某一行乘以一个常数"><span class="toc-number">2.2.1.</span> <span class="toc-text">矩阵的某一行乘以一个常数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#让矩阵的一行加-减-另一行"><span class="toc-number">2.2.2.</span> <span class="toc-text">让矩阵的一行加(减)另一行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交换矩阵的两行"><span class="toc-number">2.2.3.</span> <span class="toc-text">交换矩阵的两行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.4.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正儿八经的形式化概念"><span class="toc-number">2.2.5.</span> <span class="toc-text">正儿八经的形式化概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从初等矩阵到矩阵的逆"><span class="toc-number">2.3.</span> <span class="toc-text">从初等矩阵到矩阵的逆</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性系统"><span class="toc-number">1.</span> <span class="toc-text">线性系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与消元法"><span class="toc-number">1.1.</span> <span class="toc-text">线性系统与消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性系统-1"><span class="toc-number">1.1.1.</span> <span class="toc-text">线性系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消元法"><span class="toc-number">1.1.2.</span> <span class="toc-text">消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯消元法"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增广矩阵"><span class="toc-number">1.2.1.</span> <span class="toc-text">增广矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯消元法-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">高斯消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯-约旦消元法"><span class="toc-number">1.3.</span> <span class="toc-text">高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行最简形式和线性方程组解的结构"><span class="toc-number">1.4.</span> <span class="toc-text">行最简形式和线性方程组解的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组解的结构"><span class="toc-number">1.4.1.</span> <span class="toc-text">线性方程组解的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行最简形式"><span class="toc-number">1.4.2.</span> <span class="toc-text">行最简形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解线性方程组解的结构"><span class="toc-number">1.5.</span> <span class="toc-text">直观理解线性方程组解的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更一般化的高斯-约旦消元法"><span class="toc-number">1.6.</span> <span class="toc-text">更一般化的高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次线性方程组"><span class="toc-number">1.7.</span> <span class="toc-text">齐次线性方程组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初等矩阵和矩阵的可逆性"><span class="toc-number">2.</span> <span class="toc-text">初等矩阵和矩阵的可逆性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与矩阵的逆"><span class="toc-number">2.1.</span> <span class="toc-text">线性系统与矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初等矩阵"><span class="toc-number">2.2.</span> <span class="toc-text">初等矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的某一行乘以一个常数"><span class="toc-number">2.2.1.</span> <span class="toc-text">矩阵的某一行乘以一个常数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#让矩阵的一行加-减-另一行"><span class="toc-number">2.2.2.</span> <span class="toc-text">让矩阵的一行加(减)另一行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交换矩阵的两行"><span class="toc-number">2.2.3.</span> <span class="toc-text">交换矩阵的两行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.4.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正儿八经的形式化概念"><span class="toc-number">2.2.5.</span> <span class="toc-text">正儿八经的形式化概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从初等矩阵到矩阵的逆"><span class="toc-number">2.3.</span> <span class="toc-text">从初等矩阵到矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么矩阵的逆这么重要"><span class="toc-number">2.4.</span> <span class="toc-text">为什么矩阵的逆这么重要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算功能"><span class="toc-number">2.4.1.</span> <span class="toc-text">计算功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的逆和很多重要的命题连接在了一起"><span class="toc-number">2.4.2.</span> <span class="toc-text">矩阵的逆和很多重要的命题连接在了一起</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-1-推导-2"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">通过 (1) 推导 (2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-2-推导-3"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">通过 (2) 推导 (3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-3-推导-4"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">通过 (3) 推导 (4)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-4-推导-1"><span class="toc-number">2.4.2.4.</span> <span class="toc-text">通过 (4) 推导 (1)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">2.4.3.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1111,6 +1162,80 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1932,17 +2057,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
@@ -1950,9 +2075,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
@@ -2015,9 +2140,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
