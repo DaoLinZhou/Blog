@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">7.2k</span>阅读时长: <span class="post-count reading-time">25 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">8.2k</span>阅读时长: <span class="post-count reading-time">28 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -999,6 +999,110 @@ height:50vh;
 <br>
 
 <h2 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h2><p><img src="/Blog/intro/stat_conclusion.PNG" alt></p>
+<br>
+
+<br>
+
+<h1 id="概率和概率分布"><a href="#概率和概率分布" class="headerlink" title="概率和概率分布"></a>概率和概率分布</h1><p>我们已经介绍了描述统计, 之前说过概率论贯穿整个统计学</p>
+<p><img src="/Blog/intro/stat_probality.PNG" alt></p>
+<p>因此这一章的目的是把一些非常基础但又和统计学密切相关的概率论知识进行介绍</p>
+<br>
+
+<h2 id="什么是概率论"><a href="#什么是概率论" class="headerlink" title="什么是概率论"></a>什么是概率论</h2><ul>
+<li>确定性现象<ul>
+<li>定义: 在一定条件下<strong>必然</strong>会发生的现象 </li>
+<li>抛起的硬币必然下落</li>
+<li>在标准大气压下, 水加热到100度必然沸腾</li>
+</ul>
+</li>
+<li>随机现象<ul>
+<li>抛一次硬币的结果 { 正面, 反面 }</li>
+<li>抛一次骰子的结果 { 1, 2, 3, 4, 5, 6 }</li>
+</ul>
+</li>
+</ul>
+<p>随机现象:</p>
+<ul>
+<li><p>在<strong>个别实验</strong>中结果具有<strong>不确定性</strong></p>
+</li>
+<li><p>在<strong>大量重复</strong>实验中结果呈现出<strong>固有规律性</strong></p>
+</li>
+</ul>
+<p>满足这两个条件的现象就是随机现象</p>
+<p>抛硬币 正面 : 反面 ≈ 1 : 1</p>
+<p>抛骰子 1 : 2 : 3 : 4 : 5 : 6 ≈ 1 : 1 : 1 : 1 : 1 : 1</p>
+<br>
+
+<p><img src="/Blog/intro/stat_probality_1.PNG" alt></p>
+<p>概率论和统计就是用来研究随机现象的<strong>统计规律性</strong>的一门科学</p>
+<p>概率论为刻画这种不确定性提供了规律</p>
+<p>确定性现象不是概率论研究的对象, 概率论研究的是随机现象</p>
+<br>
+
+<h3 id="相关术语和概念"><a href="#相关术语和概念" class="headerlink" title="相关术语和概念"></a>相关术语和概念</h3><ul>
+<li>样本空间 (Space) (用S来表示)<ul>
+<li>定义: 随机实验E的所有可能结果组成的集合</li>
+<li>例如: 试验: 扔一次硬币进行观察 =&gt; S : {Head, Tail}</li>
+<li>例如: 实验: 扔两次硬币进行观察 =&gt; S : {HH, HT, TH, TT}</li>
+</ul>
+</li>
+<li>随机事件<ul>
+<li>定义: 样本空间S的子集称为随机试验E的随机事件, 简称事件</li>
+<li><img src="/Blog/intro/stat_probality_2.PNG" alt></li>
+</ul>
+</li>
+</ul>
+<p>例如:</p>
+<p>S : {HH, HT, TH, TT} =&gt; {HH, HT, TH} = {至少一次正面}</p>
+<p><strong>事件发生</strong> : 在本次实验中, 当且仅当这一子集的一个样本点出现</p>
+<p>就是说, 扔两次硬币, 看结果是不是上面三个结果之一, 如果是, 则事件发生</p>
+<p>样本空间是<strong>必然事件</strong></p>
+<br>
+
+<h3 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h3><p><img src="/Blog/intro/stat_probality_3.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h2><p>基于个人的经验知识对某件事发生的可能大小进行赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">明天的天气</span><br><span class="line"></span><br><span class="line">S:&#123;晴, 雨&#125;</span><br><span class="line"></span><br><span class="line">事件 : &#123;雨&#125;</span><br><span class="line"></span><br><span class="line">P(雨) = 0.2	20%的可能明天下雨</span><br><span class="line"></span><br><span class="line">P(雨) = 0.7	70%的可能明天下雨</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>首先它可以是纯粹的猜测, 没有任何依据, 仅仅依赖个人的经验/知识, 因此主观色彩非常强, 可信度低</p>
+<p>在贝叶斯统计中, 经常使用这种方法, 但在传统的参数估计和假设检验这两个问题下不太会用到这种方法</p>
+<br>
+
+<h3 id="频率"><a href="#频率" class="headerlink" title="频率"></a>频率</h3><p><img src="/Blog/intro/stat_probility.PNG" alt></p>
+<p>例如</p>
+<p><img src="/Blog/intro/stat_probility_1.PNG" alt></p>
+<p><strong>性质:</strong></p>
+<ul>
+<li><p>0 &lt;= fn(A) &lt;= 1</p>
+</li>
+<li><p>fn(S) = 1     (样本空间是必然事件)</p>
+</li>
+<li><p><img src="/Blog/intro/stat_probility_2.PNG" alt></p>
+</li>
+</ul>
+<br>
+
+<h3 id="概率-1"><a href="#概率-1" class="headerlink" title="概率"></a>概率</h3><p>对于随机试验E的每一个事件A赋予一个实数, 记作P(A), 称为事件A的概率, 如果<strong>集合函数</strong>P(.)满足下列条件</p>
+<ul>
+<li>非负性: 对于每一个事件A, 有P(A) &gt;= 0</li>
+<li>规范性: 对于必然事件S, 有P(S) = 1</li>
+<li>可列可加性: 设A1, A2… 是两两不相容事件, 有P(A1 U A2 U …) = P(A1) + P(A2) + …</li>
+</ul>
+<br>
+
+<h3 id="频率-vs-概率"><a href="#频率-vs-概率" class="headerlink" title="频率 vs 概率"></a>频率 vs 概率</h3><p>为什么频率近似概率</p>
+<p><img src="/Blog/intro/stat_probility_3.PNG" alt></p>
+<p><img src="/Blog/intro/stat_probility_4.PNG" alt></p>
+<p>随着n的增加, 频率逐渐稳定于某个常数, 这就是统计规律性, 这个常数就是概率</p>
+<p>当实验次数非常小时, 频率波动非常大</p>
+<p>当实验次数非常大时, 频率波动非常小, 趋近于常数</p>
+<p><img src="/Blog/intro/stat_probility_5.PNG" alt></p>
+<p>小数定律: 当重复实验的次数非常小时, 频率不能非常好地代表事件发生的可能性大小, 我们不能使用它很好地近似概率</p>
+<p>大数定律: 当实验次数n趋于无穷时, 事件A发生的频率趋于事件A发生的概率</p>
+<p><img src="/Blog/intro/stat_probility_6.PNG" alt></p>
 
     </article>
     <!-- license  -->
@@ -1007,7 +1111,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 19th 2019, 1:23:22 am</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">December 30th 2019, 10:42:08 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/19/stat-for-programmer/">January 4th 2020, 2:19:02 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -1133,7 +1237,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是统计"><span class="toc-number">1.</span> <span class="toc-text">什么是统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要学统计"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要学统计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识数据"><span class="toc-number">2.</span> <span class="toc-text">认识数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据和变量"><span class="toc-number">2.1.</span> <span class="toc-text">数据和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定性数据"><span class="toc-number">2.1.1.</span> <span class="toc-text">定性数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">定量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据和变量的关系"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据和变量的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定性-分类变量"><span class="toc-number">2.1.4.</span> <span class="toc-text">定性 / 分类变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量-数值变量"><span class="toc-number">2.1.5.</span> <span class="toc-text">定量 / 数值变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观测-变量-与数据矩阵"><span class="toc-number">2.1.6.</span> <span class="toc-text">观测, 变量, 与数据矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测量尺度"><span class="toc-number">2.2.</span> <span class="toc-text">测量尺度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象数字系统的属性"><span class="toc-number">2.2.1.</span> <span class="toc-text">抽象数字系统的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量"><span class="toc-number">2.2.2.</span> <span class="toc-text">测量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名目尺度-nominal-scale"><span class="toc-number">2.2.3.</span> <span class="toc-text">名目尺度(nominal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#次序尺度-ordinal-scale"><span class="toc-number">2.2.4.</span> <span class="toc-text">次序尺度(ordinal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等距尺度-interval-scale"><span class="toc-number">2.2.5.</span> <span class="toc-text">等距尺度 (interval scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比尺度-ratio-scale"><span class="toc-number">2.2.6.</span> <span class="toc-text">等比尺度(ratio scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量尺度的重要性"><span class="toc-number">2.2.7.</span> <span class="toc-text">测量尺度的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更加系统地看待变量"><span class="toc-number">2.2.8.</span> <span class="toc-text">更加系统地看待变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#描述统计"><span class="toc-number">3.</span> <span class="toc-text">描述统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是描述统计"><span class="toc-number">3.1.</span> <span class="toc-text">什么是描述统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据的可靠性和有效性"><span class="toc-number">3.2.</span> <span class="toc-text">数据的可靠性和有效性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个分类变量的特征和可视化"><span class="toc-number">3.3.</span> <span class="toc-text">一个分类变量的特征和可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无序分类变量"><span class="toc-number">3.3.1.</span> <span class="toc-text">无序分类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频率表"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">频率表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条形图-bar-plot"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">条形图(bar plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势-central-tendency"><span class="toc-number">3.3.1.3.</span> <span class="toc-text">集中趋势(central tendency)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有序分类变量"><span class="toc-number">3.3.2.</span> <span class="toc-text">有序分类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频率表-1"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">频率表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条形图-bar-plot-1"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">条形图(bar plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势"><span class="toc-number">3.3.2.3.</span> <span class="toc-text">集中趋势</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">3.3.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个数值变量的特征和可视化"><span class="toc-number">3.4.</span> <span class="toc-text">一个数值变量的特征和可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等距变量"><span class="toc-number">3.4.1.</span> <span class="toc-text">等距变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频率表-2"><span class="toc-number">3.4.1.1.</span> <span class="toc-text">频率表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#频率直方图-histogram"><span class="toc-number">3.4.1.2.</span> <span class="toc-text">频率直方图(histogram)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势-众数-中位数以及均值-mean"><span class="toc-number">3.4.1.3.</span> <span class="toc-text">集中趋势: 众数, 中位数以及均值(mean)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#均值-mean-算数平均值"><span class="toc-number">3.4.1.3.1.</span> <span class="toc-text">均值(mean) (算数平均值)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#离散趋势-tendency-of-dispersion"><span class="toc-number">3.4.1.4.</span> <span class="toc-text">离散趋势(tendency of dispersion)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#箱线图-box-plot"><span class="toc-number">3.4.1.5.</span> <span class="toc-text">箱线图(box plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结-1"><span class="toc-number">3.4.1.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比变量"><span class="toc-number">3.4.2.</span> <span class="toc-text">等比变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频数直方图"><span class="toc-number">3.4.2.1.</span> <span class="toc-text">频数直方图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#箱线图"><span class="toc-number">3.4.2.2.</span> <span class="toc-text">箱线图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方差-variance-和标准差-standard-deviation"><span class="toc-number">3.4.2.3.</span> <span class="toc-text">方差(variance)和标准差(standard deviation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结-2"><span class="toc-number">3.4.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布的形状"><span class="toc-number">3.5.</span> <span class="toc-text">分布的形状</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#偏度-skewness"><span class="toc-number">3.5.1.</span> <span class="toc-text">偏度(skewness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#形态-modality"><span class="toc-number">3.5.2.</span> <span class="toc-text">形态(modality)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#峰度-kurtosis"><span class="toc-number">3.5.3.</span> <span class="toc-text">峰度(kurtosis)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量间的关系"><span class="toc-number">3.6.</span> <span class="toc-text">变量间的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两个分类变量的关系"><span class="toc-number">3.6.1.</span> <span class="toc-text">两个分类变量的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关联表-contingency-table"><span class="toc-number">3.6.1.1.</span> <span class="toc-text">关联表(contingency table)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分段条形图"><span class="toc-number">3.6.1.2.</span> <span class="toc-text">分段条形图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相对频率分段条形图"><span class="toc-number">3.6.1.3.</span> <span class="toc-text">相对频率分段条形图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两个数值变量的关系"><span class="toc-number">3.6.2.</span> <span class="toc-text">两个数值变量的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#散点图-scatter-plot"><span class="toc-number">3.6.2.1.</span> <span class="toc-text">散点图(scatter plot)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个数值变量和一个分类变量的关系"><span class="toc-number">3.6.3.</span> <span class="toc-text">一个数值变量和一个分类变量的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#并排箱图-side-by-side-box-plot"><span class="toc-number">3.6.3.1.</span> <span class="toc-text">并排箱图(side-by-side box plot)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#极端值与缺失值"><span class="toc-number">3.7.</span> <span class="toc-text">极端值与缺失值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#极端值-异常值-outliers"><span class="toc-number">3.7.1.</span> <span class="toc-text">极端值/异常值 (outliers)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#修正箱线图"><span class="toc-number">3.7.1.1.</span> <span class="toc-text">修正箱线图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极端值产生的原因"><span class="toc-number">3.7.1.2.</span> <span class="toc-text">极端值产生的原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极端值可能产生的影响"><span class="toc-number">3.7.1.3.</span> <span class="toc-text">极端值可能产生的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何处理极端值"><span class="toc-number">3.7.1.4.</span> <span class="toc-text">如何处理极端值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理缺失值"><span class="toc-number">3.7.2.</span> <span class="toc-text">如何处理缺失值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结-3"><span class="toc-number">3.8.</span> <span class="toc-text">小结</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是统计"><span class="toc-number">1.</span> <span class="toc-text">什么是统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要学统计"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要学统计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#认识数据"><span class="toc-number">2.</span> <span class="toc-text">认识数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据和变量"><span class="toc-number">2.1.</span> <span class="toc-text">数据和变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定性数据"><span class="toc-number">2.1.1.</span> <span class="toc-text">定性数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">定量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据和变量的关系"><span class="toc-number">2.1.3.</span> <span class="toc-text">数据和变量的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定性-分类变量"><span class="toc-number">2.1.4.</span> <span class="toc-text">定性 / 分类变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定量-数值变量"><span class="toc-number">2.1.5.</span> <span class="toc-text">定量 / 数值变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观测-变量-与数据矩阵"><span class="toc-number">2.1.6.</span> <span class="toc-text">观测, 变量, 与数据矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测量尺度"><span class="toc-number">2.2.</span> <span class="toc-text">测量尺度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象数字系统的属性"><span class="toc-number">2.2.1.</span> <span class="toc-text">抽象数字系统的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量"><span class="toc-number">2.2.2.</span> <span class="toc-text">测量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名目尺度-nominal-scale"><span class="toc-number">2.2.3.</span> <span class="toc-text">名目尺度(nominal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#次序尺度-ordinal-scale"><span class="toc-number">2.2.4.</span> <span class="toc-text">次序尺度(ordinal scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等距尺度-interval-scale"><span class="toc-number">2.2.5.</span> <span class="toc-text">等距尺度 (interval scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比尺度-ratio-scale"><span class="toc-number">2.2.6.</span> <span class="toc-text">等比尺度(ratio scale)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测量尺度的重要性"><span class="toc-number">2.2.7.</span> <span class="toc-text">测量尺度的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更加系统地看待变量"><span class="toc-number">2.2.8.</span> <span class="toc-text">更加系统地看待变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#描述统计"><span class="toc-number">3.</span> <span class="toc-text">描述统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是描述统计"><span class="toc-number">3.1.</span> <span class="toc-text">什么是描述统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据的可靠性和有效性"><span class="toc-number">3.2.</span> <span class="toc-text">数据的可靠性和有效性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个分类变量的特征和可视化"><span class="toc-number">3.3.</span> <span class="toc-text">一个分类变量的特征和可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无序分类变量"><span class="toc-number">3.3.1.</span> <span class="toc-text">无序分类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频率表"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">频率表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条形图-bar-plot"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">条形图(bar plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势-central-tendency"><span class="toc-number">3.3.1.3.</span> <span class="toc-text">集中趋势(central tendency)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有序分类变量"><span class="toc-number">3.3.2.</span> <span class="toc-text">有序分类变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频率表-1"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">频率表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条形图-bar-plot-1"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">条形图(bar plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势"><span class="toc-number">3.3.2.3.</span> <span class="toc-text">集中趋势</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">3.3.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个数值变量的特征和可视化"><span class="toc-number">3.4.</span> <span class="toc-text">一个数值变量的特征和可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等距变量"><span class="toc-number">3.4.1.</span> <span class="toc-text">等距变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频率表-2"><span class="toc-number">3.4.1.1.</span> <span class="toc-text">频率表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#频率直方图-histogram"><span class="toc-number">3.4.1.2.</span> <span class="toc-text">频率直方图(histogram)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集中趋势-众数-中位数以及均值-mean"><span class="toc-number">3.4.1.3.</span> <span class="toc-text">集中趋势: 众数, 中位数以及均值(mean)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#均值-mean-算数平均值"><span class="toc-number">3.4.1.3.1.</span> <span class="toc-text">均值(mean) (算数平均值)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#离散趋势-tendency-of-dispersion"><span class="toc-number">3.4.1.4.</span> <span class="toc-text">离散趋势(tendency of dispersion)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#箱线图-box-plot"><span class="toc-number">3.4.1.5.</span> <span class="toc-text">箱线图(box plot)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结-1"><span class="toc-number">3.4.1.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等比变量"><span class="toc-number">3.4.2.</span> <span class="toc-text">等比变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#频数直方图"><span class="toc-number">3.4.2.1.</span> <span class="toc-text">频数直方图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#箱线图"><span class="toc-number">3.4.2.2.</span> <span class="toc-text">箱线图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方差-variance-和标准差-standard-deviation"><span class="toc-number">3.4.2.3.</span> <span class="toc-text">方差(variance)和标准差(standard deviation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结-2"><span class="toc-number">3.4.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分布的形状"><span class="toc-number">3.5.</span> <span class="toc-text">分布的形状</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#偏度-skewness"><span class="toc-number">3.5.1.</span> <span class="toc-text">偏度(skewness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#形态-modality"><span class="toc-number">3.5.2.</span> <span class="toc-text">形态(modality)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#峰度-kurtosis"><span class="toc-number">3.5.3.</span> <span class="toc-text">峰度(kurtosis)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量间的关系"><span class="toc-number">3.6.</span> <span class="toc-text">变量间的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两个分类变量的关系"><span class="toc-number">3.6.1.</span> <span class="toc-text">两个分类变量的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关联表-contingency-table"><span class="toc-number">3.6.1.1.</span> <span class="toc-text">关联表(contingency table)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分段条形图"><span class="toc-number">3.6.1.2.</span> <span class="toc-text">分段条形图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相对频率分段条形图"><span class="toc-number">3.6.1.3.</span> <span class="toc-text">相对频率分段条形图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两个数值变量的关系"><span class="toc-number">3.6.2.</span> <span class="toc-text">两个数值变量的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#散点图-scatter-plot"><span class="toc-number">3.6.2.1.</span> <span class="toc-text">散点图(scatter plot)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个数值变量和一个分类变量的关系"><span class="toc-number">3.6.3.</span> <span class="toc-text">一个数值变量和一个分类变量的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#并排箱图-side-by-side-box-plot"><span class="toc-number">3.6.3.1.</span> <span class="toc-text">并排箱图(side-by-side box plot)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#极端值与缺失值"><span class="toc-number">3.7.</span> <span class="toc-text">极端值与缺失值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#极端值-异常值-outliers"><span class="toc-number">3.7.1.</span> <span class="toc-text">极端值/异常值 (outliers)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#修正箱线图"><span class="toc-number">3.7.1.1.</span> <span class="toc-text">修正箱线图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极端值产生的原因"><span class="toc-number">3.7.1.2.</span> <span class="toc-text">极端值产生的原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极端值可能产生的影响"><span class="toc-number">3.7.1.3.</span> <span class="toc-text">极端值可能产生的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何处理极端值"><span class="toc-number">3.7.1.4.</span> <span class="toc-text">如何处理极端值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理缺失值"><span class="toc-number">3.7.2.</span> <span class="toc-text">如何处理缺失值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结-3"><span class="toc-number">3.8.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#概率和概率分布"><span class="toc-number">4.</span> <span class="toc-text">概率和概率分布</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是概率论"><span class="toc-number">4.1.</span> <span class="toc-text">什么是概率论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关术语和概念"><span class="toc-number">4.1.1.</span> <span class="toc-text">相关术语和概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-4"><span class="toc-number">4.1.2.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概率"><span class="toc-number">4.2.</span> <span class="toc-text">概率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#频率"><span class="toc-number">4.2.1.</span> <span class="toc-text">频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#概率-1"><span class="toc-number">4.2.2.</span> <span class="toc-text">概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#频率-vs-概率"><span class="toc-number">4.2.3.</span> <span class="toc-text">频率 vs 概率</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1146,6 +1250,48 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1957,13 +2103,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
@@ -1979,17 +2125,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
