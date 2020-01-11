@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">19.1k</span>阅读时长: <span class="post-count reading-time">66 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">20.4k</span>阅读时长: <span class="post-count reading-time">70 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -1948,6 +1948,100 @@ height:50vh;
 <br>
 
 <br>
+
+<h2 id="行空间和矩阵的行秩"><a href="#行空间和矩阵的行秩" class="headerlink" title="行空间和矩阵的行秩"></a>行空间和矩阵的行秩</h2><p>上一小节提到的问题</p>
+<p><img src="/Blog/intro/problem_from_prev.PNG" alt></p>
+<p>同理我们可以用同样的方法求一组n维向量生成空间的维度</p>
+<p><img src="/Blog/intro/problem_from_prev_1.PNG" alt></p>
+<p>我们就可以不断删除线性相关的向量, 看最后剩下多少组向量</p>
+<p>换句话说, 这个过程就是要找到<strong>这组向量有多少和其他向量线性相关</strong></p>
+<br>
+
+<p><strong>回忆: Gauss-Jordan消元法的结果的每一行, 都是原来矩阵各行的一个线性组合</strong></p>
+<p><img src="/Blog/intro/linear_combin_5.PNG" alt></p>
+<p>当化为行最简形式后, 零行肯定出现在最下面, 而零行用向量的角度去看就是一个零向量</p>
+<p>在这个例子中, 我们得到的结果就是</p>
+<p><img src="/Blog/intro/problem_from_prev_2.PNG" alt></p>
+<p>这意味着r1, r2, r3存在非零系数, 使得它们的线性组合的结果为0</p>
+<p>换句话说, 这三个向量是线性相关的</p>
+<p>而Gauss-Jordan消元法的过程中, 其实只进行Gauss消元法的过程, 所以r3前面的系数肯定为1. 高斯消元法是上面的主元行乘以某个倍数加当前行来消元, 所以当前行的系数肯定为1.</p>
+<p>所以这个式子可以写成</p>
+<p><img src="/Blog/intro/problem_from_prev_3.PNG" alt></p>
+<p>即 r3 可以表示为 r1 和 r2 的线性组合, 因此我们可以把 r3 删除掉</p>
+<br>
+
+<p>更进一步, 如果我们进行Gauss-Jordan消元一个有m行的矩阵, 下面x行都为 0 行, 这就意味着, 这 x 行所以应的行向量都可以表示成上面 m-x 行行向量的线性组合</p>
+<p>所以这x个最终为零向量的向量都可以删去</p>
+<p><img src="/Blog/intro/line_space.PNG" alt></p>
+<br>
+
+<p><img src="/Blog/intro/line_space_1.PNG" alt></p>
+<br>
+
+<h3 id="行空间和列空间"><a href="#行空间和列空间" class="headerlink" title="行空间和列空间"></a>行空间和列空间</h3><p><img src="/Blog/intro/line_space_2.PNG" alt></p>
+<p>例子:</p>
+<p><img src="/Blog/intro/line_space_3.PNG" alt></p>
+<p>本小节, 我们主要聚焦在行空间上.</p>
+<p>m 行 n 列, 行空间是 n 维空间的子集</p>
+<p>行空间的维度 &lt;= n</p>
+<p>具体怎么求? =&gt; 求矩阵<strong>行最简形式的非零行数量</strong></p>
+<br>
+
+<p>一个矩阵的行最简形式的非零行数量很重要</p>
+<p>无论是增广矩阵还是系数矩阵, rref的非零行个数其实就是整个方程组的约束数, 或者说整个方程组<strong>化简后剩下的方程数</strong>, 剩下的方程数和未知数的关系就生成了方程组解的结构</p>
+<br>
+
+<h3 id="行秩-Row-Rank"><a href="#行秩-Row-Rank" class="headerlink" title="行秩 (Row Rank)"></a>行秩 (Row Rank)</h3><p>由于矩阵的行最简形式的非零行数量很重要, 因此我们给他一个名字:</p>
+<p><strong>一个矩阵的行最简形式的非零行数量成为矩阵的行秩 (Row Rank)</strong></p>
+<p>行空间的维度, 为矩阵的行秩</p>
+<p>注意行秩和维度作用的<strong>对象</strong>是不同的. 空间是没有行秩的, 只有矩阵有行秩, 但矩阵是没有维度的. 但行秩和维度间存在着这样的联系</p>
+<br>
+
+<h4 id="如何求矩阵行空间的基"><a href="#如何求矩阵行空间的基" class="headerlink" title="如何求矩阵行空间的基"></a>如何求矩阵行空间的基</h4><p>更近一步, 如何求出空间的一组基?</p>
+<p>非常简单, 当化为行最简形式后, 最终得到的非零行的行向量, 就是这个矩阵行空间的一组基</p>
+<p><img src="/Blog/intro/line_space_4.PNG" alt></p>
+<br>
+
+<h5 id="证明-2"><a href="#证明-2" class="headerlink" title="证明:"></a>证明:</h5><p><img src="/Blog/intro/line_space_5.PNG" alt></p>
+<p>对于矩阵R来说, 所有非零向量已经是线性无关的, 接下来只要<strong>证明A的行空间就是R的行空间</strong>, 就说明 R 的非零行的行向量是空间中的一组基</p>
+<br>
+
+<p><strong>证明A的行空间就是R的行空间</strong></p>
+<blockquote>
+<p>有点像集合论中的证明方式</p>
+<p>如果想证明两个集合a,b相等, 就要证明a是b的子集, b是a的子集</p>
+<p>即a中所有元素都在b中, b中所有元素都在a中</p>
+</blockquote>
+<p>这里我们证明:</p>
+<p><strong>A的行空间的每一个向量, 都在R的行空间中</strong></p>
+<p><strong>R的行空间的每一个向量, 都在A的行空间中</strong></p>
+<p>就可以证明A的行空间等于R的行空间了 (空间就是向量的集合)</p>
+<br>
+
+<p>显然是有这样的关系的</p>
+<p>A的行空间中的每一个向量都是A的行向量的线性组合</p>
+<p>R的每一行也是原来A的行向量的线性组合</p>
+<p>很显然, A的行空间的每一个向量都可以表示为R的行向量的线性组合</p>
+<p>反过来, A矩阵的每一行也可以表示为R矩阵的每一行的线性组合</p>
+<p>所以, R的行空间的每一个向量都可以表示为A的行向量的线性组合</p>
+<p>R 是由 A 进行Gauss-Jordan 消元得来的(初等变换), 这两个矩阵的行空间是完全一样的</p>
+<p>A的行空间等于R的行空间, 而R的行空间的基就是其中的非零行(已经是行最简形式, 非零行已经线性无关了)</p>
+<p><strong>一个矩阵A的行最简形式的非零行向量, 是A的行空间的一组基</strong></p>
+<br>
+
+<h3 id="小结-5"><a href="#小结-5" class="headerlink" title="小结"></a>小结</h3><p>对于一个矩阵</p>
+<ul>
+<li>行向量生成的空间, 称为<strong>行空间</strong> (Row Space)</li>
+<li>m行n列, 行空间是n维空间的子空间</li>
+<li>一个矩阵的行最简形式的非零行数量称为矩阵的<strong>行秩</strong> (Row Rank)</li>
+<li>行空间的维度, 维矩阵的行秩</li>
+<li>一个矩阵A的行最简形式的非零行向量, 是A的行空间的一组基</li>
+</ul>
+<br>
+
+<br>
+
+
     </article>
     <!-- license  -->
     
@@ -1955,7 +2049,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">December 20th 2019, 1:11:18 am</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">January 7th 2020, 11:45:38 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/12/20/play-with-linear-algebra-2/">January 10th 2020, 8:16:01 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -2076,7 +2170,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性系统"><span class="toc-number">1.</span> <span class="toc-text">线性系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与消元法"><span class="toc-number">1.1.</span> <span class="toc-text">线性系统与消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性系统-1"><span class="toc-number">1.1.1.</span> <span class="toc-text">线性系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消元法"><span class="toc-number">1.1.2.</span> <span class="toc-text">消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯消元法"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增广矩阵"><span class="toc-number">1.2.1.</span> <span class="toc-text">增广矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯消元法-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">高斯消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯-约旦消元法"><span class="toc-number">1.3.</span> <span class="toc-text">高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行最简形式和线性方程组解的结构"><span class="toc-number">1.4.</span> <span class="toc-text">行最简形式和线性方程组解的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组解的结构"><span class="toc-number">1.4.1.</span> <span class="toc-text">线性方程组解的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行最简形式"><span class="toc-number">1.4.2.</span> <span class="toc-text">行最简形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解线性方程组解的结构"><span class="toc-number">1.5.</span> <span class="toc-text">直观理解线性方程组解的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更一般化的高斯-约旦消元法"><span class="toc-number">1.6.</span> <span class="toc-text">更一般化的高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次线性方程组"><span class="toc-number">1.7.</span> <span class="toc-text">齐次线性方程组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初等矩阵和矩阵的可逆性"><span class="toc-number">2.</span> <span class="toc-text">初等矩阵和矩阵的可逆性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与矩阵的逆"><span class="toc-number">2.1.</span> <span class="toc-text">线性系统与矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初等矩阵"><span class="toc-number">2.2.</span> <span class="toc-text">初等矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的某一行乘以一个常数"><span class="toc-number">2.2.1.</span> <span class="toc-text">矩阵的某一行乘以一个常数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#让矩阵的一行加-减-另一行"><span class="toc-number">2.2.2.</span> <span class="toc-text">让矩阵的一行加(减)另一行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交换矩阵的两行"><span class="toc-number">2.2.3.</span> <span class="toc-text">交换矩阵的两行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.4.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正儿八经的形式化概念"><span class="toc-number">2.2.5.</span> <span class="toc-text">正儿八经的形式化概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从初等矩阵到矩阵的逆"><span class="toc-number">2.3.</span> <span class="toc-text">从初等矩阵到矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么矩阵的逆这么重要"><span class="toc-number">2.4.</span> <span class="toc-text">为什么矩阵的逆这么重要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算功能"><span class="toc-number">2.4.1.</span> <span class="toc-text">计算功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的逆和很多重要的命题连接在了一起"><span class="toc-number">2.4.2.</span> <span class="toc-text">矩阵的逆和很多重要的命题连接在了一起</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-1-推导-2"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">通过 (1) 推导 (2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-2-推导-3"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">通过 (2) 推导 (3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-3-推导-4"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">通过 (3) 推导 (4)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-4-推导-1"><span class="toc-number">2.4.2.4.</span> <span class="toc-text">通过 (4) 推导 (1)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">2.4.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的LU分解"><span class="toc-number">2.5.</span> <span class="toc-text">矩阵的LU分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是矩阵的分解"><span class="toc-number">2.5.1.</span> <span class="toc-text">什么是矩阵的分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是矩阵的LU分解"><span class="toc-number">2.5.2.</span> <span class="toc-text">什么是矩阵的LU分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么进行LU分解"><span class="toc-number">2.5.3.</span> <span class="toc-text">为什么进行LU分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非方阵的LU分解-矩阵的LDU分解和PLU分解"><span class="toc-number">2.6.</span> <span class="toc-text">非方阵的LU分解, 矩阵的LDU分解和PLU分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LDU分解"><span class="toc-number">2.6.1.</span> <span class="toc-text">LDU分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PLU分解"><span class="toc-number">2.6.2.</span> <span class="toc-text">PLU分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的PLUP分解和再看矩阵的乘法"><span class="toc-number">2.7.</span> <span class="toc-text">矩阵的PLUP分解和再看矩阵的乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#列交换"><span class="toc-number">2.7.1.</span> <span class="toc-text">列交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行交换"><span class="toc-number">2.7.2.</span> <span class="toc-text">行交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新看待矩阵乘法"><span class="toc-number">2.7.3.</span> <span class="toc-text">重新看待矩阵乘法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线性相关-线性无关和生成空间"><span class="toc-number">3.</span> <span class="toc-text">线性相关, 线性无关和生成空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性组合"><span class="toc-number">3.1.</span> <span class="toc-text">线性组合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性组合"><span class="toc-number">3.1.1.</span> <span class="toc-text">什么是线性组合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性相关和线性无关"><span class="toc-number">3.2.</span> <span class="toc-text">线性相关和线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性相关的定义"><span class="toc-number">3.2.1.</span> <span class="toc-text">线性相关的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-gt"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">证明: =&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-lt"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">证明: &lt;=</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性无关"><span class="toc-number">3.2.2.</span> <span class="toc-text">线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-标准单位向量e1…en-线性无关"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">证明: 标准单位向量e1…en 线性无关</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的逆和线性相关-线性无关"><span class="toc-number">3.3.</span> <span class="toc-text">矩阵的逆和线性相关, 线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性相关的重要性质"><span class="toc-number">3.3.1.</span> <span class="toc-text">线性相关的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从一个例子出发"><span class="toc-number">3.3.2.</span> <span class="toc-text">从一个例子出发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更一般的如果有m个n维向量"><span class="toc-number">3.3.3.</span> <span class="toc-text">更一般的如果有m个n维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么时候线性无关"><span class="toc-number">3.3.4.</span> <span class="toc-text">什么时候线性无关</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观地理解线性相关和线性无关"><span class="toc-number">3.4.</span> <span class="toc-text">直观地理解线性相关和线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过坐标系理解线性相关"><span class="toc-number">3.4.1.</span> <span class="toc-text">通过坐标系理解线性相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果存在零向量"><span class="toc-number">3.4.2.</span> <span class="toc-text">如果存在零向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相反的结论"><span class="toc-number">3.4.3.</span> <span class="toc-text">相反的结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成空间"><span class="toc-number">3.5.</span> <span class="toc-text">生成空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-生成空间所需的最少向量"><span class="toc-number">3.5.1.</span> <span class="toc-text">证明: 生成空间所需的最少向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-2"><span class="toc-number">3.5.2.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基"><span class="toc-number">3.6.</span> <span class="toc-text">空间的基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空间的基的定义"><span class="toc-number">3.6.1.</span> <span class="toc-text">空间的基的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间的基的性质"><span class="toc-number">3.6.2.</span> <span class="toc-text">空间的基的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#证明一个向量在一组基中的表示方法唯一"><span class="toc-number">3.6.3.</span> <span class="toc-text">证明一个向量在一组基中的表示方法唯一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-标准单位向量满足性质"><span class="toc-number">3.6.3.1.</span> <span class="toc-text">证明: 标准单位向量满足性质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-任意一组空间的基满足性质"><span class="toc-number">3.6.3.2.</span> <span class="toc-text">证明: 任意一组空间的基满足性质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-3"><span class="toc-number">3.6.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基的更多性质"><span class="toc-number">3.7.</span> <span class="toc-text">空间的基的更多性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空间的基的性质-1"><span class="toc-number">3.7.1.</span> <span class="toc-text">空间的基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明"><span class="toc-number">3.7.1.1.</span> <span class="toc-text">证明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本章小结"><span class="toc-number">3.8.</span> <span class="toc-text">本章小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#向量空间-维度-和四大子空间"><span class="toc-number">4.</span> <span class="toc-text">向量空间, 维度, 和四大子空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间-向量空间和欧几里得空间"><span class="toc-number">4.1.</span> <span class="toc-text">空间, 向量空间和欧几里得空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是空间"><span class="toc-number">4.1.1.</span> <span class="toc-text">什么是空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是向量空间"><span class="toc-number">4.1.2.</span> <span class="toc-text">什么是向量空间</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#封闭性"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">封闭性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-4"><span class="toc-number">4.1.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#广义向量空间"><span class="toc-number">4.2.</span> <span class="toc-text">广义向量空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例一"><span class="toc-number">4.2.1.</span> <span class="toc-text">例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例二"><span class="toc-number">4.2.2.</span> <span class="toc-text">例二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例三"><span class="toc-number">4.2.3.</span> <span class="toc-text">例三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子空间"><span class="toc-number">4.3.</span> <span class="toc-text">子空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-1"><span class="toc-number">4.3.1.</span> <span class="toc-text">证明:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明之前-理清思路"><span class="toc-number">4.3.1.1.</span> <span class="toc-text">证明之前, 理清思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向量空间的性质"><span class="toc-number">4.3.1.2.</span> <span class="toc-text">向量空间的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#证明-0u-O"><span class="toc-number">4.3.1.2.1.</span> <span class="toc-text">证明: 0u = O</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#证明-u-1u"><span class="toc-number">4.3.1.2.2.</span> <span class="toc-text">证明: -u = -1u</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始证明"><span class="toc-number">4.3.2.</span> <span class="toc-text">开始证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解欧几里得空间的子空间"><span class="toc-number">4.4.</span> <span class="toc-text">直观理解欧几里得空间的子空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#维度"><span class="toc-number">4.5.</span> <span class="toc-text">维度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子空间和维度"><span class="toc-number">4.5.1.</span> <span class="toc-text">子空间和维度</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性系统"><span class="toc-number">1.</span> <span class="toc-text">线性系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与消元法"><span class="toc-number">1.1.</span> <span class="toc-text">线性系统与消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性系统-1"><span class="toc-number">1.1.1.</span> <span class="toc-text">线性系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#消元法"><span class="toc-number">1.1.2.</span> <span class="toc-text">消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯消元法"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#增广矩阵"><span class="toc-number">1.2.1.</span> <span class="toc-text">增广矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯消元法-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">高斯消元法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯-约旦消元法"><span class="toc-number">1.3.</span> <span class="toc-text">高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行最简形式和线性方程组解的结构"><span class="toc-number">1.4.</span> <span class="toc-text">行最简形式和线性方程组解的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性方程组解的结构"><span class="toc-number">1.4.1.</span> <span class="toc-text">线性方程组解的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行最简形式"><span class="toc-number">1.4.2.</span> <span class="toc-text">行最简形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解线性方程组解的结构"><span class="toc-number">1.5.</span> <span class="toc-text">直观理解线性方程组解的结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更一般化的高斯-约旦消元法"><span class="toc-number">1.6.</span> <span class="toc-text">更一般化的高斯-约旦消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#齐次线性方程组"><span class="toc-number">1.7.</span> <span class="toc-text">齐次线性方程组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初等矩阵和矩阵的可逆性"><span class="toc-number">2.</span> <span class="toc-text">初等矩阵和矩阵的可逆性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性系统与矩阵的逆"><span class="toc-number">2.1.</span> <span class="toc-text">线性系统与矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初等矩阵"><span class="toc-number">2.2.</span> <span class="toc-text">初等矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的某一行乘以一个常数"><span class="toc-number">2.2.1.</span> <span class="toc-text">矩阵的某一行乘以一个常数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#让矩阵的一行加-减-另一行"><span class="toc-number">2.2.2.</span> <span class="toc-text">让矩阵的一行加(减)另一行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交换矩阵的两行"><span class="toc-number">2.2.3.</span> <span class="toc-text">交换矩阵的两行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.4.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正儿八经的形式化概念"><span class="toc-number">2.2.5.</span> <span class="toc-text">正儿八经的形式化概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从初等矩阵到矩阵的逆"><span class="toc-number">2.3.</span> <span class="toc-text">从初等矩阵到矩阵的逆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么矩阵的逆这么重要"><span class="toc-number">2.4.</span> <span class="toc-text">为什么矩阵的逆这么重要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算功能"><span class="toc-number">2.4.1.</span> <span class="toc-text">计算功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#矩阵的逆和很多重要的命题连接在了一起"><span class="toc-number">2.4.2.</span> <span class="toc-text">矩阵的逆和很多重要的命题连接在了一起</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-1-推导-2"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">通过 (1) 推导 (2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-2-推导-3"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">通过 (2) 推导 (3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-3-推导-4"><span class="toc-number">2.4.2.3.</span> <span class="toc-text">通过 (3) 推导 (4)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过-4-推导-1"><span class="toc-number">2.4.2.4.</span> <span class="toc-text">通过 (4) 推导 (1)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">2.4.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的LU分解"><span class="toc-number">2.5.</span> <span class="toc-text">矩阵的LU分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是矩阵的分解"><span class="toc-number">2.5.1.</span> <span class="toc-text">什么是矩阵的分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是矩阵的LU分解"><span class="toc-number">2.5.2.</span> <span class="toc-text">什么是矩阵的LU分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么进行LU分解"><span class="toc-number">2.5.3.</span> <span class="toc-text">为什么进行LU分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非方阵的LU分解-矩阵的LDU分解和PLU分解"><span class="toc-number">2.6.</span> <span class="toc-text">非方阵的LU分解, 矩阵的LDU分解和PLU分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LDU分解"><span class="toc-number">2.6.1.</span> <span class="toc-text">LDU分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PLU分解"><span class="toc-number">2.6.2.</span> <span class="toc-text">PLU分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的PLUP分解和再看矩阵的乘法"><span class="toc-number">2.7.</span> <span class="toc-text">矩阵的PLUP分解和再看矩阵的乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#列交换"><span class="toc-number">2.7.1.</span> <span class="toc-text">列交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行交换"><span class="toc-number">2.7.2.</span> <span class="toc-text">行交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新看待矩阵乘法"><span class="toc-number">2.7.3.</span> <span class="toc-text">重新看待矩阵乘法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线性相关-线性无关和生成空间"><span class="toc-number">3.</span> <span class="toc-text">线性相关, 线性无关和生成空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性组合"><span class="toc-number">3.1.</span> <span class="toc-text">线性组合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性组合"><span class="toc-number">3.1.1.</span> <span class="toc-text">什么是线性组合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性相关和线性无关"><span class="toc-number">3.2.</span> <span class="toc-text">线性相关和线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性相关的定义"><span class="toc-number">3.2.1.</span> <span class="toc-text">线性相关的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-gt"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">证明: =&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-lt"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">证明: &lt;=</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性无关"><span class="toc-number">3.2.2.</span> <span class="toc-text">线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-标准单位向量e1…en-线性无关"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">证明: 标准单位向量e1…en 线性无关</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的逆和线性相关-线性无关"><span class="toc-number">3.3.</span> <span class="toc-text">矩阵的逆和线性相关, 线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性相关的重要性质"><span class="toc-number">3.3.1.</span> <span class="toc-text">线性相关的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从一个例子出发"><span class="toc-number">3.3.2.</span> <span class="toc-text">从一个例子出发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更一般的如果有m个n维向量"><span class="toc-number">3.3.3.</span> <span class="toc-text">更一般的如果有m个n维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么时候线性无关"><span class="toc-number">3.3.4.</span> <span class="toc-text">什么时候线性无关</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观地理解线性相关和线性无关"><span class="toc-number">3.4.</span> <span class="toc-text">直观地理解线性相关和线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过坐标系理解线性相关"><span class="toc-number">3.4.1.</span> <span class="toc-text">通过坐标系理解线性相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果存在零向量"><span class="toc-number">3.4.2.</span> <span class="toc-text">如果存在零向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相反的结论"><span class="toc-number">3.4.3.</span> <span class="toc-text">相反的结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成空间"><span class="toc-number">3.5.</span> <span class="toc-text">生成空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-生成空间所需的最少向量"><span class="toc-number">3.5.1.</span> <span class="toc-text">证明: 生成空间所需的最少向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-2"><span class="toc-number">3.5.2.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基"><span class="toc-number">3.6.</span> <span class="toc-text">空间的基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空间的基的定义"><span class="toc-number">3.6.1.</span> <span class="toc-text">空间的基的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间的基的性质"><span class="toc-number">3.6.2.</span> <span class="toc-text">空间的基的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#证明一个向量在一组基中的表示方法唯一"><span class="toc-number">3.6.3.</span> <span class="toc-text">证明一个向量在一组基中的表示方法唯一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-标准单位向量满足性质"><span class="toc-number">3.6.3.1.</span> <span class="toc-text">证明: 标准单位向量满足性质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#证明-任意一组空间的基满足性质"><span class="toc-number">3.6.3.2.</span> <span class="toc-text">证明: 任意一组空间的基满足性质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-3"><span class="toc-number">3.6.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基的更多性质"><span class="toc-number">3.7.</span> <span class="toc-text">空间的基的更多性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空间的基的性质-1"><span class="toc-number">3.7.1.</span> <span class="toc-text">空间的基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明"><span class="toc-number">3.7.1.1.</span> <span class="toc-text">证明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本章小结"><span class="toc-number">3.8.</span> <span class="toc-text">本章小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#向量空间-维度-和四大子空间"><span class="toc-number">4.</span> <span class="toc-text">向量空间, 维度, 和四大子空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间-向量空间和欧几里得空间"><span class="toc-number">4.1.</span> <span class="toc-text">空间, 向量空间和欧几里得空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是空间"><span class="toc-number">4.1.1.</span> <span class="toc-text">什么是空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是向量空间"><span class="toc-number">4.1.2.</span> <span class="toc-text">什么是向量空间</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#封闭性"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">封闭性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-4"><span class="toc-number">4.1.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#广义向量空间"><span class="toc-number">4.2.</span> <span class="toc-text">广义向量空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例一"><span class="toc-number">4.2.1.</span> <span class="toc-text">例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例二"><span class="toc-number">4.2.2.</span> <span class="toc-text">例二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例三"><span class="toc-number">4.2.3.</span> <span class="toc-text">例三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子空间"><span class="toc-number">4.3.</span> <span class="toc-text">子空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-1"><span class="toc-number">4.3.1.</span> <span class="toc-text">证明:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明之前-理清思路"><span class="toc-number">4.3.1.1.</span> <span class="toc-text">证明之前, 理清思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向量空间的性质"><span class="toc-number">4.3.1.2.</span> <span class="toc-text">向量空间的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#证明-0u-O"><span class="toc-number">4.3.1.2.1.</span> <span class="toc-text">证明: 0u = O</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#证明-u-1u"><span class="toc-number">4.3.1.2.2.</span> <span class="toc-text">证明: -u = -1u</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始证明"><span class="toc-number">4.3.2.</span> <span class="toc-text">开始证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解欧几里得空间的子空间"><span class="toc-number">4.4.</span> <span class="toc-text">直观理解欧几里得空间的子空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#维度"><span class="toc-number">4.5.</span> <span class="toc-text">维度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子空间和维度"><span class="toc-number">4.5.1.</span> <span class="toc-text">子空间和维度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行空间和矩阵的行秩"><span class="toc-number">4.6.</span> <span class="toc-text">行空间和矩阵的行秩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#行空间和列空间"><span class="toc-number">4.6.1.</span> <span class="toc-text">行空间和列空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行秩-Row-Rank"><span class="toc-number">4.6.2.</span> <span class="toc-text">行秩 (Row Rank)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何求矩阵行空间的基"><span class="toc-number">4.6.2.1.</span> <span class="toc-text">如何求矩阵行空间的基</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#证明-2"><span class="toc-number">4.6.2.1.1.</span> <span class="toc-text">证明:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-5"><span class="toc-number">4.6.3.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2089,24 +2183,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -2950,15 +3026,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
         <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
@@ -2972,19 +3048,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
+    
+        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
@@ -3033,9 +3109,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
+    
+        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
