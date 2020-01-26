@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">931</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.9k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -464,6 +464,144 @@ height:50vh;
 
 <br>
 
+<h2 id="一维投影"><a href="#一维投影" class="headerlink" title="一维投影"></a>一维投影</h2><p>看起来和正交一点关系都没有, 但其实他们的关系是巨大的</p>
+<p>更重要的是, 这里我们其实把一个非常复杂的过程进行拆解, 先看这个复杂过程的一小部分</p>
+<br>
+
+<p>这个复杂的过程指的是: </p>
+<p>通常对于一个空间来说, 我们可能只能得到随便的一组基. 而我们希望进一步找到这个空间的一组<strong>正交基</strong></p>
+<p>这是我们接下来三个小节要一直处理的问题</p>
+<p>如果找到一组正交基, 更进一步, 找到一组<strong>标准正交基</strong>就特别容易了, 只要把找到的正交基进行<strong>归一化</strong>处理就好了</p>
+<p><img src="/Blog/intro/unionlize.PNG" alt></p>
+<br>
+
+<p>这一小节将从最简单的二维情况出发, 来看看这个过程是怎样做的</p>
+<blockquote>
+<p>本小结虽然叫做<strong>投影</strong></p>
+<p>投影本身是在线性代数领域不小的一个话题</p>
+<p>但我们的关注点并不在投影, 只是借助投影来帮我们求出一组正交基</p>
+</blockquote>
+<br>
+
+<p>如果给出任意两个不共线的向量(因为我们假设的是给出一组基, 因此一定不共线), 如何根据这两个向量求出二维平面的一组正交基?</p>
+<p><img src="/Blog/intro/two_vector.PNG" alt></p>
+<p>我们要借助投影, 但实际上我们只需要改变一个向量, 让它和另一个向量垂直, 这里假设向量u是不变的, 我们改变向量v让它们互相垂直</p>
+<p>很简单, 如果我们先求出 v向量 在 u向量 上的投影</p>
+<p><img src="/Blog/intro/projection.PNG" alt></p>
+<p>所谓投影, 就是把 <strong>v向量</strong> 理解为线段的话, 从线段末端向u所在直线做垂线, 把垂足的位置当作是另外一个向量的末端.</p>
+<p>这个蓝色向量p 就是v向量在u向量上的投影</p>
+<p>如果我们已知p向量, 那么相应的我们求出和u向量垂直的向量就非常容易</p>
+<p><img src="/Blog/intro/projection_1.PNG" alt></p>
+<p>绿色的向量(v-p) 就和u垂直, 因为绿色向量加蓝色向量等于向量v</p>
+<p>u和(v-p) 就是这个二维空间的一组正交基</p>
+<blockquote>
+<p>为什么叫做一维投影, 核心就是我们要找到一组蓝色向量p, 即投影向量</p>
+</blockquote>
+<p>下面的关键就是求出p</p>
+<br>
+
+<h3 id="求投影向量p"><a href="#求投影向量p" class="headerlink" title="求投影向量p"></a>求投影向量p</h3><p>非常容易, 在之前讲向量时已经涉及过了</p>
+<p>点乘的结果就是将一个向量投影到另一个向量上在做向量乘法</p>
+<p><img src="/Blog/intro/projection_2.PNG" alt></p>
+<p>这样就即得到了p的模, 以及p的方向. 合在一起就得到了p向量的表达</p>
+<p><img src="/Blog/intro/projection_3.PNG" alt></p>
+<blockquote>
+<p>注意: 向量不能连续点乘, u * v 是一个数, 所以 (u * v) * u 不等价于 (u * u *) v</p>
+</blockquote>
+<p>这就是一维投影. 我们把一个向量投影到另外一个向量(可以理解为是一维空间)上</p>
+<p>在有的教材可能会换一种写法</p>
+<p><img src="/Blog/intro/projection_4.PNG" alt></p>
+<p>不过, 写成这个样子是不能约分的, 这是向量的点乘, 不是两个数字相乘</p>
+<br>
+
+<p>此时就在<strong>二维空间</strong>找到了一组正交基, 但如果三维乃至更高维度怎么办?</p>
+<br>
+
+<br>
+
+<h2 id="高维投影-和-Gram-Schmidt过程"><a href="#高维投影-和-Gram-Schmidt过程" class="headerlink" title="高维投影 和 Gram-Schmidt过程"></a>高维投影 和 Gram-Schmidt过程</h2><p>接下来处理更高维度的投影问题, 进而把求正交基的过程总结成一个严谨的算法过程(<strong>Gram-Schmidt过程</strong>). </p>
+<p>二维空间中:</p>
+<p><img src="/Blog/intro/projection_1.PNG" alt></p>
+<br>
+
+<h3 id="求三维空间中的投影"><a href="#求三维空间中的投影" class="headerlink" title="求三维空间中的投影"></a>求三维空间中的投影</h3><p><img src="/Blog/intro/3d_projection.PNG" alt></p>
+<p>这三个向量是这个三维空间中的一组基, 但不是一组正交基, 不满足两两正交的条件</p>
+<p>首先我们可以使用<strong>一维投影</strong>的问题, 处理其中的两个向量</p>
+<p>这里先把u和v两个向量处理成正交的形状</p>
+<p>u 和 v 变为 p1, p2</p>
+<p><img src="/Blog/intro/3d_projection_1.PNG" alt></p>
+<p>此时p1, p2已经相互垂直. 但第三个向量w还没有和p1, p2垂直</p>
+<p>下面只需要让w和p1, p2相垂直就好了</p>
+<p>即: 找出w的一个分量, 它和p1, p2所在的平面垂直</p>
+<p><img src="/Blog/intro/3d_projection_2.PNG" alt></p>
+<p>这和我们之前讲的一维投影非常像, 只不过此时w向量从向一个<strong>一维子空间</strong>投影变成了向<strong>二维子空间(平面)投影</strong></p>
+<p>依然, 在求出p之后用w-p就是我们所求的向量</p>
+<p>问题的核心又变成了: 求w在p1, p2平面上相应的投影向量p</p>
+<br>
+
+<p>注意: 此时p1, p2本身已经是相互垂直的, 所以p1, p2已经是p1, p2所组成的二维屏面的一组<strong>正交基</strong>了</p>
+<p>因此, p这个向量就可以写作是p1 和 p2 的一个线性组合, (<strong>因为p1, p2是一组基, 因此这组基所代表的平面上的任意向量都可以表示成这组基的线性组合</strong>)</p>
+<p><img src="/Blog/intro/3d_projection_3.PNG" alt></p>
+<p>或者理解成p向p1, p2作垂线, 相应的落在p1, p2方向上就有两个分向量a和b, p = a+b</p>
+<p><img src="/Blog/intro/3d_projection_4.PNG" alt></p>
+<p>此时, 已知条件除了p1, p2以外, 还有向量w</p>
+<p>w的末端可以和a, b进行连接, aw垂直于p1, bw垂直于p2</p>
+<p><img src="/Blog/intro/3d_projection_5.PNG" alt></p>
+<p>可以很明显看出:</p>
+<p>a 是 w 在 p1 的投影, b 是 w 在 p2 的投影</p>
+<p>即: <strong>w向量对p1和p2这两个正交基上的投影(a和b), 它们的加和 (肯定在p1, p2组成的子空间中) 就是 w向量在这个子空间 (p1, p2生成的子空间) 的投影</strong></p>
+<blockquote>
+<p>整理一下过程: </p>
+<p>我们先求出二维平面的一组正交基 p1, p2</p>
+<p>之后第三个向量w分布向p1, p2作投影, 得到分量a, b</p>
+<p>把a, b加和起来就是w在p1, p2构成的子空间上的投影p</p>
+<p>之后就可以求出第三个正交基: w-p</p>
+</blockquote>
+<p>其实我们把这个问题转换成了一个向量向另外 <strong>一个</strong> 向量上的投影</p>
+<p><img src="/Blog/intro/3d_projection_6.PNG" alt></p>
+<p>通过a和b就可以构造p, 通过p就可以构造第三个正交向量: w-p</p>
+<p><img src="/Blog/intro/3d_projection_7.PNG" alt></p>
+<p><img src="/Blog/intro/3d_projection_8.PNG" alt></p>
+<p>如果是一个四维向量, 虽然我们无法可视化, 但是同理我们依然可以先用同样的方式求出p1, p2, p3</p>
+<p>假设第四个向量为x, 根据x求出p4, 使得p4和p1, p2, p3全都垂直</p>
+<p><strong>其实我们要做的就是让x减去x对p1, p2, p3 三个向量组成的子空间(三维空间)上的投影</strong></p>
+<p><strong>即: p4 = x减去x对p1, p2, p3 三个向量的三个一维投影的分量</strong></p>
+<p><img src="/Blog/intro/3d_projection_9.PNG" alt></p>
+<p>逻辑和之前完全是一样的, 只不过维度越堆越高</p>
+<blockquote>
+<p>思想: 从低维空间出发, 把低维空间搞明白后, 用同样的逻辑向高维空间推导</p>
+</blockquote>
+<br>
+
+<h3 id="拓展到高维空间"><a href="#拓展到高维空间" class="headerlink" title="拓展到高维空间"></a>拓展到高维空间</h3><p><img src="/Blog/intro/3d_projection_10.PNG" alt></p>
+<p>以此类推, 这个过程称为Gram-Schmidt过程</p>
+<br>
+
+<p>注意: Gram-Schmidt过程算法的输入必须是一组基, 即<strong>线性无关</strong></p>
+<br>
+
+<p>如果线性相关:</p>
+<p><img src="/Blog/intro/projection_5.PNG" alt></p>
+<p>如果u, v共线, 则v的投影p就是自身, v-p = 0</p>
+<p>此时求出来的结果就会包含零向量, 而正交基中是不可能有零向量的, 虽然它和任意向量正交, 但零向量会使得这组向量<strong>线性相关</strong>, 不满足基的定义, 不可能是一组基</p>
+<p>因此Gram-Schmidt过程是给定一组基, 求另外一组基的过程</p>
+<br>
+
+<p>进一步找到标准正交基就是把正交基进行归一化就好了</p>
+<p><img src="/Blog/intro/unionlize.PNG" alt></p>
+<p>最终就得到了一组标准正交基</p>
+<br>
+
+<blockquote>
+<p>为什么要用Gram-Schmidt过程的个人理解:</p>
+<p>我突然想到一个问题, 如果我们有一组基, 为什么不可以把它们表示为行空间, 化为rref后的每一行不就是标准单位向量吗, 即rref的所有行向量组成一个标准正交基</p>
+<p>后来我想到, 如果这组基是在高维空间中的子空间的基呢?</p>
+<p>例如: u = (1, 1, 1), v = (0, 2, 3) 这样rref的方式求得的基就不是正交的, 而同样的例子, 使用Gram-Schmidt过程得到的结果确实正交的</p>
+</blockquote>
+<br>
+
+<br>
+
 
     </article>
     <!-- license  -->
@@ -472,7 +610,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 24th 2020, 11:14:13 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 25th 2020, 1:50:34 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 26th 2020, 2:08:55 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -593,7 +731,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -606,30 +744,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1518,17 +1632,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+    
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
@@ -1536,27 +1650,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
     
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
     
         <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
@@ -1601,9 +1715,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
