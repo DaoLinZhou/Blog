@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.7k</span>阅读时长: <span class="post-count reading-time">12 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">5k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -653,6 +653,101 @@ height:50vh;
 
 <br>
 
+<h2 id="矩阵QR分解"><a href="#矩阵QR分解" class="headerlink" title="矩阵QR分解"></a>矩阵QR分解</h2><p>前文中介绍过一种矩阵的分解 LU分解, 把一个矩阵分为上三角矩阵和下三角矩阵</p>
+<p>类似的我们可以把一个矩阵A 分解成Q和R两部分</p>
+<p><img src="/Blog/intro/matrix_qr.PNG" alt></p>
+<p>某种意义上可以可以把QR分解的R理解为LU分解的U</p>
+<p>这里的R是reduce的缩写, 其实行最简形式 (rref, 第一个r也是reduce的缩写) 也可以理解为一个上三角矩阵</p>
+<br>
+
+<h3 id="为什么要把矩阵分解为QR这样的形式"><a href="#为什么要把矩阵分解为QR这样的形式" class="headerlink" title="为什么要把矩阵分解为QR这样的形式?"></a>为什么要把矩阵分解为QR这样的形式?</h3><p>之前也说过, 真实世界的很多问题就是 <strong>Ax = b</strong> 这种形式</p>
+<p>我们在线性代数所学习的很多内容都是为了更方便地解决这个线性系统</p>
+<p>如果A可以分解为Q和R两部分</p>
+<p><img src="/Blog/intro/matrix_qr_1.PNG" alt></p>
+<p>而R是一个上三角矩阵, 这就意味着我们已经做完了高斯消元法的过程</p>
+<p>进而就可以倒着进行Jordan消元, 快速求解这个方程组</p>
+<br>
+
+<p>很快我们就会看到: 如果要想求标准正交矩阵Q, 我们就要运行Gram-Schmidt过程, 而要想运行这个过程, 必须要保证: <strong>A的各个列向量线性无关</strong></p>
+<blockquote>
+<p>实际上QR分解不局限于方阵, 但这里只讲述QR分解是怎么作用在方阵上的</p>
+</blockquote>
+<br>
+
+<h3 id="怎样进行矩阵的QR分解"><a href="#怎样进行矩阵的QR分解" class="headerlink" title="怎样进行矩阵的QR分解"></a>怎样进行矩阵的QR分解</h3><p><img src="/Blog/intro/matrix_qr_2.PNG" alt></p>
+<p>把A的列向量看作是一组基, 这组基所对应的一组正交基</p>
+<p>而每一个p的相应求法就是这样</p>
+<p><img src="/Blog/intro/matrix_qr_3.PNG" alt></p>
+<h4 id="a-p-q之间的关系"><a href="#a-p-q之间的关系" class="headerlink" title="a, p, q之间的关系"></a>a, p, q之间的关系</h4><p>p1 很简单, 就等于a1, 而回忆p和q的关系 ( 归一化, p除以p的模等于q )又可以有下面的式子</p>
+<p><img src="/Blog/intro/relationship_a_p_q.PNG" alt></p>
+<p>这里我们主要关注a和q之间的关系, 由于a这个向量是矩阵A中的一个<strong>列向量</strong>, 而q是标准正交矩阵中的一个<strong>列向量</strong></p>
+<p>A = QR 这个等式描述的就是A这个矩阵和标准正交矩阵Q之间有这样的一个关系</p>
+<p>p1的模就是一个系数, 我们把它称为r11, 因此我们可以把a1这个向量写成是 某一个系数(r11) 乘以向量q1</p>
+<p><img src="/Blog/intro/relationship_a_p_q_1.PNG" alt></p>
+<br>
+
+<p>接下来看p2这个向量</p>
+<p><img src="/Blog/intro/relationship_a_p_q_2.PNG" alt></p>
+<p>我们依然可以将其看成: a2 减去一个系数乘以向量p1, 或者p2的模乘以q2</p>
+<p>我们关注的是后面两个式子, 尝试寻找a2和q2之间的关系</p>
+<p><img src="/Blog/intro/relationship_a_p_q_3.PNG" alt></p>
+<p>我们把上面的等式变化为下面的等式</p>
+<p>而我们已经可以用 <strong>p1的模乘以q1</strong> 来表示p1了</p>
+<p><img src="/Blog/intro/relationship_a_p_q.PNG" alt></p>
+<p>所以</p>
+<p><img src="/Blog/intro/relationship_a_p_q_4.PNG" alt></p>
+<p>而相应的, 最后这个式子中q1前面的那部分都是一个系数, q2前面那一部分也是一个系数. 同样我们把这两个系数进行简化</p>
+<p><img src="/Blog/intro/relationship_a_p_q_5.PNG" alt></p>
+<br>
+
+<p>再看p3</p>
+<p><img src="/Blog/intro/relationship_a_p_q_6.PNG" alt></p>
+<p>同理也可以推导出:</p>
+<p><img src="/Blog/intro/relationship_a_p_q_7.PNG" alt></p>
+<br>
+
+<p><img src="/Blog/intro/relationship_a_p_q_8.PNG" alt></p>
+<p>我们根据Gram-Schmidt过程, 一旦把a化成了一组正交基, 我们再把这组正交基化为标准正交基, 那么反推回来A的各个列向量就可以写为标准正交基各个列向量的线性组合</p>
+<p><img src="/Blog/intro/relationship_a_p_q_9.PNG" alt></p>
+<br>
+
+<p>而 我们可以把这个式子代入A, 把a1, a2… an都替换掉, 就得到</p>
+<p><img src="/Blog/intro/relationship_a_p_q_10.PNG" alt></p>
+<p>对于这个矩阵, 我们可以进一步把它化成n个矩阵的和</p>
+<p>这个矩阵中, 每一个向量都是一个列向量</p>
+<p>我们把这些列向量中包含<strong>q1的那一项</strong>拿出来作为第一个矩阵</p>
+<p><img src="/Blog/intro/relationship_a_p_q_11.PNG" alt></p>
+<p>把每一项含q2的矩阵拿出来组成第二个矩阵, 注意A矩阵的第一项没有q2, 所以为0</p>
+<p><img src="/Blog/intro/relationship_a_p_q_12.PNG" alt></p>
+<br>
+
+<p>以此类推</p>
+<p>于是矩阵A就可以写成这n个矩阵相加的形式</p>
+<p><img src="/Blog/intro/relationship_a_p_q_13.PNG" alt></p>
+<br>
+
+<p>回忆: 我们可以通过列视角来看待矩阵的乘法</p>
+<p><img src="/Blog/intro/relationship_a_p_q_14.PNG" alt></p>
+<p>把前一个矩阵A看作是一列一列的, 后一个矩阵B看作是一行一行的</p>
+<p>而现在, 我们已经把A化作是n个矩阵相加的结果</p>
+<p><img src="/Blog/intro/relationship_a_p_q_15.PNG" alt></p>
+<p>这n个矩阵相加的结果, 就可以反过来想成是这样两个矩阵点乘的结果</p>
+<p><img src="/Blog/intro/relationship_a_p_q_16.PNG" alt></p>
+<p>第一个矩阵, 就是由每一个q向量组成的标准正交矩阵, 每一个q向量作为列向量组成矩阵, 再乘以后面这个矩阵</p>
+<p>其实, 从矩阵的加法推导出矩阵的乘法是比较难的, 因为这是反向的推导</p>
+<br>
+
+<p>其实所有的r在我们的推导的过程中, 都知道了具体该怎么求</p>
+<p>但其实我们具体实现的时候, 根本不需要把这些r给求出来</p>
+<p>因为刚才的整个过程可以理解为是一个<strong>证明过程</strong>. </p>
+<p>我们证明了, 只要A这个方阵的各个列是线性无关的, 它就能分解为QR这样的形式, R就可以用Q的逆点乘A求出来</p>
+<p><img src="/Blog/intro/relationship_a_p_q_17.PNG" alt></p>
+<p>这里就用到了上一节的那个优美的性质, 对于标准正交矩阵Q, Q的转置就是Q的逆</p>
+<p>这样我们就把矩阵A分解为了QR两部分.</p>
+<br>
+
+<br>
+
 
     </article>
     <!-- license  -->
@@ -661,7 +756,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 24th 2020, 11:14:13 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 27th 2020, 12:03:20 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 28th 2020, 11:36:46 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -782,7 +877,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准正交基的性质"><span class="toc-number">1.4.</span> <span class="toc-text">标准正交基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正交矩阵的重要性质"><span class="toc-number">1.4.1.</span> <span class="toc-text">标准正交矩阵的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性质及其证明"><span class="toc-number">1.4.2.</span> <span class="toc-text">重要性质及其证明</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准正交基的性质"><span class="toc-number">1.4.</span> <span class="toc-text">标准正交基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正交矩阵的重要性质"><span class="toc-number">1.4.1.</span> <span class="toc-text">标准正交矩阵的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性质及其证明"><span class="toc-number">1.4.2.</span> <span class="toc-text">重要性质及其证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵QR分解"><span class="toc-number">1.5.</span> <span class="toc-text">矩阵QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要把矩阵分解为QR这样的形式"><span class="toc-number">1.5.1.</span> <span class="toc-text">为什么要把矩阵分解为QR这样的形式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎样进行矩阵的QR分解"><span class="toc-number">1.5.2.</span> <span class="toc-text">怎样进行矩阵的QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-p-q之间的关系"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">a, p, q之间的关系</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -795,6 +890,28 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1655,15 +1772,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
@@ -1671,35 +1788,35 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
     
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
     
+        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
+    
         <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
     
         <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
     
         <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
     
@@ -1738,9 +1855,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
+    
+        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
