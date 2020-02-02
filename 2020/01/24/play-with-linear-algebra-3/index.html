@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">6.4k</span>阅读时长: <span class="post-count reading-time">22 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">7.8k</span>阅读时长: <span class="post-count reading-time">27 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -834,6 +834,125 @@ height:50vh;
 
 <h2 id="其他坐标系与标准坐标系的转换"><a href="#其他坐标系与标准坐标系的转换" class="headerlink" title="其他坐标系与标准坐标系的转换"></a>其他坐标系与标准坐标系的转换</h2><p>一个空间有无数组基, 每一组基都对应着一个坐标系</p>
 <p>标准基就是欧几里得空间中最常用的坐标系对应的基就是标准基, 相应的坐标系就叫做标准坐标系</p>
+<p>我们先看其他坐标系和标准坐标系的转换, 之后再来看任意两个坐标系之间的转换就会非常容易</p>
+<p><strong>如何进行其他坐标系与标准坐标系之间的转换?</strong></p>
+<p>还是这个例子:</p>
+<p><img src="/Blog/intro/basis_space_and_e_1_1.PNG" alt></p>
+<p>(12, 8) 和 (2, 2) 之间有什么联系?</p>
+<p>在讲矩阵的视角时就已经提到过</p>
+<p><img src="/Blog/intro/basis_space_and_e_1_2.PNG" alt></p>
+<p>就相当于在(4, 1)的方向上走两步, 再向(2, 3)的方向走两步, 最终所得到的点的位置</p>
+<p>由于(4, 1) 和 (2, 3) 都是在标准坐标系下衡量的, 所以我们最终得到的点坐标就是标准坐标系下的点坐标</p>
+<p>总结一下:</p>
+<p><img src="/Blog/intro/basis_space_and_e_1_3.PNG" alt></p>
+<p>注意: B 和 PB 是两个东西, B是一个集合, 因为它是一组基, 包含n个向量</p>
+<p>PB是一个矩阵</p>
+<p>我们称矩阵PB为: <strong>坐标转换矩阵</strong></p>
+<br>
+
+<h3 id="更加严谨的证明"><a href="#更加严谨的证明" class="headerlink" title="更加严谨的证明"></a>更加严谨的证明</h3><p><img src="/Blog/intro/basis_space_and_e_1_4.PNG" alt></p>
+<br>
+
+<h3 id="反过来转换"><a href="#反过来转换" class="headerlink" title="反过来转换"></a>反过来转换</h3><p>现在我们已知这个式子</p>
+<p><img src="/Blog/intro/basis_space_and_e_1_5.PNG" alt></p>
+<p>要想让标准坐标系的坐标转换为其他坐标系的坐标非常简单, 只要同时左乘一下PB的逆</p>
+<p><img src="/Blog/intro/basis_space_and_e_1_6.PNG" alt></p>
+<p>为什么我们可以确信矩阵PB可逆?</p>
+<p>因为PB的列向量是线性无关的, 同时也是生成空间的, 因为他们是一组基, 这等价于PB矩阵可逆</p>
+<br>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>对于给定的任意一个坐标系, 就可以用这种方式, 和标准坐标系中的坐标进行转换</p>
+<p><img src="/Blog/intro/basis_space_and_e_1_7.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="任意坐标系转换"><a href="#任意坐标系转换" class="headerlink" title="任意坐标系转换"></a>任意坐标系转换</h2><p><img src="/Blog/intro/trans_coord_1.PNG" alt></p>
+<p>就是这个公式</p>
+<p><img src="/Blog/intro/trans_coord_2.PNG" alt></p>
+<p>Pc的逆乘以Pb的结果也是一个矩阵, 我们便可以把这个矩阵称为P从b到c</p>
+<p><img src="/Blog/intro/trans_coord_3.PNG" alt></p>
+<blockquote>
+<p>其实我更喜欢  Pc * [x]c = Pb * [x]b  这种写法</p>
+<p><img src="/Blog/intro/trans_coord_4.PNG" alt></p>
+</blockquote>
+<p><img src="/Blog/intro/trans_coord_5.PNG" alt></p>
+<p>这里关注一下这两个矩阵</p>
+<p><img src="/Blog/intro/trans_coord_6.PNG" alt></p>
+<p>这两个矩阵 P从b到c, 和P从c到b 互为逆</p>
+<br>
+
+<p>我们可以用矩阵逆的定义来证明 (A乘A的逆等于单位矩阵), 但是这里我们使用另一种方式</p>
+<p><img src="/Blog/intro/trans_coord_7.PNG" alt></p>
+<br>
+
+<p>标准坐标系也是坐标系, 所以也满足上面的性质</p>
+<p><img src="/Blog/intro/trans_coord_8.PNG" alt></p>
+<p>它只是任意坐标系转换的一个特例</p>
+<br>
+
+<p>在处理任意坐标系向标准坐标系的转换时, B = {b1, b2…bn} 这些基向量本质是, 我们知道这些<strong>基向量在我们要转到的坐标系 (标准坐标系) 的转换方式</strong></p>
+<p><img src="/Blog/intro/trans_coord_9.PNG" alt></p>
+<p>因此</p>
+<p><img src="/Blog/intro/trans_coord_10.PNG" alt></p>
+<p>例如:</p>
+<p><img src="/Blog/intro/trans_coord_11.PNG" alt></p>
+<br>
+
+<p>如果我们在处理两个基的转换时, 已经知道一组基在另外一个坐标系的表示的话, 就可以不以单位坐标系作为桥梁了, 它们之间已经有桥梁了, 直接使用就好了</p>
+<br>
+
+<br>
+
+<h2 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h2><p>前面几个小节一直在关注坐标系的<strong>转换</strong>, 而在线性代数领域, 关于变换这个话题, 我们会关注一个更加宏观, 更加庞大的定义: <strong>线性变换</strong></p>
+<p>而我们之前提到的坐标系转换, 也只是线性变换的一种.</p>
+<br>
+
+<h3 id="什么是线性变换"><a href="#什么是线性变换" class="headerlink" title="什么是线性变换?"></a>什么是线性变换?</h3><p>在研究线性变换之前, 先看看什么是变换. </p>
+<p>通常在数学中, <strong>变换是一个函数</strong></p>
+<p>而在线性代数领域中, 我们对 “<strong>线性</strong>“ 更为关注, 因此我们主要研究的就是<strong>线性变换</strong></p>
+<p><img src="/Blog/intro/linear_transform.PNG" alt></p>
+<p>注意: u和v都是向量, 因为在线性代数中, 我们只对向量空间感兴趣</p>
+<p>再一次呈现了向量的两种基本运算, 向量的加法, 和向量的数量乘法</p>
+<br>
+
+<blockquote>
+<p>线性变换是一个动作, 它本身就是非常抽象的. 且线性代数领域研究的是向量空间, 向量空间是非常广阔的, 欧几里得空间只是向量空间中的一种, 配合不同的向量空间 “什么是线性变换” 就变得更加抽象, 而在这里我们只探讨欧几里得空间的线性变换</p>
+</blockquote>
+<p>在欧几里得空间中, 我们可以简单地把矩阵所表示的变换, 理解为是线性变换. 我们看待矩阵的视角中, 有一个就是把<strong>矩阵看作是向量的函数</strong></p>
+<p>其实在线性代数领域中, 我们所研究的线性变换总能够找到一个矩阵, 和这个变换相对应</p>
+<p>我们研究清楚了矩阵, 其实就研究清楚了线性代数领域的变化</p>
+<br>
+
+<h3 id="证明-矩阵乘以向量这样的变换为线性变换"><a href="#证明-矩阵乘以向量这样的变换为线性变换" class="headerlink" title="证明: 矩阵乘以向量这样的变换为线性变换"></a>证明: 矩阵乘以向量这样的变换为线性变换</h3><p><img src="/Blog/intro/linear_transform_1.PNG" alt></p>
+<br>
+
+<h3 id="空间就是变换-矩阵可以表示变换"><a href="#空间就是变换-矩阵可以表示变换" class="headerlink" title="空间就是变换, 矩阵可以表示变换"></a>空间就是变换, 矩阵可以表示变换</h3><p>一个矩阵, 既可以看作是空间, 又可以看作是变换, 这两个视角本质是一样的</p>
+<p><img src="/Blog/intro/linear_transform_2.PNG" alt></p>
+<p>当我们把矩阵看作是空间, 其实描述的是这个空间的坐标系</p>
+<p>而这个矩阵本身又是P从B到ε的坐标变换矩阵, 这个矩阵本身就表示一个变换</p>
+<p>而在课程之前就是使用这个矩阵, 和一个向量相乘得到另外一个向量</p>
+<p>我们说这个过程是把同样一个向量从一个坐标系的表示, 转换成另外一个坐标系的表示, 我们也可以把这个过程看作是一个变换</p>
+<br>
+
+<p>空间就是变换, 不同的空间对应着不同的基, 对应着不同的坐标系, 进行矩阵乘法就可以看作是不同的基之间的变换</p>
+<p>反过来一个变换肯定对应着不同的基和不同的坐标系</p>
+<br>
+
+<p><img src="/Blog/intro/linear_transform_3.PNG" alt></p>
+<p>T的列向量就是另外一组基, 这个坐标系下的(x, y) 对应到标准坐标系下就是(-x, -y)</p>
+<p>同理:</p>
+<p><img src="/Blog/intro/linear_transform_4.PNG" alt></p>
+<p>我们说这个变换本质就是对应另外一组基, 另外一个坐标系</p>
+<p><strong>就是看 x, y 在T的列向量的坐标系下对应在标准坐标系下的位置</strong></p>
+<br>
+
+<p><strong>所有的矩阵都可以用来表示一个线性变换</strong></p>
+<p><strong>用矩阵表示空间的视角和用矩阵表示变换的视角是等价的</strong></p>
+<br>
+
+<br>
+
 
     </article>
     <!-- license  -->
@@ -842,7 +961,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 24th 2020, 11:14:13 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 31st 2020, 8:03:23 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">February 1st 2020, 6:59:10 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -963,7 +1082,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准正交基的性质"><span class="toc-number">1.4.</span> <span class="toc-text">标准正交基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正交矩阵的重要性质"><span class="toc-number">1.4.1.</span> <span class="toc-text">标准正交矩阵的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性质及其证明"><span class="toc-number">1.4.2.</span> <span class="toc-text">重要性质及其证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵QR分解"><span class="toc-number">1.5.</span> <span class="toc-text">矩阵QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要把矩阵分解为QR这样的形式"><span class="toc-number">1.5.1.</span> <span class="toc-text">为什么要把矩阵分解为QR这样的形式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎样进行矩阵的QR分解"><span class="toc-number">1.5.2.</span> <span class="toc-text">怎样进行矩阵的QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-p-q之间的关系"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">a, p, q之间的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本章小结以及更多和投影相关的话题"><span class="toc-number">1.6.</span> <span class="toc-text">本章小结以及更多和投影相关的话题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#投影还能怎样使用"><span class="toc-number">1.6.1.</span> <span class="toc-text">投影还能怎样使用?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坐标转换和线性变换"><span class="toc-number">2.</span> <span class="toc-text">坐标转换和线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基和坐标系"><span class="toc-number">2.1.</span> <span class="toc-text">空间的基和坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">2.1.1.</span> <span class="toc-text">定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他坐标系与标准坐标系的转换"><span class="toc-number">2.2.</span> <span class="toc-text">其他坐标系与标准坐标系的转换</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准正交基的性质"><span class="toc-number">1.4.</span> <span class="toc-text">标准正交基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正交矩阵的重要性质"><span class="toc-number">1.4.1.</span> <span class="toc-text">标准正交矩阵的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性质及其证明"><span class="toc-number">1.4.2.</span> <span class="toc-text">重要性质及其证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵QR分解"><span class="toc-number">1.5.</span> <span class="toc-text">矩阵QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要把矩阵分解为QR这样的形式"><span class="toc-number">1.5.1.</span> <span class="toc-text">为什么要把矩阵分解为QR这样的形式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎样进行矩阵的QR分解"><span class="toc-number">1.5.2.</span> <span class="toc-text">怎样进行矩阵的QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-p-q之间的关系"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">a, p, q之间的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本章小结以及更多和投影相关的话题"><span class="toc-number">1.6.</span> <span class="toc-text">本章小结以及更多和投影相关的话题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#投影还能怎样使用"><span class="toc-number">1.6.1.</span> <span class="toc-text">投影还能怎样使用?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坐标转换和线性变换"><span class="toc-number">2.</span> <span class="toc-text">坐标转换和线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基和坐标系"><span class="toc-number">2.1.</span> <span class="toc-text">空间的基和坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">2.1.1.</span> <span class="toc-text">定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他坐标系与标准坐标系的转换"><span class="toc-number">2.2.</span> <span class="toc-text">其他坐标系与标准坐标系的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更加严谨的证明"><span class="toc-number">2.2.1.</span> <span class="toc-text">更加严谨的证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反过来转换"><span class="toc-number">2.2.2.</span> <span class="toc-text">反过来转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意坐标系转换"><span class="toc-number">2.3.</span> <span class="toc-text">任意坐标系转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性变换"><span class="toc-number">2.4.</span> <span class="toc-text">线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性变换"><span class="toc-number">2.4.1.</span> <span class="toc-text">什么是线性变换?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-矩阵乘以向量这样的变换为线性变换"><span class="toc-number">2.4.2.</span> <span class="toc-text">证明: 矩阵乘以向量这样的变换为线性变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间就是变换-矩阵可以表示变换"><span class="toc-number">2.4.3.</span> <span class="toc-text">空间就是变换, 矩阵可以表示变换</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -976,44 +1095,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1872,33 +1953,33 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
@@ -1955,13 +2036,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
         <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
