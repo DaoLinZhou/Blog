@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">11.1k</span>阅读时长: <span class="post-count reading-time">38 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">12.3k</span>阅读时长: <span class="post-count reading-time">42 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -1182,7 +1182,85 @@ height:50vh;
 
 <br>
 
+<h2 id="初等矩阵与行列式"><a href="#初等矩阵与行列式" class="headerlink" title="初等矩阵与行列式"></a>初等矩阵与行列式</h2><p>这一小节, 我们要探讨行列式的一个稍微有些不一样的性质:</p>
+<p><img src="/Blog/intro/det_pro.PNG" alt></p>
+<p>为了探讨清楚这个性质, 我们要研究一下初等矩阵对应的行列式</p>
+<br>
 
+<p>为什么这个性质不太一样? 因为前面的几个性质都可以从行列式的<strong>几何</strong>属性出发, 相应得到一个直观的理解: <strong>行列式表示的就是在n维空间中n维多面体的有向体积</strong></p>
+<p>但是对于这个性质, 这个几何理解稍微有些没用了, 因为等式的右边是两个行列式的乘积, 从几何的角度理解就是两个体积的乘积, 而两个体积的乘积的几何意义就不是特别明确了</p>
+<p>因此, 为了证明这个性质, 我们要从纯代数的角度出发</p>
+<br>
+
+<h3 id="如果A或者B中的某一行和其他行线性相关"><a href="#如果A或者B中的某一行和其他行线性相关" class="headerlink" title="如果A或者B中的某一行和其他行线性相关"></a>如果A或者B中的某一行和其他行线性相关</h3><p><img src="/Blog/intro/det_pro.PNG" alt></p>
+<p>如果A或者B中的某一行和其他行线性相关, 此时</p>
+<p><img src="/Blog/intro/det_pro_1.PNG" alt></p>
+<p>因为如果A中的某一行和其他行线性相关, A中的这一行可以写为其他行的线性组合, 而在进行乘法的过程中, 这一行中的所有的元素会和B中的某一些元素进行相乘再相加. 这个过程下, A中这一行的所有元素一定还保持着是其他行的线性组合, 只不过前面的系数会产生一些变化, 但是这个线性组合的线性关系依然存在, 因此行列式的值为0, 同理如果B中有一行和其他行线性相关, 也是如此</p>
+<blockquote>
+<p>我更喜欢另一种理解方式:</p>
+<p>如果A或B中某一行和其他行线性相关, 则它不能表达为一系列初等矩阵的乘积, 而是一系列初等矩阵乘以一个非初等矩阵, </p>
+<p>因此将其代入, A乘B同样不能表达为一系列初等矩阵的乘积, 即AB不可逆, 即AB的行向量线性相关, 即det(AB) = 0</p>
+</blockquote>
+<p>此时等式的左右两侧都为0</p>
+<br>
+
+<h3 id="如果A和B中的所有行都线性无关"><a href="#如果A和B中的所有行都线性无关" class="headerlink" title="如果A和B中的所有行都线性无关"></a>如果A和B中的所有行都线性无关</h3><p>如果A和B中的所有行都线性无关, 而A和B都是方阵, 这就说明这个方阵可以表示成一系列初等矩阵的乘积</p>
+<p><img src="/Blog/intro/det_pro_2.PNG" alt></p>
+<p>回忆: 初等矩阵: 对单位矩阵进行初等行操作</p>
+<p>一个初等矩阵乘以某一个矩阵, 就相当于是对这个矩阵进行初等矩阵对应的初等行操作</p>
+<p>因此我们可以拆解矩阵A</p>
+<p><img src="/Blog/intro/det_pro_3.PNG" alt></p>
+<p>因此我们要研究一下初等矩阵的行列式</p>
+<br>
+
+<h4 id="初等矩阵的行列式"><a href="#初等矩阵的行列式" class="headerlink" title="初等矩阵的行列式"></a>初等矩阵的行列式</h4><p>初等矩阵的行列式非常简单, 近乎就是之前讲的一个一个性质</p>
+<p><img src="/Blog/intro/det_pro_4.PNG" alt></p>
+<br>
+
+<h3 id="先证明初等矩阵乘以B的行列式"><a href="#先证明初等矩阵乘以B的行列式" class="headerlink" title="先证明初等矩阵乘以B的行列式"></a>先证明初等矩阵乘以B的行列式</h3><p>先证明这样一个命题, 一个初等矩阵E 和 另外一个矩阵B满足</p>
+<p><img src="/Blog/intro/det_pro_5.PNG" alt></p>
+<p>证明这个结论就简单很多, 因为初等矩阵E乘以矩阵B本质就是对B进行一次行变换而已, 所以我们完全可以把E乘B看作一个矩阵</p>
+<p><strong>情况1:</strong></p>
+<p><img src="/Blog/intro/det_pro_6.PNG" alt></p>
+<p><strong>情况2:</strong></p>
+<p><img src="/Blog/intro/det_pro_7.PNG" alt></p>
+<p><strong>情况3:</strong></p>
+<p><img src="/Blog/intro/det_pro_8.PNG" alt></p>
+<p>因此: 这个命题是正确的</p>
+<p><img src="/Blog/intro/det_pro_5.PNG" alt></p>
+<br>
+
+<p>对于一个E乘以B我们有这个结论, 那么对于一串E乘以B我们也能得到类似的结论:</p>
+<p><img src="/Blog/intro/det_pro_9.PNG" alt></p>
+<p>思路就是不断使用上面那个结论</p>
+<p><img src="/Blog/intro/det_pro_10.PNG" alt></p>
+<br>
+
+<h3 id="再证明A乘以B的行列式"><a href="#再证明A乘以B的行列式" class="headerlink" title="再证明A乘以B的行列式"></a>再证明A乘以B的行列式</h3><p><img src="/Blog/intro/det_pro_11.PNG" alt></p>
+<p>因此</p>
+<p><img src="/Blog/intro/det_pro_12.PNG" alt></p>
+<br>
+
+<p>这样我们就通过研究初等矩阵的行列式证明出任意两个矩阵A, B; <strong>det(AB) = det(A) * det(B)</strong></p>
+<br>
+
+<h3 id="应用这个结论回顾前面的知识点"><a href="#应用这个结论回顾前面的知识点" class="headerlink" title="应用这个结论回顾前面的知识点"></a>应用这个结论回顾前面的知识点</h3><p><img src="/Blog/intro/det_pro.PNG" alt></p>
+<p>对于这个式子, 我们把B换做是A的逆</p>
+<p><img src="/Blog/intro/det_pro_13.PNG" alt></p>
+<p>这个结论意味着什么? </p>
+<p>首先给了我们一个计算A的逆的行列式的值的方式</p>
+<p>更重要的一点是: det(A)的值放在分母的位置, 这就意味着如果我们想求A的逆的行列式的值, det(A)不能为0</p>
+<p>换句话说, 如果det(A) = 0, A的逆的行列式的值不存在, 即: A的逆不存在</p>
+<p>我们又从另外一个角度证明出来了行列式与矩阵的逆的关系得到的非常重要的结论:</p>
+<p>如果矩阵A存在逆, det(A) != 0</p>
+<br>
+
+<p>等价命题列表:</p>
+<p><img src="/Blog/intro/det_pro_2.PNG" alt></p>
+<p>行列式我们一直用行的角度讨论, 下一小节就将用这一小结证明的性质, 来说明用列的方式讨论行列式完全等价于用行的方式讨论行列式</p>
+<br>
+
+<br>
 
 
     </article>
@@ -1192,7 +1270,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">January 24th 2020, 11:14:13 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">February 6th 2020, 10:29:56 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/">February 9th 2020, 2:39:40 am</a>
             <p>版权声明：</p>
         </div>
     
@@ -1313,7 +1391,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准正交基的性质"><span class="toc-number">1.4.</span> <span class="toc-text">标准正交基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正交矩阵的重要性质"><span class="toc-number">1.4.1.</span> <span class="toc-text">标准正交矩阵的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性质及其证明"><span class="toc-number">1.4.2.</span> <span class="toc-text">重要性质及其证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵QR分解"><span class="toc-number">1.5.</span> <span class="toc-text">矩阵QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要把矩阵分解为QR这样的形式"><span class="toc-number">1.5.1.</span> <span class="toc-text">为什么要把矩阵分解为QR这样的形式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎样进行矩阵的QR分解"><span class="toc-number">1.5.2.</span> <span class="toc-text">怎样进行矩阵的QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-p-q之间的关系"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">a, p, q之间的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本章小结以及更多和投影相关的话题"><span class="toc-number">1.6.</span> <span class="toc-text">本章小结以及更多和投影相关的话题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#投影还能怎样使用"><span class="toc-number">1.6.1.</span> <span class="toc-text">投影还能怎样使用?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坐标转换和线性变换"><span class="toc-number">2.</span> <span class="toc-text">坐标转换和线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基和坐标系"><span class="toc-number">2.1.</span> <span class="toc-text">空间的基和坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">2.1.1.</span> <span class="toc-text">定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他坐标系与标准坐标系的转换"><span class="toc-number">2.2.</span> <span class="toc-text">其他坐标系与标准坐标系的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更加严谨的证明"><span class="toc-number">2.2.1.</span> <span class="toc-text">更加严谨的证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反过来转换"><span class="toc-number">2.2.2.</span> <span class="toc-text">反过来转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意坐标系转换"><span class="toc-number">2.3.</span> <span class="toc-text">任意坐标系转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性变换"><span class="toc-number">2.4.</span> <span class="toc-text">线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性变换"><span class="toc-number">2.4.1.</span> <span class="toc-text">什么是线性变换?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-矩阵乘以向量这样的变换为线性变换"><span class="toc-number">2.4.2.</span> <span class="toc-text">证明: 矩阵乘以向量这样的变换为线性变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间就是变换-矩阵可以表示变换"><span class="toc-number">2.4.3.</span> <span class="toc-text">空间就是变换, 矩阵可以表示变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多和坐标转换和线性变换相关的话题"><span class="toc-number">2.5.</span> <span class="toc-text">更多和坐标转换和线性变换相关的话题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#行列式"><span class="toc-number">3.</span> <span class="toc-text">行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是行列式"><span class="toc-number">3.1.</span> <span class="toc-text">什么是行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从二维空间入手看如何求行列式"><span class="toc-number">3.1.1.</span> <span class="toc-text">从二维空间入手看如何求行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#表示法"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">表示法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何计算"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">如何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行列式的四大基本性质"><span class="toc-number">3.2.</span> <span class="toc-text">行列式的四大基本性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#前两个性质"><span class="toc-number">3.2.1.</span> <span class="toc-text">前两个性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三个性质"><span class="toc-number">3.2.2.</span> <span class="toc-text">第三个性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四个性质"><span class="toc-number">3.2.3.</span> <span class="toc-text">第四个性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">3.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行列式与矩阵的逆"><span class="toc-number">3.3.</span> <span class="toc-text">行列式与矩阵的逆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式的两行相同-则行列式的值为0"><span class="toc-number">3.3.1.</span> <span class="toc-text">如果行列式的两行相同, 则行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式的一行是另一行的k倍-则行列式的值为0"><span class="toc-number">3.3.2.</span> <span class="toc-text">如果行列式的一行是另一行的k倍, 则行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式有一行为0-则行列式的值为0"><span class="toc-number">3.3.3.</span> <span class="toc-text">如果行列式有一行为0, 则行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式的一行是其他行的线性组合-行列式的值为0"><span class="toc-number">3.3.4.</span> <span class="toc-text">如果行列式的一行是其他行的线性组合, 行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行列式和矩阵的逆的联系"><span class="toc-number">3.3.5.</span> <span class="toc-text">行列式和矩阵的逆的联系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算行列式的值"><span class="toc-number">3.4.</span> <span class="toc-text">计算行列式的值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算对角矩阵的行列式"><span class="toc-number">3.4.1.</span> <span class="toc-text">计算对角矩阵的行列式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法总结"><span class="toc-number">3.4.2.</span> <span class="toc-text">算法总结:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证算法"><span class="toc-number">3.4.3.</span> <span class="toc-text">验证算法:</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正交性-标准正交矩阵和投影"><span class="toc-number">1.</span> <span class="toc-text">正交性, 标准正交矩阵和投影</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正交基与标准正交基"><span class="toc-number">1.1.</span> <span class="toc-text">正交基与标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是正交"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交向量组"><span class="toc-number">1.1.2.</span> <span class="toc-text">正交向量组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#证明线性无关"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">证明线性无关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交基和标准正交基"><span class="toc-number">1.1.3.</span> <span class="toc-text">正交基和标准正交基</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#正交基"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">正交基</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标准正交基"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">标准正交基</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一维投影"><span class="toc-number">1.2.</span> <span class="toc-text">一维投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求投影向量p"><span class="toc-number">1.2.1.</span> <span class="toc-text">求投影向量p</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高维投影-和-Gram-Schmidt过程"><span class="toc-number">1.3.</span> <span class="toc-text">高维投影 和 Gram-Schmidt过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求三维空间中的投影"><span class="toc-number">1.3.1.</span> <span class="toc-text">求三维空间中的投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展到高维空间"><span class="toc-number">1.3.2.</span> <span class="toc-text">拓展到高维空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标准正交基的性质"><span class="toc-number">1.4.</span> <span class="toc-text">标准正交基的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正交矩阵的重要性质"><span class="toc-number">1.4.1.</span> <span class="toc-text">标准正交矩阵的重要性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要性质及其证明"><span class="toc-number">1.4.2.</span> <span class="toc-text">重要性质及其证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵QR分解"><span class="toc-number">1.5.</span> <span class="toc-text">矩阵QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要把矩阵分解为QR这样的形式"><span class="toc-number">1.5.1.</span> <span class="toc-text">为什么要把矩阵分解为QR这样的形式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎样进行矩阵的QR分解"><span class="toc-number">1.5.2.</span> <span class="toc-text">怎样进行矩阵的QR分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-p-q之间的关系"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">a, p, q之间的关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本章小结以及更多和投影相关的话题"><span class="toc-number">1.6.</span> <span class="toc-text">本章小结以及更多和投影相关的话题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#投影还能怎样使用"><span class="toc-number">1.6.1.</span> <span class="toc-text">投影还能怎样使用?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坐标转换和线性变换"><span class="toc-number">2.</span> <span class="toc-text">坐标转换和线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#空间的基和坐标系"><span class="toc-number">2.1.</span> <span class="toc-text">空间的基和坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">2.1.1.</span> <span class="toc-text">定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他坐标系与标准坐标系的转换"><span class="toc-number">2.2.</span> <span class="toc-text">其他坐标系与标准坐标系的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更加严谨的证明"><span class="toc-number">2.2.1.</span> <span class="toc-text">更加严谨的证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反过来转换"><span class="toc-number">2.2.2.</span> <span class="toc-text">反过来转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.2.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任意坐标系转换"><span class="toc-number">2.3.</span> <span class="toc-text">任意坐标系转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性变换"><span class="toc-number">2.4.</span> <span class="toc-text">线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线性变换"><span class="toc-number">2.4.1.</span> <span class="toc-text">什么是线性变换?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#证明-矩阵乘以向量这样的变换为线性变换"><span class="toc-number">2.4.2.</span> <span class="toc-text">证明: 矩阵乘以向量这样的变换为线性变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间就是变换-矩阵可以表示变换"><span class="toc-number">2.4.3.</span> <span class="toc-text">空间就是变换, 矩阵可以表示变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多和坐标转换和线性变换相关的话题"><span class="toc-number">2.5.</span> <span class="toc-text">更多和坐标转换和线性变换相关的话题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#行列式"><span class="toc-number">3.</span> <span class="toc-text">行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是行列式"><span class="toc-number">3.1.</span> <span class="toc-text">什么是行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从二维空间入手看如何求行列式"><span class="toc-number">3.1.1.</span> <span class="toc-text">从二维空间入手看如何求行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#表示法"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">表示法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何计算"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">如何计算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行列式的四大基本性质"><span class="toc-number">3.2.</span> <span class="toc-text">行列式的四大基本性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#前两个性质"><span class="toc-number">3.2.1.</span> <span class="toc-text">前两个性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三个性质"><span class="toc-number">3.2.2.</span> <span class="toc-text">第三个性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四个性质"><span class="toc-number">3.2.3.</span> <span class="toc-text">第四个性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">3.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行列式与矩阵的逆"><span class="toc-number">3.3.</span> <span class="toc-text">行列式与矩阵的逆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式的两行相同-则行列式的值为0"><span class="toc-number">3.3.1.</span> <span class="toc-text">如果行列式的两行相同, 则行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式的一行是另一行的k倍-则行列式的值为0"><span class="toc-number">3.3.2.</span> <span class="toc-text">如果行列式的一行是另一行的k倍, 则行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式有一行为0-则行列式的值为0"><span class="toc-number">3.3.3.</span> <span class="toc-text">如果行列式有一行为0, 则行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果行列式的一行是其他行的线性组合-行列式的值为0"><span class="toc-number">3.3.4.</span> <span class="toc-text">如果行列式的一行是其他行的线性组合, 行列式的值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行列式和矩阵的逆的联系"><span class="toc-number">3.3.5.</span> <span class="toc-text">行列式和矩阵的逆的联系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算行列式的值"><span class="toc-number">3.4.</span> <span class="toc-text">计算行列式的值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算对角矩阵的行列式"><span class="toc-number">3.4.1.</span> <span class="toc-text">计算对角矩阵的行列式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法总结"><span class="toc-number">3.4.2.</span> <span class="toc-text">算法总结:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证算法"><span class="toc-number">3.4.3.</span> <span class="toc-text">验证算法:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初等矩阵与行列式"><span class="toc-number">3.5.</span> <span class="toc-text">初等矩阵与行列式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果A或者B中的某一行和其他行线性相关"><span class="toc-number">3.5.1.</span> <span class="toc-text">如果A或者B中的某一行和其他行线性相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如果A和B中的所有行都线性无关"><span class="toc-number">3.5.2.</span> <span class="toc-text">如果A和B中的所有行都线性无关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初等矩阵的行列式"><span class="toc-number">3.5.2.1.</span> <span class="toc-text">初等矩阵的行列式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#先证明初等矩阵乘以B的行列式"><span class="toc-number">3.5.3.</span> <span class="toc-text">先证明初等矩阵乘以B的行列式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#再证明A乘以B的行列式"><span class="toc-number">3.5.4.</span> <span class="toc-text">再证明A乘以B的行列式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用这个结论回顾前面的知识点"><span class="toc-number">3.5.5.</span> <span class="toc-text">应用这个结论回顾前面的知识点</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1326,28 +1404,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -2220,19 +2276,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
         <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
@@ -2242,15 +2298,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
         <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
     
@@ -2305,9 +2361,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
