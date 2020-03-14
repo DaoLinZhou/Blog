@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.7k</span>阅读时长: <span class="post-count reading-time">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -528,6 +528,50 @@ height:50vh;
 <p>Ax=b 这个式子中, b就是A的列向量的线性组合, 因此所谓的列空间可以理解为Ax=b中, b所有可能值的集合</p>
 <p>因此, <strong>如果Ax=b这个系统有解, 当且仅当( if and only if ) 向量b在A的列空间中.</strong></p>
 <p>反之如果Ax=b没有解, b就不在A的列空间中</p>
+<br>
+
+<h2 id="Form"><a href="#Form" class="headerlink" title="Form"></a>Form</h2><h3 id="vector-form"><a href="#vector-form" class="headerlink" title="vector form"></a>vector form</h3><p>n维空间的一条直线的表示方法</p>
+<p><img src="/Blog/intro/vector_form.PNG" alt></p>
+<p>x<sub>0</sub>代表起始点(该直线上的任意一点, 也可以理解为偏移量), d表示方向</p>
+<p><img src="/Blog/intro/vector_form_1.PNG" alt></p>
+<p>同理, n维空间的一个平面的表示方法就是</p>
+<p><img src="/Blog/intro/vector_form_2.PNG" alt></p>
+<p>d和v应该线性无关, 因为两个线性无关的向量生成一个平面</p>
+<br>
+
+<h3 id="Parametric-equation"><a href="#Parametric-equation" class="headerlink" title="Parametric equation"></a>Parametric equation</h3><p><img src="/Blog/intro/vector_form.PNG" alt></p>
+<p>这个vector form表示的线也可以拆开, 这就是Parametric form</p>
+<p><img src="/Blog/intro/parametric_form.PNG" alt></p>
+<p>对于平面一样可以:</p>
+<p><img src="/Blog/intro/parametric_form_1.PNG" alt></p>
+<br>
+
+<h3 id="Symmetric-equation"><a href="#Symmetric-equation" class="headerlink" title="Symmetric equation"></a>Symmetric equation</h3><p>同样关注于n维空间的一条直线, vector form:</p>
+<p><img src="/Blog/intro/vector_form.PNG" alt></p>
+<p>Parametric form:</p>
+<p><img src="/Blog/intro/parametric_form.PNG" alt></p>
+<p>可以看出每一个等式都有一个t, 这些t是相等的, 因此可以写作</p>
+<p><img src="/Blog/intro/symmetric_form.PNG" alt></p>
+<p>可以看到, 所有的分母组合起来就是向量d, a1, a2…组合起来就是x</p>
+<p>Symmetric equation不能很好的表示一个平面或者更高维度的空间, 它只能用来表示一条线</p>
+<br>
+
+<h3 id="General-equation"><a href="#General-equation" class="headerlink" title="General equation"></a>General equation</h3><p>已知一个平面有两个点x, x<sub>0</sub>, 以及和这个平面垂直的一条直线n</p>
+<p><img src="/Blog/intro/general_equation.PNG" alt></p>
+<p>因为n垂直于x和x<sub>0</sub>所在的平面, 因此我们有</p>
+<p><img src="/Blog/intro/general_equation_1.PNG" alt></p>
+<p><img src="/Blog/intro/general_equation_2.PNG" alt></p>
+<p>根据向量的点乘得到</p>
+<p><img src="/Blog/intro/general_equation_3.PNG" alt></p>
+<p>当求出ABC之后, 随便取出平面上的一点代入x就可以得到D</p>
+<br>
+
+<h3 id="normal-form"><a href="#normal-form" class="headerlink" title="normal form"></a>normal form</h3><p>上面也提到了, 其实这个形式就是normal form</p>
+<p><img src="/Blog/intro/general_equation_1.PNG" alt></p>
+<p><img src="/Blog/intro/general_equation_2.PNG" alt></p>
+<p>x1, x2, x3减去平面上任意一点, 都与(A, B, C) 正交</p>
+<br>
+
 
     </article>
     <!-- license  -->
@@ -536,7 +580,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">March 6th 2020, 7:03:35 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">March 9th 2020, 11:06:35 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">March 13th 2020, 8:57:23 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -657,7 +701,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性映射-linear-map"><span class="toc-number">1.</span> <span class="toc-text">线性映射(linear map)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性映射的范围-Range-of-linear-map"><span class="toc-number">1.1.</span> <span class="toc-text">线性映射的范围(Range of linear map)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交线性算子-orthogonal-linear-operators"><span class="toc-number">1.2.</span> <span class="toc-text">正交线性算子(orthogonal linear operators)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交矩阵-orthogonal-matrix"><span class="toc-number">1.3.</span> <span class="toc-text">正交矩阵 (orthogonal matrix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性映射的核-kernel"><span class="toc-number">1.4.</span> <span class="toc-text">线性映射的核(kernel)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#one-to-one映射和onto映射"><span class="toc-number">1.5.</span> <span class="toc-text">one to one映射和onto映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定理1"><span class="toc-number">1.5.1.</span> <span class="toc-text">定理1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定理2"><span class="toc-number">1.5.2.</span> <span class="toc-text">定理2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列空间的理解"><span class="toc-number">2.</span> <span class="toc-text">列空间的理解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性映射-linear-map"><span class="toc-number">1.</span> <span class="toc-text">线性映射(linear map)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性映射的范围-Range-of-linear-map"><span class="toc-number">1.1.</span> <span class="toc-text">线性映射的范围(Range of linear map)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交线性算子-orthogonal-linear-operators"><span class="toc-number">1.2.</span> <span class="toc-text">正交线性算子(orthogonal linear operators)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交矩阵-orthogonal-matrix"><span class="toc-number">1.3.</span> <span class="toc-text">正交矩阵 (orthogonal matrix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性映射的核-kernel"><span class="toc-number">1.4.</span> <span class="toc-text">线性映射的核(kernel)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#one-to-one映射和onto映射"><span class="toc-number">1.5.</span> <span class="toc-text">one to one映射和onto映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定理1"><span class="toc-number">1.5.1.</span> <span class="toc-text">定理1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定理2"><span class="toc-number">1.5.2.</span> <span class="toc-text">定理2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列空间的理解"><span class="toc-number">2.</span> <span class="toc-text">列空间的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Form"><span class="toc-number">3.</span> <span class="toc-text">Form</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vector-form"><span class="toc-number">3.1.</span> <span class="toc-text">vector form</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parametric-equation"><span class="toc-number">3.2.</span> <span class="toc-text">Parametric equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symmetric-equation"><span class="toc-number">3.3.</span> <span class="toc-text">Symmetric equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General-equation"><span class="toc-number">3.4.</span> <span class="toc-text">General equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#normal-form"><span class="toc-number">3.5.</span> <span class="toc-text">normal form</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -670,6 +714,38 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1562,39 +1638,39 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
         <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
         <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
         <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
     
         <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
@@ -1649,9 +1725,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
         <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
