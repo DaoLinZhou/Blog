@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Daolin">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Daolin">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>统计自整理 · Daolin&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/Blog/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/Blog/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/Blog/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/Blog/" >Daolin&#39;s Repository.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">统计自整理</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/Blog/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            统计自整理
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "数学">数学</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "统计学">统计学</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">3.8k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/04</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/Blog/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><p>一个正态分布长这样</p>
+<p><img src="/Blog/intro/Normal_distribution.PNG" alt></p>
+<h5 id="u决定了什么"><a href="#u决定了什么" class="headerlink" title="u决定了什么"></a>u决定了什么</h5><p>固定σ = 1, 而变化u的正态分布函数</p>
+<p><img src="/Blog/intro/stat_u_dependence_what.PNG" alt></p>
+<p>红色图形的对称轴在 x=-2</p>
+<p>绿色图形的对称轴在 x=0</p>
+<p>蓝色图形的对称轴在 x=2</p>
+<p>可以看出, u决定了这个图形的对称轴在哪里</p>
+<br>
+
+<h5 id="σ决定了什么"><a href="#σ决定了什么" class="headerlink" title="σ决定了什么"></a>σ决定了什么</h5><p>固定u = 0, 即对称轴在0, 变化 σ 的正态分布函数</p>
+<p><img src="/Blog/intro/stat_u_dependence_what_1.PNG" alt></p>
+<p>σ = 0.5 的图形是最窄的, 也是最高的</p>
+<p>σ = 1 时位于中间</p>
+<p>σ = 2 的图形是最宽的, 也是最矮的</p>
+<p>σ决定的是这个曲线的高低和胖瘦</p>
+<br>
+
+<p>u就是这个分布的均值(期望值), σ就是分布的标准差</p>
+<br>
+
+<h4 id="正态分布的特征"><a href="#正态分布的特征" class="headerlink" title="正态分布的特征"></a>正态分布的特征</h4><p>并不是所有这样的曲线都叫正态分布, 正态分布有着独有的特征</p>
+<p><img src="/Blog/intro/Normal_distribution_1.PNG" alt></p>
+<p><img src="/Blog/intro/Normal_distribution_2.PNG" alt></p>
+<ul>
+<li><p>u - σ, u + σ 之间的面积为 68.26%, 也就是说, 在正态分布中, 数值落在(u - σ, u + σ) 的概率为 68.26%</p>
+</li>
+<li><p>u - 2σ, u + 2σ 之间的面积为 95.44%, 也就是说, 在正态分布中, 数值落在(u - 2σ, u + 2σ) 的概率为 95.44%</p>
+</li>
+<li><p>u - 3σ, u + 3σ 之间的面积为 99.74%, 也就是说, 在正态分布中, 数值落在(u - 3σ, u + 3σ) 的概率为 99.74%</p>
+</li>
+</ul>
+<p>因此正态分布有3σ法则</p>
+<p><strong>3σ法则</strong>: 正态变量的取值范围是正负无穷, 但它的值几乎肯定落在(u-3σ, u+3σ)</p>
+<p>满足这些性质的, 同时长成这个样子的曲线, 才叫正态分布</p>
+<br>
+
+<h3 id="标准正态分布"><a href="#标准正态分布" class="headerlink" title="标准正态分布"></a>标准正态分布</h3><p>当u=0, σ=1时的分布我们称为<strong>标准正态分布</strong></p>
+<p><img src="/Blog/intro/Normal_distribution_3.PNG" alt></p>
+<p>右上角是当X服从正态分布时, 如何求得Z服从标准正态分布</p>
+<br>
+
+<h4 id="上-下-α分位点"><a href="#上-下-α分位点" class="headerlink" title="(上/下)α分位点"></a>(上/下)α分位点</h4><p><img src="/Blog/intro/Normal_distribution_4.PNG" alt></p>
+<p>让Zα之上的面积等于α, 若α大于0小于1, 则称Zα为标准正态分布的上α分位点</p>
+<p>同理, 让Zα之下的面积等于α, 若α大于0小于1, 则称Zα为标准正态分布的下α分位点</p>
+<br>
+
+<p>正态分布有一个特别有用的性质, 如果X服从任意正态分布</p>
+<p><img src="/Blog/intro/normal_dis.PNG" alt></p>
+<p>我们可以把X转化为z值在计算, z服从标准正态分布, 可以使用</p>
+<p>查值来找到对应的值</p>
+<p>z = (x - E(X)) / sqrt(V(X))</p>
+<br>
+
+<h2 id="期望值和方差"><a href="#期望值和方差" class="headerlink" title="期望值和方差"></a>期望值和方差</h2><p>随机试验: 抛3次硬币, 我们对 <strong>X=正面朝上的次数</strong> 感兴趣</p>
+<p>X的可能值: 0, 1, 2, 3</p>
+<p><img src="/Blog/intro/expect_value.PNG" alt></p>
+<p>一共有2的立方种可能, k面朝上的次数为(3 choose k)</p>
+<p><strong>PMF(probability Mass Function)</strong></p>
+<p>离散型随机变量的分布函数: Distribution function for a discrete random variable</p>
+<table>
+<thead>
+<tr>
+<th align="center">X</th>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P(X)</td>
+<td align="center">1/8</td>
+<td align="center">3/8</td>
+<td align="center">3/8</td>
+<td align="center">1/8</td>
+</tr>
+</tbody></table>
+<br>
+
+<p>随机试验2: 抛一枚不公平的硬币3次, P(head) = 1/3</p>
+<p><strong>Y=正面朝上的次数</strong></p>
+<p><img src="/Blog/intro/expect_value_1.PNG" alt></p>
+<p>PMF:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Y</th>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P(Y)</td>
+<td align="center">8/27</td>
+<td align="center">12/27</td>
+<td align="center">6/27</td>
+<td align="center">1/27</td>
+</tr>
+</tbody></table>
+<br>
+
+<h3 id="期望值"><a href="#期望值" class="headerlink" title="期望值"></a>期望值</h3><p>期望值也可以理解成均值</p>
+<blockquote>
+<p>我常用的一种方法就是:</p>
+<p>以随机试验2举例, Y的每个取值都有一个可能性</p>
+<p>假设有27个数, 这27个数由 8个0, 12个1, 6个2, 1个3 组成, 求E(Y)就等于求这27个数的均值</p>
+</blockquote>
+<p><img src="/Blog/intro/expect_value_2.PNG" alt></p>
+<h3 id="期望值的性质"><a href="#期望值的性质" class="headerlink" title="期望值的性质"></a>期望值的性质</h3><ol>
+<li>E(c * W) = c * E(W), c是常数</li>
+<li>E(c) = c,  c是常数: 可以理解为求c的均值, c的均值就是c</li>
+<li>E(W+T) = E(W)+E(T), W和T是<strong>任意</strong>随机变量, W和T可能有关也可能无关</li>
+</ol>
+<br>
+
+<h3 id="方差-标准误"><a href="#方差-标准误" class="headerlink" title="方差/标准误"></a>方差/标准误</h3><p><img src="/Blog/intro/expect_value_3.PNG" alt></p>
+<p>W-E(W): W到均值/中心的距离/偏差</p>
+<p>(W-E(W))^2: W到均值/中心的距离/偏差 的平方</p>
+<p>E{(W-E(W))^2}: 期望/平均 到距离的平方</p>
+<br>
+
+<p>例如:</p>
+<table>
+<thead>
+<tr>
+<th align="center">X</th>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P(X)</td>
+<td align="center">1/8</td>
+<td align="center">3/8</td>
+<td align="center">3/8</td>
+<td align="center">1/8</td>
+</tr>
+</tbody></table>
+<p>E(X) = 1.5</p>
+<p><img src="/Blog/intro/expect_value_4.PNG" alt></p>
+<br>
+
+<h3 id="方差的性质"><a href="#方差的性质" class="headerlink" title="方差的性质"></a>方差的性质</h3><p><img src="/Blog/intro/expect_value_5.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="抽样"><a href="#抽样" class="headerlink" title="抽样"></a>抽样</h2><p>The procedure of systematically acquiring and recording information about every member of the given target population - census (系统地获取和记录有关给定目标人群的每个成员的信息的过程-census)</p>
+<p><strong>如果选择样本的方法是偏向于某些群体的, 那么这个样本是biased: 例如: 自愿相应的调查通常都是有倾向的</strong></p>
+<ul>
+<li><p>方便抽样(Convenience sampling) : <strong>非随机抽样</strong>, 是一种为配合研究主题而由调查者于特定的时间和特定社区的某一位置上，随意选择回答者的非概率抽样方法</p>
+</li>
+<li><p>判断抽样 (Judgement sampling) : <strong>非随机抽样</strong>, 研究人员依其自己对所要选择的回答者的判断，只拣那些最适于该项研究目的者.</p>
+</li>
+<li><p>配额抽样(<em>Quota</em> <em>Sampling</em>) :  <strong>非随机抽样</strong>, 指调查人员将调查总体样本按一定标志分类或分层，确定各类（层）单位的样本数额，在配额内任意抽选样本的抽样方式</p>
+</li>
+<li><p>雪球抽样 (Snowball sampling) : <strong>非随机抽样</strong>滚雪球抽样是指先随机选择一些被访者并对其实施访问，再请他们提供另外一些属于所研究目标总体的调查对象，根据所形成的线索选择此后的调查对象</p>
+</li>
+</ul>
+<h3 id="简单随机抽样-Simple-Random-Samples"><a href="#简单随机抽样-Simple-Random-Samples" class="headerlink" title="简单随机抽样: Simple Random Samples"></a>简单随机抽样: Simple Random Samples</h3><p>Simple Random Samples means drawing at random <strong>without</strong> replacement</p>
+<p>without replacement: 取完之后不放回</p>
+<p>with replacement: 取完之后放回</p>
+<p>例如从1, 2, 3, 4中随机取3个数</p>
+<p>without replacement: 4 choose 3 = 4</p>
+<p>with replacement: 4^3 = 64</p>
+<p>使用Simple Random Samples, 总体中所有的个体都有同等的机会被选中, 同样大小的样本被选中的机会也是相同的 </p>
+<br>
+
+<h3 id="分层抽样-stratified-random-sampling"><a href="#分层抽样-stratified-random-sampling" class="headerlink" title="分层抽样-stratified random sampling"></a>分层抽样-stratified random sampling</h3><p>分层随机抽样，又称类型随机抽样，它是先将总体各单位按一定标准分成各种类型（或层）；然后根据各类型单位数与总体单位数的比例，确定从各类型中抽取样本单位的数量；最后，按照随机原则从各类型中抽取样本。</p>
+<p>比如，我们要了解某市400个国营企业的生产经营情况，决定采取类型随机抽样法抽取20个企业作为样本进行调查，其具体做法是：首先，将这400个企业按产业（也可按行政区划、盈利情况、规模大小等）分为三类，假定第一产业40个，第二产业200个，第三产业160个。然后，按各类企业在总体中的比重，确定各类企业抽取样本单位的数量。其中，第一产业的企业占总体10%，按比例应抽样本企业2个；按同样方法计算，第二产业中应抽样本企业10个，第三产业中应抽样本企业8个。最后，采用简单随机抽样或等距随机抽样方法，从各类企业中抽出上述数量的样本单位。</p>
+<br>
+
+<h3 id="系统随机抽样"><a href="#系统随机抽样" class="headerlink" title="系统随机抽样"></a>系统随机抽样</h3><p>系统随机抽样也称机械随机抽样或等距随机抽样，即将总体单位按某一标志(如时间)排序，然后按一定间隔来随机抽取样本单位。例如，要从100件产品中抽取10件组成样本，首先将100件产品按某一标志排序，顺序编号为1～100；然后用抽签或查随机数表的方法确定1～10号中入选样本的编号(假定为4号)；然后按等距原则依次确定入选样本的产品编号为14、24、34、44、54、64、74、84、94；最后由编号为4、14、24、34、44、54、64、74、84、94的10件产品组成样本。</p>
+<br>
+
+<blockquote>
+<p>简单随机抽样的个体和系统随机抽样的个体被抽取几率是相同的, </p>
+<p>如果总体容量为p, 样本容量为s, 则每一个个体被抽取的概率为s/p</p>
+<p>简单随机抽样: (p-1 choose s-1) / (p choose s) = s / p</p>
+<p>系统随机抽样:  1 / (p/s) = s / p</p>
+<p>但是简单随机抽样中所有样本的抽取概率都是一样的, 而系统随机抽样不是</p>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="抽样分布"><a href="#抽样分布" class="headerlink" title="抽样分布"></a>抽样分布</h2><p><strong>参数和统计量的定义:</strong></p>
+<p>参数(parameter): 一个描述总体(population)的数, 通常是未知的.</p>
+<p>统计量(statistic): 通过样本计算出来的值, 我们会用样本的统计量来推测总体的参数</p>
+<br>
+
+<p>例如: 一个箱子中有1, 1, 2, 4 这4个球, make n draw <strong>with replacement</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Possible Value</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">How often</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">How likely</td>
+<td align="center">50%</td>
+<td align="center">25%</td>
+<td align="center">25%</td>
+</tr>
+</tbody></table>
+<p>假设我们 make 3 draw (2, 2, 1), 这就是一个样本(sample)</p>
+<p>sample max = max(2, 2, 1) = 2</p>
+<p>sample total = 2+2+1 = 5</p>
+<p>sample mean = sample total / n = 5/3</p>
+<br>
+
+<p>当n=1时, Sample Total = X1+X2…+Xn = X1</p>
+<table>
+<thead>
+<tr>
+<th align="center">Total</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">p[Total]</td>
+<td align="center">50%</td>
+<td align="center">25%</td>
+<td align="center">25%</td>
+</tr>
+</tbody></table>
+<p>conclusion: When sample size is one, the sample distribution is the same as the population distribution</p>
+<br>
+
+<p>当n=2时, Sample Total = X1+X2…+Xn = X1+X2</p>
+<table>
+<thead>
+<tr>
+<th>Total</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p[Total]</td>
+<td>4/16</td>
+<td>4/16</td>
+<td>1/16</td>
+<td>4/16</td>
+<td>2/16</td>
+<td>1/16</td>
+</tr>
+</tbody></table>
+<p>P[Total = 2] = P[X1+X2=2] = P[X1 = 1 and X2 = 1] = P(1, 1) = 2/4 * 2/4 = 4/16</p>
+<p>P[Total = 3] = P(1, 2) + P(2, 1) = 2/4 * 1/4 + 1/4 * 2/4 = 4/16</p>
+<p>… …</p>
+<p>P[Total = 8] = P(4, 4) = 1/16</p>
+<p>&lt;Comments&gt; : A legitimate probability distribution for a discrete random variable W:</p>
+<ol>
+<li>for all possible w, p(w) &gt;= 0</li>
+<li>Σ<sub>all w</sub> P(w) = 1</li>
+</ol>
+<br>
+
+<p>在n=2的情况下, 说sample total = 2 等价于说sample mean=1</p>
+<p>P(total = 2) = P(AVG<sub>x</sub> = 1) 二者是等价的</p>
+<p>即在 n=2 的情况下</p>
+<table>
+<thead>
+<tr>
+<th>Total</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AVG<sub>x</sub></td>
+<td>1</td>
+<td>1.5</td>
+<td>2</td>
+<td>2.5</td>
+<td>3</td>
+</tr>
+<tr>
+<td>p[Total]</td>
+<td>4/16</td>
+<td>4/16</td>
+<td>1/16</td>
+<td>4/16</td>
+<td>2/16</td>
+</tr>
+</tbody></table>
+<br>
+
+<p>问题: 求P[2 &lt;= AVG<sub>x</sub> &lt;= 3] 当n=25时.</p>
+<p>P[2 &lt;= AVG<sub>x</sub> &lt;= 3]  = P[50 &lt;= total &lt;= 75] = P[total=50] + P[total=51] … + P[total=75]</p>
+<p><img src="/Blog/intro/clt.PNG" alt></p>
+<p>很显然, 当样本容量很大时, 计算一个统计量的样本分布会变得非常复杂</p>
+<br>
+
+<h2 id="中心极限定理-Central-Limit-Theorem"><a href="#中心极限定理-Central-Limit-Theorem" class="headerlink" title="中心极限定理(Central Limit Theorem)"></a>中心极限定理(Central Limit Theorem)</h2><p>Given {X1, X2, X3, …, Xn} is a sequence of <strong>independently and identically distributed</strong><br><strong>random variables</strong>(或者说 simple random sample) with common mean <strong>E(X1) = μ</strong> and common variance <strong>V(X1) = σ^2.</strong></p>
+<p><img src="/Blog/intro/clt_1.PNG" alt></p>
+<p>如果X不服从伯努利分布:</p>
+<p><img src="/Blog/intro/clt_2.PNG" alt></p>
+<p>如果X服从伯努利分布:</p>
+<p><img src="/Blog/intro/clt_3.PNG" alt></p>
+<br>
+
+<p>回到原来的问题: 求P[2 &lt;= AVG<sub>x</sub> &lt;= 3] 当n=25时.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Total</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">p[Total]</td>
+<td align="center">50%</td>
+<td align="center">25%</td>
+<td align="center">25%</td>
+</tr>
+</tbody></table>
+<p>E(X) = 1 * 50% + 2 * 25% + 4 * 25% = 2</p>
+<p>V(X) = (1-2)^2 * 50% + (2-2)^2 * 25% + (4-2)^2 * 25% = 1.5</p>
+<p>μ = 2, σ^2=1.5</p>
+<p>而AVG<sub>x</sub>~N(μ, σ^2/n)</p>
+<p>现在就可以把x转为z值</p>
+<p><img src="/Blog/intro/clt_4.PNG" alt></p>
+<br>
+
+<p>也可以使用total来计算 Total~N(nμ, n * σ^2)</p>
+<p><img src="/Blog/intro/clt_5.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="统计推断-statistical-inferences"><a href="#统计推断-statistical-inferences" class="headerlink" title="统计推断(statistical inferences)"></a>统计推断(statistical inferences)</h2><p>使用样本的数据推断总体的参数</p>
+<p>分为: 点估计, 区间估计, 假设检验 三个部分</p>
+<br>
+
+<p>例子: 抛100次硬币, 观察到40次正面朝上, 是否是一枚公平的硬币</p>
+<h3 id="点估计"><a href="#点估计" class="headerlink" title="点估计"></a>点估计</h3><p>用AVG<sub>x</sub> 来估计π, 即用sample% 估计 population%</p>
+<p>40/100 = 0.4</p>
+<p>即我们猜测硬币证明朝上的概率为0.4.</p>
+<p>但是显然, 这种方法的准确性低.</p>
+<br>
+
+<h3 id="区间估计"><a href="#区间估计" class="headerlink" title="区间估计"></a>区间估计</h3><p>因此相比于估计一个点, 我们改为估计一个区间(置信区间)</p>
+<p>我们估计(AVG<sub>x</sub>-h, AVG<sub>x</sub>+h) 有一定可能性包含我们想猜测的参数 π或μ (population%, 或 population mean)</p>
+<p>可能性通常取99%, 95%, 90%</p>
+<p>h被称为Margin of Error</p>
+<br>
+
+<p>假设使用95%的置信区间</p>
+<p>AVG<sub>x</sub>~N[E(AVG<sub>x</sub>), V(AVG<sub>x</sub>)]</p>
+<p><img src="/Blog/intro/clt_6.PNG" alt></p>
+<p><img src="/Blog/intro/clt_7.PNG" alt></p>
+<p><img src="/Blog/intro/clt_8.PNG" alt></p>
+<p><img src="/Blog/intro/clt_9.PNG" alt></p>
+<p><img src="/Blog/intro/clt_10.PNG" alt></p>
+<p><img src="/Blog/intro/clt_11.PNG" alt></p>
+<p><img src="/Blog/intro/clt_12.PNG" alt></p>
+<p><img src="/Blog/intro/clt_13.PNG" alt></p>
+<br>
+
+<br>
+
+<h3 id="假设检验"><a href="#假设检验" class="headerlink" title="假设检验"></a>假设检验</h3><p>核心思想: 假设一件事情为真, 判断当前情况即更极端的情况发生的概率</p>
+<p>例如: 一对情侣, 男生99%次上街都会看其他的女生, 假设这个男生爱他的女朋友, 那么99%次上街都会看其他的女生的概率就非常低, 属于近乎不可能发生的事件, 但这样一个事件却发生了, 说明假设错误, 即这个男生不爱他的女朋友</p>
+<br>
+
+<p>同样的道理, 抛100次硬币40次正面朝上, 假设这枚硬币是公平的, 即证明朝上的概率为50%, 判断40次及以下正面朝上的概率</p>
+<p>即Type I error: p[Type I error] = p[ reject H0|under H0 is True ]</p>
+<p>如果概率小于阈值(通常选择5% 或 1%), 则认为是小概率事件, 拒绝零假设.</p>
+<p>具体步骤:</p>
+<blockquote>
+<p><strong>&lt;step 1&gt;</strong> </p>
+<p>H0 : π = 1/2 (即证明朝上的概率为50%)</p>
+<p>Ha : π != 1/2 (证明朝上的概率不为50%)</p>
+<p><strong>&lt;step 2&gt;</strong></p>
+<p>选 α = 5%, 即进行20次实验, 才会出现一次40次或更极端正面朝上</p>
+<p><strong>&lt;step 3&gt;</strong></p>
+<p><img src="/Blog/intro/hyposis_testing.PNG" alt></p>
+<p><strong>&lt;step 4&gt;</strong></p>
+<p><img src="/Blog/intro/hyposis_testing_1.PNG" alt></p>
+</blockquote>
+<br>
+
+<h4 id="Hypothesis-Testing-The-2nd-approach"><a href="#Hypothesis-Testing-The-2nd-approach" class="headerlink" title="Hypothesis Testing - The 2nd approach"></a>Hypothesis Testing - The 2nd approach</h4><p>除了上面的这个方法, 还有第二种计算方式</p>
+<p><img src="/Blog/intro/hyposis_testing_2.PNG" alt></p>
+<br>
+
+<br>
+
+<h4 id="Hypothesis-Testing-P-Value-approach"><a href="#Hypothesis-Testing-P-Value-approach" class="headerlink" title="Hypothesis Testing - P-Value approach"></a>Hypothesis Testing - P-Value approach</h4><p>第三种计算方式, 计算P值(可能性) 和 α 比较</p>
+<p><strong>&lt;step 1&gt;</strong></p>
+<p>H0(Null Hypothesis) : the coin is fair</p>
+<p>Ha(Alternative Hypothesis) : H0 is not true </p>
+<p>注意这里Ha有三种选择, π &gt; 1/2, π &lt; 1/2 (这两个称为 one-side alternative), π != 1/2(包含π &gt; 1/2, π &lt; 1/2, 称为2-side alternative)</p>
+<blockquote>
+<p>注意:</p>
+<ol>
+<li><p>我们推测的是总体的参数而不是样本的数据, H0: π = 1/2, 而不是 AVG_x = 1/2, 因为当有样本数据时AVG_x就是一个固定的常量</p>
+</li>
+<li><p>Ha选择那个是基于research interest, 而不是基于收集到的数据不能因为AVG_x &lt; 1/2就选择Ha:π &lt; 1/2</p>
+</li>
+<li><p>H0要包含等于, 即不能是H0:π != 1/2 , Ha:π = 1/2. 必须是H0:π = 1/2 , Ha:π != 1/2</p>
+</li>
+</ol>
+</blockquote>
+<p><strong>&lt;step 2&gt;</strong></p>
+<p>选 α = 5%</p>
+<p><strong>&lt;step 3&gt;</strong></p>
+<p>用sample%(AVG_x)去推测population%(π)</p>
+<p>AVG_x = 40/100 = 0.4</p>
+<p><strong>&lt;step 4&gt;</strong></p>
+<p>计算p值</p>
+<p><img src="/Blog/intro/hyposis_testing_3.PNG" alt></p>
+<p>p=4.56% &lt; 5%</p>
+<p>因此拒绝H0</p>
+<p><strong>注意</strong>: 在假设检验中, 我们不说接受H0, 而是说不拒绝H0, 保留H0, 或者拒绝H0失败</p>
+<p>因为有可能硬币不是1/2的概率而是51/100的概率, 他们很相似, 但却不一样.</p>
+<p><strong>注意:</strong> 双尾检验的p值是单尾检验时的二倍</p>
+<br>
+
+<br>
+
+<h3 id="统计功效-Power"><a href="#统计功效-Power" class="headerlink" title="统计功效(Power)"></a>统计功效(Power)</h3><p>在假设检验中有两类错误</p>
+<p>P(type I error) = P(reject H0 | H0 is true)</p>
+<p>P(type II error) = P(Fail to reject H0 | H0 is false)</p>
+<p>而power就是不犯二类错误的概率(Type 2 error)</p>
+<p>power = 1 - P(type 2 error)</p>
+<p><img src="/Blog/intro/power_of_a_test.PNG" alt></p>
+<p><img src="/Blog/intro/power_of_a_test_1.PNG" alt></p>
+<br>
+
+<p>power受到α和n(sample size)的影响</p>
+<p><strong>如果增大α</strong></p>
+<p><img src="/Blog/intro/power_of_a_test_2.PNG" alt></p>
+<br>
+
+<p><strong>如果增大n</strong></p>
+<p><img src="/Blog/intro/power_of_a_test_3.PNG" alt></p>
+<p><img src="/Blog/intro/power_of_a_test_4.PNG" alt></p>
+<br>
+
+<h4 id="直观的理解"><a href="#直观的理解" class="headerlink" title="直观的理解"></a>直观的理解</h4><p><img src="/Blog/intro/power_of_a_test_5.PNG" alt></p>
+<p>如果μ=0置信区间是(-3.14, 3.14), 然而实际的μ为4, 那么-3.14到3.14这个范围的值不会拒绝H0(二类错误), 绿色的部分就是统计功效, 其实还有小于-3.14的那一部分, 但面积太少就忽略不计了</p>
+<br>
+
+<br>
+
+<h2 id="t-分布"><a href="#t-分布" class="headerlink" title="t 分布"></a>t 分布</h2><p>在假设检验时, 我们上面举的例子都是服从二项分布的, 即要么成功(success) 要么失败(fail)</p>
+<p>抛硬币就是要么正面朝上要么反面朝上, 因此我们知道它的方差, 而二项分布的方差就是 π(1-π)</p>
+<p>而在计算Margin of error和置信区间时, 是需要使用到总体的方差的.</p>
+<p><img src="/Blog/intro/t_pro.PNG" alt></p>
+<p>然而在非二项分布的情况下, 即大多数情况下, 我们并不清楚<strong>总体的方差</strong>, 因此我们可以使用<strong>样本的方差</strong>代替</p>
+<p><img src="/Blog/intro/t_pro_1.PNG" alt></p>
+<br>
+
+<h3 id="t分布的性质"><a href="#t分布的性质" class="headerlink" title="t分布的性质"></a>t分布的性质</h3><p>如果{X1, X2…Xn} 是来自<strong>正态总体</strong>(normal population)的<strong>简单随机抽样</strong>(SRS), 那么</p>
+<p><img src="/Blog/intro/t_pro_2.PNG" alt></p>
+<p>t分布也是对称单峰的分布, 且自由度(degree of freedom)越大越接近正态分布</p>
+<p><img src="/Blog/intro/t_distribution_2.PNG" alt></p>
+<p>{X1, X2, X3} 是iid(不相关的)随机变量, 那么df = 3</p>
+<p>但是{X1 - AVG_X, X2 - AVG_X, X3 - AVG_X} 的自由度只有2,因为</p>
+<p>(X1 - AVG_X)+(X2 - AVG_X)+(X3 - AVG_X) = 0</p>
+<p>如果X1 - AVG_X=5, X2 - AVG_X=6, 那么X3 - AVG_X只有可能为-11</p>
+<br>
+
+<p>例子:</p>
+<p><img src="/Blog/intro/t_pro_3.PNG" alt></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
+            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">https://daolinzhou.github.io/Blog/2020/04/04/stat-203/</a>
+            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">April 4th 2020, 1:01:30 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">April 7th 2020, 1:01:53 am</a>
+            <p>版权声明：</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/Blog/2020/03/06/play-with-linear-algebra-4/" title= "线性代数补充知识">
+                    <div class="prevTitle">线性代数补充知识</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正态分布"><span class="toc-number">1.</span> <span class="toc-text">正态分布</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#u决定了什么"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">u决定了什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#σ决定了什么"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">σ决定了什么</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正态分布的特征"><span class="toc-number">1.0.1.</span> <span class="toc-text">正态分布的特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正态分布"><span class="toc-number">1.1.</span> <span class="toc-text">标准正态分布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#上-下-α分位点"><span class="toc-number">1.1.1.</span> <span class="toc-text">(上/下)α分位点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期望值和方差"><span class="toc-number">2.</span> <span class="toc-text">期望值和方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#期望值"><span class="toc-number">2.1.</span> <span class="toc-text">期望值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#期望值的性质"><span class="toc-number">2.2.</span> <span class="toc-text">期望值的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差-标准误"><span class="toc-number">2.3.</span> <span class="toc-text">方差/标准误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差的性质"><span class="toc-number">2.4.</span> <span class="toc-text">方差的性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽样"><span class="toc-number">3.</span> <span class="toc-text">抽样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单随机抽样-Simple-Random-Samples"><span class="toc-number">3.1.</span> <span class="toc-text">简单随机抽样: Simple Random Samples</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分层抽样-stratified-random-sampling"><span class="toc-number">3.2.</span> <span class="toc-text">分层抽样-stratified random sampling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统随机抽样"><span class="toc-number">3.3.</span> <span class="toc-text">系统随机抽样</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽样分布"><span class="toc-number">4.</span> <span class="toc-text">抽样分布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中心极限定理-Central-Limit-Theorem"><span class="toc-number">5.</span> <span class="toc-text">中心极限定理(Central Limit Theorem)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#统计推断-statistical-inferences"><span class="toc-number">6.</span> <span class="toc-text">统计推断(statistical inferences)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点估计"><span class="toc-number">6.1.</span> <span class="toc-text">点估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区间估计"><span class="toc-number">6.2.</span> <span class="toc-text">区间估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#假设检验"><span class="toc-number">6.3.</span> <span class="toc-text">假设检验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hypothesis-Testing-The-2nd-approach"><span class="toc-number">6.3.1.</span> <span class="toc-text">Hypothesis Testing - The 2nd approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hypothesis-Testing-P-Value-approach"><span class="toc-number">6.3.2.</span> <span class="toc-text">Hypothesis Testing - P-Value approach</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计功效-Power"><span class="toc-number">6.4.</span> <span class="toc-text">统计功效(Power)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直观的理解"><span class="toc-number">6.4.1.</span> <span class="toc-text">直观的理解</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#t-分布"><span class="toc-number">7.</span> <span class="toc-text">t 分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#t分布的性质"><span class="toc-number">7.1.</span> <span class="toc-text">t分布的性质</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 45
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
+    
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
+    
+        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
+    
+        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
+    
+        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
+    
+        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
+    
+        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
+    
+        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
+    
+        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/Blog/",
+        author: "Daolin"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/Blog/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/Blog/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
