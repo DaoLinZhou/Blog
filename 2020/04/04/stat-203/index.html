@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.8k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">6k</span>阅读时长: <span class="post-count reading-time">24 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -403,7 +403,8 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><p>一个正态分布长这样</p>
+        <p>FIC 统计-203 的重点知识<a id="more"></a></p>
+<h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><p>一个正态分布长这样</p>
 <p><img src="/Blog/intro/Normal_distribution.PNG" alt></p>
 <h5 id="u决定了什么"><a href="#u决定了什么" class="headerlink" title="u决定了什么"></a>u决定了什么</h5><p>固定σ = 1, 而变化u的正态分布函数</p>
 <p><img src="/Blog/intro/stat_u_dependence_what.PNG" alt></p>
@@ -888,7 +889,7 @@ height:50vh;
 <p><img src="/Blog/intro/t_pro_2.PNG" alt></p>
 <p>t分布也是对称单峰的分布, 且自由度(degree of freedom)越大越接近正态分布</p>
 <p><img src="/Blog/intro/t_distribution_2.PNG" alt></p>
-<p>{X1, X2, X3} 是iid(不相关的)随机变量, 那么df = 3</p>
+<h3 id="自由度"><a href="#自由度" class="headerlink" title="自由度"></a>自由度</h3><p>{X1, X2, X3} 是iid(不相关的)随机变量, 那么df = 3</p>
 <p>但是{X1 - AVG_X, X2 - AVG_X, X3 - AVG_X} 的自由度只有2,因为</p>
 <p>(X1 - AVG_X)+(X2 - AVG_X)+(X3 - AVG_X) = 0</p>
 <p>如果X1 - AVG_X=5, X2 - AVG_X=6, 那么X3 - AVG_X只有可能为-11</p>
@@ -896,6 +897,398 @@ height:50vh;
 
 <p>例子:</p>
 <p><img src="/Blog/intro/t_pro_3.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="2-sample-dependent-t-Procedure"><a href="#2-sample-dependent-t-Procedure" class="headerlink" title="2-sample(dependent) t Procedure"></a>2-sample(dependent) t Procedure</h2><p>也被称为 matched pairs t procedure</p>
+<p>例子: 现有期中考试和期末考试的成绩, 问期中到期末这段时间的学习是否使得成绩有所提高?</p>
+<table>
+<thead>
+<tr>
+<th align="center">Before(X)</th>
+<th align="center">69</th>
+<th align="center">54</th>
+<th align="center">82</th>
+<th align="center">67</th>
+<th align="center">60</th>
+<th align="center">73</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>After(Y)</strong></td>
+<td align="center">73</td>
+<td align="center">50</td>
+<td align="center">83</td>
+<td align="center">78</td>
+<td align="center">56</td>
+<td align="center">74</td>
+</tr>
+<tr>
+<td align="center"><strong>Difference(D=Y-X)</strong></td>
+<td align="center">4</td>
+<td align="center">-4</td>
+<td align="center">1</td>
+<td align="center">11</td>
+<td align="center">-4</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<p>X 和 Y 是相关的变量, 但我们可以把这两个变量整合称为一个变量</p>
+<p><strong>&lt;step 1&gt;</strong></p>
+<p>H0 : μ<sub>d</sub> = (μ<sub>y</sub> - μ<sub>x</sub>) = 0</p>
+<p>Ha : μ<sub>d</sub> &gt; 0</p>
+<p><strong>&lt;step 2&gt;</strong></p>
+<p>choose α = 5%</p>
+<p><strong>&lt;step 3&gt;</strong></p>
+<p>由于不知道总体方差, 所以使用t分布及样本方差</p>
+<p>t的自由度为6-1 = 5</p>
+<p><strong>&lt;step 4&gt;</strong></p>
+<p>计算p-value, p-value = p[Test statistic behaves at least as extreme as the observe d value | H0 is true] = p[mean_D(总体均值) &gt; mean_d(1.5, 样本均值)|μ<sub>d</sub> = 0]</p>
+<p><img src="/Blog/intro/matched_t_pro.PNG" alt></p>
+<p><strong>&lt;step 5&gt;</strong></p>
+<p>结论: fail to reject H0, the collected evidence are not significant enough to claim there is an improvement</p>
+<blockquote>
+<p>X 和 Y 相关, 问X和Y是否有显著差异, 把两个变量结合为一个变量D=Y-X再用t分布计算概率</p>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="2-sample-independent-t-Procedure"><a href="#2-sample-independent-t-Procedure" class="headerlink" title="2-sample(independent) t Procedure"></a>2-sample(independent) t Procedure</h2><blockquote>
+<p>X 和 Y 不相关, 问X和Y是否有显著差异</p>
+</blockquote>
+<p>一个学者认为阅读活动能提升阅读的能力, 于是他让21个人参与阅读活动(treatment group), 23个人不参与活动(control group), 并在8周后进行测试</p>
+<br>
+
+<p>感兴趣的变量: X 和 Y</p>
+<p>X = treatment group 的测试成绩</p>
+<p>Y = control group 的测试成绩</p>
+<br>
+
+<p>前置条件</p>
+<p>{X1, X2…X21}是来自正态总体的简单随机抽样 (X1~N(μ<sub>x</sub>, σ^2<sub>x</sub>))</p>
+<p>{Y1, Y2…Y23}是来自正态总体的简单随机抽样 (Y1~N(μ<sub>Y</sub>, σ^2<sub>Y</sub>))</p>
+<p>X, Y是不相关的</p>
+<br>
+
+<p><img src="/Blog/intro/matched_t_pro_1.PNG" alt></p>
+<p>通过计算求得:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Group</th>
+<th>size(n)</th>
+<th>sample_mean</th>
+<th>sample SD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>X</td>
+<td>Treatment</td>
+<td>21(nx)</td>
+<td>51.48(AVG<sub>x</sub>)</td>
+<td>11.01(S<sub>x</sub>)</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>Control</td>
+<td>23(ny)</td>
+<td>41.52(AVG<sub>Y</sub>)</td>
+<td>17.15(S<sub>Y</sub>)</td>
+</tr>
+</tbody></table>
+<p><strong>&lt;step 1&gt;</strong></p>
+<p>H0 : μ<sub>x</sub> = μ<sub>y</sub>, (μ<sub>x</sub> - μ<sub>y</sub> = 0)</p>
+<p>Ha : μ<sub>x</sub> - μ<sub>y</sub> &gt; 0 (the difference is real, treatment method is better)</p>
+<p><strong>&lt;step 2&gt;</strong></p>
+<p>choose α = 5%</p>
+<p><strong>&lt;step 3&gt;</strong></p>
+<p>test statistics used </p>
+<p><img src="/Blog/intro/matched_t_pro_2.PNG" alt></p>
+<p>拒绝H0如果p-value &lt; α = 5%</p>
+<p><strong>&lt;comments on Sampling Distribution of X_bar Y_bar&gt;</strong></p>
+<p><img src="/Blog/intro/matched_t_pro_3.PNG" alt></p>
+<p><img src="/Blog/intro/matched_t_pro_4.PNG" alt><br>因此:</p>
+<p><img src="/Blog/intro/matched_t_pro_5.PNG" alt></p>
+<p>首先先计算期望值</p>
+<p><img src="/Blog/intro/matched_t_pro_6.PNG" alt></p>
+<p>在计算标准误/方差, 由于X, Y无关</p>
+<p><img src="/Blog/intro/matched_t_pro_7.PNG" alt></p>
+<br>
+
+<p><img src="/Blog/intro/matched_t_pro_8.PNG" alt></p>
+<p>ν是t的自由度, 它有两种计算方法</p>
+<p><img src="/Blog/intro/matched_t_pro_9.PNG" alt></p>
+<p>第二种方法准确度更高, 常用于计算机工程中计算自由度, 但二者差异不大</p>
+<br>
+
+<p><strong>&lt;step 4&gt;</strong></p>
+<p>这里自由度选择21-1=20</p>
+<p><img src="/Blog/intro/matched_t_pro_10.PNG" alt></p>
+<p><img src="/Blog/intro/matched_t_pro_11.PNG" alt></p>
+<br>
+
+<p><strong>&lt;step 4 第二版&gt;</strong></p>
+<p>另一种方法是计算<strong>单侧置信区间</strong></p>
+<p><img src="/Blog/intro/matched_t_pro_12.PNG" alt></p>
+<p>[0.97, 18.95] 是置信区间, 不包含0, 所以reject H0</p>
+<p>即: 进行阅读活动确实帮助学生提高阅读能力</p>
+<br>
+
+<br>
+
+<h2 id="非参数检验-One-Way-Chi-square-test"><a href="#非参数检验-One-Way-Chi-square-test" class="headerlink" title="非参数检验: One Way Chi-square test"></a>非参数检验: One Way Chi-square test</h2><p>从一个例子出发:</p>
+<p>假设教授的期末试卷50道题的答案如下(称为<strong>f<sub>o</sub></strong>), 问教授是否倾向于让题目设置为某一个选项</p>
+<table>
+<thead>
+<tr>
+<th>Correct answer</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Observed frequencies</td>
+<td>12</td>
+<td>14</td>
+<td>9</td>
+<td>5</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<p>H0: (Null hypothesis) The instructor shows <strong>no</strong> tendency to assign any particular correct response from A to E (教授没有倾向)</p>
+<p>Ha:(Research hypothesis) The instructor shows tendency to assign any particular correct response from A to E (教授有倾向)</p>
+<p>因此如果教授没有倾向, 我们期望的答案的分布应该如下(称为<strong>f<sub>e</sub></strong>)</p>
+<table>
+<thead>
+<tr>
+<th>Correct answer</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Observed frequencies</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<p><strong>&lt;step 1&gt;</strong></p>
+<p>H0: (Null hypothesis) The instructor shows <strong>no</strong> tendency to assign any particular correct response from A to E (教授没有倾向)</p>
+<p>Ha:(Research hypothesis) The instructor shows tendency to assign any particular correct response from A to E (教授有倾向)</p>
+<p><strong>&lt;step 2&gt;</strong></p>
+<p>Choose α = 5%</p>
+<p><strong>&lt;step 3&gt;</strong></p>
+<p>使用统计量的选取: 卡方分布</p>
+<p><img src="/Blog/intro/chi_square_n.PNG" alt></p>
+<p>当卡方的值过大时拒绝H0</p>
+<blockquote>
+<p>思想: </p>
+<p>如果H0为真, 则<strong>f<sub>o</sub></strong>应该接近<strong>f<sub>e</sub></strong></p>
+<p>因此<strong>f<sub>o</sub></strong> - <strong>f<sub>e</sub></strong> 接近0, <strong>f<sub>o</sub></strong> - <strong>f<sub>e</sub></strong>的平方接近0</p>
+<p>因此这个统计量应该非常小, 如果太大了就要拒绝H0</p>
+<p><img src="/Blog/intro/chi_square_n.PNG" alt></p>
+</blockquote>
+<blockquote>
+<p>卡方分布的几条性质</p>
+<p>卡方分布的概率密度函数图:</p>
+<p><img src="/Blog/intro/chi-square-distribution_4.PNG" alt></p>
+<p>卡方分布的曲线是右偏(right skewed)的</p>
+<p>每个卡方分布的曲线都和一个自由度相关</p>
+<p>增加自由度卡方分布的曲线会变得更加对称</p>
+</blockquote>
+<p><strong>&lt;step 4&gt;</strong></p>
+<p><img src="/Blog/intro/chi_square_n_1.PNG" alt></p>
+<p>df = k-1 = 5-1 = 4</p>
+<p>卡方分布在自由度为4时单尾5%的拒绝域为 [9.488, inf)</p>
+<p>而根据样本得到的卡方值为4.6, 并没有落在拒绝域内, 所以保留H0</p>
+<br>
+
+<br>
+
+<h2 id="非参数检验-Two-Way-Chi-square-test"><a href="#非参数检验-Two-Way-Chi-square-test" class="headerlink" title="非参数检验: Two Way Chi-square test"></a>非参数检验: Two Way Chi-square test</h2><p><img src="/Blog/intro/chi_square_n_2.PNG" alt></p>
+<p><img src="/Blog/intro/chi_square_n_3.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="F分布"><a href="#F分布" class="headerlink" title="F分布"></a>F分布</h2><p>如果U服从自由度为v1的卡方分布, V服从自由度为v2的卡方分布</p>
+<p><img src="/Blog/intro/f_dis.PNG" alt></p>
+<p><img src="/Blog/intro/f_dis_1.PNG" alt></p>
+<br>
+
+<p>同样是一个服从标准正态分布的总体, 通过这个总体可以得到一些统计量, U服从自由度为n1的卡方分布, V服从自由度为n2的卡方分布</p>
+<p><img src="/Blog/intro/f_distribution.PNG" alt></p>
+<br>
+
+<p>基于U和V构造新的统计量F</p>
+<p><img src="/Blog/intro/f_distribution_1.PNG" alt></p>
+<br>
+
+<h3 id="F分布的概率密度函数图"><a href="#F分布的概率密度函数图" class="headerlink" title="F分布的概率密度函数图"></a>F分布的概率密度函数图</h3><p>首先固定n2为40, 去变换n1</p>
+<p><img src="/Blog/intro/f_distribution_2.PNG" alt></p>
+<p>随着n1的不断变小, 图形变得越来越矮, 越来越胖, 并且其概率最大值所对应的F值也越来越向左偏移</p>
+<br>
+
+<p>固定n1为20, 变化n2, 一次递减10</p>
+<p><img src="/Blog/intro/f_distribution_3.PNG" alt></p>
+<p>随着n2递减, 图形变得越来越矮, 相对的也胖了一些, 但变换程度没有左侧的明显</p>
+<br>
+
+<h3 id="t分布和F分布"><a href="#t分布和F分布" class="headerlink" title="t分布和F分布"></a>t分布和F分布</h3><p>如果T服从自由度为v的t分布, 则:</p>
+<p><img src="/Blog/intro/f_dis_2.PNG" alt></p>
+<br>
+
+<h3 id="来自正态总体的样本和F分布"><a href="#来自正态总体的样本和F分布" class="headerlink" title="来自正态总体的样本和F分布"></a>来自正态总体的样本和F分布</h3><p>如果有2个无关的来自正态分布的随机样本, 样本容量分布为n1, n2, </p>
+<p><img src="/Blog/intro/f_dis_3.PNG" alt></p>
+<br>
+
+<br>
+
+<h2 id="单因素方差分析One-Way-Analysis-of-Variance-ANOVA"><a href="#单因素方差分析One-Way-Analysis-of-Variance-ANOVA" class="headerlink" title="单因素方差分析One-Way Analysis of Variance (ANOVA):"></a>单因素方差分析One-Way Analysis of Variance (ANOVA):</h2><p>前面讲过对一个总体均值进行假设检验, 以及对两个总体的均值进行假设检验</p>
+<p>方差分析则是用来实现在多于两个均值的情况下的假设检验</p>
+<br>
+
+<h3 id="t检验对比方差分析"><a href="#t检验对比方差分析" class="headerlink" title="t检验对比方差分析"></a>t检验对比方差分析</h3><p><img src="/Blog/intro/t_anova.PNG" alt></p>
+<br>
+
+<h3 id="方差分析的核心"><a href="#方差分析的核心" class="headerlink" title="方差分析的核心"></a>方差分析的核心</h3><p>对因变量的总变化进行划分, 把它分成<strong>自变量引起的变化</strong>(可以解释的变化)和<strong>其他因素引起的变化</strong>(无法解释的变化)</p>
+<p><img src="/Blog/intro/t_anova_1.PNG" alt></p>
+<p>二者的比值正好是一个F统计量, 服从F分布</p>
+<p><img src="/Blog/intro/t_anova_2.PNG" alt></p>
+<p>我们只进行单尾检验(只关心右尾), 因为如果是左尾就说明自变量引起的变化远远小于其他因素引起的变化, 因此我们不认为自变量可以解释因变量</p>
+<p>而<strong>自变量引起的变化</strong>和<strong>其他因素引起的变化</strong>都是使用方差进行刻画的, 因此称为<strong>方差分析</strong></p>
+<br>
+
+<h3 id="从一个例子出发"><a href="#从一个例子出发" class="headerlink" title="从一个例子出发"></a>从一个例子出发</h3><p>一个学者认为结婚时长和结婚次数的关系, 他收集的样本数据如下:</p>
+<table>
+<thead>
+<tr>
+<th>First Marriage (X1)</th>
+<th>Second Marriage (X2)</th>
+<th>Third Marriage (X3)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8.50</td>
+<td>7.50</td>
+<td>2.75</td>
+</tr>
+<tr>
+<td>9.00</td>
+<td>4.75</td>
+<td>4.00</td>
+</tr>
+<tr>
+<td>6.75</td>
+<td>3.75</td>
+<td>1.50</td>
+</tr>
+<tr>
+<td>8.50</td>
+<td>6.50</td>
+<td>3.75</td>
+</tr>
+<tr>
+<td>9.50</td>
+<td>5.00</td>
+<td>3.50</td>
+</tr>
+</tbody></table>
+<p>当我们把这些数值看作一个总体, 就可以求出<strong>总平均</strong></p>
+<p>总平均 X_bar = 5.68</p>
+<p>每一个组再计算一下平均值: </p>
+<p>X1_bar = 8.45,    X2_bar = 5.50,    X3_bar=3.10</p>
+<br>
+
+<p>有了这些平均值就可以衡量变化了</p>
+<p>总变化(SST Sum of Squares Total) = 所有的值到总平均距离的平方</p>
+<p><img src="/Blog/intro/anova_sst.PNG" alt></p>
+<p><img src="/Blog/intro/sst_anova.PNG" alt></p>
+<br>
+
+<p>自变量引起的变化(SSG Sum of Squares Group)(组间变化/效应平方和)</p>
+<p><img src="/Blog/intro/ssg_anova.PNG" alt></p>
+<p>X_j_bar 和总平均之间的差距我们认为是代表第j组的效应</p>
+<p>此外乘以第j组的样本容量, 相当于给差的平方一个<strong>权重</strong>, 因为X_j_bar是基于这么多样本算出来的</p>
+<p>对所有组进行这样计算在加和得到的就是组间变化</p>
+<p><img src="/Blog/intro/anova_ssg.PNG" alt></p>
+<br>
+
+<p>其他因素引起的变化(SSE Sum of Squares Error)(组内变化/误差平方和)</p>
+<p><img src="/Blog/intro/anova_sse.PNG" alt></p>
+<p>这就是每组的方差乘以自由度</p>
+<p><img src="/Blog/intro/anova_sse_1.PNG" alt></p>
+<p>即每组数据围绕组内均值的变化程度</p>
+<p>比如说第一组5个人, 都是第一次结婚, 所以它们之间的变化不是因为结婚次数导致的, 而是由其他因素导致的</p>
+<p>然而当我们求出了SST和SSG就可以直接用SST-SSG求出SSE</p>
+<p>SST = SSG+SSE</p>
+<br>
+
+<p>然而我们并不是直接用SSG除以SSE</p>
+<p>而是先求出 MSG (Mean square of Group) 和 MSE  (Mean square of Error) 即用SSG 和SSE除以各自的自由度</p>
+<p>SSG 的自由度为k-1, 即组数-1</p>
+<p>SSE 的自由度为n-k, 即总数-组数</p>
+<p>为什么是n-k? 因为如果是求第j组内方差, 那么自由度应该是n_j-1</p>
+<p>一共有k组, 即(n_1-1)+(n_2-1)… = n-k</p>
+<br>
+
+<p><img src="/Blog/intro/anova_1.PNG" alt></p>
+<table>
+<thead>
+<tr>
+<th>Source of variation</th>
+<th>Sum of Square (SS)</th>
+<th>df</th>
+<th>Mean of Square (MS)</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Between Group</td>
+<td>71.80833</td>
+<td>2</td>
+<td>35.90</td>
+<td>24.98</td>
+</tr>
+<tr>
+<td>Within Group</td>
+<td>17.25</td>
+<td>12</td>
+<td>1.4375</td>
+<td></td>
+</tr>
+<tr>
+<td>Total</td>
+<td>89.58</td>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>F(2, 12)的5%的拒绝域为[3.88, inf)</p>
+<p>而24.98落在其中, 所以拒绝H0</p>
+<p>方差分析的H0一直是所有组的均值相等</p>
+<p>拒绝H0即某两组的均值不等</p>
+<br>
+
+<br>
+
+<h2 id="Inference-for-the-difference-of-two-Proportions"><a href="#Inference-for-the-difference-of-two-Proportions" class="headerlink" title="Inference for the difference of two Proportions"></a>Inference for the difference of two Proportions</h2><p><img src="/Blog/intro/inf_2_prop.PNG" alt></p>
+<p><img src="/Blog/intro/inf_2_prop_1.PNG" alt></p>
+<p><img src="/Blog/intro/inf_2_prop_2.PNG" alt></p>
+<p><img src="/Blog/intro/inf_2_prop_3.PNG" alt></p>
 
     </article>
     <!-- license  -->
@@ -904,7 +1297,7 @@ height:50vh;
             <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
             <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">https://daolinzhou.github.io/Blog/2020/04/04/stat-203/</a>
             <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">April 4th 2020, 1:01:30 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">April 7th 2020, 1:01:53 am</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">April 8th 2020, 4:53:20 pm</a>
             <p>版权声明：</p>
         </div>
     
@@ -1025,7 +1418,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正态分布"><span class="toc-number">1.</span> <span class="toc-text">正态分布</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#u决定了什么"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">u决定了什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#σ决定了什么"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">σ决定了什么</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正态分布的特征"><span class="toc-number">1.0.1.</span> <span class="toc-text">正态分布的特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正态分布"><span class="toc-number">1.1.</span> <span class="toc-text">标准正态分布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#上-下-α分位点"><span class="toc-number">1.1.1.</span> <span class="toc-text">(上/下)α分位点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期望值和方差"><span class="toc-number">2.</span> <span class="toc-text">期望值和方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#期望值"><span class="toc-number">2.1.</span> <span class="toc-text">期望值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#期望值的性质"><span class="toc-number">2.2.</span> <span class="toc-text">期望值的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差-标准误"><span class="toc-number">2.3.</span> <span class="toc-text">方差/标准误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差的性质"><span class="toc-number">2.4.</span> <span class="toc-text">方差的性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽样"><span class="toc-number">3.</span> <span class="toc-text">抽样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单随机抽样-Simple-Random-Samples"><span class="toc-number">3.1.</span> <span class="toc-text">简单随机抽样: Simple Random Samples</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分层抽样-stratified-random-sampling"><span class="toc-number">3.2.</span> <span class="toc-text">分层抽样-stratified random sampling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统随机抽样"><span class="toc-number">3.3.</span> <span class="toc-text">系统随机抽样</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽样分布"><span class="toc-number">4.</span> <span class="toc-text">抽样分布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中心极限定理-Central-Limit-Theorem"><span class="toc-number">5.</span> <span class="toc-text">中心极限定理(Central Limit Theorem)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#统计推断-statistical-inferences"><span class="toc-number">6.</span> <span class="toc-text">统计推断(statistical inferences)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点估计"><span class="toc-number">6.1.</span> <span class="toc-text">点估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区间估计"><span class="toc-number">6.2.</span> <span class="toc-text">区间估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#假设检验"><span class="toc-number">6.3.</span> <span class="toc-text">假设检验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hypothesis-Testing-The-2nd-approach"><span class="toc-number">6.3.1.</span> <span class="toc-text">Hypothesis Testing - The 2nd approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hypothesis-Testing-P-Value-approach"><span class="toc-number">6.3.2.</span> <span class="toc-text">Hypothesis Testing - P-Value approach</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计功效-Power"><span class="toc-number">6.4.</span> <span class="toc-text">统计功效(Power)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直观的理解"><span class="toc-number">6.4.1.</span> <span class="toc-text">直观的理解</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#t-分布"><span class="toc-number">7.</span> <span class="toc-text">t 分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#t分布的性质"><span class="toc-number">7.1.</span> <span class="toc-text">t分布的性质</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正态分布"><span class="toc-number">1.</span> <span class="toc-text">正态分布</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#u决定了什么"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">u决定了什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#σ决定了什么"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">σ决定了什么</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正态分布的特征"><span class="toc-number">1.0.1.</span> <span class="toc-text">正态分布的特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标准正态分布"><span class="toc-number">1.1.</span> <span class="toc-text">标准正态分布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#上-下-α分位点"><span class="toc-number">1.1.1.</span> <span class="toc-text">(上/下)α分位点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期望值和方差"><span class="toc-number">2.</span> <span class="toc-text">期望值和方差</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#期望值"><span class="toc-number">2.1.</span> <span class="toc-text">期望值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#期望值的性质"><span class="toc-number">2.2.</span> <span class="toc-text">期望值的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差-标准误"><span class="toc-number">2.3.</span> <span class="toc-text">方差/标准误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差的性质"><span class="toc-number">2.4.</span> <span class="toc-text">方差的性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽样"><span class="toc-number">3.</span> <span class="toc-text">抽样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单随机抽样-Simple-Random-Samples"><span class="toc-number">3.1.</span> <span class="toc-text">简单随机抽样: Simple Random Samples</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分层抽样-stratified-random-sampling"><span class="toc-number">3.2.</span> <span class="toc-text">分层抽样-stratified random sampling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统随机抽样"><span class="toc-number">3.3.</span> <span class="toc-text">系统随机抽样</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽样分布"><span class="toc-number">4.</span> <span class="toc-text">抽样分布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中心极限定理-Central-Limit-Theorem"><span class="toc-number">5.</span> <span class="toc-text">中心极限定理(Central Limit Theorem)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#统计推断-statistical-inferences"><span class="toc-number">6.</span> <span class="toc-text">统计推断(statistical inferences)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点估计"><span class="toc-number">6.1.</span> <span class="toc-text">点估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区间估计"><span class="toc-number">6.2.</span> <span class="toc-text">区间估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#假设检验"><span class="toc-number">6.3.</span> <span class="toc-text">假设检验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hypothesis-Testing-The-2nd-approach"><span class="toc-number">6.3.1.</span> <span class="toc-text">Hypothesis Testing - The 2nd approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hypothesis-Testing-P-Value-approach"><span class="toc-number">6.3.2.</span> <span class="toc-text">Hypothesis Testing - P-Value approach</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计功效-Power"><span class="toc-number">6.4.</span> <span class="toc-text">统计功效(Power)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直观的理解"><span class="toc-number">6.4.1.</span> <span class="toc-text">直观的理解</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#t-分布"><span class="toc-number">7.</span> <span class="toc-text">t 分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#t分布的性质"><span class="toc-number">7.1.</span> <span class="toc-text">t分布的性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自由度"><span class="toc-number">7.2.</span> <span class="toc-text">自由度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-sample-dependent-t-Procedure"><span class="toc-number">8.</span> <span class="toc-text">2-sample(dependent) t Procedure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-sample-independent-t-Procedure"><span class="toc-number">9.</span> <span class="toc-text">2-sample(independent) t Procedure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数检验-One-Way-Chi-square-test"><span class="toc-number">10.</span> <span class="toc-text">非参数检验: One Way Chi-square test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非参数检验-Two-Way-Chi-square-test"><span class="toc-number">11.</span> <span class="toc-text">非参数检验: Two Way Chi-square test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F分布"><span class="toc-number">12.</span> <span class="toc-text">F分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#F分布的概率密度函数图"><span class="toc-number">12.1.</span> <span class="toc-text">F分布的概率密度函数图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#t分布和F分布"><span class="toc-number">12.2.</span> <span class="toc-text">t分布和F分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#来自正态总体的样本和F分布"><span class="toc-number">12.3.</span> <span class="toc-text">来自正态总体的样本和F分布</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单因素方差分析One-Way-Analysis-of-Variance-ANOVA"><span class="toc-number">13.</span> <span class="toc-text">单因素方差分析One-Way Analysis of Variance (ANOVA):</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#t检验对比方差分析"><span class="toc-number">13.1.</span> <span class="toc-text">t检验对比方差分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方差分析的核心"><span class="toc-number">13.2.</span> <span class="toc-text">方差分析的核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从一个例子出发"><span class="toc-number">13.3.</span> <span class="toc-text">从一个例子出发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inference-for-the-difference-of-two-Proportions"><span class="toc-number">14.</span> <span class="toc-text">Inference for the difference of two Proportions</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1038,36 +1431,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1964,35 +2327,35 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
     
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
     
         <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
     
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
-        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
     
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
     
         <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
     
         <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
     
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
     
@@ -2047,13 +2410,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
         <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
     
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
     
         <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
     
