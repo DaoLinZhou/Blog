@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Daolin">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Daolin">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>python3入门机器学习 · Daolin&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/Blog/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/Blog/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/Blog/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/Blog/" >Daolin&#39;s Repository.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">python3入门机器学习</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/Blog/intro/sincegate.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            python3入门机器学习
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python3">python3</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "机器学习">机器学习</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">4.1k</span>阅读时长: <span class="post-count reading-time">13 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/04/10</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/Blog/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>机器学习常见算法</p>
+<a id="more"></a>
+
+<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><br>
+
+<h2 id="机器学习的数据"><a href="#机器学习的数据" class="headerlink" title="机器学习的数据"></a>机器学习的数据</h2><p>机器学习其实就是喂给我们的算法数据, 让我们的算法在数据中寻找相应的关系</p>
+<p><img src="/Blog/intro/lris_flowers.PNG" alt></p>
+<p>使用注明的鸢尾花数据来说明</p>
+<p>这个数据就是给出了很多鸢尾花相关的信息, 数据中主要包含三类鸢尾花</p>
+<p>这个数据整体的信息是这个样子的:</p>
+<p><img src="/Blog/intro/lris_flowers_1.PNG" alt></p>
+<p>总共包含150个数据信息, 对于每个数据信息给出了4个方面的信息: 萼片的长宽和花瓣的长宽</p>
+<p><img src="/Blog/intro/lris_flowers_2.PNG" alt></p>
+<p>这样4个信息就描述了一朵花, 对于每一朵花都分属3种鸢尾花之一, 那么整个数据就可以表示成这个样子(这里只选出3条信息作为例子)</p>
+<p><img src="/Blog/intro/lris_flowers_3.PNG" alt></p>
+<p><strong>关于数据的相关概念:</strong></p>
+<ul>
+<li><p>数据整体叫<strong>数据集 (data set)</strong></p>
+</li>
+<li><p>每一行数据称为一个<strong>样本 (sample)</strong></p>
+</li>
+<li><p>除去最后一列, 每一列表达样本的一个<strong>特征 (feature)</strong> , 或者可以理解成是一个属性</p>
+</li>
+<li><p>最后一列, 称为<strong>标记 (label)</strong>, 这也是机器想要去学习的内容</p>
+</li>
+</ul>
+<p><img src="/Blog/intro/lris_flowers_4.PNG" alt> </p>
+<p> 很显然X是一个矩阵, y是一个向量</p>
+<p><img src="/Blog/intro/lris_flowers_5.PNG" alt></p>
+<p>每一行都是一个特征向量, 通常向量都是以列排列(列向量) 所以这个矩阵就也可以写成</p>
+<p><img src="/Blog/intro/lris_flowers_6.PNG" alt></p>
+<br>
+
+<p>取两个特征举例</p>
+<p><img src="/Blog/intro/lris_flowers_7.PNG" alt></p>
+<br>
+
+<p>特征可以很抽象 </p>
+<p><img src="/Blog/intro/lris_flowers_8.PNG" alt></p>
+<p>喂给算法的特征是什么样子的, 将很大程度影响输出结果的准确性和可靠性, 甚至有专门领域取研究: 特征工程</p>
+<p>值得一提的是, 有一些 “高级方法” 例如深度学习, 其实可以理解成算法在自动地帮助我们进行特征工程</p>
+<br>
+
+<br>
+
+<h2 id="机器学习的主要任务"><a href="#机器学习的主要任务" class="headerlink" title="机器学习的主要任务"></a>机器学习的主要任务</h2><p>机器学习关注的任务主要有两类: 分类任务, 回归任务</p>
+<br>
+
+<h3 id="分类任务"><a href="#分类任务" class="headerlink" title="分类任务"></a>分类任务</h3><p>例如, 给一张图片, 区分里面的动物是猫还是狗</p>
+<p>例如, 识别手写数字</p>
+<br>
+
+<p>对于分类任务可以再进行细分, 主要分为这样几类任务</p>
+<h4 id="二分类任务"><a href="#二分类任务" class="headerlink" title="二分类任务"></a>二分类任务</h4><p>二分类任务, 二选一的任务, 例如判断是猫是狗</p>
+<p>生活中很多任务使用二分类就可以了: 判断邮件是不是垃圾邮件, 判断发给客户信用卡是否有风险, 判断肿瘤是良性还是恶性</p>
+<br>
+
+<h4 id="多分类任务"><a href="#多分类任务" class="headerlink" title="多分类任务"></a>多分类任务</h4><p><img src="/Blog/intro/lris_flowers_9.PNG" alt></p>
+<p>把结果锁定多个中的一个而不是两个中的一个, 手写数字识别就是从10个种类中选择一个</p>
+<p>生活中的应用: 数字识别, 图像识别</p>
+<p>一些看似复杂的任务, 也可以转换成分类任务, 例如2048</p>
+<p><img src="/Blog/intro/category_task.PNG" alt></p>
+<p>最终机器要做到的就是: 给出现在盘面的状况机器判断上移下移左移右移即可(4个中选一个)</p>
+<p>同理对于更加复杂的游戏也是如此, 例如下围棋. 毕竟棋盘上落子的地方有限的, 所以每一步机器要做的事情就是根据现在的棋盘信息选择一个地方进行落子</p>
+<p><img src="/Blog/intro/category_task_1.PNG" alt></p>
+<p>甚至无人车领域也可以转化为分类任务, 根据车周围环形的图像信息机器进行选择方向盘向左还是向右, 以及旋转多少角度</p>
+<p>即使配合上踩下油门和刹车力度的不同. 方向盘, 油门, 刹车他们的组合也是有限的, 在这些组合中选择一个, 因此我们也可以把它转换成一个多分类问题</p>
+<blockquote>
+<p>注意: 只是说这些问题可以转换为多分类问题, 但不是说用多分类解决这些问题是最好的方案</p>
+</blockquote>
+<p>有一些算法只支持完成二分类的任务</p>
+<p>但是一个多分类的任务我们其实是可以转换成二分类的任务的, 这种转化的方式还不止一个</p>
+<p>有一些算法天然可以完成多分类任务</p>
+<br>
+
+<h4 id="多标签分类"><a href="#多标签分类" class="headerlink" title="多标签分类"></a>多标签分类</h4><p><img src="/Blog/intro/category_task_2.PNG" alt></p>
+<p>之前的分类对于某一张图片, 我们都是把图片放到一个类别中, 区别只是类别数是只有两个还是有多个</p>
+<p>不过更高级的分类任务可以让我们把一张图片分到多个类别中</p>
+<p>这是一个前沿的课题, 文章中不会涉及</p>
+<br>
+
+<p>然而还有另一类数据</p>
+<p><img src="/Blog/intro/category_task_3.PNG" alt></p>
+<p>和上一类数据的不同在与最后一列 (标签列)</p>
+<p>之前的数据的标签列都是 <strong>类别</strong>, 但是这个数据中, 价格不是类别, 而是连续的数字</p>
+<p>这一类任务被称为<strong>回归任务</strong></p>
+<h3 id="回归任务"><a href="#回归任务" class="headerlink" title="回归任务"></a>回归任务</h3><p>结果是一个连续数字的值, 而非一个类别</p>
+<p>例如: 预测房屋价格, 预测学生乘积, 市场分析, 股票价格</p>
+<p>有一些算法只能解决回归问题, 有一些算法只能解决分类问题, 有一些算法的思路既能解决回归问题, 又能解决分类问题</p>
+<p>某些情况下, 回归任务是可以简化为分类任务的</p>
+<p>依然用无人驾驶举例, 之前说它是分类问题, 但是方向盘打的角度其实是连续的数值, 只是我们将他类别化(每一度看作是一个类别), 这样一来我们就将一个回归任务简化成一个分类任务</p>
+<p>比如说预测学生的成绩, 其实是回归任务, 但有时候我们并不需要预测学生的具体成绩, 只需要看成绩是A+, A, B, C-等等, 这样也把一个回归的任务变成了分类的任务</p>
+<p><img src="/Blog/intro/category_task_4.PNG" alt></p>
+<br>
+
+<p>我们说机器学习解决分类问题和监督问题, 其实更为准确地说是<strong>监督学习</strong>解决了它们, 其实机器学习领域还可以解决其他的问题, 不过文章以解决分类问题和回归问题为主</p>
+<p>机器学习还可以解决什么问题?</p>
+<br>
+
+<br>
+
+<h2 id="监督学习-非监督学习-半监督学习-和-增强学习"><a href="#监督学习-非监督学习-半监督学习-和-增强学习" class="headerlink" title="监督学习, 非监督学习, 半监督学习 和 增强学习"></a>监督学习, 非监督学习, 半监督学习 和 增强学习</h2><p>分类和回归这两类任务其实是从机器学习<strong>可以解决的问题的角度</strong>分类的, 而不是从机器学习算法本身进行分类的</p>
+<p>如果我们将目光放在机器学习算法上, 整体上我们可以将机器学习算法分成 <strong>监督学习, 非监督学习, 半监督学习 和 增强学习</strong> 这四个大类</p>
+<br>
+
+<h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p><strong>给机器的训练数据拥有 “标记” 或者 “答案”</strong></p>
+<p>例如上面提到的鸢尾花和房产的数据集, 都拥有”标记”列</p>
+<p><img src="/Blog/intro/Supervised_learning.PNG" alt></p>
+<p>比如分辨照片是猫还是狗只给出照片是不够的, 还要分辨这个照片到底是猫还是狗</p>
+<p><img src="/Blog/intro/Supervised_learning_1.PNG" alt></p>
+<p>同样对于mnist数据集, 不仅要有图片信息, 还要有标记信息</p>
+<br>
+
+<p>监督的意思就在于我们人类已经针对给机器的数据进行了正确答案的划分. 这种正确答案的划分本身就被称为是一种监督的信息</p>
+<p>实际思考一下生活中很多学习的过程都是监督学习的过程</p>
+<p><img src="/Blog/intro/Supervised_learning_2.PNG" alt></p>
+<p>文章中大部分算法都属于监督学习算法</p>
+<br>
+
+<h3 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h3><p>给机器的训练数据没有任何”标记”或者”答案”</p>
+<p><img src="/Blog/intro/unSupervised_learning.PNG" alt></p>
+<p>每一个点并没有表示类别, 非监督学习就是基于相应的算法可以为这些点进行分类</p>
+<p><img src="/Blog/intro/unSupervised_learning_1.PNG" alt></p>
+<p>通常管这样的工作叫做<strong>聚类分析</strong></p>
+<p>其实电商网站对每一个人都是同等对待的, 初始的时候是没有标记的, 但是随着在电商网站上留下越来越多的足迹, 电商网站就可以用非监督学习的方式对用户进行分类</p>
+<br>
+
+<p>非监督学习的另一个重要应用就是对数据进行<strong>降维处理</strong></p>
+<p>对数据进行降维处理主要分为两部分内容:</p>
+<ul>
+<li><p>特征提取: 信用卡的信用评级和人的胖瘦无关?</p>
+<p>数据通常有很多特征, 有一些特征对我们将要预测/计算的结果没有贡献</p>
+</li>
+<li><p>特征压缩: PCA</p>
+</li>
+</ul>
+<p>特征压缩并不丢弃任何特征</p>
+<p>特征压缩例子:</p>
+<p><img src="/Blog/intro/unSupervised_learning_2.PNG" alt></p>
+<p>例如在这个二维特征平面上分布着很多数据点</p>
+<p>但是似乎这些点整体是成一个直线的形式, 如果化成一根直线的话, 把所有点都映射到这根直线上的话, 这些点的信息并没有丢失多少, 但是经过这样处理后这些二维的点就变成了一维的点</p>
+<p> <strong>特征压缩做的事情就是: 尽量少的损失信息的情况下, 将高维的特征向量压缩成低维的特征向量</strong></p>
+<br>
+
+<p>对数据进行降维还有一个重要的意义: 方便可视化</p>
+<p><img src="/Blog/intro/unSupervised_learning_3.PNG" alt></p>
+<p>还可以进行<strong>异常检测</strong></p>
+<p><img src="/Blog/intro/unSupervised_learning_4.PNG" alt></p>
+<p>就是有的时候数据中的某些点明显具有异常</p>
+<p> 并不是说异常点没有意义, 但是我们直观地去看它就可以看出来<strong>它不能表达样本的整体的特性</strong>, 而对于机器学习来说, 很多时候是要找到样本一般化的特征. 对于这种特殊的点对我们发现一般性规律很有可能是没有帮助的</p>
+<blockquote>
+<p>非监督学习通常用作辅助监督学习</p>
+</blockquote>
+<br>
+
+<h3 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h3><p>一部分数据有”标记”或者”答案”, 另一部分数据没有</p>
+<p>这种情况更为常见, 因为生活中会因为各种原因产生标记缺失</p>
+<p>通常都先使用<strong>无监督学习手段</strong>对数据做处理, 之后使用<strong>监督学习手段</strong>做数据的训练和预测</p>
+<p>半监督学习就是监督学习和非监督学习的结合, 相对是容易的</p>
+<br>
+
+<h3 id="增强学习"><a href="#增强学习" class="headerlink" title="增强学习"></a>增强学习</h3><p>根据周围环境的情况, 采取行动, 根据采取行动的结果, 学习行动方式</p>
+<p><img src="/Blog/intro/unSupervised_learning_5.PNG" alt></p>
+<p>算法通常叫做一个Agent, 要根据周围的环境来采取行动, 行动之后算法会收到一些反馈, 这些反馈有的时候会使用 reward(奖赏) 的机制, 有的时候是使用惩罚的机制进行反馈.</p>
+<p>当Agent得到反馈之后, 它就会相应地改变自己的行为模式, 之后根据该机的算法在做出一个Action(动作), 环境再反馈Agent以此类推</p>
+<p>在循环中增强自己的智能, 所以叫增强学习</p>
+<p>增强学习是非常适合机器人的, AlphaGo实际上是增强学习的一个应用, 它在和人或者自己博弈中每一次落子其实都是和环境进行了一次交互, 此时AlphaGo就会思考刚才的落子是好还是不好</p>
+<p>无论是无人驾驶还是机器人其实都需要增强学习</p>
+<p>同样增强学习是比较前沿的学习领域, 监督学习和半监督学习是基础</p>
+<br>
+
+<p>然而<strong>监督学习, 非监督学习, 半监督学习 和 增强学习</strong>这四个大类并不是对机器学习分类的唯一标准</p>
+<br>
+
+<br>
+
+<h2 id="在线学习-批量学习-离线学习-参数学习和非参数学习"><a href="#在线学习-批量学习-离线学习-参数学习和非参数学习" class="headerlink" title="在线学习, 批量学习 (离线学习), 参数学习和非参数学习"></a>在线学习, 批量学习 (离线学习), 参数学习和非参数学习</h2><ul>
+<li>批量学习 Batch Learning(有时候也叫离线学习Offline Learning)</li>
+<li>在线学习 Online Learning</li>
+</ul>
+<h3 id="批量学习"><a href="#批量学习" class="headerlink" title="批量学习"></a>批量学习</h3><p>之前所介绍的算法如果没有特殊说明都可以使用批量学习的方式来进行机器学习</p>
+<p><img src="/Blog/intro/category_task_4.PNG" alt></p>
+<p>所谓批量学习就是首先收集一定量的样本资料, 然后将这些样本资料送给机器学习算法, 算法就会训练出一个模型</p>
+<p>当我们训练出这个模型之后就可以直接将模型投入生产环境中了</p>
+<p>在具体应用的时候可能有新的样例送进来, 让模型预测出相应的结果, 这个过程中我们的模型不会再发生任何变化</p>
+<p>例如: 手写识别系统, 在训练好模型后投入实践, 虽然在使用的过程中依然会投入大量新的样例, 但这些样例不会作为训练集来优化模型了</p>
+<br>
+
+<h4 id="批量学习的特点"><a href="#批量学习的特点" class="headerlink" title="批量学习的特点"></a>批量学习的特点</h4><p><strong>优点</strong>: 简单, 只需要学习机器学习算法本身就好了, 不需要考虑当算法投入生产环境中以后, 面对新的数据我们怎样来逐步优化算法</p>
+<p><strong>问题</strong>: 如何适应环境的变化? 例如在不同年代, 垃圾邮件的标签不同</p>
+<p><strong>解决方案</strong>: 定时重新批量学习, 让新来的样本数据和原来的样本融合在一起, 形成新的数据集, 然后在新的数据集上重新执行算法, 重新训练模型</p>
+<p><strong>缺点</strong>: 每次重新批量学习, 运算量巨大. 在某些环境变化非常快的情况下, 甚至不可能</p>
+<br>
+
+<h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p><img src="/Blog/intro/category_task_4.PNG" alt></p>
+<p>整体流程不变, 不过每次输入样例进入模型得到预期的结果之后同时我们输入样例并不浪费掉, 我们将输入样例和正确结果迭代进机器学习算法来改进模型</p>
+<p>在线学习相当不不仅仅使用模型得到想要的结果, 与此同时我们还在不断地训练算法让算法进行学习, 所以叫做在线学习</p>
+<p><img src="/Blog/intro/online_learning.PNG" alt></p>
+<br>
+
+<h4 id="在线学习的特点"><a href="#在线学习的特点" class="headerlink" title="在线学习的特点"></a>在线学习的特点</h4><p><strong>优点</strong>: 及时反映新的环境变化</p>
+<p><strong>问题</strong>: 新的数据带来不好的变化, 例如错误地使用系统产生的异常数据</p>
+<p><strong>解决方案</strong>: 需要加强对数据进行监控 (讲非监督学习时说过, 有一个使用场景就是进行异常数据检测), 通常在在线学习的过程中, 就需要对异常数据进行检测</p>
+<p><strong>其他</strong>: 也适用于数据量巨大, 完全无法批量学习的环境 (在线学习算法也是对批量学习算法的一个改进)</p>
+<br>
+
+<p>从另外一个维度, 我们还可以把机器学习分为:</p>
+<ul>
+<li>参数学习 Parametric Learning</li>
+<li>非参数学习 Nonparametric Learning</li>
+</ul>
+<h3 id="参数学习"><a href="#参数学习" class="headerlink" title="参数学习"></a>参数学习</h3><p><img src="/Blog/intro/para_leaning.PNG" alt></p>
+<p>这就是一个二维的特征空间, 假设横坐标是房屋的面积, 纵坐标是房屋的价格</p>
+<p>对应每一个房屋相应就在特征空间中代表一个点, 基于这些数据点我可以假设房屋的价格和房屋的面积是一个线性的关系 f(x) = ax + b</p>
+<p>当有了这个假设之后, 机器学习的过程就是想办法找到一个好的a和b来描述房屋的面积和房屋的价格之间的关系. a 和 b 就是参数</p>
+<p>基于这样的学习特点的学习算法就叫做参数学习</p>
+<p>参数学习最大的特点就是: 喂给机器很多数据, 这些数据的作用是希望学到我们想要的参数. 一旦我们学到了参数, 那么这些数据集就不再有用了</p>
+<p>例如上面的 f(x) = ax+b, 一旦我们知道 a 和 b, 那么对于一个新的房屋, 只要将它的面积代入公式, 就可以预测出房屋的价格. 此时预测的结果和我们喂给机器的训练数据都是<strong>没有关系</strong>的</p>
+<p>事实上可以做出非常多的假设, 统计学领域有非常多的统计模型. 我们可以假设特征和要预测的结果之间是某种统计模型可以涵盖的关系, 之后我们的任务就是学习统计模型中的参数. 一旦学到了这些参数, 后面的预测是非常简单的, 不再需要原有数据集的参与</p>
+<br>
+
+<h3 id="非参数学习"><a href="#非参数学习" class="headerlink" title="非参数学习"></a>非参数学习</h3><p>非参数学习就是不对模型进行过多假设</p>
+<p><strong>非参数不等于没有参数</strong></p>
+<p>非参数学习中的参数其实并不少, 区别只是在于我们不对整个问题进行一个建模. 不把整个问题理解成是学习一些参数, 但是在学习的过程中依然是要有参数来参与的</p>
+<br>
+
+<br>
+
+
+
+
+
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
+            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/">https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/</a>
+            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/">April 10th 2020, 7:41:51 pm</a>
+            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/">April 12th 2020, 2:06:14 am</a>
+            <p>版权声明：</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/Blog/2020/04/04/stat-203/" title= "统计自整理">
+                    <div class="prevTitle">统计自整理</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习基础"><span class="toc-number">1.</span> <span class="toc-text">机器学习基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的数据"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的主要任务"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习的主要任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分类任务"><span class="toc-number">1.2.1.</span> <span class="toc-text">分类任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二分类任务"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">二分类任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多分类任务"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">多分类任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多标签分类"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">多标签分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回归任务"><span class="toc-number">1.2.2.</span> <span class="toc-text">回归任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监督学习-非监督学习-半监督学习-和-增强学习"><span class="toc-number">1.3.</span> <span class="toc-text">监督学习, 非监督学习, 半监督学习 和 增强学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#监督学习"><span class="toc-number">1.3.1.</span> <span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非监督学习"><span class="toc-number">1.3.2.</span> <span class="toc-text">非监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#半监督学习"><span class="toc-number">1.3.3.</span> <span class="toc-text">半监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增强学习"><span class="toc-number">1.3.4.</span> <span class="toc-text">增强学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在线学习-批量学习-离线学习-参数学习和非参数学习"><span class="toc-number">1.4.</span> <span class="toc-text">在线学习, 批量学习 (离线学习), 参数学习和非参数学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#批量学习"><span class="toc-number">1.4.1.</span> <span class="toc-text">批量学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#批量学习的特点"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">批量学习的特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在线学习"><span class="toc-number">1.4.2.</span> <span class="toc-text">在线学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在线学习的特点"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">在线学习的特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数学习"><span class="toc-number">1.4.3.</span> <span class="toc-text">参数学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非参数学习"><span class="toc-number">1.4.4.</span> <span class="toc-text">非参数学习</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 46
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/Blog/2020/04/10/machine-learning/" >python3入门机器学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
+        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
+    
+        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
+    
+        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
+    
+        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
+    
+        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
+    
+        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
+    
+        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
+    
+        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
+    
+        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
+    
+        <span class="sidebar-category-name" data-categories="人工智能"><span class="iconfont-archer">&#xe60a;</span>人工智能</span>
+    
+        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
+    
+        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/Blog/",
+        author: "Daolin"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/Blog/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/Blog/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
