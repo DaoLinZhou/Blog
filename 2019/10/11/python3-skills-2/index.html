@@ -1,416 +1,241 @@
 <!DOCTYPE html>
 <html lang="">
-    <!-- title -->
 
-
-
-
-<!-- keywords -->
 
 
 
 
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="Daolin">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="Daolin">
-    
-    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
-    
-    <meta name="description" content>
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>python3编程技巧(二) · Daolin&#39;s Studio</title>
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/Blog/font/Oswald-Regular.ttf");
-    }
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>python3编程技巧(二) - Daolin&#39;s Repository</title>
 
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-</style>
-
-    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
+  <link rel="stylesheet" href="/Blog/lib/prettify/tomorrow-night-eighties.min.css">
 
-    <link rel="icon" href="/Blog/assets/favicon.ico">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/Blog/scripts/main.js" as="script">
-    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
 </head>
 
-    
-        <body class="post-body">
-    
-    
-<header class="header">
 
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/Blog/" >Daolin&#39;s Repository.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">python3编程技巧(二)</a>
-            </div>
-    </div>
-    
-    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
-</header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
 
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-
-
-
-
-height:50vh;
-">
-    
-    <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/intro/lulutiya.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-            python3编程技巧(二)
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-            
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页meta -->
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "python3">python3</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">5.3k</span>阅读时长: <span class="post-count reading-time">22 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/10/11</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
         
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
-        <script>
- 
-  // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
-  }
-  console.log("userAgent:" + browser.versions.userAgent);
+  </div>
+</nav>
 
-  // callback
-  function fontLoaded() {
-    console.log('font loaded');
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in');
-      }
-    }
-  }
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb(){
-    if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular']
-        },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
-        },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
-        },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
-        },
-        timeout: 5000 // Set the timeout to two seconds
-      });
-    }
-  }
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Friday, October 11th 2019, 7:52 pm
+                </p>
+              
 
-  function asyncErr(){
-    console.warn('script load from CDN failed, will load local script')
-  }
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    5.5k 字
+                  </span>
+                
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      24 分钟
+                  </span>
+                
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+                
+              </p>
+            
+          </div>
 
-      async(arr[0], success, currReject)
-  }
+          
+        </div>
+      </div>
+    </div>
+  </header>
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/Blog/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="文件I-O相关"><a href="#文件I-O相关" class="headerlink" title="文件I/O相关"></a>文件I/O相关</h1><h2 id="读写文本文件"><a href="#读写文本文件" class="headerlink" title="读写文本文件"></a>读写文本文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># t这里代表以文本文件格式, python会在内部自动进行编解码</span></span><br><span class="line"><span class="comment"># 默认情况下就是这个模式, 所有不写t也行</span></span><br><span class="line">f = open(<span class="string">"a.txt"</span>, <span class="string">"wt"</span>, encoding=<span class="string">'gbk'</span>)</span><br><span class="line">f.write(<span class="string">'我爱python'</span>)</span><br></pre></td></tr></table></figure>
+  <main>
+    
+      
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="文件I-O相关"><a href="#文件I-O相关" class="headerlink" title="文件I/O相关"></a>文件I/O相关</h1><h2 id="读写文本文件"><a href="#读写文本文件" class="headerlink" title="读写文本文件"></a>读写文本文件</h2><pre><code class="python"># t这里代表以文本文件格式, python会在内部自动进行编解码
+# 默认情况下就是这个模式, 所有不写t也行
+f = open(&quot;a.txt&quot;, &quot;wt&quot;, encoding=&#39;gbk&#39;)
+f.write(&#39;我爱python&#39;)</code></pre>
 <p>这也是为什么python3 不用手动进行编解码的原因</p>
 <p>同时python3 的字符串默认就是unicode字符串, 同样不用向python2那样在字符串前面加u</p>
 <br>
 
 <h2 id="处理二进制文件-wav举例"><a href="#处理二进制文件-wav举例" class="headerlink" title="处理二进制文件(wav举例)"></a>处理二进制文件(wav举例)</h2><p>这里以处理wav音频文件为例</p>
-<p><img src="/Blog/intro/wavformat.png" alt></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取subchunk == name的位置和subchunk的size</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_subchunk</span><span class="params">(f, name)</span>:</span></span><br><span class="line">    <span class="comment"># 如图所示, 前12位是我们不需要的</span></span><br><span class="line">    f.seek(<span class="number">12</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 读取subchunk的id和size</span></span><br><span class="line">        chunk_name = f.read(<span class="number">4</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 使用struct的unpack把二进制转换为int</span></span><br><span class="line">        <span class="comment"># 因为int是4个字节, 而如图chunk的size也是4个字节</span></span><br><span class="line">        chunk_size, = struct.unpack(<span class="string">'i'</span>, f.read(<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> chunk_name == name:</span><br><span class="line">            <span class="comment"># 返回当前位置, 和size</span></span><br><span class="line">            <span class="keyword">return</span> f.tell(), chunk_size</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 0 代表从头, 1 代表当前点, 2 代表文件结尾</span></span><br><span class="line">        <span class="comment"># 从当前位置开始定位, 定位到下一个subchunk的位置</span></span><br><span class="line">        f.seek(chunk_size, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># b 表示二进制</span></span><br><span class="line">    f = open(<span class="string">'test.wav'</span>, <span class="string">'rb'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取data的信息的位置和大小</span></span><br><span class="line">    offset, size = find_subchunk(f, <span class="string">b'data'</span>)</span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 使用numpy创建缓冲</span></span><br><span class="line">    buf = np.zeros(size//<span class="number">2</span>, dtype=np.short)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 把所有信息读到buffer</span></span><br><span class="line">    f.readinto(buf)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 对buf中, 所有元素进行/=16</span></span><br><span class="line">    <span class="comment"># 具体的表现则是声音变小</span></span><br><span class="line">    buf //= <span class="number">16</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 新建文件</span></span><br><span class="line">    f2 = open(<span class="string">'out.wav'</span>, <span class="string">'wb'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 重新定位到开头</span></span><br><span class="line">    f.seek(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 先把前面的信息副职过去</span></span><br><span class="line">    info = f.read(offset)</span><br><span class="line">    f2.write(info)</span><br><span class="line">    <span class="comment"># 把处理好的data写入f2</span></span><br><span class="line">    buf.tofile(f2)</span><br><span class="line"></span><br><span class="line">    f2.close()</span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 二进制模式下返回bytes, 而不是str</span></span><br><span class="line">    <span class="comment"># info = f.read(100)</span></span><br><span class="line">    <span class="comment"># print(info)</span></span><br></pre></td></tr></table></figure>
+<p><img src="/Blog/intro/wavformat.png" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">import struct
+import numpy as np
 
+# 获取subchunk == name的位置和subchunk的size
+def find_subchunk(f, name):
+    # 如图所示, 前12位是我们不需要的
+    f.seek(12)
+    while True:
+        # 读取subchunk的id和size
+        chunk_name = f.read(4)
+
+        # 使用struct的unpack把二进制转换为int
+        # 因为int是4个字节, 而如图chunk的size也是4个字节
+        chunk_size, = struct.unpack(&#39;i&#39;, f.read(4))
+
+        if chunk_name == name:
+            # 返回当前位置, 和size
+            return f.tell(), chunk_size
+
+        # 0 代表从头, 1 代表当前点, 2 代表文件结尾
+        # 从当前位置开始定位, 定位到下一个subchunk的位置
+        f.seek(chunk_size, 1)
+
+
+if __name__ == &#39;__main__&#39;:
+
+    # b 表示二进制
+    f = open(&#39;test.wav&#39;, &#39;rb&#39;)
+
+    # 获取data的信息的位置和大小
+    offset, size = find_subchunk(f, b&#39;data&#39;)
+
+    # 使用numpy创建缓冲
+    buf = np.zeros(size//2, dtype=np.short)
+
+    # 把所有信息读到buffer
+    f.readinto(buf)
+
+    # 对buf中, 所有元素进行/=16
+    # 具体的表现则是声音变小
+    buf //= 16
+
+    # 新建文件
+    f2 = open(&#39;out.wav&#39;, &#39;wb&#39;)
+
+    # 重新定位到开头
+    f.seek(0)
+
+    # 先把前面的信息副职过去
+    info = f.read(offset)
+    f2.write(info)
+    # 把处理好的data写入f2
+    buf.tofile(f2)
+
+    f2.close()
+    f.close()
+
+    # 二进制模式下返回bytes, 而不是str
+    # info = f.read(100)
+    # print(info)</code></pre>
 <p>得到的新的wav文件的声音就比原本的声音小</p>
 <br>
 
@@ -419,39 +244,42 @@ height:50vh;
 
 <p><strong>全缓冲</strong>: </p>
 <p>缓冲区的大小是固定的, 当缓冲区满了后会进行<strong>系统调用</strong>(system call), 通过系统调用把内存中的内容写到硬盘中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查看a.bin尾部的内容</span><br><span class="line">tail -f a.bin</span><br></pre></td></tr></table></figure>
-
-<p>监听a.bin这个文件的变化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'a.bin'</span>, <span class="string">'wb'</span>)</span><br><span class="line">f.write(<span class="string">b'abcefg'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code># 查看a.bin尾部的内容
+tail -f a.bin</code></pre><p>监听a.bin这个文件的变化</p>
+<pre><code class="python">f = open(&#39;a.bin&#39;, &#39;wb&#39;)
+f.write(b&#39;abcefg&#39;)</code></pre>
 <p>然而此时tail并没有显示任何信息, 说明abcefg并没有真实的写入磁盘, 而是进入缓冲区当中, 且没有填满缓冲区</p>
 <p>缓冲区的大小是多大呢? 这个和磁盘相关.</p>
 <p>如果在驱动信息中找不到, 则会使用 io.DEFAULT_BUFFER_SIZE, 即8192</p>
 <p>这里假设缓冲区为4096</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f.write(<span class="string">b'+'</span>*<span class="number">4090</span>) <span class="comment"># 之前已经写了6个字节, 在写4090个</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">f.write(b&#39;+&#39;*4090) # 之前已经写了6个字节, 在写4090个</code></pre>
 <p>依然没有任何信息, 但是如果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f.write(<span class="string">b'-'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">f.write(b&#39;-&#39;)</code></pre>
 <p>此时就会写入到文件中, 也就是说如果写入的字节超过缓冲区范围就会往文件中进行写入</p>
 <p>而无缓冲就是把缓冲区设为0, 让缓冲区无法容纳任何东西, 使得每个字节都要写入文件</p>
 <p><strong><em>注意</em></strong>上面的操作都是使用<strong>二进制</strong>进行读取的</p>
 <br>
 
 <p>如果我们使用字符流进行读取却有些不一样</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f2 = open(<span class="string">'a.txt'</span>, <span class="string">'w'</span>)</span><br><span class="line">f2.write(<span class="string">'abc'</span>*<span class="number">5000</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">f2 = open(&#39;a.txt&#39;, &#39;w&#39;)
+f2.write(&#39;abc&#39;*5000)</code></pre>
 <p>文件依然没有被写入</p>
 <p>原因如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(type(f))  <span class="comment"># &lt;class '_io.BufferedWriter'&gt;</span></span><br><span class="line">print(type(f2)) <span class="comment"># &lt;class '_io.TextIOWrapper'&gt;</span></span><br><span class="line"></span><br><span class="line">print(f2.buffer) </span><br><span class="line"><span class="comment"># &lt;_io.BufferedWriter name='E:\\py_WorkSpace\\PySkills\\read_write_file\\a.txt'&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 就变成以二进制打开文件了, 这说明文本模式打开是基于二进制打开的</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">print(type(f))  # &lt;class &#39;_io.BufferedWriter&#39;&gt;
+print(type(f2)) # &lt;class &#39;_io.TextIOWrapper&#39;&gt;
 
+print(f2.buffer) 
+# &lt;_io.BufferedWriter name=&#39;E:\\py_WorkSpace\\PySkills\\read_write_file\\a.txt&#39;&gt;
+
+# 就变成以二进制打开文件了, 这说明文本模式打开是基于二进制打开的</code></pre>
 <p><strong>三层模型</strong></p>
-<p><img src="/Blog/intro/pythonIO.PNG" alt></p>
+<p><img src="/Blog/intro/pythonIO.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>如图所示,  TextIOWrapper是基于BufferedWriter实现的, </p>
 <p>BufferedWriter是处理二进制用的, 而TextIO是处理文本文件用的, 可以看出TextIO的主要作用是进行编解码.</p>
 <p>在BufferedWriter之下是raw, raw是无缓冲直接写入</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 层次在上面的总是可以调用底层的方法</span></span><br><span class="line"><span class="comment"># 这么做就是跳过缓冲区, 直接写入</span></span><br><span class="line">f.buffer.raw.write(<span class="string">b'b'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python"># 层次在上面的总是可以调用底层的方法
+# 这么做就是跳过缓冲区, 直接写入
+f.buffer.raw.write(b&#39;b&#39;)</code></pre>
 <br>
 
 <p>而TextIO也有缓冲, 说明是两级缓冲, 而我们之前写5000 个依然没有反应说明是没有填满缓冲, 根据测试, 这一级的缓冲区的大小为8192</p>
@@ -460,8 +288,7 @@ height:50vh;
 <p><strong>行缓冲</strong></p>
 <p>行缓冲就是遇到换行(\n)就进行写入, 它也有size, 如果没有遇到换行但是size满了也进行写入</p>
 <p>linux的终端就是<strong>行缓冲</strong>文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty		<span class="comment"># 查看终端对应的文件</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">tty        # 查看终端对应的文件</code></pre>
 <p>会返回一个文件的path</p>
 <p>这个文件不是普通的文件, 它在linux中叫做char设备</p>
 <p>而我们直接对这个文件进行写入,  默认情况下这种tty设备就是<strong>行缓冲</strong></p>
@@ -469,8 +296,7 @@ height:50vh;
 <br>
 
 <p><strong>手动指定缓冲区大小</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'test.txt'</span>, <span class="string">'wb'</span>, buffering=<span class="number">8192</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">f = open(&#39;test.txt&#39;, &#39;wb&#39;, buffering=8192)</code></pre>
 <p><strong>注意</strong>: 文本模式有两级缓冲, 文本模式下指定的缓冲是buffered那级, 而不是最上面那一层的</p>
 <p>无缓冲就是把buffering设为0</p>
 <p>行缓冲则是在文本模式下(因为行缓冲只对文本模式有用), 把buffering设为1</p>
@@ -498,41 +324,108 @@ height:50vh;
 <br>
 
 <p>创建一个大小为1兆, 内容全0的二进制文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> dd命令用于读取、转换并输出数据</span><br><span class="line"><span class="meta">#</span> /dev/zero 是一个特殊文件, 它里面内容全0</span><br><span class="line"><span class="meta">#</span> 指定每块的大小为1024(bs), 一共有1024个块(count)</span><br><span class="line">dd if=/dev/zero of=demo.bin bs=1024 count=1024</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> -x 代表以16进制</span><br><span class="line"><span class="meta">#</span> 以16进制的方式查看二进制文件demo.bin</span><br><span class="line">od -x demo.bin</span><br></pre></td></tr></table></figure>
+<pre><code class="shell"># dd命令用于读取、转换并输出数据
+# /dev/zero 是一个特殊文件, 它里面内容全0
+# 指定每块的大小为1024(bs), 一共有1024个块(count)
+dd if=/dev/zero of=demo.bin bs=1024 count=1024
 
+# -x 代表以16进制
+# 以16进制的方式查看二进制文件demo.bin
+od -x demo.bin</code></pre>
 <br>
 
 <p>使用例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mmap</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'demo.bin'</span>, <span class="string">'r+b'</span>)</span><br><span class="line"><span class="comment"># 0 代表把整个文件都映射进内存</span></span><br><span class="line">m = mmap.mmap(f.fileno(), <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 普通的write方式写入</span></span><br><span class="line">m.write(<span class="string">b'abc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用数组的随机访问进行写入</span></span><br><span class="line">m[<span class="number">5</span>] = <span class="number">78</span></span><br><span class="line">m[<span class="number">8</span>:<span class="number">16</span>] = <span class="string">b'\xff'</span> * <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">import mmap
 
+f = open(&#39;demo.bin&#39;, &#39;r+b&#39;)
+# 0 代表把整个文件都映射进内存
+m = mmap.mmap(f.fileno(), 0)
+
+# 普通的write方式写入
+m.write(b&#39;abc&#39;)
+
+# 用数组的随机访问进行写入
+m[5] = 78
+m[8:16] = b&#39;\xff&#39; * 8</code></pre>
 <p>centos中 /dev/fb0 就是对屏幕的抽象, 而我们要通过映射更改屏幕的显示</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mmap</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'/dev/fb0'</span>, <span class="string">'r+b'</span>)</span><br><span class="line">size = <span class="number">8294400</span></span><br><span class="line"><span class="comment"># 第一个参数要传入文件描述符,而不是file对象 ,这是系统底层的要求</span></span><br><span class="line">m = mmap.mmap(f.fileno(), size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给一半的屏幕写入白色, \xff就是255, \x00就是0, rgba中, rgb都为255, a为0</span></span><br><span class="line">m[:size//<span class="number">2</span>] = <span class="string">b'\xff\xff\xff\x00'</span> * (size // <span class="number">4</span> // <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">m.close()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<pre><code class="python">import mmap
 
+f = open(&#39;/dev/fb0&#39;, &#39;r+b&#39;)
+size = 8294400
+# 第一个参数要传入文件描述符,而不是file对象 ,这是系统底层的要求
+m = mmap.mmap(f.fileno(), size)
+
+# 给一半的屏幕写入白色, \xff就是255, \x00就是0, rgba中, rgb都为255, a为0
+m[:size//2] = b&#39;\xff\xff\xff\x00&#39; * (size // 4 // 2)
+
+m.close()
+f.close()</code></pre>
 <br>
 
 <h2 id="访问文件的状态"><a href="#访问文件的状态" class="headerlink" title="访问文件的状态"></a>访问文件的状态</h2><p>系统调用: 标准库<strong>os</strong>模块中的系统调用<strong>stat</strong>获取文件状态</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">fd = os.open(<span class="string">'a.txt'</span>, os.O_RDONLY) <span class="comment"># 获取文件描述符, 就是一个数字</span></span><br><span class="line">s = os.stat(<span class="string">'a.txt'</span>) 	<span class="comment"># 传入路径</span></span><br><span class="line">os.stat(fd)			<span class="comment"># 传入文件描述符</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件表述符是给系统调用使用的</span></span><br><span class="line">os.read(fd, <span class="number">10</span>)		<span class="comment"># 系统调用, 读取10个字节</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">import os
 
+fd = os.open(&#39;a.txt&#39;, os.O_RDONLY) # 获取文件描述符, 就是一个数字
+s = os.stat(&#39;a.txt&#39;)     # 传入路径
+os.stat(fd)            # 传入文件描述符
+
+# 文件表述符是给系统调用使用的
+os.read(fd, 10)        # 系统调用, 读取10个字节</code></pre>
 <br>
 
 <p>快捷函数:标准库os.path下的一些函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">os.path.isdir(&apos;test&apos;)</span><br><span class="line"></span><br><span class="line">os.path.isfile(&apos;a.txt&apos;)</span><br><span class="line"></span><br><span class="line">os.path.getsize(&apos;a.txt&apos;)</span><br></pre></td></tr></table></figure>
+<pre><code>os.path.isdir(&#39;test&#39;)
 
-<br>
+os.path.isfile(&#39;a.txt&#39;)
+
+os.path.getsize(&#39;a.txt&#39;)</code></pre><br>
 
 <h2 id="如何使用临时文件"><a href="#如何使用临时文件" class="headerlink" title="如何使用临时文件"></a>如何使用临时文件</h2><p>例如: 某项目中, 我们每采集数据1G数据就对它做分析, 最终只保留分析结果. 而这样大量的临时数据如果常驻内存会消耗大量资源. 所以我们可以使用临时文件存储这些临时数据 ( 外部存储 ).</p>
 <p>临时文件不用命名, 且关闭后会自动删除</p>
 <br>
 
 <p>解决方案 : 使用标准库中的 <strong>TemporaryFile</strong> 以及 <strong>NamedTemporaryFile</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tempfile <span class="keyword">import</span> TemporaryFile, NamedTemporaryFile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定目录创建临时文件, 因为默认目录的大小可能会不够用</span></span><br><span class="line"><span class="comment"># 操作系统级别的临时文件, 系统调用的open打开的</span></span><br><span class="line">tf = TemporaryFile(dir=<span class="string">'/'</span>)</span><br><span class="line">tf.write(<span class="string">b'*'</span> * <span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line">tf.write(<span class="string">b'*'</span> * <span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line">tf.write(<span class="string">b'*'</span> * <span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line">tf.write(<span class="string">b'*'</span> * <span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用法和普通文件一样,</span></span><br><span class="line"><span class="comment"># 但我们无法在文件系统中访问到它 例如:ls</span></span><br><span class="line">tf.seek(<span class="number">0</span>)</span><br><span class="line">tf.read(<span class="number">512</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动删除这个文件</span></span><br><span class="line">tf.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#######################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 能创建出带名字的临时文件</span></span><br><span class="line"><span class="comment"># 不是系统级别,</span></span><br><span class="line"><span class="comment"># 无论创建临时文件的名字还是自动帮你删除这个文件</span></span><br><span class="line"><span class="comment"># 都是由python库实现的, 而不是由操作系统实现</span></span><br><span class="line"><span class="comment"># 多进程都想访问统一个临时文件时可以使用</span></span><br><span class="line">ntf = NamedTemporaryFile()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存储的位置</span></span><br><span class="line">ntf.name()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当构造器delete为True时(默认)会自动删除文件, 可以修改为False来不删除</span></span><br><span class="line">ntf.close()</span><br></pre></td></tr></table></figure>
+<pre><code class="python">from tempfile import TemporaryFile, NamedTemporaryFile
 
+# 指定目录创建临时文件, 因为默认目录的大小可能会不够用
+# 操作系统级别的临时文件, 系统调用的open打开的
+tf = TemporaryFile(dir=&#39;/&#39;)
+tf.write(b&#39;*&#39; * 1024 * 1024)
+tf.write(b&#39;*&#39; * 1024 * 1024)
+tf.write(b&#39;*&#39; * 1024 * 1024)
+tf.write(b&#39;*&#39; * 1024 * 1024)
+
+# 用法和普通文件一样,
+# 但我们无法在文件系统中访问到它 例如:ls
+tf.seek(0)
+tf.read(512)
+
+# 自动删除这个文件
+tf.close()
+
+#######################################
+
+# 能创建出带名字的临时文件
+# 不是系统级别,
+# 无论创建临时文件的名字还是自动帮你删除这个文件
+# 都是由python库实现的, 而不是由操作系统实现
+# 多进程都想访问统一个临时文件时可以使用
+ntf = NamedTemporaryFile()
+
+# 存储的位置
+ntf.name()
+
+# 当构造器delete为True时(默认)会自动删除文件, 可以修改为False来不删除
+ntf.close()</code></pre>
 <br>
 
 <h1 id="类与对象相关"><a href="#类与对象相关" class="headerlink" title="类与对象相关"></a>类与对象相关</h1><h2 id="如何派生内置不可变类型并修改其实例化行为"><a href="#如何派生内置不可变类型并修改其实例化行为" class="headerlink" title="如何派生内置不可变类型并修改其实例化行为"></a>如何派生内置不可变类型并修改其实例化行为</h2><p>例如: 自定义一种新类型的元组, 对于传入的可迭代对象, 我们只保留其中int类型且值大于0的元素</p>
 <p>先尝试这样实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntTuple</span><span class="params">(tuple)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, iterable)</span>:</span></span><br><span class="line">        <span class="comment"># 过滤iterable</span></span><br><span class="line">        f_it = (e <span class="keyword">for</span> e <span class="keyword">in</span> iterable <span class="keyword">if</span> isinstance(e, int) <span class="keyword">and</span> e &gt; <span class="number">0</span>)</span><br><span class="line">        super(IntTuple, self).__init__(f_it)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">class IntTuple(tuple):
+    def __init__(self, iterable):
+        # 过滤iterable
+        f_it = (e for e in iterable if isinstance(e, int) and e &gt; 0)
+        super(IntTuple, self).__init__(f_it)</code></pre>
 <p>但是运行时会发现出现问题,  因为父类object的init方法没有参数</p>
 <p>也就是说很有可能tuple没有实现init方法</p>
 <br>
@@ -541,42 +434,128 @@ height:50vh;
 <br>
 
 <p>通常我们把一个类的init方法成为这个类的构造器, 但这实际上是不准确的, 我们在创建一个类的实例时, 实际上会调用两个方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, *args)</span>:</span></span><br><span class="line">        print(<span class="string">"In A.__new__"</span>, cls, args)</span><br><span class="line">        <span class="keyword">return</span> object.__new__(cls)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args)</span>:</span></span><br><span class="line">        print(<span class="string">"In A.__init__"</span>, args)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># a1 = A(1, 2)</span></span><br><span class="line">    a = A.__new__(A, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    A.__init__(a, <span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">class A:
+    def __new__(cls, *args):
+        print(&quot;In A.__new__&quot;, cls, args)
+        return object.__new__(cls)
 
+    def __init__(self, *args):
+        print(&quot;In A.__init__&quot;, args)
+
+if __name__ == &#39;__main__&#39;:
+    # a1 = A(1, 2)
+    a = A.__new__(A, 1, 2)
+    A.__init__(a, 1, 2)</code></pre>
 <p>其实在python中所有类的实例都是由object的new方法创建的, 如果不实现new, 调用的依然是父类object的new方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># list的初始化</span></span><br><span class="line">l = list.__new__(list)</span><br><span class="line">list.__init__(l, <span class="string">'abc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># tuple的初始化</span></span><br><span class="line">t = tuple.__new__(tuple, <span class="string">"abc"</span>)</span><br><span class="line"><span class="comment"># new 之后元组就初始化完成了, tuple根本就没实现init</span></span><br><span class="line"></span><br><span class="line">print(tuple.__init <span class="keyword">is</span> object.__init__)  <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python"># list的初始化
+l = list.__new__(list)
+list.__init__(l, &#39;abc&#39;)
 
+# tuple的初始化
+t = tuple.__new__(tuple, &quot;abc&quot;)
+# new 之后元组就初始化完成了, tuple根本就没实现init
+
+print(tuple.__init is object.__init__)  # True</code></pre>
 <p>对于特殊情况(例如: tuple) 我们可以在new的时候直接初始化好</p>
 <p>因此我们可以这么实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntTuple</span><span class="params">(tuple)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, iterable)</span>:</span></span><br><span class="line">        <span class="comment"># 过滤iterable</span></span><br><span class="line">        f_it = (e <span class="keyword">for</span> e <span class="keyword">in</span> iterable <span class="keyword">if</span> isinstance(e, int) <span class="keyword">and</span> e &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> super().__new__(cls, f_it)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    t = IntTuple([<span class="number">1</span>, <span class="number">2</span>, <span class="string">'e'</span>, <span class="number">-1</span>, <span class="number">9</span>, [<span class="string">'x'</span>, <span class="string">'y'</span>], <span class="number">3</span>])</span><br><span class="line">    print(t)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">class IntTuple(tuple):
+    def __new__(cls, iterable):
+        # 过滤iterable
+        f_it = (e for e in iterable if isinstance(e, int) and e &gt; 0)
+        return super().__new__(cls, f_it)
 
+if __name__ == &#39;__main__&#39;:
+    t = IntTuple([1, 2, &#39;e&#39;, -1, 9, [&#39;x&#39;, &#39;y&#39;], 3])
+    print(t)</code></pre>
 <br>
 
 <h2 id="如何为创建大量实例节省内存"><a href="#如何为创建大量实例节省内存" class="headerlink" title="如何为创建大量实例节省内存"></a>如何为创建大量实例节省内存</h2><p>定义类的slots内置属性, 声明实例有哪些属性 (关闭动态绑定)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player1</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, uid, name, level)</span>:</span></span><br><span class="line">        self.uid = uid</span><br><span class="line">        self.name = name</span><br><span class="line">        self.level = level</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player2</span>:</span></span><br><span class="line">    __slots__ = [<span class="string">'uid'</span>, <span class="string">'name'</span>, <span class="string">'level'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, uid, name, level)</span>:</span></span><br><span class="line">        self.uid = uid</span><br><span class="line">        self.name = name</span><br><span class="line">        self.level = level</span><br></pre></td></tr></table></figure>
+<pre><code class="python">class Player1:
+    def __init__(self, uid, name, level):
+        self.uid = uid
+        self.name = name
+        self.level = level
 
+
+class Player2:
+    __slots__ = [&#39;uid&#39;, &#39;name&#39;, &#39;level&#39;]
+
+    def __init__(self, uid, name, level):
+        self.uid = uid
+        self.name = name
+        self.level = level</code></pre>
 <p>上面两个类中, Player2实例使用的空间会更小</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    p1 = Player1(<span class="string">'0001'</span>, <span class="string">'Jim'</span>, <span class="number">20</span>)</span><br><span class="line">    p2 = Player2(<span class="string">'0001'</span>, <span class="string">'Jim'</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 查看一下 p1 比 p2 多出哪些东西</span></span><br><span class="line">    <span class="comment"># dir(p1) 会以列表的形式打印p1的所有属性</span></span><br><span class="line">    <span class="comment"># 对两个集合作差就可以得出我们要的结果</span></span><br><span class="line">    print(set(dir(p1)) - set(dir(p2)))</span><br><span class="line">    <span class="comment"># &#123;'__weakref__', '__dict__'&#125;</span></span><br><span class="line">	<span class="comment"># p1 比 p2 多了两个属性, __weakref__ 和 __dict__</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    p1 = Player1(&#39;0001&#39;, &#39;Jim&#39;, 20)
+    p2 = Player2(&#39;0001&#39;, &#39;Jim&#39;, 20)
 
+    # 查看一下 p1 比 p2 多出哪些东西
+    # dir(p1) 会以列表的形式打印p1的所有属性
+    # 对两个集合作差就可以得出我们要的结果
+    print(set(dir(p1)) - set(dir(p2)))
+    # {&#39;__weakref__&#39;, &#39;__dict__&#39;}
+    # p1 比 p2 多了两个属性, __weakref__ 和 __dict__</code></pre>
 <p>weakref 是弱引用, 在这里它的开销并不大. 主要占用内存的是dict</p>
 <p>p1中的三个属性都是动态创建的</p>
 <p>而实例内部就是通过dict来维护动态绑定的属性</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 等价语句</span></span><br><span class="line">p1.z = <span class="number">300</span></span><br><span class="line">p1.__dict__[<span class="string">'z'</span>] = <span class="number">300</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除属性</span></span><br><span class="line">p1.__dict__.pop(<span class="string">'x'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="python"># 等价语句
+p1.z = 300
+p1.__dict__[&#39;z&#39;] = 300
 
+# 删除属性
+p1.__dict__.pop(&#39;x&#39;)</code></pre>
 <br>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数可以查看内置类型占用多少空间</span></span><br><span class="line">res = sys.getsizeof(p1.__dict__)</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line">res2 = sys.getsizeof(p1.name) + sys.getsizeof(p1.level) + sys.getsizeof(p1.uid)</span><br><span class="line">print(res2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># res1 和 res2 分别为 112, 133</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">import sys
 
+# 这个函数可以查看内置类型占用多少空间
+res = sys.getsizeof(p1.__dict__)
+print(res)
+
+res2 = sys.getsizeof(p1.name) + sys.getsizeof(p1.level) + sys.getsizeof(p1.uid)
+print(res2)
+
+# res1 和 res2 分别为 112, 133</code></pre>
 <p>可以看出存储的数据是133个字节, 而维护他们的字典是112个字节, 近乎浪费一半的空间. </p>
 <p>如果实例个数较少, 牺牲些空间换取动态绑定属性的特性还是值得的. 但如果实例的个数非常多, 就会造成非常大的浪费</p>
 <p>而关闭动态添加数据就是用 slots 提前声明号实例中能有哪些属性, 提前分配好空间</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># tracemalloc 用于跟踪内存使用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># start 启用跟踪</span></span><br><span class="line">    tracemalloc.start()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 要跟踪的代码</span></span><br><span class="line">    la = [Player1(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000</span>)]</span><br><span class="line">    lb = [Player2(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># end 停止跟踪</span></span><br><span class="line">    snapshot = tracemalloc.take_snapshot()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 查看内存占用最多的语句位置</span></span><br><span class="line">    top_stats = snapshot.statistics(<span class="string">'lineno'</span>)</span><br><span class="line">    <span class="keyword">for</span> stat <span class="keyword">in</span> top_stats[:<span class="number">10</span>]:</span><br><span class="line">        print(stat)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    # tracemalloc 用于跟踪内存使用
 
-<p><img src="/Blog/intro/useage.PNG" alt></p>
+    # start 启用跟踪
+    tracemalloc.start()
+
+    # 要跟踪的代码
+    la = [Player1(1, 2, 3) for _ in range(100000)]
+    lb = [Player2(1, 2, 3) for _ in range(100000)]
+
+    # end 停止跟踪
+    snapshot = tracemalloc.take_snapshot()
+
+    # 查看内存占用最多的语句位置
+    top_stats = snapshot.statistics(&#39;lineno&#39;)
+    for stat in top_stats[:10]:
+        print(stat)</code></pre>
+<p><img src="/Blog/intro/useage.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>占用最多内存的是在Player1中第一次动态绑定时的语句</p>
 <p>而两次列表解析的效率差不多.  由于Player2没有动态绑定, 所以没有绑定的消耗. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># tracemalloc 用于跟踪内存使用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># start 启用跟踪</span></span><br><span class="line">    tracemalloc.start()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 要跟踪的代码, 下面两行每次只打开一个运行</span></span><br><span class="line">    <span class="comment"># la = [Player1(1, 2, 3) for _ in range(100000)]</span></span><br><span class="line">    <span class="comment"># lb = [Player2(1, 2, 3) for _ in range(100000)]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># end 停止跟踪</span></span><br><span class="line">    snapshot = tracemalloc.take_snapshot()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 查看整个文件的内存使用情况</span></span><br><span class="line">    top_stats = snapshot.statistics(<span class="string">'filename'</span>)</span><br><span class="line">    <span class="keyword">for</span> stat <span class="keyword">in</span> top_stats[:<span class="number">10</span>]:</span><br><span class="line">        print(stat)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    # tracemalloc 用于跟踪内存使用
 
+    # start 启用跟踪
+    tracemalloc.start()
+
+    # 要跟踪的代码, 下面两行每次只打开一个运行
+    # la = [Player1(1, 2, 3) for _ in range(100000)]
+    # lb = [Player2(1, 2, 3) for _ in range(100000)]
+
+    # end 停止跟踪
+    snapshot = tracemalloc.take_snapshot()
+
+    # 查看整个文件的内存使用情况
+    top_stats = snapshot.statistics(&#39;filename&#39;)
+    for stat in top_stats[:10]:
+        print(stat)</code></pre>
 <p>Player1 使用 16.8 M, Player2 使用 7056 K. 大大节省了内存</p>
 <br>
 
@@ -584,36 +563,167 @@ height:50vh;
 <blockquote>
 <p>telnet是一种网络协议, 默认使用23端口, 和ssh类似但是是明文的, 不安全 所以默认不能使用root权限账号</p>
 <p>如果想要连接远程服务器, 则服务器需要安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> yum -y install telnet-server.x86_64</span><br><span class="line"><span class="meta">&gt;</span> yum -y install telnet.x86_64</span><br><span class="line"><span class="meta">&gt;</span> yum -y install xinetd.x86_64</span><br><span class="line"><span class="meta">&gt;</span> </span><br><span class="line"><span class="meta">&gt;</span> 设置开机自启：</span><br><span class="line"><span class="meta">&gt;</span> systemctl enable xinetd.service</span><br><span class="line"><span class="meta">&gt;</span> systemctl enable telnet.socket</span><br><span class="line"><span class="meta">&gt;</span> </span><br><span class="line"><span class="meta">&gt;</span> 开启service：</span><br><span class="line"><span class="meta">&gt;</span> systemctl start telnet.socket</span><br><span class="line"><span class="meta">&gt;</span> systemctl start xinetd</span><br><span class="line"><span class="meta">&gt;</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> getpass</span><br><span class="line"><span class="keyword">import</span> telnetlib</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> stdout, stdin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TelnetClient</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, port=<span class="number">23</span>)</span>:</span></span><br><span class="line">        self.host = host</span><br><span class="line">        self.port = port</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.tn = telnetlib.Telnet(self.host, self.port)</span><br><span class="line">        self.history = deque([])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cleanup</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.tn.close()</span><br><span class="line">        self.tn = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">'history.txt'</span>, <span class="string">'a'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.writelines(self.history)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.tn.read_until(<span class="string">b'login: '</span>)</span><br><span class="line">        user = input(<span class="string">"Enter your remote account: "</span>)</span><br><span class="line">        self.tn.write(user.encode(<span class="string">'utf8'</span>) + <span class="string">b"\n"</span>)</span><br><span class="line"></span><br><span class="line">        self.tn.read_until(<span class="string">b'Password: '</span>)</span><br><span class="line">        password = getpass.getpass()</span><br><span class="line">        self.tn.write(password.encode(<span class="string">'utf8'</span>) + <span class="string">b"\n"</span>)</span><br><span class="line">        out = self.tn.read_until(<span class="string">b'$ '</span>)</span><br><span class="line">        stdout.write(out.decode(<span class="string">'utf8'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">interact</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            cmd = stdin.readline()</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> cmd:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            self.history.append(cmd)</span><br><span class="line">            self.tn.write(cmd.encode(<span class="string">'utf8'</span>))</span><br><span class="line">            out = self.tn.read_until(<span class="string">b'$ '</span>).decode(<span class="string">'utf8'</span>)</span><br><span class="line"></span><br><span class="line">            stdout.write(out[len(cmd)+<span class="number">1</span>:])</span><br><span class="line">            stdout.flush()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    client = TelnetClient(<span class="string">'服务器ip'</span>)</span><br><span class="line">    client.connect()</span><br><span class="line">    client.login()</span><br><span class="line">    client.interact()</span><br><span class="line">    client.cleanup()</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">yum -y install telnet-server.x86_64
+yum -y install telnet.x86_64
+yum -y install xinetd.x86_64
 
+设置开机自启：
+systemctl enable xinetd.service
+systemctl enable telnet.socket
+
+开启service：
+systemctl start telnet.socket
+systemctl start xinetd</code></pre>
+</blockquote>
+<pre><code class="python">import getpass
+import telnetlib
+from collections import deque
+from sys import stdout, stdin
+
+
+class TelnetClient:
+    def __init__(self, host, port=23):
+        self.host = host
+        self.port = port
+
+    def connect(self):
+        self.tn = telnetlib.Telnet(self.host, self.port)
+        self.history = deque([])
+
+    def cleanup(self):
+        self.tn.close()
+        self.tn = None
+
+        with open(&#39;history.txt&#39;, &#39;a&#39;) as f:
+            f.writelines(self.history)
+
+    def login(self):
+        self.tn.read_until(b&#39;login: &#39;)
+        user = input(&quot;Enter your remote account: &quot;)
+        self.tn.write(user.encode(&#39;utf8&#39;) + b&quot;\n&quot;)
+
+        self.tn.read_until(b&#39;Password: &#39;)
+        password = getpass.getpass()
+        self.tn.write(password.encode(&#39;utf8&#39;) + b&quot;\n&quot;)
+        out = self.tn.read_until(b&#39;$ &#39;)
+        stdout.write(out.decode(&#39;utf8&#39;))
+
+    def interact(self):
+        while True:
+            cmd = stdin.readline()
+            if not cmd:
+                break
+            self.history.append(cmd)
+            self.tn.write(cmd.encode(&#39;utf8&#39;))
+            out = self.tn.read_until(b&#39;$ &#39;).decode(&#39;utf8&#39;)
+
+            stdout.write(out[len(cmd)+1:])
+            stdout.flush()
+
+
+if __name__ == &#39;__main__&#39;:
+    client = TelnetClient(&#39;服务器ip&#39;)
+    client.connect()
+    client.login()
+    client.interact()
+    client.cleanup()</code></pre>
 <p>这里可以看到从创建client到使用它, 再到关闭一共要五行代码(main中)</p>
 <p>而我们的目标是让这个类支持with自动打开和关闭(即支持上下文管理)</p>
 <br>
 
 <p>举个with的简单例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"test.txt"</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">with open(&quot;test.txt&quot;, &#39;w&#39;) as f:</code></pre>
 <p>注意: 这里并不是把open的返回值直接给f, 这里等同于下面语句</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">F = open(<span class="string">"test.txt"</span>, <span class="string">'w'</span>)</span><br><span class="line"><span class="keyword">with</span> F <span class="keyword">as</span> f:</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">F = open(&quot;test.txt&quot;, &#39;w&#39;)
+with F as f:</code></pre>
 <p>而 f 则是通过 F 的内置enter方法得到的</p>
 <p>由于 F 的 enter 方法返回的是 self 所以 f 就是 F, 但这取决于enter的实现</p>
 <p>而退出则会自动调用 F 的 exit 内置方法执行清理工作</p>
 <p>因此我们只要把 connect 和 cleanup 分别改为 enter 和 exit</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.tn = telnetlib.Telnet(self.host, self.port)</span><br><span class="line">    self.history = deque([])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 返回的值赋值给as后的变量</span></span><br><span class="line">    <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果执行出现异常, 同样会调用此方法, 三个参数都是异常的描述</span></span><br><span class="line"><span class="comment"># 如果正常退出, 则这三个参数都是None</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, exc_type, exc_val, exc_tb)</span>:</span></span><br><span class="line">    self.tn.close()</span><br><span class="line">    self.tn = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'history.txt'</span>, <span class="string">'a'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.writelines(self.history)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 返回真说明异常已经被处理完毕, 不再抛给上一层</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">    def __enter__(self):
+        self.tn = telnetlib.Telnet(self.host, self.port)
+        self.history = deque([])
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">with</span> TelnetClient(<span class="string">'服务器ip'</span>) <span class="keyword">as</span> client:</span><br><span class="line">        client.login()</span><br><span class="line">        client.interact()</span><br></pre></td></tr></table></figure>
+        # 返回的值赋值给as后的变量
+        return self
 
+    # 如果执行出现异常, 同样会调用此方法, 三个参数都是异常的描述
+    # 如果正常退出, 则这三个参数都是None
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.tn.close()
+        self.tn = None
+
+        with open(&#39;history.txt&#39;, &#39;a&#39;) as f:
+            f.writelines(self.history)
+
+        # 返回真说明异常已经被处理完毕, 不再抛给上一层
+        return True</code></pre>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    with TelnetClient(&#39;服务器ip&#39;) as client:
+        client.login()
+        client.interact()</code></pre>
 <br>
 
 <h2 id="创建可管理的对象属性"><a href="#创建可管理的对象属性" class="headerlink" title="创建可管理的对象属性"></a>创建可管理的对象属性</h2><p>通常我们在面向对象的编程中, 不建议直接对属性进行操作, 而是应该实用Getter和Setter来操作</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, radius)</span>:</span></span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_radius</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.radius</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_radius</span><span class="params">(self, radius)</span>:</span></span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.radius ** <span class="number">2</span> * math.pi</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_area</span><span class="params">(self, S)</span>:</span></span><br><span class="line">        self.radius = math.sqrt(S / math.pi)</span><br><span class="line">        </span><br><span class="line">c = Circle(<span class="number">1111</span>)</span><br><span class="line">c.set_radius(<span class="number">32.95</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">import math
 
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def get_radius(self):
+        return self.radius
+
+    def set_radius(self, radius):
+        self.radius = radius
+
+    def get_area(self):
+        return self.radius ** 2 * math.pi
+
+    def set_area(self, S):
+        self.radius = math.sqrt(S / math.pi)
+
+c = Circle(1111)
+c.set_radius(32.95)</code></pre>
 <p>而在python中可以使用property函数为类创建可管理属性, 传入的参数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, radius)</span>:</span></span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_radius</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"get R"</span>)</span><br><span class="line">        <span class="keyword">return</span> self.radius</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_radius</span><span class="params">(self, radius)</span>:</span></span><br><span class="line">        print(<span class="string">"set R"</span>)</span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用方法2</span></span><br><span class="line">    <span class="comment"># 可以通过c.S来读取, 必须要和方法名一样</span></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">S</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.radius ** <span class="number">2</span> * math.pi</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 可以通过c.S = xxx 来访问</span></span><br><span class="line">    <span class="comment"># S指的就是上面那个方法的名字</span></span><br><span class="line"><span class="meta">    @S.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">S</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        self.radius = math.sqrt(s / math.pi)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用方法1</span></span><br><span class="line">    <span class="comment"># 虽然这里R是一个类属性, 但我们对R进行操作时</span></span><br><span class="line">    <span class="comment"># 调用的是操作radius的方法, 因此一个类属性就可以</span></span><br><span class="line">    R = property(get_radius, set_radius)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    c = Circle(<span class="number">5.712</span>)</span><br><span class="line">    c.R = <span class="number">31.89</span></span><br><span class="line">    print(<span class="string">"this is print "</span>, c.R)</span><br><span class="line">    <span class="comment"># 设置S后R的值改变了</span></span><br><span class="line">    c.S = <span class="number">99.88</span></span><br><span class="line">    print(c.S)</span><br><span class="line">    print(c.R)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">class Circle:
+    def __init__(self, radius):
+        self.radius = radius
 
+    def get_radius(self):
+        print(&quot;get R&quot;)
+        return self.radius
+
+    def set_radius(self, radius):
+        print(&quot;set R&quot;)
+        self.radius = radius
+
+    # 使用方法2
+    # 可以通过c.S来读取, 必须要和方法名一样
+    @property
+    def S(self):
+        return self.radius ** 2 * math.pi
+
+    # 可以通过c.S = xxx 来访问
+    # S指的就是上面那个方法的名字
+    @S.setter
+    def S(self, s):
+        self.radius = math.sqrt(s / math.pi)
+
+    # 使用方法1
+    # 虽然这里R是一个类属性, 但我们对R进行操作时
+    # 调用的是操作radius的方法, 因此一个类属性就可以
+    R = property(get_radius, set_radius)
+
+
+if __name__ == &#39;__main__&#39;:
+    c = Circle(5.712)
+    c.R = 31.89
+    print(&quot;this is print &quot;, c.R)
+    # 设置S后R的值改变了
+    c.S = 99.88
+    print(c.S)
+    print(c.R)</code></pre>
 <br>
 
 <h2 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h2><p>python中运算符实际上是调用的类中的内置函数</p>
@@ -651,8 +761,35 @@ height:50vh;
 </tbody></table>
 <br>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> total_ordering</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用total_ordering, 运算符只要重载两个就行</span></span><br><span class="line"><span class="comment"># 一个是__eq__, 之后再随便重载一个就行 lt, le, gt, ge</span></span><br><span class="line"><span class="comment"># 其余的它会自动帮你实现</span></span><br><span class="line"><span class="meta">@total_ordering</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rect</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, w, h)</span>:</span></span><br><span class="line">        self.w = w</span><br><span class="line">        self.h = h</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.w * self.h</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 相当于java中的toString</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Rect:(%s, %s)'</span> % (self.w, self.h)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.area() == other.area()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__le__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.area() &lt;= other.area()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">rect1 = Rect(<span class="number">6</span>, <span class="number">9</span>)</span><br><span class="line">rect2 = Rect(<span class="number">7</span>, <span class="number">8</span>)</span><br><span class="line">print(rect1 &lt; rect2)</span><br><span class="line">print(rect1 &gt; rect2)  <span class="comment"># 由于我们没有重载对于方法, 会被翻译成 rect2 &lt; rect1</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">from functools import total_ordering
 
+# 使用total_ordering, 运算符只要重载两个就行
+# 一个是__eq__, 之后再随便重载一个就行 lt, le, gt, ge
+# 其余的它会自动帮你实现
+@total_ordering
+class Rect:
+    def __init__(self, w, h):
+        self.w = w
+        self.h = h
+
+    def area(self):
+        return self.w * self.h
+
+    # 相当于java中的toString
+    def __str__(self):
+        return &#39;Rect:(%s, %s)&#39; % (self.w, self.h)
+
+    def __eq__(self, other):
+        return self.area() == other.area()
+
+    def __le__(self, other):
+        return self.area() &lt;= other.area()
+
+
+rect1 = Rect(6, 9)
+rect2 = Rect(7, 8)
+print(rect1 &lt; rect2)
+print(rect1 &gt; rect2)  # 由于我们没有重载对于方法, 会被翻译成 rect2 &lt; rect1</code></pre>
 <br>
 
 <p>更进一步, 可以让父类实现这些比较方法, 子类之间就可以互相比较了</p>
@@ -662,25 +799,137 @@ height:50vh;
 <br>
 
 <p>当一个类包含set, get, delete内置函数其中之一, 那它就是描述符</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Attr</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, key, _type)</span>:</span></span><br><span class="line">        self.key = key</span><br><span class="line">        self._type = _type</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></span><br><span class="line">        print(<span class="string">'in __set__'</span>)</span><br><span class="line">        <span class="comment"># set时判断属性类型</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, self._type):</span><br><span class="line">            <span class="keyword">raise</span> TypeError(<span class="string">'must be %s'</span> % self._type)</span><br><span class="line">        instance.__dict__[self.key] = value</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, cls)</span>:</span></span><br><span class="line">        print(<span class="string">'in __get__'</span>, instance, cls)</span><br><span class="line">        <span class="keyword">return</span> instance.__dict__[self.key]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delete__</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">        print(<span class="string">'in __del__'</span>, instance)</span><br><span class="line">        <span class="keyword">del</span> instance.__dict__[self.key]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    <span class="comment"># 对这些属性的访问都会被描述符所捕获</span></span><br><span class="line">    name = Attr(<span class="string">'name'</span>, str)</span><br><span class="line">    age = Attr(<span class="string">'age'</span>, int)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    p = Person()</span><br><span class="line">    p.name = <span class="string">'daolin'</span></span><br><span class="line">    p.age = <span class="number">33</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">class Attr:
 
+    def __init__(self, key, _type):
+        self.key = key
+        self._type = _type
+
+    def __set__(self, instance, value):
+        print(&#39;in __set__&#39;)
+        # set时判断属性类型
+        if not isinstance(value, self._type):
+            raise TypeError(&#39;must be %s&#39; % self._type)
+        instance.__dict__[self.key] = value
+
+    def __get__(self, instance, cls):
+        print(&#39;in __get__&#39;, instance, cls)
+        return instance.__dict__[self.key]
+
+    def __delete__(self, instance):
+        print(&#39;in __del__&#39;, instance)
+        del instance.__dict__[self.key]
+
+
+class Person:
+    # 对这些属性的访问都会被描述符所捕获
+    name = Attr(&#39;name&#39;, str)
+    age = Attr(&#39;age&#39;, int)
+
+
+if __name__ == &#39;__main__&#39;:
+    p = Person()
+    p.name = &#39;daolin&#39;
+    p.age = 33</code></pre>
 <br>
 
 <h2 id="如何在环状数据结构中管理内存"><a href="#如何在环状数据结构中管理内存" class="headerlink" title="如何在环状数据结构中管理内存"></a>如何在环状数据结构中管理内存</h2><br>
 
 <p>python中的垃圾回收机制</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'in __del__'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="comment"># 引用计数为2    </span></span><br><span class="line">    a = A()</span><br><span class="line">    a2 = a</span><br><span class="line">    </span><br><span class="line">    a2 = <span class="literal">None</span></span><br><span class="line">    a = <span class="number">1</span></span><br><span class="line">    <span class="comment"># 当一个对象的引用数量为 0 时, 就会被自动回收</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">class A:
+    def __del__(self):
+        print(&#39;in __del__&#39;)
 
+if __name__ == &#39;__main__&#39;:
+    # 引用计数为2    
+    a = A()
+    a2 = a
+
+    a2 = None
+    a = 1
+    # 当一个对象的引用数量为 0 时, 就会被自动回收</code></pre>
 <br>
 
 <p>然而当出现循环引用时</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 双向链表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        self.data = data</span><br><span class="line">        self.left = <span class="literal">None</span></span><br><span class="line">        self.right = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_right</span><span class="params">(self, node)</span>:</span></span><br><span class="line">        self.right = node</span><br><span class="line">        node.left = self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Node:&lt;%s&gt;'</span> % self.data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'in __del__: delete %s'</span> % self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_linklist</span><span class="params">(n)</span>:</span></span><br><span class="line">    head = current = Node(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        node = Node(i)</span><br><span class="line">        current.add_right(node)</span><br><span class="line">        current = node</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    head = create_linklist(<span class="number">1000</span>)</span><br><span class="line">    <span class="comment"># 引用计数依然大于0, 对于不会执行del</span></span><br><span class="line">    head = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        print(<span class="string">'run...'</span>)</span><br><span class="line">    input(<span class="string">'wait...'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="python"># 双向链表
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
 
+    def add_right(self, node):
+        self.right = node
+        node.left = self
+
+    def __str__(self):
+        return &#39;Node:&lt;%s&gt;&#39; % self.data
+
+    def __del__(self):
+        print(&#39;in __del__: delete %s&#39; % self)
+
+
+def create_linklist(n):
+    head = current = Node(1)
+    for i in range(2, n+1):
+        node = Node(i)
+        current.add_right(node)
+        current = node
+    return head
+
+if __name__ == &#39;__main__&#39;:
+    head = create_linklist(1000)
+    # 引用计数依然大于0, 对于不会执行del
+    head = None
+
+    for _ in range(1000):
+        time.sleep(1)
+        print(&#39;run...&#39;)
+    input(&#39;wait...&#39;)</code></pre>
 <br>
 
 <p>而解决方法就是使用弱引用, weakref.ref(), 弱引用不会计算在引用计数里. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> weakref</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        self.data = data</span><br><span class="line">        self._left: Node = <span class="literal">None</span></span><br><span class="line">        self.right: Node = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_right</span><span class="params">(self, node)</span>:</span></span><br><span class="line">        self.right = node</span><br><span class="line">        <span class="comment"># 把左节点改为弱引用, 所有的元素引用计数就都为1了</span></span><br><span class="line">        node._left = weakref.ref(self)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 左节点通过self._left()获取引用</span></span><br><span class="line">    <span class="comment"># 右节点通过self.right获取引用</span></span><br><span class="line">    <span class="comment"># 为了对称, 根据上面学过的知识, 通过property让他们使用方法一样</span></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">left</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 弱引用通过()返回真正的引用</span></span><br><span class="line">        <span class="keyword">return</span> self._left()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Node:&lt;%s&gt;'</span> % self.data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'in __del__: delete %s'</span> % self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_linklist</span><span class="params">(n)</span>:</span></span><br><span class="line">    head = current = Node(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        node = Node(i)</span><br><span class="line">        current.add_right(node)</span><br><span class="line">        current = node</span><br><span class="line">    <span class="keyword">return</span> head</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    head = create_linklist(<span class="number">1000</span>)</span><br><span class="line">    print(head.right, head.right.left)</span><br><span class="line">    head = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">import weakref
 
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self._left: Node = None
+        self.right: Node = None
+
+    def add_right(self, node):
+        self.right = node
+        # 把左节点改为弱引用, 所有的元素引用计数就都为1了
+        node._left = weakref.ref(self)
+
+    # 左节点通过self._left()获取引用
+    # 右节点通过self.right获取引用
+    # 为了对称, 根据上面学过的知识, 通过property让他们使用方法一样
+    @property
+    def left(self):
+        # 弱引用通过()返回真正的引用
+        return self._left()
+
+    def __str__(self):
+        return &#39;Node:&lt;%s&gt;&#39; % self.data
+
+    def __del__(self):
+        print(&#39;in __del__: delete %s&#39; % self)
+
+
+def create_linklist(n):
+    head = current = Node(1)
+    for i in range(2, n+1):
+        node = Node(i)
+        current.add_right(node)
+        current = node
+    return head
+
+if __name__ == &#39;__main__&#39;:
+    head = create_linklist(1000)
+    print(head.right, head.right.left)
+    head = None</code></pre>
 <br>
 
 <h2 id="如何通过方法名调用类的方法"><a href="#如何通过方法名调用类的方法" class="headerlink" title="如何通过方法名调用类的方法"></a>如何通过方法名调用类的方法</h2><p>有两种方式:</p>
@@ -692,1221 +941,310 @@ height:50vh;
 <br>
 
 <p>getattr:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'123abc987'</span></span><br><span class="line"><span class="comment"># 获取s的find方法对象, 如果没有这个方法则赋值为None(第三个参数)</span></span><br><span class="line">method = getattr(s, <span class="string">'find'</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="comment"># 传参调用, 从index为3的位置寻找abc</span></span><br><span class="line">method(<span class="string">'abc'</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">s = &#39;123abc987&#39;
+# 获取s的find方法对象, 如果没有这个方法则赋值为None(第三个参数)
+method = getattr(s, &#39;find&#39;, None)
+# 传参调用, 从index为3的位置寻找abc
+method(&#39;abc&#39;, 3)</code></pre>
 <br>
 
 <p>methodcaller</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'123abc987'</span></span><br><span class="line">method = <span class="string">'find'</span></span><br><span class="line"><span class="comment"># 先告诉它要调用那个方法, 以及传参</span></span><br><span class="line">caller = methodcaller(method, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># 之后才传入调用的对象, 通常要判断一下这个对象中是否有这个方法</span></span><br><span class="line"><span class="keyword">if</span> hasattr(s, method):</span><br><span class="line">	caller(s)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">s = &#39;123abc987&#39;
+method = &#39;find&#39;
+# 先告诉它要调用那个方法, 以及传参
+caller = methodcaller(method, 3)
+# 之后才传入调用的对象, 通常要判断一下这个对象中是否有这个方法
+if hasattr(s, method):
+    caller(s)</code></pre>
 <br>
 
 
-    </article>
-    <!-- license  -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/10/11/python3-skills-2/">https://daolinzhou.github.io/Blog/2019/10/11/python3-skills-2/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/10/11/python3-skills-2/">October 11th 2019, 7:52:23 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/10/11/python3-skills-2/">November 28th 2019, 8:24:59 pm</a>
-            <p>版权声明：</p>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/学习笔记/">学习笔记</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/Blog/2019/10/20/git-common-command/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">git学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2019/09/27/python3-skills-1/">
+                        <span class="hidden-mobile">python3编程技巧(一)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
         </div>
+      </div>
+    </div>
     
-    <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/Blog/2019/10/20/git-common-command/" title= "git学习笔记">
-                    <div class="nextTitle">git学习笔记</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2019/09/27/python3-skills-1/" title= "python3编程技巧(一)">
-                    <div class="prevTitle">python3编程技巧(一)</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
 
-<!-- City版安装代码已完成 -->
+      </div>
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
+  </div>
+</div>
+
+<!-- Custom -->
 
 
     
-    
+  </main>
 
-    <!-- 评论 -->
-</main>
-            <!-- profile -->
-            
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
         </div>
-        <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-    <div class="social">
-        
-    
-        
-    
-        
-            
-                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-    </div>
-    <!-- 不蒜子  -->
-    
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#文件I-O相关"><span class="toc-number">1.</span> <span class="toc-text">文件I/O相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#读写文本文件"><span class="toc-number">1.1.</span> <span class="toc-text">读写文本文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#处理二进制文件-wav举例"><span class="toc-number">1.2.</span> <span class="toc-text">处理二进制文件(wav举例)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何设置文件缓冲"><span class="toc-number">1.3.</span> <span class="toc-text">如何设置文件缓冲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何将文件映射到内存"><span class="toc-number">1.4.</span> <span class="toc-text">如何将文件映射到内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问文件的状态"><span class="toc-number">1.5.</span> <span class="toc-text">访问文件的状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用临时文件"><span class="toc-number">1.6.</span> <span class="toc-text">如何使用临时文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#类与对象相关"><span class="toc-number">2.</span> <span class="toc-text">类与对象相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何派生内置不可变类型并修改其实例化行为"><span class="toc-number">2.1.</span> <span class="toc-text">如何派生内置不可变类型并修改其实例化行为</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何为创建大量实例节省内存"><span class="toc-number">2.2.</span> <span class="toc-text">如何为创建大量实例节省内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何让类支持with的自动开启和关闭-支持上下文管理"><span class="toc-number">2.3.</span> <span class="toc-text">如何让类支持with的自动开启和关闭 / 支持上下文管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建可管理的对象属性"><span class="toc-number">2.4.</span> <span class="toc-text">创建可管理的对象属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运算符重载"><span class="toc-number">2.5.</span> <span class="toc-text">运算符重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用描述符对实例属性作类型检查"><span class="toc-number">2.6.</span> <span class="toc-text">使用描述符对实例属性作类型检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何在环状数据结构中管理内存"><span class="toc-number">2.7.</span> <span class="toc-text">如何在环状数据结构中管理内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何通过方法名调用类的方法"><span class="toc-number">2.8.</span> <span class="toc-text">如何通过方法名调用类的方法</span></a></li></ol></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 46
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-    
-    
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/Blog/2020/04/10/machine-learning/" >python3入门机器学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
-        </li>
-    
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
   </div>
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
-        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
-    
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
-    
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
-        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
-    </div> 
-    <div class="sidebar-tags-list"></div>
 </div>
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
-    
-        <span class="sidebar-category-name" data-categories="人工智能"><span class="iconfont-archer">&#xe60a;</span>人工智能</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
-    
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-    </div>
-</div> 
-    <script>
-    var siteMeta = {
-        root: "/Blog/",
-        author: "Daolin"
-    }
-</script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
         }
-    </script>
-    <script src="/Blog/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/Blog/scripts/share.js" async></script>    
-     
-    </body>
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "python3编程技巧(二)&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-

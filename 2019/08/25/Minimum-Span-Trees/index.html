@@ -1,408 +1,173 @@
 <!DOCTYPE html>
 <html lang="">
-    <!-- title -->
 
-
-
-
-<!-- keywords -->
 
 
 
 
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="Daolin">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="Daolin">
-    
-    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
-    
-    <meta name="description" content>
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>图论(五)-最小生成树 · Daolin&#39;s Studio</title>
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/Blog/font/Oswald-Regular.ttf");
-    }
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>图论(五)-最小生成树 - Daolin&#39;s Repository</title>
 
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-</style>
-
-    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
+  <link rel="stylesheet" href="/Blog/lib/prettify/tomorrow-night-eighties.min.css">
 
-    <link rel="icon" href="/Blog/assets/favicon.ico">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/Blog/scripts/main.js" as="script">
-    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
 </head>
 
-    
-        <body class="post-body">
-    
-    
-<header class="header">
 
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/Blog/" >Daolin&#39;s Repository.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">图论(五)-最小生成树</a>
-            </div>
-    </div>
-    
-    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
-</header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
 
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-
-
-
-
-height:50vh;
-">
-    
-    <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/intro/eye.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-            图论(五)-最小生成树
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-            
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页meta -->
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.8k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/25</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
         
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
-        <script>
- 
-  // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
-  }
-  console.log("userAgent:" + browser.versions.userAgent);
+  </div>
+</nav>
 
-  // callback
-  function fontLoaded() {
-    console.log('font loaded');
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in');
-      }
-    }
-  }
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb(){
-    if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular']
-        },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
-        },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
-        },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
-        },
-        timeout: 5000 // Set the timeout to two seconds
-      });
-    }
-  }
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Sunday, August 25th 2019, 7:51 pm
+                </p>
+              
 
-  function asyncErr(){
-    console.warn('script load from CDN failed, will load local script')
-  }
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.8k 字
+                  </span>
+                
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      11 分钟
+                  </span>
+                
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+                
+              </p>
+            
+          </div>
 
-      async(arr[0], success, currReject)
-  }
+          
+        </div>
+      </div>
+    </div>
+  </header>
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/Blog/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>最小生成树( Minimum Span Trees )是关于有权图的一个重要的算法</p>
-<p><img src="/Blog/intro/mst.PNG" alt></p>
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>最小生成树( Minimum Span Trees )是关于有权图的一个重要的算法</p>
+<p><img src="/Blog/intro/mst.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>什么是<strong>生成树</strong> : 对于一个有v个节点的图, 有v-1条边, 连接v个节点</p>
 <p>一个图可以有多个生成树, 而 <strong>最小生成树</strong> , 则是边的权重之和最小的生成树</p>
 <a id="more"></a>
@@ -424,7 +189,7 @@ height:50vh;
 
 <h1 id="切分定理-Cut-Property"><a href="#切分定理-Cut-Property" class="headerlink" title="切分定理 Cut Property"></a>切分定理 Cut Property</h1><p><strong><em>切分定理</em></strong>   :  给定<strong>任意</strong>切分, 横切边中权值最小的边必然属于最小生成树</p>
 <h2 id="什么是切分"><a href="#什么是切分" class="headerlink" title="什么是切分?"></a>什么是切分?</h2><p>定义 : 把图中节点分成两部分, 就是一个切分 (Cut)</p>
-<p><img src="/Blog/intro/cut.PNG" alt></p>
+<p><img src="/Blog/intro/cut.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h2 id="什么是横切边"><a href="#什么是横切边" class="headerlink" title="什么是横切边?"></a>什么是横切边?</h2><p>定义 : 如果一个边的两个端点, 属于 <strong>切分</strong>(Cut) 不同的两边, 这个边称为 <strong>横切边</strong>(Crossing Edge)</p>
@@ -433,7 +198,7 @@ height:50vh;
 
 <h2 id="简易证明"><a href="#简易证明" class="headerlink" title="简易证明:"></a>简易证明:</h2><p><strong>切分</strong>把一个图分成了两个部分,  这两个部分一定有<strong>横切边</strong> (如果没有横切边图就不连通了).</p>
 <p>我们要证明: 权值最小的横切边一定属于最小生成树</p>
-<p><img src="/Blog/intro/proof-cut-pro.PNG" alt></p>
+<p><img src="/Blog/intro/proof-cut-pro.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>假设:</p>
 <p>​        有一个横切边a, 它不是最小的横切边, 但它属于最小生成树. 同时, 蓝色部分和红色部分都已经求出了它们的最小生成树</p>
 <p>​        由于a不是最小横斜边, 那么就有横切边b小于a, </p>
@@ -448,7 +213,7 @@ height:50vh;
 <li>其余所有节点</li>
 </ol>
 <p>那么这个节点的相邻边中最小的边就属于最小生成树</p>
-<p><img src="/Blog/intro/using-cut-pro.PNG" alt></p>
+<p><img src="/Blog/intro/using-cut-pro.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h1 id="Lazy-Prim-算法"><a href="#Lazy-Prim-算法" class="headerlink" title="Lazy Prim 算法"></a>Lazy Prim 算法</h1><p>选取一个节点, 通过切分定理不断扩散. </p>
@@ -456,8 +221,85 @@ height:50vh;
 <br>
 
 <p>分析: 使用优先队列, 而且是求最小横切边, 那么一定要用最小堆. MinHeap 和 MaxHeap 相似, 所以就不放代码了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ALGORITHM_LAZYPRIMMST_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALGORITHM_LAZYPRIMMST_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Edge.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../heap/MinHeap.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph, <span class="keyword">typename</span> Weight&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LazyPrimMST</span>&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Graph &amp;G;</span><br><span class="line">    MinHeap&lt;Edge&lt;Weight&gt;&gt; pq;   <span class="comment">// 优先队列 Priority queue</span></span><br><span class="line">    <span class="keyword">bool</span>* marked;               <span class="comment">// 记录每个节点是否被访问过</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; mst;   <span class="comment">// 存储最小生成树的所有边</span></span><br><span class="line">    Weight mstWeight;           <span class="comment">// 记录最小生成树的总权值</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">visit</span><span class="params">(<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">        assert(!marked[v]);</span><br><span class="line">        marked[v] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历相邻边</span></span><br><span class="line">        <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, v)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())&#123;</span><br><span class="line">            <span class="comment">/* 首先当前节点已经访问过了, 如果这个边的另一个节点也被访问过了,</span></span><br><span class="line"><span class="comment">             * 这就不是横切边, 只有当没被访问过时才把这条边加入优先队列   */</span></span><br><span class="line">            <span class="keyword">if</span>( !marked[e-&gt;other(v)] )</span><br><span class="line">                pq.insert(*e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    LazyPrimMST(Graph &amp;graph):G(graph), pq(MinHeap&lt;Edge&lt;Weight&gt;&gt;(graph.E()))&#123;</span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        marked = <span class="keyword">new</span> <span class="keyword">bool</span>[G.V()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.V(); i++)</span><br><span class="line">            marked[i] = <span class="literal">false</span>;</span><br><span class="line">        mst.clear();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Lazy Prim</span></span><br><span class="line">        visit(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">while</span>(!pq.isEmpty())&#123;</span><br><span class="line">            Edge&lt;Weight&gt; e = pq.extractMin();</span><br><span class="line">            <span class="comment">/* 当边加入时两边的节点是不同的, 但有可能通过其他边访问过另一个节点</span></span><br><span class="line"><span class="comment">             * 导致两边节点都被访问过了, 所以在取出时要检查一下, 这里体现出Lazy */</span></span><br><span class="line">            <span class="keyword">if</span>(marked[e.v()] == marked[e.w()])</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="comment">// 通过检查就说明属于最小生成树, 保存进向量</span></span><br><span class="line">            mst.push_back(e);</span><br><span class="line">            <span class="comment">/* 这条边的两头一边被访问过, 另一边没有,</span></span><br><span class="line"><span class="comment">             * 继续要访问没有被访问过的那个点*/</span></span><br><span class="line">            <span class="keyword">if</span>(!marked[e.v()])  <span class="comment">// 如果v点没被访问, 就访问v</span></span><br><span class="line">                visit(e.v());</span><br><span class="line">            <span class="keyword">else</span>                <span class="comment">// 反之访问w, 因为必定有一点没被访问</span></span><br><span class="line">                visit(e.w());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算mstWeight</span></span><br><span class="line">        mstWeight = mst[<span class="number">0</span>].wt();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;mst.size(); i++)</span><br><span class="line">            mstWeight += mst[i].wt();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~LazyPrimMST()&#123;</span><br><span class="line">        <span class="keyword">delete</span> [] marked;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; mstEdges()&#123;</span><br><span class="line">        <span class="keyword">return</span> mst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Weight <span class="title">result</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mstWeight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//ALGORITHM_LAZYPRIMMST_H</span></span></span><br></pre></td></tr></table></figure>
+<pre><code class="c++">#ifndef ALGORITHM_LAZYPRIMMST_H
+#define ALGORITHM_LAZYPRIMMST_H
 
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &quot;Edge.h&quot;
+#include &quot;../heap/MinHeap.h&quot;
+
+template &lt;typename Graph, typename Weight&gt;
+class LazyPrimMST{
+
+private:
+    Graph &amp;G;
+    MinHeap&lt;Edge&lt;Weight&gt;&gt; pq;   // 优先队列 Priority queue
+    bool* marked;               // 记录每个节点是否被访问过
+    vector&lt;Edge&lt;Weight&gt;&gt; mst;   // 存储最小生成树的所有边
+    Weight mstWeight;           // 记录最小生成树的总权值
+
+    void visit(int v){
+        assert(!marked[v]);
+        marked[v] = true;
+
+        // 遍历相邻边
+        typename Graph::adjIterator adj(G, v);
+        for(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next()){
+            /* 首先当前节点已经访问过了, 如果这个边的另一个节点也被访问过了,
+             * 这就不是横切边, 只有当没被访问过时才把这条边加入优先队列   */
+            if( !marked[e-&gt;other(v)] )
+                pq.insert(*e);
+        }
+    }
+
+public:
+    LazyPrimMST(Graph &amp;graph):G(graph), pq(MinHeap&lt;Edge&lt;Weight&gt;&gt;(graph.E())){
+        // 初始化
+        marked = new bool[G.V()];
+        for(int i = 0; i &lt; G.V(); i++)
+            marked[i] = false;
+        mst.clear();
+
+        // Lazy Prim
+        visit(0);
+        while(!pq.isEmpty()){
+            Edge&lt;Weight&gt; e = pq.extractMin();
+            /* 当边加入时两边的节点是不同的, 但有可能通过其他边访问过另一个节点
+             * 导致两边节点都被访问过了, 所以在取出时要检查一下, 这里体现出Lazy */
+            if(marked[e.v()] == marked[e.w()])
+                continue;
+            // 通过检查就说明属于最小生成树, 保存进向量
+            mst.push_back(e);
+            /* 这条边的两头一边被访问过, 另一边没有,
+             * 继续要访问没有被访问过的那个点*/
+            if(!marked[e.v()])  // 如果v点没被访问, 就访问v
+                visit(e.v());
+            else                // 反之访问w, 因为必定有一点没被访问
+                visit(e.w());
+        }
+
+        // 计算mstWeight
+        mstWeight = mst[0].wt();
+        for(int i=1; i&lt;mst.size(); i++)
+            mstWeight += mst[i].wt();
+    }
+
+    ~LazyPrimMST(){
+        delete [] marked;
+    }
+
+    vector&lt;Edge&lt;Weight&gt;&gt; mstEdges(){
+        return mst;
+    }
+
+    Weight result(){
+        return mstWeight;
+    }
+
+};
+
+#endif //ALGORITHM_LAZYPRIMMST_H</code></pre>
 <p><strong>时间复杂度分析</strong>:    V(节点数) E(边数)</p>
 <p>所有边都会进入最小堆, while循环执行 E(边数) 次, 每次执行有两个主要操作</p>
 <ol>
@@ -485,19 +327,163 @@ height:50vh;
 <p>所以应该使用 IndexMinHeap </p>
 <p>而这个 IndexMinHeap 只需要开<strong>节点个数</strong>的空间就足够了, 每个空间保存的就是和这个节点相连的最短的横切边</p>
 <p>有V个节点, 而最小生成树只有V-1条边, 所以在 IndexMinHeap 中初始节点就不存东西了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ALGORITHM_PRIMMST_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALGORITHM_PRIMMST_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Edge.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../heap/IndexMinHeap.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph, <span class="keyword">typename</span> Weight&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PrimMST</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Graph &amp;G;</span><br><span class="line">    IndexMinHeap&lt;Weight&gt; ipq;       <span class="comment">// 只保存权值</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;*&gt; edgeTo;   <span class="comment">// 存储和每个节点相邻的最短的横切边</span></span><br><span class="line">    <span class="keyword">bool</span>* marked;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; mst;</span><br><span class="line">    Weight mstWeight;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">visit</span><span class="params">(<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">        assert(!marked[v]);</span><br><span class="line">        marked[v] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历点v的相邻边</span></span><br><span class="line">        <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, v)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())&#123;</span><br><span class="line">            <span class="comment">// 从相邻边中取出相邻节点</span></span><br><span class="line">            <span class="keyword">int</span> w = e-&gt;other(v);</span><br><span class="line">            <span class="comment">// 如果没访问过</span></span><br><span class="line">            <span class="keyword">if</span>( !marked[w] )&#123;</span><br><span class="line">                <span class="keyword">if</span>( !edgeTo[w] )&#123;   <span class="comment">// 当没有边和w连接时</span></span><br><span class="line">                    ipq.insert(w, e-&gt;wt());     <span class="comment">// 插入这条边</span></span><br><span class="line">                    edgeTo[w] = e;  <span class="comment">// 连接w的边是e</span></span><br><span class="line">                &#125;	<span class="comment">// 当有边和w连接, 并且旧的边比这条边大时</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>( e-&gt;wt() &lt; edgeTo[w]-&gt;wt() )&#123;  </span><br><span class="line">                    edgeTo[w] = e;  <span class="comment">// 连接w的边是e</span></span><br><span class="line">                    <span class="comment">// 更新index w在索引堆中的值</span></span><br><span class="line">                    ipq.change(w, e-&gt;wt());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 当有边和w连接, 并且旧的边比这条边小时, 什么都不做</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    PrimMST(Graph &amp;graph):G(graph), ipq(IndexMinHeap&lt;<span class="keyword">double</span>&gt;(graph.V()))&#123;</span><br><span class="line">        marked = <span class="keyword">new</span> <span class="keyword">bool</span>[G.V()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; G.V(); i++)&#123;</span><br><span class="line">            marked[i] = <span class="literal">false</span>;</span><br><span class="line">            edgeTo.push_back(<span class="literal">NULL</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        mst.clear();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Prim</span></span><br><span class="line">        visit(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">while</span>( !ipq.isEmpty() )&#123;</span><br><span class="line">            <span class="keyword">int</span> v = ipq.extractMinIndex();  <span class="comment">// 获取的是最小边的Index</span></span><br><span class="line">            assert( edgeTo[v] );            <span class="comment">// 确保有边连接v节点</span></span><br><span class="line">            mst.push_back( *edgeTo[v] );    <span class="comment">// 存入边</span></span><br><span class="line">            visit(v);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算mstWeight</span></span><br><span class="line">        mstWeight = mst[<span class="number">0</span>].wt();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; mst.size(); i++)</span><br><span class="line">            mstWeight += mst[i].wt();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~PrimMST()&#123;</span><br><span class="line">        <span class="keyword">delete</span>[] marked;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; mstEdges()&#123;</span><br><span class="line">        <span class="keyword">return</span> mst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Weight <span class="title">result</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mstWeight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//ALGORITHM_PRIMMST_H</span></span></span><br></pre></td></tr></table></figure>
+<pre><code class="c++">#ifndef ALGORITHM_PRIMMST_H
+#define ALGORITHM_PRIMMST_H
 
+#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+#include &lt;vector&gt;
+#include &quot;Edge.h&quot;
+#include &quot;../heap/IndexMinHeap.h&quot;
+
+using namespace std;
+
+template &lt;typename Graph, typename Weight&gt;
+class PrimMST{
+private:
+    Graph &amp;G;
+    IndexMinHeap&lt;Weight&gt; ipq;       // 只保存权值
+    vector&lt;Edge&lt;Weight&gt;*&gt; edgeTo;   // 存储和每个节点相邻的最短的横切边
+    bool* marked;
+    vector&lt;Edge&lt;Weight&gt;&gt; mst;
+    Weight mstWeight;
+
+    void visit(int v){
+        assert(!marked[v]);
+        marked[v] = true;
+
+        // 遍历点v的相邻边
+        typename Graph::adjIterator adj(G, v);
+        for(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next()){
+            // 从相邻边中取出相邻节点
+            int w = e-&gt;other(v);
+            // 如果没访问过
+            if( !marked[w] ){
+                if( !edgeTo[w] ){   // 当没有边和w连接时
+                    ipq.insert(w, e-&gt;wt());     // 插入这条边
+                    edgeTo[w] = e;  // 连接w的边是e
+                }    // 当有边和w连接, 并且旧的边比这条边大时
+                else if( e-&gt;wt() &lt; edgeTo[w]-&gt;wt() ){  
+                    edgeTo[w] = e;  // 连接w的边是e
+                    // 更新index w在索引堆中的值
+                    ipq.change(w, e-&gt;wt());
+                }
+                // 当有边和w连接, 并且旧的边比这条边小时, 什么都不做
+            }
+        }
+    }
+
+public:
+    PrimMST(Graph &amp;graph):G(graph), ipq(IndexMinHeap&lt;double&gt;(graph.V())){
+        marked = new bool[G.V()];
+        for(int i=0; i &lt; G.V(); i++){
+            marked[i] = false;
+            edgeTo.push_back(NULL);
+        }
+        mst.clear();
+
+        // Prim
+        visit(0);
+        while( !ipq.isEmpty() ){
+            int v = ipq.extractMinIndex();  // 获取的是最小边的Index
+            assert( edgeTo[v] );            // 确保有边连接v节点
+            mst.push_back( *edgeTo[v] );    // 存入边
+            visit(v);
+        }
+
+        // 计算mstWeight
+        mstWeight = mst[0].wt();
+        for(int i = 1; i &lt; mst.size(); i++)
+            mstWeight += mst[i].wt();
+    }
+
+    ~PrimMST(){
+        delete[] marked;
+    }
+
+    vector&lt;Edge&lt;Weight&gt;&gt; mstEdges(){
+        return mst;
+    }
+
+    Weight result(){
+        return mstWeight;
+    }
+
+};
+
+#endif //ALGORITHM_PRIMMST_H</code></pre>
 <p>时间复杂度分析: 堆只有v个元素, 而其余的时间复杂度和 Lazy Prim 一样, 所以是 <strong>Elog(V)</strong> 级别</p>
 <br>
 
 <h1 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h1><p>思想 : 如果每次都选择所有边中最小的一条边, 这条边是否就属于最小生成树呢? </p>
 <p>答案是yes, 因为我们总能找到一个切分, 使得这条边是横切边中最小的边</p>
 <p>我们可以不断的找这些最短边, 只要这些最短边不构成环</p>
-<p><img src="/Blog/intro/kruakal.PNG" alt></p>
+<p><img src="/Blog/intro/kruakal.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>难点就是变成如何判断新加一条边会产生环?</p>
 <p>解决方案就是使用并查集, 如果两个节点是连接的, 在添加一条边就会构成环</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ALGORITHM_KRUSKALMST_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALGORITHM_KRUSKALMST_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../heap/MinHeap.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../unionfind/UnionFind5.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Edge.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph, <span class="keyword">typename</span> Weight&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KruskalMST</span>&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 因为不需要辅助函数, 所以也不需要存一份graph的引用</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; mst;</span><br><span class="line">    Weight mstWeight;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    KruskalMST(Graph &amp;graph)&#123;</span><br><span class="line">        MinHeap&lt;Edge&lt;Weight&gt;&gt; pq( graph.E() );</span><br><span class="line">        <span class="comment">// 遍历所有节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; graph.V(); i++)&#123;</span><br><span class="line">            <span class="comment">// 把所有节点的相邻边都添加到优先队列中</span></span><br><span class="line">            <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(graph, i)</span></span>;</span><br><span class="line">            <span class="keyword">for</span>(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())&#123;</span><br><span class="line">                <span class="comment">/* 由于图是无向的, 所以要防止边的重复添加</span></span><br><span class="line"><span class="comment">                 * 例如 1&lt;-&gt;2 这条边, 只添加1-&gt;2, 不添加2-&gt;1 */</span></span><br><span class="line">                <span class="keyword">if</span>( e-&gt;v() &lt; e-&gt;w() )   </span><br><span class="line">                    pq.insert(*e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 自己实现的并查集</span></span><br><span class="line">        UF5::<span class="function">UnionFind <span class="title">uf</span><span class="params">(graph.V())</span></span>;</span><br><span class="line">        <span class="comment">// 我们只需要v-1条边</span></span><br><span class="line">        <span class="keyword">while</span>( !pq.isEmpty() &amp;&amp; mst.size() &lt; graph.V() - <span class="number">1</span> )&#123;</span><br><span class="line">            Edge&lt;Weight&gt; e = pq.extractMin();</span><br><span class="line">            <span class="comment">// 如果两点已经连接, 再连接就会成为环</span></span><br><span class="line">            <span class="keyword">if</span>(uf.isConnected(e.v(), e.w())) </span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            mst.push_back(e);</span><br><span class="line">            uf.unionElements(e.v(), e.w());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mstWeight = mst[<span class="number">0</span>].wt();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; mst.size(); i++)</span><br><span class="line">            mstWeight += mst[i].wt();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~KruskalMST()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; mstEdges()&#123;</span><br><span class="line">        <span class="keyword">return</span> mst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Weight <span class="title">result</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mstWeight;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//ALGORITHM_KRUSKALMST_H</span></span></span><br></pre></td></tr></table></figure>
+<pre><code class="c++">#ifndef ALGORITHM_KRUSKALMST_H
+#define ALGORITHM_KRUSKALMST_H
 
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &quot;../heap/MinHeap.h&quot;
+#include &quot;../unionfind/UnionFind5.h&quot;
+#include &quot;Edge.h&quot;
+
+using namespace std;
+
+template &lt;typename Graph, typename Weight&gt;
+class KruskalMST{
+
+private:
+    // 因为不需要辅助函数, 所以也不需要存一份graph的引用
+    vector&lt;Edge&lt;Weight&gt;&gt; mst;
+    Weight mstWeight;
+
+public:
+    KruskalMST(Graph &amp;graph){
+        MinHeap&lt;Edge&lt;Weight&gt;&gt; pq( graph.E() );
+        // 遍历所有节点
+        for(int i = 0; i &lt; graph.V(); i++){
+            // 把所有节点的相邻边都添加到优先队列中
+            typename Graph::adjIterator adj(graph, i);
+            for(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next()){
+                /* 由于图是无向的, 所以要防止边的重复添加
+                 * 例如 1&lt;-&gt;2 这条边, 只添加1-&gt;2, 不添加2-&gt;1 */
+                if( e-&gt;v() &lt; e-&gt;w() )   
+                    pq.insert(*e);
+            }
+        }
+        // 自己实现的并查集
+        UF5::UnionFind uf(graph.V());
+        // 我们只需要v-1条边
+        while( !pq.isEmpty() &amp;&amp; mst.size() &lt; graph.V() - 1 ){
+            Edge&lt;Weight&gt; e = pq.extractMin();
+            // 如果两点已经连接, 再连接就会成为环
+            if(uf.isConnected(e.v(), e.w())) 
+                continue;
+            mst.push_back(e);
+            uf.unionElements(e.v(), e.w());
+        }
+
+        mstWeight = mst[0].wt();
+        for(int i = 1; i &lt; mst.size(); i++)
+            mstWeight += mst[i].wt();
+    }
+
+    ~KruskalMST(){}
+
+    vector&lt;Edge&lt;Weight&gt;&gt; mstEdges(){
+        return mst;
+    }
+
+    Weight result(){
+        return mstWeight;
+    }
+
+};
+
+#endif //ALGORITHM_KRUSKALMST_H</code></pre>
 <br>
 
 <h1 id="三种算法对比"><a href="#三种算法对比" class="headerlink" title="三种算法对比"></a>三种算法对比</h1><table>
@@ -540,1211 +526,292 @@ height:50vh;
 
 <p>而在Kruskal中使用了并查集, Prim和Lazy Prim中用了最小索引堆和最小堆这些高级数据结构. 而在很长时间里, Kruskal 和 Prim算法都没有很好的实现方法, 直到这些数据结构被发现,</p>
 
-    </article>
-    <!-- license  -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/08/25/Minimum-Span-Trees/">https://daolinzhou.github.io/Blog/2019/08/25/Minimum-Span-Trees/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/08/25/Minimum-Span-Trees/">August 25th 2019, 7:51:28 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/08/25/Minimum-Span-Trees/">August 28th 2019, 3:21:01 pm</a>
-            <p>版权声明：</p>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/算法与数据结构/">算法与数据结构</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/图论算法/">图论算法</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/Blog/2019/08/28/shortest-path/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">图论(六)-最短路径</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2019/08/25/weight-graph/">
+                        <span class="hidden-mobile">图论(四)-有权图</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
         </div>
+      </div>
+    </div>
     
-    <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/Blog/2019/08/28/shortest-path/" title= "图论(六)-最短路径">
-                    <div class="nextTitle">图论(六)-最短路径</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2019/08/25/weight-graph/" title= "图论(四)-有权图">
-                    <div class="prevTitle">图论(四)-有权图</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
 
-<!-- City版安装代码已完成 -->
+      </div>
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
+  </div>
+</div>
+
+<!-- Custom -->
 
 
     
-    
+  </main>
 
-    <!-- 评论 -->
-</main>
-            <!-- profile -->
-            
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
         </div>
-        <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-    <div class="social">
-        
-    
-        
-    
-        
-            
-                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-    </div>
-    <!-- 不蒜子  -->
-    
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#切分定理-Cut-Property"><span class="toc-number">1.</span> <span class="toc-text">切分定理 Cut Property</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是切分"><span class="toc-number">1.1.</span> <span class="toc-text">什么是切分?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是横切边"><span class="toc-number">1.2.</span> <span class="toc-text">什么是横切边?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简易证明"><span class="toc-number">1.3.</span> <span class="toc-text">简易证明:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切分定理的应用"><span class="toc-number">1.4.</span> <span class="toc-text">切分定理的应用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lazy-Prim-算法"><span class="toc-number">2.</span> <span class="toc-text">Lazy Prim 算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Prim-算法"><span class="toc-number">3.</span> <span class="toc-text">Prim 算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Kruskal-算法"><span class="toc-number">4.</span> <span class="toc-text">Kruskal 算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三种算法对比"><span class="toc-number">5.</span> <span class="toc-text">三种算法对比</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#另一种算法思路"><span class="toc-number">5.1.</span> <span class="toc-text">另一种算法思路</span></a></li></ol></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 46
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-    
-    
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/Blog/2020/04/10/machine-learning/" >python3入门机器学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
-        </li>
-    
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
   </div>
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
-        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
-    
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
-    
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
-        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
-    </div> 
-    <div class="sidebar-tags-list"></div>
 </div>
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
-    
-        <span class="sidebar-category-name" data-categories="人工智能"><span class="iconfont-archer">&#xe60a;</span>人工智能</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
-    
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-    </div>
-</div> 
-    <script>
-    var siteMeta = {
-        root: "/Blog/",
-        author: "Daolin"
-    }
-</script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
         }
-    </script>
-    <script src="/Blog/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/Blog/scripts/share.js" async></script>    
-     
-    </body>
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "图论(五)-最小生成树&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-

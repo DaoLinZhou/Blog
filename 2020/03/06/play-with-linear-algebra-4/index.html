@@ -1,429 +1,192 @@
 <!DOCTYPE html>
 <html lang="">
-    <!-- title -->
 
-
-
-
-<!-- keywords -->
 
 
 
 
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="Daolin">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="Daolin">
-    
-    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
-    
-    <meta name="description" content>
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>线性代数补充知识 · Daolin&#39;s Studio</title>
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/Blog/font/Oswald-Regular.ttf");
-    }
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>线性代数补充知识 - Daolin&#39;s Repository</title>
 
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-</style>
-
-    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
+  <link rel="stylesheet" href="/Blog/lib/prettify/tomorrow-night-eighties.min.css">
 
-    <link rel="icon" href="/Blog/assets/favicon.ico">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/Blog/scripts/main.js" as="script">
-    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
 </head>
 
-    
-        <body class="post-body">
-    
-    
-<header class="header">
 
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/Blog/" >Daolin&#39;s Repository.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">线性代数补充知识</a>
-            </div>
-    </div>
-    
-    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
-</header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
 
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-
-
-
-
-height:50vh;
-">
-    
-    <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/intro/longyin.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-            线性代数补充知识
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-            
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页meta -->
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "线性代数">线性代数</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "数学">数学</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/03/06</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
         
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
-        <script>
- 
-  // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
-  }
-  console.log("userAgent:" + browser.versions.userAgent);
+  </div>
+</nav>
 
-  // callback
-  function fontLoaded() {
-    console.log('font loaded');
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in');
-      }
-    }
-  }
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb(){
-    if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular']
-        },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
-        },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
-        },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
-        },
-        timeout: 5000 // Set the timeout to two seconds
-      });
-    }
-  }
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Friday, March 6th 2020, 7:03 pm
+                </p>
+              
 
-  function asyncErr(){
-    console.warn('script load from CDN failed, will load local script')
-  }
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    3k 字
+                  </span>
+                
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      11 分钟
+                  </span>
+                
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+                
+              </p>
+            
+          </div>
 
-      async(arr[0], success, currReject)
-  }
+          
+        </div>
+      </div>
+    </div>
+  </header>
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/Blog/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <blockquote>
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
 <p>从不同的角度, 去看同样的知识, 特别重要</p>
 </blockquote>
 <a id="more"></a>
 
 <h2 id="线性映射-linear-map"><a href="#线性映射-linear-map" class="headerlink" title="线性映射(linear map)"></a>线性映射(linear map)</h2><p>表示法:</p>
 <p>就是线性变换, 把一个n维向量线性变换为m维向量, 实现方法就是矩阵乘法, A是一个m * n的矩阵, n列是因为x是n维, 为了可以相乘, m行是因为变换完成后是m维向量</p>
-<p><img src="/Blog/intro/linear_map.PNG" alt></p>
+<p><img src="/Blog/intro/linear_map.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h3 id="线性映射的范围-Range-of-linear-map"><a href="#线性映射的范围-Range-of-linear-map" class="headerlink" title="线性映射的范围(Range of linear map)"></a>线性映射的范围(Range of linear map)</h3><p>假设: 线性变换T是这样</p>
-<p><img src="/Blog/intro/linear_map_1.PNG" alt></p>
+<p><img src="/Blog/intro/linear_map_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>问它的range是什么</p>
 <p>首先可以轻易找到这个线性变换对应的矩阵A</p>
-<p><img src="/Blog/intro/linear_map_2.PNG" alt></p>
-<p><img src="/Blog/intro/linear_map_3.PNG" alt></p>
+<p><img src="/Blog/intro/linear_map_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/linear_map_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>即线性变换T的range是它对应的变换矩阵的列空间</p>
 <br>
 
 <h3 id="正交线性算子-orthogonal-linear-operators"><a href="#正交线性算子-orthogonal-linear-operators" class="headerlink" title="正交线性算子(orthogonal linear operators)"></a>正交线性算子(orthogonal linear operators)</h3><p>定义: 线性变换T:R<sup>n</sup>-&gt;R<sup>n</sup> 是 orthogonal (线性等距 linear isometry) 如果 T保留长度(preserving length)</p>
-<p><img src="/Blog/intro/linear_map_4.PNG" alt></p>
+<p><img src="/Blog/intro/linear_map_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>即: 线性变换后的长度和原来的长度相等</p>
 <br>
 
@@ -456,7 +219,7 @@ height:50vh;
 
 <p>同时这几条定理是等价的:</p>
 <p>如果A是n*n的矩阵</p>
-<p><img src="/Blog/intro/linear_map_6.PNG" alt></p>
+<p><img src="/Blog/intro/linear_map_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>值得一提的是第二条和第三条定理</p>
 <p>第二条定理就是说 preserving length</p>
 <p>第三条定理就是说 preserving dot product</p>
@@ -465,7 +228,7 @@ height:50vh;
 <br>
 
 <h3 id="线性映射的核-kernel"><a href="#线性映射的核-kernel" class="headerlink" title="线性映射的核(kernel)"></a>线性映射的核(kernel)</h3><p>其实就是线性变换T对应的变换矩阵A的零空间</p>
-<p><img src="/Blog/intro/kernel.PNG" alt></p>
+<p><img src="/Blog/intro/kernel.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>定理: 如果T是n维到m维的线性变换, 那么T映射n维的子空间到m维子空间</p>
@@ -474,18 +237,18 @@ height:50vh;
 <p>即证明T(v)不为空, T(v)加法封闭, T(v)数量乘法封闭</p>
 <ol>
 <li>不为空, 因为零向量在v中, T(0) = 0所以一定有零向量</li>
-<li>加法封闭<img src="/Blog/intro/kernel_1.PNG" alt></li>
-<li>数量乘法封闭<img src="/Blog/intro/kernel_2.PNG" alt></li>
+<li>加法封闭<img src="/Blog/intro/kernel_1.PNG" srcset="/Blog/img/loading.gif" alt></li>
+<li>数量乘法封闭<img src="/Blog/intro/kernel_2.PNG" srcset="/Blog/img/loading.gif" alt></li>
 </ol>
 <br>
 
 <p>例) </p>
-<p><img src="/Blog/intro/kernel_3.PNG" alt></p>
+<p><img src="/Blog/intro/kernel_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>1) 求这个变换的核</p>
 <p>即求这个变换矩阵的零空间</p>
-<p><img src="/Blog/intro/kernel_4.PNG" alt></p>
+<p><img src="/Blog/intro/kernel_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>2) 如果子空间V的基为(1, 1, 1) (1, 1, 0), 这个子空间经过T变换后得到的子空间是什么</p>
-<p><img src="/Blog/intro/kernel_5.PNG" alt></p>
+<p><img src="/Blog/intro/kernel_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此结果就是(0, 1)生成的子空间</p>
 <br>
 
@@ -508,13 +271,13 @@ height:50vh;
 <p>且rank(A) = 列数, 换句话说所有列向量线性无关</p>
 <p>也就是说当<strong>A所有列线性无关时T是one-to-one映射</strong></p>
 <p>即A的行最简形式为</p>
-<p><img src="/Blog/intro/kernel_7.PNG" alt></p>
+<p><img src="/Blog/intro/kernel_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h4 id="定理2"><a href="#定理2" class="headerlink" title="定理2"></a>定理2</h4><p>定理: T是onto当且仅当Ax=b有解对于所有m维向量b, 即A的列空间是R<sup>m</sup></p>
 <p>A是m<em>n的矩阵, A的列空间是R<sup>m</sup>, 说明A的列数n&gt;=A的行数m, 且*</em>A的列向量生成了整个m维空间**, </p>
 <p>即A的行最简形式应该长这样:</p>
-<p><img src="/Blog/intro/kernel_6.PNG" alt></p>
+<p><img src="/Blog/intro/kernel_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p><strong>A所有列线性无关时T是one-to-one映射</strong></p>
@@ -524,61 +287,61 @@ height:50vh;
 <br>
 
 <h2 id="列空间的理解"><a href="#列空间的理解" class="headerlink" title="列空间的理解"></a>列空间的理解</h2><p>一个矩阵的列空间是这个矩阵<strong>列向量的线性组合</strong>, 然而当我们用列视角看矩阵乘法时</p>
-<p><img src="Blog/intro/linear_combin_1.PNG" alt></p>
+<p><img src="Blog/intro/linear_combin_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>Ax=b 这个式子中, b就是A的列向量的线性组合, 因此所谓的列空间可以理解为Ax=b中, b所有可能值的集合</p>
 <p>因此, <strong>如果Ax=b这个系统有解, 当且仅当( if and only if ) 向量b在A的列空间中.</strong></p>
 <p>反之如果Ax=b没有解, b就不在A的列空间中</p>
 <br>
 
 <h2 id="Form"><a href="#Form" class="headerlink" title="Form"></a>Form</h2><h3 id="vector-form"><a href="#vector-form" class="headerlink" title="vector form"></a>vector form</h3><p>n维空间的一条直线的表示方法</p>
-<p><img src="/Blog/intro/vector_form.PNG" alt></p>
+<p><img src="/Blog/intro/vector_form.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>x<sub>0</sub>代表起始点(该直线上的任意一点, 也可以理解为偏移量), d表示方向</p>
-<p><img src="/Blog/intro/vector_form_1.PNG" alt></p>
+<p><img src="/Blog/intro/vector_form_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>同理, n维空间的一个平面的表示方法就是</p>
-<p><img src="/Blog/intro/vector_form_2.PNG" alt></p>
+<p><img src="/Blog/intro/vector_form_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>d和v应该线性无关, 因为两个线性无关的向量生成一个平面</p>
 <br>
 
-<h3 id="Parametric-equation"><a href="#Parametric-equation" class="headerlink" title="Parametric equation"></a>Parametric equation</h3><p><img src="/Blog/intro/vector_form.PNG" alt></p>
+<h3 id="Parametric-equation"><a href="#Parametric-equation" class="headerlink" title="Parametric equation"></a>Parametric equation</h3><p><img src="/Blog/intro/vector_form.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这个vector form表示的线也可以拆开, 这就是Parametric form</p>
-<p><img src="/Blog/intro/parametric_form.PNG" alt></p>
+<p><img src="/Blog/intro/parametric_form.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>对于平面一样可以:</p>
-<p><img src="/Blog/intro/parametric_form_1.PNG" alt></p>
+<p><img src="/Blog/intro/parametric_form_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h3 id="Symmetric-equation"><a href="#Symmetric-equation" class="headerlink" title="Symmetric equation"></a>Symmetric equation</h3><p>同样关注于n维空间的一条直线, vector form:</p>
-<p><img src="/Blog/intro/vector_form.PNG" alt></p>
+<p><img src="/Blog/intro/vector_form.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>Parametric form:</p>
-<p><img src="/Blog/intro/parametric_form.PNG" alt></p>
+<p><img src="/Blog/intro/parametric_form.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>可以看出每一个等式都有一个t, 这些t是相等的, 因此可以写作</p>
-<p><img src="/Blog/intro/symmetric_form.PNG" alt></p>
+<p><img src="/Blog/intro/symmetric_form.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>可以看到, 所有的分母组合起来就是向量d, a1, a2…组合起来就是x</p>
 <p>Symmetric equation不能很好的表示一个平面或者更高维度的空间, 它只能用来表示一条线</p>
 <br>
 
 <h3 id="General-equation"><a href="#General-equation" class="headerlink" title="General equation"></a>General equation</h3><p>已知一个平面有两个点x, x<sub>0</sub>, 以及和这个平面垂直的一条直线n</p>
-<p><img src="/Blog/intro/general_equation.PNG" alt></p>
+<p><img src="/Blog/intro/general_equation.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因为n垂直于x和x<sub>0</sub>所在的平面, 因此我们有</p>
-<p><img src="/Blog/intro/general_equation_1.PNG" alt></p>
-<p><img src="/Blog/intro/general_equation_2.PNG" alt></p>
+<p><img src="/Blog/intro/general_equation_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/general_equation_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>根据向量的点乘得到</p>
-<p><img src="/Blog/intro/general_equation_3.PNG" alt></p>
+<p><img src="/Blog/intro/general_equation_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>当求出ABC之后, 随便取出平面上的一点代入x就可以得到D</p>
 <br>
 
 <h3 id="normal-form"><a href="#normal-form" class="headerlink" title="normal form"></a>normal form</h3><p>上面也提到了, 其实这个形式就是normal form</p>
-<p><img src="/Blog/intro/general_equation_1.PNG" alt></p>
-<p><img src="/Blog/intro/general_equation_2.PNG" alt></p>
+<p><img src="/Blog/intro/general_equation_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/general_equation_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>x1, x2, x3减去平面上任意一点, 都与(A, B, C) 正交</p>
 <br>
 
 <br>
 
 <h2 id="正交补-Orthogonal-Complement"><a href="#正交补-Orthogonal-Complement" class="headerlink" title="正交补 Orthogonal Complement"></a>正交补 Orthogonal Complement</h2><p>定义:</p>
-<p><img src="/Blog/intro/orthogonalcompliment.PNG" alt></p>
+<p><img src="/Blog/intro/orthogonalcompliment.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>定理:</p>
-<p><img src="/Blog/intro/orthogonalcompliment_1.PNG" alt></p>
-<p><img src="/Blog/intro/orthogonalcompliment_2.PNG" alt></p>
+<p><img src="/Blog/intro/orthogonalcompliment_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/orthogonalcompliment_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h2 id="秩零化度定理的补充"><a href="#秩零化度定理的补充" class="headerlink" title="秩零化度定理的补充"></a>秩零化度定理的补充</h2><p>A行空间的基和A零空间的基合起来生成整个n维空间, n为A的列数</p>
@@ -590,39 +353,39 @@ height:50vh;
 <br>
 
 <h2 id="补充-投影的另一种计算方法"><a href="#补充-投影的另一种计算方法" class="headerlink" title="补充: 投影的另一种计算方法"></a>补充: 投影的另一种计算方法</h2><p>V是R<sup>n</sup>的子空间, 向量x在R<sup>n</sup>中, S = {v<sub>1</sub>, v<sub>2</sub>…v<sub>k</sub>}是V的一组基</p>
-<p><img src="/Blog/intro/projection_another_way.PNG" alt></p>
+<p><img src="/Blog/intro/projection_another_way.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>证明:</p>
-<p><img src="/Blog/intro/projection_another_way_1.PNG" alt></p>
+<p><img src="/Blog/intro/projection_another_way_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <blockquote>
 <p>由于M的所有列向量是一组基, 所以一定线性无关</p>
 <p>Mx的结果就是M的列向量的线性组合, 而M的列向量的非零线性组合不可能和M的所有列向量正交, 因此M<sup>T</sup>Mx=0只有唯一的零解</p>
 <p>因此M<sup>T</sup>M可逆</p>
 </blockquote>
-<p><img src="/Blog/intro/projection_another_way_2.PNG" alt></p>
-<h3 id="另一个角度看Gram-Schmidt过程"><a href="#另一个角度看Gram-Schmidt过程" class="headerlink" title="另一个角度看Gram-Schmidt过程"></a>另一个角度看Gram-Schmidt过程</h3><p><img src="/Blog/intro/projection_another_way_3.PNG" alt></p>
+<p><img src="/Blog/intro/projection_another_way_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="另一个角度看Gram-Schmidt过程"><a href="#另一个角度看Gram-Schmidt过程" class="headerlink" title="另一个角度看Gram-Schmidt过程"></a>另一个角度看Gram-Schmidt过程</h3><p><img src="/Blog/intro/projection_another_way_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>由此就可以求出x到V的投影, x减去这个投影就是一个正交基</p>
 <blockquote>
 <p>注意上面我们假设v<sub>1</sub>…v<sub>k</sub>是标准正交基, 但如果是普通的正交基是否也可以推导出同样的结果?</p>
-<p><img src="/Blog/intro/projection_another_way_4.PNG" alt></p>
+<p><img src="/Blog/intro/projection_another_way_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>可以看到得到了同样的结果</p>
 </blockquote>
 <br>
 
 <h2 id="最小二乘法-least-squares-Approximation"><a href="#最小二乘法-least-squares-Approximation" class="headerlink" title="最小二乘法(least squares Approximation)"></a>最小二乘法(least squares Approximation)</h2><p>[]: <a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/#%E6%8A%95%E5%BD%B1%E8%BF%98%E8%83%BD%E6%80%8E%E6%A0%B7%E4%BD%BF%E7%94%A8">https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/#%E6%8A%95%E5%BD%B1%E8%BF%98%E8%83%BD%E6%80%8E%E6%A0%B7%E4%BD%BF%E7%94%A8</a>    “最小二乘法的思路”</p>
-<p><img src="/Blog/intro/ex_use_sub_space.PNG" alt></p>
+<p><img src="/Blog/intro/ex_use_sub_space.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此 b’ 我们称之为: least squares approximation to <strong>b</strong> from V, V是A的列空间,<strong>b’就是A的列空间的投影</strong></p>
-<p><img src="/Blog/intro/least_square_approximation_1.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>由于b’在A的列空间中, 因此一定有 向量x(不一定唯一, 因为A的列向量不一定线性无关) 使得:</p>
-<p><img src="/Blog/intro/least_square_approximation_2.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>即:</p>
-<p><img src="/Blog/intro/least_square_approximation_3.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>我们称这个x为: least squares (approximation / solution) to Ax=b </p>
 <br>
 
 <p>如何求解这个等式? </p>
-<p><img src="/Blog/intro/least_square_approximation_3.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>很自然地, 可以根据投影的知识</p>
 <p><strong>只要求出A的列空间的一组正交基, 之后求出向量b到这个正交基中各个分量的一维投影, 每一个投影都是一个分量, 把这些分量加在一起就是向量b到 A的列空间(高维空间)的投影, 之后正常求解这个线性方程组</strong></p>
 <blockquote>
@@ -630,17 +393,17 @@ height:50vh;
 </blockquote>
 <br>
 
-<p><img src="/Blog/intro/least_square_approximation_3.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>我们可以把这个等式转换为:</p>
-<p><img src="/Blog/intro/least_square_approximation_4.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这个等式非常重要, 因为关注等式的右边, <strong>b减去b到V的投影是垂直于V (A的列空间) 的</strong>, 又由于A的列空间和A的左零空间互相垂直:</p>
-<p><img src="/Blog/intro/least_square_approximation_5.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此A的每个列向量乘以 b-Proj<sub>v</sub>b 都为0, 即A<sup>T</sup>点乘 b-Proj<sub>v</sub>b 为 0, 因此等式两边在同乘A<sup>T</sup></p>
-<p><img src="/Blog/intro/least_square_approximation_6.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此求解左边等式等价于求解右边等式</p>
-<p><img src="/Blog/intro/least_square_approximation_7.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>而解这个等式就简单很多</p>
-<p><img src="/Blog/intro/least_square_approximation_8.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>我们称之为: normal system associated to Ax=b</p>
 <blockquote>
 <p>然而, 没有任何保证, 我们能得到唯一解x</p>
@@ -650,7 +413,7 @@ height:50vh;
 <p>或者用另一中方法:</p>
 <p>由于A的列向量线性无关, 所以Ax = Proj<sub>v</sub>b只有唯一解, </p>
 <p>而求解Ax = Proj<sub>v</sub>b 等价于求解</p>
-<p><img src="/Blog/intro/least_square_approximation_7.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此我们直到右边的等式也只有唯一解, 所以A<sup>T</sup>A可逆</p>
 </blockquote>
 <br>
@@ -659,12 +422,12 @@ height:50vh;
 <br>
 
 <p>首先我们要找的线是y=mx+b, 把这四个点都代入等式</p>
-<p><img src="/Blog/intro/least_square_approximation_9.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此可以化为系统:</p>
-<p><img src="/Blog/intro/least_square_approximation_10.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>由于这个系统没有解, 我们可以用最小二乘法求近似解</p>
 <p>而且由于A的列向量线性无关, 所以A<sup>T</sup>A可逆, 因此用这个公式求解</p>
-<p><img src="/Blog/intro/least_square_approximation_8.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>解得m = 0.5, b=1</p>
 <p>因此拟合线为 y=0.5x+1</p>
 <br>
@@ -672,16 +435,16 @@ height:50vh;
 <blockquote>
 <p>解释: 这个公式是怎么和平方联系起来的</p>
 <p>我们希望求解这个系统</p>
-<p><img src="/Blog/intro/least_square_approximation_10.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>然而通常情况这个系统没有解, 所以为了选取最合适的x使得该等式”尽量成立”, 即所有<strong>误差的平方之和</strong>尽可能小</p>
 <p>即选定x使得这个式子的值最小</p>
-<p><img src="/Blog/intro/least_square_approximation_11.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这里就体现出为什么叫最小二乘, <strong>向量Ax-y的平方 等于 y到A的列空间的距离的平方(向量的模的定义) 等于 所有点到最佳拟合线的距离的平方之和(向量点乘定义)</strong></p>
 <p>Ax代表了A的列空间, 根据我们上面所说, 即从A的列空间中选定一点, 使得y到这个点的距离的平方最小,</p>
 <p>即求y到A的列空间的投影y’, 因为y-y’垂直于A的列空间, 所以距离最短, 因此距离的平方最小</p>
 <p>因此下面的目的就是求解Ax=y’, 而怎么求这个式子中的x?</p>
 <p>直接套用公式</p>
-<p><img src="/Blog/intro/least_square_approximation_8.PNG" alt></p>
+<p><img src="/Blog/intro/least_square_approximation_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>就求得了x</p>
 </blockquote>
 <br>
@@ -691,1211 +454,294 @@ height:50vh;
 
 
 
-    </article>
-    <!-- license  -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">March 6th 2020, 7:03:35 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/">March 31st 2020, 10:03:34 pm</a>
-            <p>版权声明：</p>
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/学习笔记/">学习笔记</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/线性代数/">线性代数</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/数学/">数学</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/Blog/2020/04/04/stat-203/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">统计自整理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/01/24/play-with-linear-algebra-3/">
+                        <span class="hidden-mobile"><专为程序员设计的线性代数>学习笔记(3)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
         </div>
+      </div>
+    </div>
     
-    <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/Blog/2020/04/04/stat-203/" title= "统计自整理">
-                    <div class="nextTitle">统计自整理</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2020/01/24/play-with-linear-algebra-3/" title= "<专为程序员设计的线性代数>学习笔记(3)">
-                    <div class="prevTitle"><专为程序员设计的线性代数>学习笔记(3)</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
 
-<!-- City版安装代码已完成 -->
+      </div>
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
+  </div>
+</div>
+
+<!-- Custom -->
 
 
     
-    
+  </main>
 
-    <!-- 评论 -->
-</main>
-            <!-- profile -->
-            
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
         </div>
-        <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-    <div class="social">
-        
-    
-        
-    
-        
-            
-                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-    </div>
-    <!-- 不蒜子  -->
-    
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性映射-linear-map"><span class="toc-number">1.</span> <span class="toc-text">线性映射(linear map)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线性映射的范围-Range-of-linear-map"><span class="toc-number">1.1.</span> <span class="toc-text">线性映射的范围(Range of linear map)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交线性算子-orthogonal-linear-operators"><span class="toc-number">1.2.</span> <span class="toc-text">正交线性算子(orthogonal linear operators)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正交矩阵-orthogonal-matrix"><span class="toc-number">1.3.</span> <span class="toc-text">正交矩阵 (orthogonal matrix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性映射的核-kernel"><span class="toc-number">1.4.</span> <span class="toc-text">线性映射的核(kernel)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#one-to-one映射和onto映射"><span class="toc-number">1.5.</span> <span class="toc-text">one to one映射和onto映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定理1"><span class="toc-number">1.5.1.</span> <span class="toc-text">定理1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定理2"><span class="toc-number">1.5.2.</span> <span class="toc-text">定理2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列空间的理解"><span class="toc-number">2.</span> <span class="toc-text">列空间的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Form"><span class="toc-number">3.</span> <span class="toc-text">Form</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vector-form"><span class="toc-number">3.1.</span> <span class="toc-text">vector form</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parametric-equation"><span class="toc-number">3.2.</span> <span class="toc-text">Parametric equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symmetric-equation"><span class="toc-number">3.3.</span> <span class="toc-text">Symmetric equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#General-equation"><span class="toc-number">3.4.</span> <span class="toc-text">General equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#normal-form"><span class="toc-number">3.5.</span> <span class="toc-text">normal form</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正交补-Orthogonal-Complement"><span class="toc-number">4.</span> <span class="toc-text">正交补 Orthogonal Complement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#秩零化度定理的补充"><span class="toc-number">5.</span> <span class="toc-text">秩零化度定理的补充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-投影的另一种计算方法"><span class="toc-number">6.</span> <span class="toc-text">补充: 投影的另一种计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#另一个角度看Gram-Schmidt过程"><span class="toc-number">6.1.</span> <span class="toc-text">另一个角度看Gram-Schmidt过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小二乘法-least-squares-Approximation"><span class="toc-number">7.</span> <span class="toc-text">最小二乘法(least squares Approximation)</span></a></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 46
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-    
-    
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/Blog/2020/04/10/machine-learning/" >python3入门机器学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
-        </li>
-    
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
   </div>
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
-        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
-    
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
-    
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
-        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
-    </div> 
-    <div class="sidebar-tags-list"></div>
 </div>
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
-    
-        <span class="sidebar-category-name" data-categories="人工智能"><span class="iconfont-archer">&#xe60a;</span>人工智能</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
-    
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-    </div>
-</div> 
-    <script>
-    var siteMeta = {
-        root: "/Blog/",
-        author: "Daolin"
-    }
-</script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
         }
-    </script>
-    <script src="/Blog/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/Blog/scripts/share.js" async></script>    
-     
-    </body>
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "线性代数补充知识&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-

@@ -1,423 +1,186 @@
 <!DOCTYPE html>
 <html lang="">
-    <!-- title -->
 
-
-
-
-<!-- keywords -->
 
 
 
 
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="Daolin">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="Daolin">
-    
-    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
-    
-    <meta name="description" content>
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>python3入门机器学习 · Daolin&#39;s Studio</title>
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/Blog/font/Oswald-Regular.ttf");
-    }
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>python3入门机器学习 - Daolin&#39;s Repository</title>
 
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-</style>
-
-    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
+  <link rel="stylesheet" href="/Blog/lib/prettify/tomorrow-night-eighties.min.css">
 
-    <link rel="icon" href="/Blog/assets/favicon.ico">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/Blog/scripts/main.js" as="script">
-    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
 </head>
 
-    
-        <body class="post-body">
-    
-    
-<header class="header">
 
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/Blog/" >Daolin&#39;s Repository.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">python3入门机器学习</a>
-            </div>
-    </div>
-    
-    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
-</header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
 
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-
-
-
-
-height:50vh;
-">
-    
-    <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/intro/sincegate.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-            python3入门机器学习
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-            
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页meta -->
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "python3">python3</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "机器学习">机器学习</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">4.1k</span>阅读时长: <span class="post-count reading-time">13 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/04/10</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
         
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
-        <script>
- 
-  // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
-  }
-  console.log("userAgent:" + browser.versions.userAgent);
+  </div>
+</nav>
 
-  // callback
-  function fontLoaded() {
-    console.log('font loaded');
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in');
-      }
-    }
-  }
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb(){
-    if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular']
-        },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
-        },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
-        },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
-        },
-        timeout: 5000 // Set the timeout to two seconds
-      });
-    }
-  }
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Friday, April 10th 2020, 7:41 pm
+                </p>
+              
 
-  function asyncErr(){
-    console.warn('script load from CDN failed, will load local script')
-  }
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    9.4k 字
+                  </span>
+                
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      35 分钟
+                  </span>
+                
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+                
+              </p>
+            
+          </div>
 
-      async(arr[0], success, currReject)
-  }
+          
+        </div>
+      </div>
+    </div>
+  </header>
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/Blog/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>机器学习常见算法</p>
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>机器学习常见算法</p>
 <a id="more"></a>
 
 <h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><br>
 
 <h2 id="机器学习的数据"><a href="#机器学习的数据" class="headerlink" title="机器学习的数据"></a>机器学习的数据</h2><p>机器学习其实就是喂给我们的算法数据, 让我们的算法在数据中寻找相应的关系</p>
-<p><img src="/Blog/intro/lris_flowers.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>使用注明的鸢尾花数据来说明</p>
 <p>这个数据就是给出了很多鸢尾花相关的信息, 数据中主要包含三类鸢尾花</p>
 <p>这个数据整体的信息是这个样子的:</p>
-<p><img src="/Blog/intro/lris_flowers_1.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>总共包含150个数据信息, 对于每个数据信息给出了4个方面的信息: 萼片的长宽和花瓣的长宽</p>
-<p><img src="/Blog/intro/lris_flowers_2.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这样4个信息就描述了一朵花, 对于每一朵花都分属3种鸢尾花之一, 那么整个数据就可以表示成这个样子(这里只选出3条信息作为例子)</p>
-<p><img src="/Blog/intro/lris_flowers_3.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><strong>关于数据的相关概念:</strong></p>
 <ul>
 <li><p>数据整体叫<strong>数据集 (data set)</strong></p>
@@ -429,19 +192,19 @@ height:50vh;
 <li><p>最后一列, 称为<strong>标记 (label)</strong>, 这也是机器想要去学习的内容</p>
 </li>
 </ul>
-<p><img src="/Blog/intro/lris_flowers_4.PNG" alt> </p>
+<p><img src="/Blog/intro/lris_flowers_4.PNG" srcset="/Blog/img/loading.gif" alt> </p>
 <p> 很显然X是一个矩阵, y是一个向量</p>
-<p><img src="/Blog/intro/lris_flowers_5.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>每一行都是一个特征向量, 通常向量都是以列排列(列向量) 所以这个矩阵就也可以写成</p>
-<p><img src="/Blog/intro/lris_flowers_6.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>取两个特征举例</p>
-<p><img src="/Blog/intro/lris_flowers_7.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>特征可以很抽象 </p>
-<p><img src="/Blog/intro/lris_flowers_8.PNG" alt></p>
+<p><img src="/Blog/intro/lris_flowers_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>喂给算法的特征是什么样子的, 将很大程度影响输出结果的准确性和可靠性, 甚至有专门领域取研究: 特征工程</p>
 <p>值得一提的是, 有一些 “高级方法” 例如深度学习, 其实可以理解成算法在自动地帮助我们进行特征工程</p>
 <br>
@@ -460,14 +223,14 @@ height:50vh;
 <p>生活中很多任务使用二分类就可以了: 判断邮件是不是垃圾邮件, 判断发给客户信用卡是否有风险, 判断肿瘤是良性还是恶性</p>
 <br>
 
-<h4 id="多分类任务"><a href="#多分类任务" class="headerlink" title="多分类任务"></a>多分类任务</h4><p><img src="/Blog/intro/lris_flowers_9.PNG" alt></p>
+<h4 id="多分类任务"><a href="#多分类任务" class="headerlink" title="多分类任务"></a>多分类任务</h4><p><img src="/Blog/intro/lris_flowers_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>把结果锁定多个中的一个而不是两个中的一个, 手写数字识别就是从10个种类中选择一个</p>
 <p>生活中的应用: 数字识别, 图像识别</p>
 <p>一些看似复杂的任务, 也可以转换成分类任务, 例如2048</p>
-<p><img src="/Blog/intro/category_task.PNG" alt></p>
+<p><img src="/Blog/intro/category_task.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>最终机器要做到的就是: 给出现在盘面的状况机器判断上移下移左移右移即可(4个中选一个)</p>
 <p>同理对于更加复杂的游戏也是如此, 例如下围棋. 毕竟棋盘上落子的地方有限的, 所以每一步机器要做的事情就是根据现在的棋盘信息选择一个地方进行落子</p>
-<p><img src="/Blog/intro/category_task_1.PNG" alt></p>
+<p><img src="/Blog/intro/category_task_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>甚至无人车领域也可以转化为分类任务, 根据车周围环形的图像信息机器进行选择方向盘向左还是向右, 以及旋转多少角度</p>
 <p>即使配合上踩下油门和刹车力度的不同. 方向盘, 油门, 刹车他们的组合也是有限的, 在这些组合中选择一个, 因此我们也可以把它转换成一个多分类问题</p>
 <blockquote>
@@ -478,14 +241,14 @@ height:50vh;
 <p>有一些算法天然可以完成多分类任务</p>
 <br>
 
-<h4 id="多标签分类"><a href="#多标签分类" class="headerlink" title="多标签分类"></a>多标签分类</h4><p><img src="/Blog/intro/category_task_2.PNG" alt></p>
+<h4 id="多标签分类"><a href="#多标签分类" class="headerlink" title="多标签分类"></a>多标签分类</h4><p><img src="/Blog/intro/category_task_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>之前的分类对于某一张图片, 我们都是把图片放到一个类别中, 区别只是类别数是只有两个还是有多个</p>
 <p>不过更高级的分类任务可以让我们把一张图片分到多个类别中</p>
 <p>这是一个前沿的课题, 文章中不会涉及</p>
 <br>
 
 <p>然而还有另一类数据</p>
-<p><img src="/Blog/intro/category_task_3.PNG" alt></p>
+<p><img src="/Blog/intro/category_task_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>和上一类数据的不同在与最后一列 (标签列)</p>
 <p>之前的数据的标签列都是 <strong>类别</strong>, 但是这个数据中, 价格不是类别, 而是连续的数字</p>
 <p>这一类任务被称为<strong>回归任务</strong></p>
@@ -495,7 +258,7 @@ height:50vh;
 <p>某些情况下, 回归任务是可以简化为分类任务的</p>
 <p>依然用无人驾驶举例, 之前说它是分类问题, 但是方向盘打的角度其实是连续的数值, 只是我们将他类别化(每一度看作是一个类别), 这样一来我们就将一个回归任务简化成一个分类任务</p>
 <p>比如说预测学生的成绩, 其实是回归任务, 但有时候我们并不需要预测学生的具体成绩, 只需要看成绩是A+, A, B, C-等等, 这样也把一个回归的任务变成了分类的任务</p>
-<p><img src="/Blog/intro/category_task_4.PNG" alt></p>
+<p><img src="/Blog/intro/category_task_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>我们说机器学习解决分类问题和监督问题, 其实更为准确地说是<strong>监督学习</strong>解决了它们, 其实机器学习领域还可以解决其他的问题, 不过文章以解决分类问题和回归问题为主</p>
@@ -510,22 +273,22 @@ height:50vh;
 
 <h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p><strong>给机器的训练数据拥有 “标记” 或者 “答案”</strong></p>
 <p>例如上面提到的鸢尾花和房产的数据集, 都拥有”标记”列</p>
-<p><img src="/Blog/intro/Supervised_learning.PNG" alt></p>
+<p><img src="/Blog/intro/Supervised_learning.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>比如分辨照片是猫还是狗只给出照片是不够的, 还要分辨这个照片到底是猫还是狗</p>
-<p><img src="/Blog/intro/Supervised_learning_1.PNG" alt></p>
+<p><img src="/Blog/intro/Supervised_learning_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>同样对于mnist数据集, 不仅要有图片信息, 还要有标记信息</p>
 <br>
 
 <p>监督的意思就在于我们人类已经针对给机器的数据进行了正确答案的划分. 这种正确答案的划分本身就被称为是一种监督的信息</p>
 <p>实际思考一下生活中很多学习的过程都是监督学习的过程</p>
-<p><img src="/Blog/intro/Supervised_learning_2.PNG" alt></p>
+<p><img src="/Blog/intro/Supervised_learning_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>文章中大部分算法都属于监督学习算法</p>
 <br>
 
 <h3 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h3><p>给机器的训练数据没有任何”标记”或者”答案”</p>
-<p><img src="/Blog/intro/unSupervised_learning.PNG" alt></p>
+<p><img src="/Blog/intro/unSupervised_learning.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>每一个点并没有表示类别, 非监督学习就是基于相应的算法可以为这些点进行分类</p>
-<p><img src="/Blog/intro/unSupervised_learning_1.PNG" alt></p>
+<p><img src="/Blog/intro/unSupervised_learning_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>通常管这样的工作叫做<strong>聚类分析</strong></p>
 <p>其实电商网站对每一个人都是同等对待的, 初始的时候是没有标记的, 但是随着在电商网站上留下越来越多的足迹, 电商网站就可以用非监督学习的方式对用户进行分类</p>
 <br>
@@ -541,16 +304,16 @@ height:50vh;
 </ul>
 <p>特征压缩并不丢弃任何特征</p>
 <p>特征压缩例子:</p>
-<p><img src="/Blog/intro/unSupervised_learning_2.PNG" alt></p>
+<p><img src="/Blog/intro/unSupervised_learning_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>例如在这个二维特征平面上分布着很多数据点</p>
 <p>但是似乎这些点整体是成一个直线的形式, 如果化成一根直线的话, 把所有点都映射到这根直线上的话, 这些点的信息并没有丢失多少, 但是经过这样处理后这些二维的点就变成了一维的点</p>
 <p> <strong>特征压缩做的事情就是: 尽量少的损失信息的情况下, 将高维的特征向量压缩成低维的特征向量</strong></p>
 <br>
 
 <p>对数据进行降维还有一个重要的意义: 方便可视化</p>
-<p><img src="/Blog/intro/unSupervised_learning_3.PNG" alt></p>
+<p><img src="/Blog/intro/unSupervised_learning_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>还可以进行<strong>异常检测</strong></p>
-<p><img src="/Blog/intro/unSupervised_learning_4.PNG" alt></p>
+<p><img src="/Blog/intro/unSupervised_learning_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>就是有的时候数据中的某些点明显具有异常</p>
 <p> 并不是说异常点没有意义, 但是我们直观地去看它就可以看出来<strong>它不能表达样本的整体的特性</strong>, 而对于机器学习来说, 很多时候是要找到样本一般化的特征. 对于这种特殊的点对我们发现一般性规律很有可能是没有帮助的</p>
 <blockquote>
@@ -565,7 +328,7 @@ height:50vh;
 <br>
 
 <h3 id="增强学习"><a href="#增强学习" class="headerlink" title="增强学习"></a>增强学习</h3><p>根据周围环境的情况, 采取行动, 根据采取行动的结果, 学习行动方式</p>
-<p><img src="/Blog/intro/unSupervised_learning_5.PNG" alt></p>
+<p><img src="/Blog/intro/unSupervised_learning_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>算法通常叫做一个Agent, 要根据周围的环境来采取行动, 行动之后算法会收到一些反馈, 这些反馈有的时候会使用 reward(奖赏) 的机制, 有的时候是使用惩罚的机制进行反馈.</p>
 <p>当Agent得到反馈之后, 它就会相应地改变自己的行为模式, 之后根据该机的算法在做出一个Action(动作), 环境再反馈Agent以此类推</p>
 <p>在循环中增强自己的智能, 所以叫增强学习</p>
@@ -584,7 +347,7 @@ height:50vh;
 <li>在线学习 Online Learning</li>
 </ul>
 <h3 id="批量学习"><a href="#批量学习" class="headerlink" title="批量学习"></a>批量学习</h3><p>之前所介绍的算法如果没有特殊说明都可以使用批量学习的方式来进行机器学习</p>
-<p><img src="/Blog/intro/category_task_4.PNG" alt></p>
+<p><img src="/Blog/intro/category_task_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>所谓批量学习就是首先收集一定量的样本资料, 然后将这些样本资料送给机器学习算法, 算法就会训练出一个模型</p>
 <p>当我们训练出这个模型之后就可以直接将模型投入生产环境中了</p>
 <p>在具体应用的时候可能有新的样例送进来, 让模型预测出相应的结果, 这个过程中我们的模型不会再发生任何变化</p>
@@ -597,10 +360,10 @@ height:50vh;
 <p><strong>缺点</strong>: 每次重新批量学习, 运算量巨大. 在某些环境变化非常快的情况下, 甚至不可能</p>
 <br>
 
-<h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p><img src="/Blog/intro/category_task_4.PNG" alt></p>
+<h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p><img src="/Blog/intro/category_task_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>整体流程不变, 不过每次输入样例进入模型得到预期的结果之后同时我们输入样例并不浪费掉, 我们将输入样例和正确结果迭代进机器学习算法来改进模型</p>
 <p>在线学习相当不不仅仅使用模型得到想要的结果, 与此同时我们还在不断地训练算法让算法进行学习, 所以叫做在线学习</p>
-<p><img src="/Blog/intro/online_learning.PNG" alt></p>
+<p><img src="/Blog/intro/online_learning.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h4 id="在线学习的特点"><a href="#在线学习的特点" class="headerlink" title="在线学习的特点"></a>在线学习的特点</h4><p><strong>优点</strong>: 及时反映新的环境变化</p>
@@ -614,7 +377,7 @@ height:50vh;
 <li>参数学习 Parametric Learning</li>
 <li>非参数学习 Nonparametric Learning</li>
 </ul>
-<h3 id="参数学习"><a href="#参数学习" class="headerlink" title="参数学习"></a>参数学习</h3><p><img src="/Blog/intro/para_leaning.PNG" alt></p>
+<h3 id="参数学习"><a href="#参数学习" class="headerlink" title="参数学习"></a>参数学习</h3><p><img src="/Blog/intro/para_leaning.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这就是一个二维的特征空间, 假设横坐标是房屋的面积, 纵坐标是房屋的价格</p>
 <p>对应每一个房屋相应就在特征空间中代表一个点, 基于这些数据点我可以假设房屋的价格和房屋的面积是一个线性的关系 f(x) = ax + b</p>
 <p>当有了这个假设之后, 机器学习的过程就是想办法找到一个好的a和b来描述房屋的面积和房屋的价格之间的关系. a 和 b 就是参数</p>
@@ -631,1211 +394,782 @@ height:50vh;
 
 <br>
 
+<h2 id="和机器学习相关的”哲学”思考"><a href="#和机器学习相关的”哲学”思考" class="headerlink" title="和机器学习相关的”哲学”思考"></a>和机器学习相关的”哲学”思考</h2><p>机器学习这类算法主要处理的是<strong>不确定世界中相关的问题</strong></p>
+<p>这和传统算法解决的问题有很大不同, 经典算法所解决的问题通常都是有固定, 唯一, 标准的答案的</p>
+<p>但机器学习不同, 它面对的是高度不确定的现实世界中的问题, 面对这些问题, 机器学习给我们的答案其实也是不确定的, 概率性的, 有统计意义的答案</p>
+<p>面对这样的答案, 我们难免会思考某些问题: 这些答案真的可靠吗, 我们到底能多大程度地相信这些答案, 机器学习学习到的本质是什么….</p>
+<p><img src="/Blog/intro/think_in_ai.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>从算法的角度它们是有优劣的, 但微软的这篇文章揭示出来, 如果我们喂给这些算法足够多的数据 (横坐标是数据规模, 纵坐标是预测的准确率) 所有的算法的准确率都在稳定上升</p>
+<p> 数据量越大, 准确率越高. 当数据量大到一定程度时, 其实算法的准确率之间的差别并不大</p>
+<p>机器学习领域, 算法本身似乎不是那么重要, 只要我们喂给算法的数据足够多, 质量足够好, 甚至有过”数据计算法”这样一个说法</p>
+<p>也正是因为如此, 大数据时代才拉开帷幕</p>
+<br>
+
+<p>数据本事确实非常重要, 而且现阶段机器学习解决的大多数问题都是数据驱动的(高度依赖数据本身的质量). </p>
+<p>这也使得很多机器学习的研究者花费大量时间处理数据</p>
+<ul>
+<li><p>收集更多的数据</p>
+</li>
+<li><p>提高数据质量</p>
+</li>
+<li><p>提高数据的代表性</p>
+</li>
+<li><p>研究更重要的特征(特征工程)</p>
+</li>
+</ul>
+<p>机器学习领域内有非常多的算法, 但是其实它们解决的问题大抵上是差不多的, 以监督学习为例, 它解决的问题就是两个问题: 分类问题和回归问题</p>
+<p>在这种情况下, 针对要研究的问题到底要选择怎样的算法?</p>
+<p>和选择相关的问题, 最简单也是最深刻的原则: 奥卡姆的剃刀</p>
+<h3 id="奥卡姆的剃刀"><a href="#奥卡姆的剃刀" class="headerlink" title="奥卡姆的剃刀"></a>奥卡姆的剃刀</h3><p>简单的就是好的, 对于一个问题不要有过多的假设, 不要对它进行过多地复杂化</p>
+<p>然而一个容易引发争议的问题就是: 到底在机器学习领域, 什么叫”简单”. 不同的情况下有不同的答案</p>
+<br>
+
+<h3 id="没有免费的午餐定理"><a href="#没有免费的午餐定理" class="headerlink" title="没有免费的午餐定理"></a>没有免费的午餐定理</h3><p>另一个有趣的定理叫做<strong>没有免费的午餐定理</strong></p>
+<p>即: 可以用严格地数学推导出: <strong>任意两个算法, 他们的期望性能是相同的</strong></p>
+<p>这个定理揭示出一个非常重要的问题, 如果任意两个算法, 他们的期望性能是相同的, 那么说明其实没有任何一个算法比另外一个算法好, 相当于说所有的算法是等价的</p>
+<p>而如果是这样的话又为什么要学习这么多的算法呢? 期望可以简单地理解成是平均值</p>
+<p>换句话说对于任意两个算法, 把它们作用在所有问题中, 对于某些问题a算法比b算法好, 对于另一些问题b算法比a算法好, 但是平均来讲a, b两个算法是一样的</p>
+<p><strong>具体到某个特定的问题, 有些算法可能更好. 但没有一种算法, 绝对比另外一种算法好</strong></p>
+<p>即: 脱离具体问题, 谈哪个算法好是没有意义的</p>
+<p>同时它也告诉我们在机器学习领域时间的过程中必须要做的一件事: 在面对一个具体问题的时候, 尝试使用多种算法进行对比试验, 是必要的</p>
+<br>
+
+<br>
+
+<h1 id="Numpy数据基础"><a href="#Numpy数据基础" class="headerlink" title="Numpy数据基础"></a>Numpy数据基础</h1><br>
+
+<h2 id="numpy-array-基础"><a href="#numpy-array-基础" class="headerlink" title="numpy.array 基础"></a>numpy.array 基础</h2><pre><code class="python">import numpy as np
+
+np.__version__</code></pre>
+<p>为什么要用numpy.array, 而不用 python 的 list</p>
+<br>
+
+<h3 id="Python-List-的特点"><a href="#Python-List-的特点" class="headerlink" title="Python List 的特点"></a>Python List 的特点</h3><pre><code class="python">L = [i for i in range(10)]
+L[5] = 100
+L[5] = &quot;Machine Learning&quot;</code></pre>
+<p>python 的 list 是对类型不做具体限定的list, 与此同时 list 中每一个元素的类型也可以是不一样的</p>
+<p>这样的存储结构使得python的list非常灵活, 但与此同时也带来了一个缺点: 效率低</p>
+<p>当然python中也有只能限定存一种类型的数组, array</p>
+<pre><code class="python">import array
+arr = array.array(&#39;i&#39;, [i for i in range(10)])  # 第一个参数 i 表示整型, 第二个参数 list 表示数组内的元素
+
+# array 的操作和 list 是一样的
+arr[5] = 100</code></pre>
+<p>array 也有一个缺点: 它只是将存储的数据当作数组来看, 或者二维数组来看. 但没有把这些数据看作是向量或矩阵</p>
+<p>因此也没有为这些数据配备和向量相关, 矩阵相关的运算, 这使得在机器学习算法中使用array也不方便</p>
+<p>由此numpy应运而生, 可以使用numpy.array进行向量和矩阵的运算</p>
+<br>
+
+<h3 id="numpy-array"><a href="#numpy-array" class="headerlink" title="numpy.array"></a>numpy.array</h3><pre><code class="python">nparr = np.array([i for i in range(10)])
+# numpy.array 的基本操作和 list, array 也是一样的
+nparr[5] = 100
 
 
+# 同时numpy.array也封装了一些自己独特的方法
 
+# 由于numpy.array也只能存储单一类型, 可以用dtype(data type 的缩写)来查看到底存储那种类型
+print( nparr.dtype )
 
+nparr[5] = 5.0</code></pre>
+<h3 id="其他创建-numpy-array-的方法"><a href="#其他创建-numpy-array-的方法" class="headerlink" title="其他创建 numpy.array 的方法"></a>其他创建 numpy.array 的方法</h3><pre><code class="python">np.zeros(10)    # 创建零向量, 或零矩阵, 默认情况dtype为 float64
 
-    </article>
-    <!-- license  -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/">https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/">April 10th 2020, 7:41:51 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2020/04/10/machine-learning/">April 12th 2020, 2:06:14 am</a>
-            <p>版权声明：</p>
+np.zeros(10, dtype=int)    # 指定类型为int
+
+np.zeros((3, 5)) # 创建二维的数组3行5列全是0
+
+np.zeros(shape=(3, 5), dtype=int)
+
+##################
+
+np.ones((3, 5)) # 创建二维数组3行5列全是1
+
+np.full((3, 5), 666) # 创建二维数组3行5列值全是666
+
+np.full(shape=(3, 5), fill_value=666.0) # 显示指定参数名</code></pre>
+<h4 id="arange"><a href="#arange" class="headerlink" title="arange"></a>arange</h4><pre><code class="python"># python 中有range这样的函数
+[i for i in range(0, 20, 2)]
+# [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+# numpy中的arange的用法和它完全相同
+np.arange(0, 20, 2)</code></pre>
+<p>唯一的一点不同就是arange的步长可以是浮点数, 但python的range不行, 步长默认为1</p>
+<br>
+
+<h4 id="linspace"><a href="#linspace" class="headerlink" title="linspace"></a>linspace</h4><p>参数和arange一样</p>
+<pre><code class="python">np.linspace(0, 20, 10) # 在0到20这个区间里等长地截取10个点, 这10个点是包括0和20这两个点的</code></pre>
+<br>
+
+<h4 id="random"><a href="#random" class="headerlink" title="random"></a>random</h4><p>随机数</p>
+<pre><code class="python">np.random.randint(0, 10)  # 生成从0到10的一个随机数
+np.random.randint(0, 10, 10) # 第三个参数代表生成的数组的形状, 这里生成了有10个0-10随机数的数组 
+np.random.randint(4, 8, size=(3, 5)) # 第三个参数指定参数名, 生成3x5的矩阵, 每个数为[4, 8)之间的随机数
+
+# 设置随机种子
+np.random.seed(666)
+
+# 生成0, 1之间随机浮点数
+np.random.random()
+# 同样是指定size
+np.random.random(10)
+np.random.random((3, 5)) # 3x5的随机数矩阵
+
+# 上面的随机数实在0, 1之间均匀分布的浮点数
+# 有的时候我们希望生成服从正态分布的随机浮点数
+np.random.normal() # 均值为0方差为1
+np.ramdom.normal(10, 100) # 均值为10, 方差为100
+np.random.normal(0, 1, (3, 5)) # 同样三个参数指定大小</code></pre>
+<br>
+
+<h3 id="numpy-array-的基本操作"><a href="#numpy-array-的基本操作" class="headerlink" title="numpy.array 的基本操作"></a>numpy.array 的基本操作</h3><pre><code class="python">x = np.array(10)     # 长度为10的一维数组
+X = np.arange(15).reshape(3, 5)    # 3*5的二维数组</code></pre>
+<h4 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h4><p>首先介绍numpy中数组的基本属性</p>
+<pre><code class="python">x.ndim    # 查看数组是几维的数组, x的维度为1
+X.ndim    # X的维度为2
+x.shape # 返回一个元组, (10,) 说明是一维数组, 第一个维度有10个元素
+X.shape # 返回一个有两个元素的元组(3, 5), 3行5列
+
+x.size # 返回10, 说明x有10个元素
+X.size # 返回15, 说明X有15个元素</code></pre>
+<br>
+
+<h4 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h4><p>和list的使用是一样的</p>
+<pre><code class="python">print(x[0])
+print(X[0][0])    # 虽然可以正确访问到单个元素, 然而numpy中是不建议这么写的
+
+# numpy 为多维数组提供了一个特殊的访问方式
+X[(0, 0)]  # 直接传入一个元组
+X[2, 2]       # 不加括号也是可以的
+
+# 切片操作
+x[0:5]     # 从0切到5(不包括5)
+x[:5]    # 默认从0 开始
+x[5:]    # 从5切到最后
+x[::2]    # 第三个参数是步长
+x[::-1]    # 倒数地访问
+
+# 切片这种语法也可以应用在二维数组中
+X[:2, :3]    # 访问前2行的前3列, 第一维取一个切片前2行, 第二位再取一个切片前3列
+
+# X[:2][:3] 这样是行不通的
+# A = X[:2] 返回X的前2行, A是2*5的矩阵
+# A[:3] 返回A的前3行, A只有2行所以没有改变</code></pre>
+<p>这也就是为什么numpy不建议用 X[][] 的方法访问元素, 而是使用元组的方式</p>
+<pre><code class="python">X[:2, ::2] # 访问前2行, 每一行访问的间隔为2
+X[::-1, ::-1] # 行倒着数, 列也倒着数, 相当于对整个矩阵进行了反转
+
+# 对于多维矩阵我们有时候会进行降维处理
+X[0]    # 自然可以
+X[0, :] # 行取第0行, 列取从头到尾
+X[:, 0] # 取一列, 行取从头到尾, 列取第0列
+
+# 获得原来矩阵的子矩阵, 这个子矩阵和python的list有一个非常重要的不同
+subX = X[:2, :3]
+subX[0, 0] = 100
+</code></pre>
+<p>如果在list中使用切片, 返回的list和原来的list是没有关系的</p>
+<p>但在numpy中不是如此, 在subX改变后X也跟着改变了</p>
+<p>numpy优先考虑的是效率, 所以对于取子矩阵的方式numpy是用类似与引用的方式来获得的, 此时修改子矩阵 会同时修改原矩阵中的元素</p>
+<p>如果想创建和原来矩阵不相关的子矩阵</p>
+<pre><code class="python">subX = X[:2, :3].copy()</code></pre>
+<p>通过copy函数得到矩阵的复制, 这个副本就和原矩阵脱离了关系</p>
+<br>
+
+<h4 id="reshape"><a href="#reshape" class="headerlink" title="reshape"></a>reshape</h4><p>当我们向改变数据的维度时的方法</p>
+<pre><code class="python">x.shape # (10,)
+
+x.reshape(2, 5) # 返回一个2*5的矩阵</code></pre>
+<p>注意, 这个方法是没有改变x自身的</p>
+<p>注意, 一维的向量和二维的矩阵是两个概念</p>
+<pre><code class="python">A = x.reshape(1, 10) # A是一个1*10的矩阵
+A.ndim     # 2
+A.shape # (1, 10)
+x.shape # (10,)</code></pre>
+<p>有的时候我们希望reshape是只想指定一个维度的数据</p>
+<pre><code class="python">x.reshape(10, -1)   # 我希望reshape之后有10行, 每一行有多少元素我不关心, 因此列对应的参数传-1
+x.reshape(-1, 10)   # 不关心有多少行, 但每行要有10个元素
+x.reshape(3, -1)    # 会报错, 因为x有10个元素, 10不能被3整除</code></pre>
+<br>
+
+<h4 id="合并操作"><a href="#合并操作" class="headerlink" title="合并操作"></a>合并操作</h4><pre><code class="python">x = np.array([1, 2, 3])
+y = np.array([3, 2, 1])
+z = np.array([666, 666, 666])
+
+# 合并xy, 并返回
+np.concatenate([x, y])
+
+# 得到含有9个元素的列表
+np.concatenate([x, y, z])</code></pre>
+<p>基于二维矩阵进行合并操作</p>
+<pre><code class="python">A = np.array([[1, 2, 3],
+              [4, 5, 6]])
+
+np.concatenate([A, A])
+&quot;&quot;&quot;
+结果:
+[[1, 2, 3],
+ [4, 5, 6],
+ [1, 2, 3],
+ [4, 5, 6]]
+&quot;&quot;&quot;
+
+# axis 默认为 0, 即沿着第0个维度进行拼接(沿着行方向拼接行)
+# 设置 axis 为1, 即沿着第1个维度进行拼接(沿着列方向拼接)
+np.concatenate([A, A], axis=1)
+&quot;&quot;&quot;
+结果:
+[[1, 2, 3, 1, 2, 3],
+ [4, 5, 6, 4, 5, 6]]
+&quot;&quot;&quot;</code></pre>
+<pre><code class="python">z = np.array([666, 666, 666])
+A = np.array([[1, 2, 3],
+              [4, 5, 6]])
+# A这个矩阵表示有2个样本, 每个样本有3个特征
+# z这个向量表示一个样本, 只有它本身的三个特征, 所以它不是一个矩阵
+# 我想将z这一个样本融合进A这个矩阵中
+# 一种方式是可以把z也转换成矩阵进行操作
+A2 = np.concatenate([A, z.reshape(1, -1)])
+
+# 另一种简单的方式
+np.vstack([A, z])
+
+# 有vstack就有hstack, 即水平方向堆积
+B = np.full((2, 2), 100)
+np.hstack([A, B])
+&quot;&quot;&quot;
+[[1, 2, 3, 100, 100],
+ [4, 5, 6, 100, 100]]
+&quot;&quot;&quot;</code></pre>
+<br>
+
+<h4 id="分割操作"><a href="#分割操作" class="headerlink" title="分割操作"></a>分割操作</h4><pre><code class="python">x = np.arange(10)
+
+# 指定分割点3, 7 把数组分成3段
+x1, x2, x3 = np.split(x, [3, 7]) 
+print(x1) # [0, 1, 2] 即 x[:3]
+print(x2) # [3, 4, 5, 6] 即 x[3:7]
+print(x3) # [7, 8, 9] 即 x[7:]
+
+# 把数组分成两段, 第二个参数传入的依然是一个数组
+x1, x2 = np.split(x, [5])</code></pre>
+<p>二维数组也是一样的</p>
+<pre><code class="python">A = np.arrange(16).reshape([4, 4])
+&quot;&quot;&quot;
+[[0, 1, 2, 3],
+ [4, 5, 6, 7],
+ [8, 9 ,10, 11],
+ [12, 13, 14, 15]]
+&quot;&quot;&quot;
+A1, A2 = np.split(A, [2])
+print(A1)
+&quot;&quot;&quot;
+[[0, 1, 2, 3],
+ [4, 5, 6, 7]]
+&quot;&quot;&quot;
+print(A2)
+&quot;&quot;&quot;
+[[8, 9 ,10, 11],
+ [12, 13, 14, 15]]
+&quot;&quot;&quot;</code></pre>
+<p>默认情况下依然是基于行所在的维度(第0个轴)进行分割</p>
+<pre><code class="python">A1, A2 = np.split(A, [2], axis=1)
+print(A1)
+&quot;&quot;&quot;
+[[0, 1],
+ [4, 5],
+ [8, 9],
+ [12, 13]]
+&quot;&quot;&quot;
+print(A2)
+&quot;&quot;&quot;
+[[2, 3],
+ [6, 7],
+ [10, 11],
+ [14, 15]]
+&quot;&quot;&quot;
+
+# numpy 也设置了两个简单的方法
+upper, lower = np.vsplit(A, [2])
+left, right = np.hsplit(A, [2])</code></pre>
+<p>数据的分割有什么意义?</p>
+<p>之前讲机器学习, 如果是4*4的矩阵, 很可能代表有4个样本, 每个样本有3个特征, 而最后一列代表的是每一个样本对应的label的值</p>
+<p>当我们运行机器学习算法时就要将特征矩阵和 label 向量分隔开</p>
+<pre><code class="python">data = np.arrange(16).reshape([4, 4])
+X, y = np.split(data, [-1], axis=1)
+X, y = np.hsplit(data, [-1])
+
+print(X)
+&quot;&quot;&quot;
+[[0, 1, 2],
+ [4, 5, 6],
+ [8, 9 ,10],
+ [12, 13, 14]]
+&quot;&quot;&quot;
+
+print(y)
+&quot;&quot;&quot;
+[[3],
+ [7],
+ [11],
+ [15]]
+&quot;&quot;&quot;
+# 如果我们想让y以向量的方式表示
+y[:, 0]</code></pre>
+<br>
+
+<h4 id="矩阵运算"><a href="#矩阵运算" class="headerlink" title="矩阵运算"></a>矩阵运算</h4><pre><code class="python"># python list 的乘法
+n = 10
+L = [i for i in range(n)]
+# 2 * L 的结果是将两个L拼接起来, 而不是让L的每一个元素都乘以2
+
+# 如果想让每个元素都乘以2, 则要这样写
+A = []
+for e in L:
+    A.append(2*e)
+
+# 或者用生成表达式(列表解析) 更快
+A = [2*e for e in L]</code></pre>
+<p>而在numpy中使用列表解析的速度是非常快的远远快于list的列表解析</p>
+<pre><code class="python">A = np.array(2*e for e in L)</code></pre>
+<p>而且numpy.array支持list不支持的乘法操作, 速度更快</p>
+<pre><code class="python">A = 2 * L</code></pre>
+<p>在numpy中对于”将数组看成是向量或矩阵进行运算”有一个特殊的名字Universal Function</p>
+<p>Universal Function近乎支持所有的运算符相应的运算</p>
+<pre><code class="python">X = np.arrange(1, 16).reshape(3, 5)
+X + 1     # 将所有元素加1
+X - 1   # 将所有元素减1
+X * 2   # 将所有元素称2
+X / 2   # 除法
+X // 2  # 整除
+X ** 2  # 幂运算
+X % 2   # 求余运算
+1 / X   # 对矩阵中所有元素取倒数
+
+np.abs(X)
+np.sin(X)    # 对X中所有元素取sin
+np.cos(X)
+np.exp(X)   # 对X的所有元素都取e的x次方
+np.power(3, X) # 对X的所有元素都取3的x次方
+3 ** X      # 和上面的结果一致
+
+np.log(X)   # 求自然对数, 以e为底
+np.log2(X)
+np.log10(X)</code></pre>
+<p> <strong>矩阵和矩阵之间的运算</strong></p>
+<pre><code class="python">A = np.arange(4).reshape(2, 2)
+B = np.full((2, 2), 10)
+A + B
+A - B
+A * B     # A 和 B对应元素相乘, 不是点乘
+A.dot(B)  # A 和 B 点乘 
+A.T       # A 的转置</code></pre>
+<p><strong>向量和矩阵的运算</strong></p>
+<pre><code class="python">v = np.array([1, 2])
+A = np.arange(4).reshape(2, 2)
+v + A    # 数学上向量和矩阵相加是没有意义的
+         # numpy中是向量和矩阵的每一行进行加法
+         # 和使用一个数和一个向量作加法的道理是一样的</code></pre>
+<p>数学上向量和矩阵相加是没有意义的</p>
+<p>numpy中是向量和矩阵的每一行进行加法, 和使用一个数和一个向量作加法的道理是一样的</p>
+<p>等同于先把v叠成A的形状在进行加法</p>
+<pre><code class="python">np.vstack([v] * A.shape[0]) + A
+
+# 由于这种堆叠也经常使用, numpy也提供了一个方便的函数
+# (2, 1) 代表堆叠的方式, 行向量堆叠2次, 列向量堆叠一次
+np.tile(v, (2, 1))  
+np.tile(v, (2, 1)) + A</code></pre>
+<pre><code class="python">v * A    # 向量v 和 A的每一个行向量进行乘法 
+v.dot(A) # 点乘, v看作1*2的行向量
+A.dot(v) # v看作时2*1的列向量</code></pre>
+<p><strong>矩阵的逆</strong></p>
+<p>np.linalg.inv 这个方法就是用来求矩阵的逆的</p>
+<pre><code class="python">A_inv = np.linalg.inv(A)
+A.dot(A_inv)    # 得到单位矩阵
+
+# 当X不为方阵时无法求逆, 但可以求伪逆
+pinvX = np.linalg.pinv(X)
+X.dot(pinvX)  # 得到单位矩阵</code></pre>
+<h4 id="聚合操作"><a href="#聚合操作" class="headerlink" title="聚合操作"></a>聚合操作</h4><p>简单来说就是把一组值变成一个值</p>
+<pre><code class="python">L = np.random.random(100)
+sum(L) # python自带的 sum
+np.sum(L) # numpy中的 sum</code></pre>
+<p>而这两个sum的区别就是效率上的区别</p>
+<p>其他的聚合操作</p>
+<pre><code class="python">np.min(L) # L.min()
+np.max(L) # L.max()</code></pre>
+<p>矩阵的聚合操作</p>
+<pre><code class="python">X = np.arange(16).reshape(4, -1) 
+np.sum(X) # 120, 0-15的和</code></pre>
+<p>聚合运算默认不管传入一维的数组还是二维的矩阵都是将所有元素进行聚合</p>
+<p>但有时我们有这样的需求: 求出每一行的和或每一列的和</p>
+<pre><code class="python">np.sum(X, axis=0)    # X 每一列的和
+np.sum(X, axis=1)    # X 每一行的和</code></pre>
+<p>为什么 axis=0 时沿着列来计算?</p>
+<p>axis这个参数代表沿着这个轴进行运算, 为0的话就是行这个维度</p>
+<p>所以它代表的就是沿着行这个方向进行运算, 沿着行就是对每列逐列地进行运算</p>
+<blockquote>
+<p>另一种思考方法就是, 传入axis的轴代表我们要把这个轴压缩掉, 我们不要这个轴</p>
+<p>如果传入0就代表第0个轴(行这个维度)我们压缩掉, 得到的结果就是按列进行运算</p>
+</blockquote>
+<pre><code class="python">np.prod(X)             # 求所有元素的乘积
+np.mean(X)             # 求平均值
+np.median(X)           # 求中位数
+np.percentile(X, q=50) # 求百分位数
+np.var(X)              # 求方差
+np.std(X)              # 求标准差</code></pre>
+<br>
+
+<h4 id="索引-arg"><a href="#索引-arg" class="headerlink" title="索引 arg"></a>索引 arg</h4><pre><code class="python">np.min(x)      # 获取x中的最小值
+np.argmin(x)   # 获取x中最小值所在位置
+np.argmax(x)   # 获取x中最大值所在位置</code></pre>
+<p>很多数学公式也都有这种表示, arg加上一个运算</p>
+<h4 id="排序和使用索引"><a href="#排序和使用索引" class="headerlink" title="排序和使用索引"></a>排序和使用索引</h4><pre><code class="python">x = np.arange(16)
+np.random.shuffle(x)    # 乱序处理, 洗牌, 改变x本身
+np.sort(x)              # 排序, 返回排好序的array, 不改变x本身
+x.sort()                # 排序, 改变x本身
+
+# 二维矩阵sort
+X = np.random.randint(10, size=(4, 4))
+np.sort(X)              # 把每一行都按照顺序排序
+np.sort(X, axis=1)      # axis默认是1, 即沿着列的方向进行排序
+np.sort(X, axis=0)      # 沿着行的方向进行排序 
+
+# 排序和索引
+np.random.shuffle(x)    # 现在x是乱序
+np.argsort(x)            # 返回值是一个array, 里面存放着x排好序的索引
+
+np.partition(x, 3)      # 和快速排序的partition是一样的
+np.argpartition(x, 3)   # 同样排序后索引的位置</code></pre>
+<br>
+
+<h4 id="Fancy-Indexing"><a href="#Fancy-Indexing" class="headerlink" title="Fancy Indexing"></a>Fancy Indexing</h4><pre><code class="python">x = np.arange(16)
+
+# 索引某一个值
+x[3]
+
+# 索引某一个区间
+x[3:9]
+x[3:9:2]</code></pre>
+<p>但如果我们想要访问3, 5, 8怎么办, 换句话说他们之间不是等间距的步长, 没有规律</p>
+<p>我们可能只能这样做</p>
+<pre><code class="python">[x[3], x[5], x[8]]</code></pre>
+<p>然而numpy为我们提供了一个非常简便的操作</p>
+<pre><code class="python">ind = [3, 5, 8]
+x[ind]  # 这样就可以直接获取索引位置为3, 5, 8的元素</code></pre>
+<p>这就是Fancy Indexing</p>
+<p>索引数组还可以是二维数组</p>
+<pre><code class="python">ind = np.array([[0, 2],
+                [1, 3]])
+x[ind]
+&quot;&quot;&quot;
+得到一个二维的矩阵, 对应的就是二维的索引
+每个值都是从一维向量中索引出来的值, 
+按照索引矩阵排列的方式我们得到了一个新的这些值对应的二维矩阵
+[[0, 2],
+ [1, 3]]
+&quot;&quot;&quot;</code></pre>
+<p>Fancy Indexing不仅可以用在一维的向量中, 还可以用在二维的矩阵里</p>
+<pre><code class="python">X = x.reshape(4, -1) # 现在X是一个4*4的方阵
+
+row = np.array([0, 1, 2]) # 感兴趣的数据点的行所在位置
+col = np.array([1, 2, 3]) # 感兴趣的数据点的列所在索引
+# 其实我们感兴趣的是3个点, 他们的坐标是[0, 1] [1, 2] [2, 3]
+X[row, col]   # return [1, 6, 11]
+X[0, col]     # return [1, 2, 3] 对第0行的这些坐标感兴趣
+
+col = [True, False, True, True] # 如果存储bool值, 则代表对为True的列感兴趣, 而对为False的列不感兴趣
+X[1:3, col]
+&quot;&quot;&quot;
+对中间两行的0,2,3列感兴趣
+[[4, 6, 7],
+ [8, 10, 11]]
+&quot;&quot;&quot;</code></pre>
+<p>使用布尔数组这种方式是非常重要的, 因为我们经常对表格中的数据进行批量比较, 而比较的结果就是这样一个布尔数组</p>
+<h4 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h4><pre><code class="python">x = np.arange(10)
+x &lt; 3     # 把x中所有的元素都去和3进行比较, 最终返回一个布尔矩阵
+</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/人工智能/">人工智能</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/机器学习/">机器学习</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/04/04/stat-203/">
+                        <span class="hidden-mobile">统计自整理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
         </div>
+      </div>
+    </div>
     
-    <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2020/04/04/stat-203/" title= "统计自整理">
-                    <div class="prevTitle">统计自整理</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
 
-<!-- City版安装代码已完成 -->
+      </div>
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
+  </div>
+</div>
+
+<!-- Custom -->
 
 
     
-    
+  </main>
 
-    <!-- 评论 -->
-</main>
-            <!-- profile -->
-            
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
         </div>
-        <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-    <div class="social">
-        
-    
-        
-    
-        
-            
-                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-    </div>
-    <!-- 不蒜子  -->
-    
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习基础"><span class="toc-number">1.</span> <span class="toc-text">机器学习基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的数据"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的主要任务"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习的主要任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分类任务"><span class="toc-number">1.2.1.</span> <span class="toc-text">分类任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二分类任务"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">二分类任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多分类任务"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">多分类任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多标签分类"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">多标签分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回归任务"><span class="toc-number">1.2.2.</span> <span class="toc-text">回归任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监督学习-非监督学习-半监督学习-和-增强学习"><span class="toc-number">1.3.</span> <span class="toc-text">监督学习, 非监督学习, 半监督学习 和 增强学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#监督学习"><span class="toc-number">1.3.1.</span> <span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非监督学习"><span class="toc-number">1.3.2.</span> <span class="toc-text">非监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#半监督学习"><span class="toc-number">1.3.3.</span> <span class="toc-text">半监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增强学习"><span class="toc-number">1.3.4.</span> <span class="toc-text">增强学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在线学习-批量学习-离线学习-参数学习和非参数学习"><span class="toc-number">1.4.</span> <span class="toc-text">在线学习, 批量学习 (离线学习), 参数学习和非参数学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#批量学习"><span class="toc-number">1.4.1.</span> <span class="toc-text">批量学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#批量学习的特点"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">批量学习的特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在线学习"><span class="toc-number">1.4.2.</span> <span class="toc-text">在线学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在线学习的特点"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">在线学习的特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数学习"><span class="toc-number">1.4.3.</span> <span class="toc-text">参数学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非参数学习"><span class="toc-number">1.4.4.</span> <span class="toc-text">非参数学习</span></a></li></ol></li></ol></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 46
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-    
-    
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/Blog/2020/04/10/machine-learning/" >python3入门机器学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
-        </li>
-    
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
   </div>
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
-        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
-    
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
-    
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
-        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
-    </div> 
-    <div class="sidebar-tags-list"></div>
 </div>
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
-    
-        <span class="sidebar-category-name" data-categories="人工智能"><span class="iconfont-archer">&#xe60a;</span>人工智能</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
-    
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-    </div>
-</div> 
-    <script>
-    var siteMeta = {
-        root: "/Blog/",
-        author: "Daolin"
-    }
-</script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
         }
-    </script>
-    <script src="/Blog/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/Blog/scripts/share.js" async></script>    
-     
-    </body>
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "python3入门机器学习&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-

@@ -1,407 +1,172 @@
 <!DOCTYPE html>
 <html lang="">
-    <!-- title -->
 
-
-
-
-<!-- keywords -->
 
 
 
 
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="author" content="Daolin">
-    <meta name="renderer" content="webkit">
-    <meta name="copyright" content="Daolin">
-    
-    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
-    
-    <meta name="description" content>
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>图论(六)-最短路径 · Daolin&#39;s Studio</title>
-    <style type="text/css">
-    @font-face {
-        font-family: 'Oswald-Regular';
-        src: url("/Blog/font/Oswald-Regular.ttf");
-    }
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>图论(六)-最短路径 - Daolin&#39;s Repository</title>
 
-    body {
-        margin: 0;
-    }
-
-    header,
-    footer,
-    .back-top,
-    .sidebar,
-    .container,
-    .site-intro-meta,
-    .toc-wrapper {
-        display: none;
-    }
-
-    .site-intro {
-        position: relative;
-        z-index: 3;
-        width: 100%;
-        /* height: 50vh; */
-        overflow: hidden;
-    }
-
-    .site-intro-placeholder {
-        position: absolute;
-        z-index: -2;
-        top: 0;
-        left: 0;
-        width: calc(100% + 300px);
-        height: 100%;
-        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
-        background-position: center center;
-        transform: translate3d(-226px, 0, 0);
-        animation: gradient-move 2.5s ease-out 0s infinite;
-    }
-
-    @keyframes gradient-move {
-        0% {
-            transform: translate3d(-226px, 0, 0);
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-</style>
-
-    <link rel="preload" href="/Blog/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="/Blog/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
-    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for
-- testing support for link[rel=preload]
-- enabling async CSS loading in browsers that do not support rel=preload
-- applying rel preload css once loaded, whether supported or not.
-*/ -->
-<script>
-(function( w ){
-	"use strict";
-	// rel=preload support test
-	if( !w.loadCSS ){
-		w.loadCSS = function(){};
-	}
-	// define on the loadCSS obj
-	var rp = loadCSS.relpreload = {};
-	// rel=preload feature support test
-	// runs once and returns a function for compat purposes
-	rp.support = (function(){
-		var ret;
-		try {
-			ret = w.document.createElement( "link" ).relList.supports( "preload" );
-		} catch (e) {
-			ret = false;
-		}
-		return function(){
-			return ret;
-		};
-	})();
-
-	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-	// then change that media back to its intended value on load
-	rp.bindMediaToggle = function( link ){
-		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
-
-		function enableStylesheet(){
-			link.media = finalMedia;
-		}
-
-		// bind load handlers to enable media
-		if( link.addEventListener ){
-			link.addEventListener( "load", enableStylesheet );
-		} else if( link.attachEvent ){
-			link.attachEvent( "onload", enableStylesheet );
-		}
-
-		// Set rel and non-applicable media type to start an async request
-		// note: timeout allows this to happen async to let rendering continue in IE
-		setTimeout(function(){
-			link.rel = "stylesheet";
-			link.media = "only x";
-		});
-		// also enable media after 3 seconds,
-		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-		setTimeout( enableStylesheet, 3000 );
-	};
-
-	// loop through link elements in DOM
-	rp.poly = function(){
-		// double check this to prevent external calls from running
-		if( rp.support() ){
-			return;
-		}
-		var links = w.document.getElementsByTagName( "link" );
-		for( var i = 0; i < links.length; i++ ){
-			var link = links[ i ];
-			// qualify links to those with rel=preload and as=style attrs
-			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
-				// prevent rerunning on link
-				link.setAttribute( "data-loadcss", true );
-				// bind listeners to toggle media back
-				rp.bindMediaToggle( link );
-			}
-		}
-	};
-
-	// if unsupported, run the polyfill
-	if( !rp.support() ){
-		// run once at least
-		rp.poly();
-
-		// rerun poly on an interval until onload
-		var run = w.setInterval( rp.poly, 500 );
-		if( w.addEventListener ){
-			w.addEventListener( "load", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		} else if( w.attachEvent ){
-			w.attachEvent( "onload", function(){
-				rp.poly();
-				w.clearInterval( run );
-			} );
-		}
-	}
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
 
-	// commonjs
-	if( typeof exports !== "undefined" ){
-		exports.loadCSS = loadCSS;
-	}
-	else {
-		w.loadCSS = loadCSS;
-	}
-}( typeof global !== "undefined" ? global : this ) );
-</script>
+  <link rel="stylesheet" href="/Blog/lib/prettify/tomorrow-night-eighties.min.css">
 
-    <link rel="icon" href="/Blog/assets/favicon.ico">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
-    <link rel="preload" href="/Blog/scripts/main.js" as="script">
-    <link rel="preload" as="font" href="/Blog/font/Oswald-Regular.ttf" crossorigin>
-    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
-    
-    <!-- fancybox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
-    <!-- 百度统计  -->
-    
-    <!-- 谷歌统计  -->
-    
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
 </head>
 
-    
-        <body class="post-body">
-    
-    
-<header class="header">
 
-    <div class="read-progress"></div>
-    <div class="header-sidebar-menu">&#xe775;</div>
-    <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/Blog/" >Daolin&#39;s Repository.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">图论(六)-最短路径</a>
-            </div>
-    </div>
-    
-    <a class="home-link" href=/Blog/>Daolin's Repository.</a>
-</header>
-    <div class="wrapper">
-        <div class="site-intro" style="
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
 
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-
-
-
-
-height:50vh;
-">
-    
-    <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
-            
-    <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/Blog/intro/deemo2.jpg)"></div>
-    <div class="site-intro-meta">
-        <!-- 标题  -->
-        <h1 class="intro-title">
-            <!-- 主页  -->
-            
-            图论(六)-最短路径
-            <!-- 404 -->
-            
-        </h1>
-        <!-- 副标题 -->
-        <p class="intro-subtitle">
-            <!-- 主页副标题  -->
-            
-            
-            <!-- 404 -->
-            
-        </p>
-        <!-- 文章页meta -->
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "图论算法">图论算法</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/28</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
         
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
-        <script>
- 
-  // get user agent
-  var browser = {
-    versions: function () {
-      var u = window.navigator.userAgent;
-      return {
-        userAgent: u,
-        trident: u.indexOf('Trident') > -1, //IE内核
-        presto: u.indexOf('Presto') > -1, //opera内核
-        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
-        iPad: u.indexOf('iPad') > -1, //是否为iPad
-        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
-        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
-        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
-      };
-    }()
-  }
-  console.log("userAgent:" + browser.versions.userAgent);
+  </div>
+</nav>
 
-  // callback
-  function fontLoaded() {
-    console.log('font loaded');
-    if (document.getElementsByClassName('site-intro-meta')) {
-      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
-      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
-      var postIntros = document.getElementsByClassName('post-intros')[0]
-      if (postIntros) {
-        postIntros.classList.add('post-fade-in');
-      }
-    }
-  }
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  // UC不支持跨域，所以直接显示
-  function asyncCb(){
-    if (browser.versions.uc) {
-      console.log("UCBrowser");
-      fontLoaded();
-    } else {
-      WebFont.load({
-        custom: {
-          families: ['Oswald-Regular']
-        },
-        loading: function () {  //所有字体开始加载
-          // console.log('loading');
-        },
-        active: function () {  //所有字体已渲染
-          fontLoaded();
-        },
-        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
-          console.log('inactive: timeout');
-          fontLoaded();
-        },
-        timeout: 5000 // Set the timeout to two seconds
-      });
-    }
-  }
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Wednesday, August 28th 2019, 3:18 pm
+                </p>
+              
 
-  function asyncErr(){
-    console.warn('script load from CDN failed, will load local script')
-  }
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2k 字
+                  </span>
+                
 
-  // load webfont-loader async, and add callback function
-  function async(u, cb, err) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
-    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-  }
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      9 分钟
+                  </span>
+                
 
-  var asyncLoadWithFallBack = function(arr, success, reject) {
-      var currReject = function(){
-        reject()
-        arr.shift()
-        if(arr.length)
-          async(arr[0], success, currReject)
-        }
+                
+              </p>
+            
+          </div>
 
-      async(arr[0], success, currReject)
-  }
+          
+        </div>
+      </div>
+    </div>
+  </header>
 
-  asyncLoadWithFallBack([
-    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
-    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
-    "/Blog/lib/webfontloader.min.js"
-  ], asyncCb, asyncErr)
-</script>        
-        <img class="loading" src="/Blog/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
-        <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>带权图还有一种常见问题: 最短路径问题</p>
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>带权图还有一种常见问题: 最短路径问题</p>
 <p>对于<strong>最小生成树</strong>问题通常都是作用于<strong>无向图</strong></p>
 <p>而<strong>最短路径</strong>问题则是同时支持<strong>无向图</strong>和<strong>有向图</strong></p>
 <p>所谓最短路径, 就是求出一个节点到另外一个节点耗费最小的路径</p>
@@ -418,11 +183,11 @@ height:50vh;
 </li>
 </ol>
 <p>而<strong>无权图</strong>中, 使用<strong>广度优先遍历</strong>时我们也说找到的路径是最短路径, 其实我们所找到的是从起始节点到其他所有节点的最短路径, 我们也将其称之为<strong>最短路径树(Shortest Path Tree)</strong>, 其实这个树也是这张图的一个<strong>生成树</strong>, 所有的顶点距离起始的顶点的响应的权值是最小的, 而求得最短路径树的过程又被称之为解决<strong>单元最短路径(Single Source Shortest Path)</strong>问题, 单元(single source)就是起始点</p>
-<p><img src="/Blog/intro/shortestpathtree.PNG" alt></p>
+<p><img src="/Blog/intro/shortestpathtree.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h1 id="松弛操作-Relaxation"><a href="#松弛操作-Relaxation" class="headerlink" title="松弛操作 (Relaxation)"></a>松弛操作 (Relaxation)</h1><p>对于<strong>有权图</strong>来说, 从一个点直接到达另一个点可能不是最短路径, 通过其他节点可能会有更短的路径. 而这个就是松弛操作</p>
-<p><img src="/Blog/intro/Relaxation.PNG" alt></p>
+<p><img src="/Blog/intro/Relaxation.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>松弛操作是最短路径求解的核心</p>
 <br>
 
@@ -430,14 +195,136 @@ height:50vh;
 <p>复杂度: O( E log(V) )</p>
 <h2 id="Dijkstra算法的思想"><a href="#Dijkstra算法的思想" class="headerlink" title="Dijkstra算法的思想"></a>Dijkstra算法的思想</h2><p>一个点的相邻边中最短的那条边就是这个点到达那个点的最短路径</p>
 <p>例如下图, 节点0的最短相邻边是0-&gt;2, 权值为2. 所以0-&gt;2的最短路径就是0-&gt;2. 因为如果从0到其他节点(大于0-&gt;2)再走向2的话一定比直接走向2权值更大. <strong>前提就是图中没有负权边</strong></p>
-<p><img src="/Blog/intro/djkstra.PNG" alt></p>
+<p><img src="/Blog/intro/djkstra.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>之后<strong>再寻找起始点到没访问过的节点中最小的权值对应的点</strong>, 2-&gt;1, 可以看到 0-&gt;2 + 2-&gt;1 的权值小于 0-&gt;1, 所以目前到1的最短路径就是0-&gt;2-&gt;1, 同理 如果2去往其他节点在回到1一定比 2-&gt;1 大. 重复这个过程.</p>
-<p><img src="/Blog/intro/dijkstra2.PNG" alt></p>
+<p><img src="/Blog/intro/dijkstra2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>可以从上面的逻辑中看到, 我们需要找到相邻边中的最短边, 所以要用到优先队列</p>
 <br>
 
-<h3 id="Dijkstra实现"><a href="#Dijkstra实现" class="headerlink" title="Dijkstra实现"></a>Dijkstra实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ALGORITHM_DIJKSTRA_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALGORITHM_DIJKSTRA_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../Edge.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../../heap/IndexMinHeap.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph, <span class="keyword">typename</span> Weight&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dijkstra</span>&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Graph &amp;G;</span><br><span class="line">    <span class="keyword">int</span> s;      <span class="comment">// 起始点</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  记录起始点到每一个点的最短距离 */</span></span><br><span class="line">    Weight* distTo;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">bool</span>* marked;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 记录这个点是从那一条边来的,</span></span><br><span class="line"><span class="comment">     * 可以用来判断是否有路径到达这一点</span></span><br><span class="line"><span class="comment">     * 还可以用来逆推到达某一个点的路径 */</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;*&gt; from;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Dijkstra(Graph &amp;graph, <span class="keyword">int</span> s):G(graph)&#123;</span><br><span class="line">        assert(s &gt;= <span class="number">0</span> &amp;&amp; s &lt; G.V());</span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="keyword">this</span>-&gt;s = s;</span><br><span class="line">        distTo = <span class="keyword">new</span> Weight[G.V()];</span><br><span class="line">        marked = <span class="keyword">new</span> <span class="keyword">bool</span>[G.V()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.V(); i++)&#123;</span><br><span class="line">            distTo[i] = Weight();</span><br><span class="line">            marked[i] = <span class="literal">false</span>;</span><br><span class="line">            from.push_back(<span class="literal">NULL</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 存储起始点到每个节点的最小权值</span></span><br><span class="line">        IndexMinHeap&lt;Weight&gt; ipq(G.V());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Dijkstra</span></span><br><span class="line">        distTo[s] = Weight();   <span class="comment">// 如果Weight是int或double会默认初始化成0</span></span><br><span class="line">        from[s] = <span class="keyword">new</span> Edge&lt;Weight&gt;(s, s, Weight());</span><br><span class="line">        ipq.insert(s, distTo[s]);</span><br><span class="line">        marked[s] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">while</span>(!ipq.isEmpty())&#123;</span><br><span class="line">        	<span class="comment">//寻找起始点到没访问过的节点中最小的权值对应的点</span></span><br><span class="line">            <span class="keyword">int</span> v = ipq.extractMinIndex();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// distTo[v] 就是s到v的最短距离</span></span><br><span class="line">            marked[v] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/** Relaxation */</span></span><br><span class="line">            <span class="comment">// 遍历v点所有相邻边</span></span><br><span class="line">            <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, v)</span></span>;</span><br><span class="line">            <span class="keyword">for</span>(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())&#123;</span><br><span class="line">                <span class="comment">// 通过相邻边获取相邻节点</span></span><br><span class="line">                <span class="keyword">int</span> w = e-&gt;other(v);</span><br><span class="line">                <span class="comment">// 如果 w 没被访问过</span></span><br><span class="line">                <span class="keyword">if</span>(!marked[w])&#123;</span><br><span class="line">                    <span class="comment">// 同时没有去往 w 的路径, 或新路径(通过 v 点走向 w 的路径)比旧路径短, 就可以进行松弛操作</span></span><br><span class="line">                    <span class="keyword">if</span>(from[w] == <span class="literal">NULL</span> || distTo[v] + e-&gt;wt() &lt; distTo[w])&#123;</span><br><span class="line">                        <span class="comment">// 更新最短路径的值</span></span><br><span class="line">                        distTo[w] = distTo[v] + e-&gt;wt();</span><br><span class="line">                        <span class="comment">// 更新去往 w 的边</span></span><br><span class="line">                        from[w] = e;</span><br><span class="line">                        <span class="keyword">if</span>(ipq.contain(w))  <span class="comment">// 如果已有就更新</span></span><br><span class="line">                            ipq.change(w, distTo[w]);</span><br><span class="line">                        <span class="keyword">else</span>    <span class="comment">// 把 w 放入最小索引堆</span></span><br><span class="line">                            ipq.insert(w, distTo[w]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Dijkstra()&#123;</span><br><span class="line">        <span class="keyword">delete</span>[] distTo;</span><br><span class="line">        <span class="keyword">delete</span>[] marked;</span><br><span class="line">        <span class="keyword">delete</span> from[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Weight <span class="title">shortestPathTo</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        assert(hasPathTo(w));</span><br><span class="line">        <span class="keyword">return</span> distTo[w];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasPathTo</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        assert(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</span><br><span class="line">        <span class="keyword">return</span> marked[w];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shortestPath</span><span class="params">(<span class="keyword">int</span> w, <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; &amp;vec)</span></span>&#123;</span><br><span class="line">        assert(hasPathTo(w));</span><br><span class="line">        <span class="built_in">stack</span>&lt;Edge&lt;Weight&gt;*&gt; s;</span><br><span class="line">        Edge&lt;Weight&gt;* e = from[w];</span><br><span class="line">        <span class="keyword">while</span>(e-&gt;v() != <span class="keyword">this</span>-&gt;s)&#123;</span><br><span class="line">            s.push(e);</span><br><span class="line">            e = from[e-&gt;v()];</span><br><span class="line">        &#125;</span><br><span class="line">        s.push(e);</span><br><span class="line">        <span class="keyword">while</span>(!s.empty())&#123;</span><br><span class="line">            e = s.top();</span><br><span class="line">            vec.push_back(*e);</span><br><span class="line">            s.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        assert(hasPathTo(w));</span><br><span class="line">        <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; vec;</span><br><span class="line">        shortestPath(w, vec);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vec.size(); i++)&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; vec[i].v() &lt;&lt; <span class="string">"-&gt;"</span>;</span><br><span class="line">            <span class="keyword">if</span>(i == vec.size()<span class="number">-1</span>)</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; vec[i].w() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//ALGORITHM_DIJKSTRA_H</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Dijkstra实现"><a href="#Dijkstra实现" class="headerlink" title="Dijkstra实现"></a>Dijkstra实现</h3><pre><code class="c++">#ifndef ALGORITHM_DIJKSTRA_H
+#define ALGORITHM_DIJKSTRA_H
 
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &quot;../Edge.h&quot;
+#include &quot;../../heap/IndexMinHeap.h&quot;
+
+template &lt;typename Graph, typename Weight&gt;
+class Dijkstra{
+
+private:
+    Graph &amp;G;
+    int s;      // 起始点
+
+    /**
+     *  记录起始点到每一个点的最短距离 */
+    Weight* distTo;
+
+    bool* marked;
+
+    /** 记录这个点是从那一条边来的,
+     * 可以用来判断是否有路径到达这一点
+     * 还可以用来逆推到达某一个点的路径 */
+    vector&lt;Edge&lt;Weight&gt;*&gt; from;
+
+
+public:
+    Dijkstra(Graph &amp;graph, int s):G(graph){
+        assert(s &gt;= 0 &amp;&amp; s &lt; G.V());
+        // 初始化
+        this-&gt;s = s;
+        distTo = new Weight[G.V()];
+        marked = new bool[G.V()];
+        for(int i = 0; i &lt; G.V(); i++){
+            distTo[i] = Weight();
+            marked[i] = false;
+            from.push_back(NULL);
+        }
+        // 存储起始点到每个节点的最小权值
+        IndexMinHeap&lt;Weight&gt; ipq(G.V());
+
+        // Dijkstra
+        distTo[s] = Weight();   // 如果Weight是int或double会默认初始化成0
+        from[s] = new Edge&lt;Weight&gt;(s, s, Weight());
+        ipq.insert(s, distTo[s]);
+        marked[s] = true;
+        while(!ipq.isEmpty()){
+            //寻找起始点到没访问过的节点中最小的权值对应的点
+            int v = ipq.extractMinIndex();
+
+            // distTo[v] 就是s到v的最短距离
+            marked[v] = true;
+
+            /** Relaxation */
+            // 遍历v点所有相邻边
+            typename Graph::adjIterator adj(G, v);
+            for(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next()){
+                // 通过相邻边获取相邻节点
+                int w = e-&gt;other(v);
+                // 如果 w 没被访问过
+                if(!marked[w]){
+                    // 同时没有去往 w 的路径, 或新路径(通过 v 点走向 w 的路径)比旧路径短, 就可以进行松弛操作
+                    if(from[w] == NULL || distTo[v] + e-&gt;wt() &lt; distTo[w]){
+                        // 更新最短路径的值
+                        distTo[w] = distTo[v] + e-&gt;wt();
+                        // 更新去往 w 的边
+                        from[w] = e;
+                        if(ipq.contain(w))  // 如果已有就更新
+                            ipq.change(w, distTo[w]);
+                        else    // 把 w 放入最小索引堆
+                            ipq.insert(w, distTo[w]);
+                    }
+                }
+            }
+        }
+    }
+
+    ~Dijkstra(){
+        delete[] distTo;
+        delete[] marked;
+        delete from[0];
+    }
+
+    Weight shortestPathTo(int w){
+        assert(hasPathTo(w));
+        return distTo[w];
+    }
+
+    bool hasPathTo(int w){
+        assert(w &gt;= 0 &amp;&amp; w &lt; G.V());
+        return marked[w];
+    }
+
+    void shortestPath(int w, vector&lt;Edge&lt;Weight&gt;&gt; &amp;vec){
+        assert(hasPathTo(w));
+        stack&lt;Edge&lt;Weight&gt;*&gt; s;
+        Edge&lt;Weight&gt;* e = from[w];
+        while(e-&gt;v() != this-&gt;s){
+            s.push(e);
+            e = from[e-&gt;v()];
+        }
+        s.push(e);
+        while(!s.empty()){
+            e = s.top();
+            vec.push_back(*e);
+            s.pop();
+        }
+    }
+
+    void showPath(int w){
+        assert(hasPathTo(w));
+        vector&lt;Edge&lt;Weight&gt;&gt; vec;
+        shortestPath(w, vec);
+        for(int i = 0; i &lt; vec.size(); i++){
+            cout &lt;&lt; vec[i].v() &lt;&lt; &quot;-&gt;&quot;;
+            if(i == vec.size()-1)
+                cout &lt;&lt; vec[i].w() &lt;&lt; endl;
+        }
+    }
+
+};
+#endif //ALGORITHM_DIJKSTRA_H</code></pre>
 <br>
 
 <h1 id="Bellman-Ford算法和负权边"><a href="#Bellman-Ford算法和负权边" class="headerlink" title="Bellman-Ford算法和负权边"></a>Bellman-Ford算法和负权边</h1><p>Bellman-Ford可以处理具有负权边的图, 但这个图中不能有负权环.</p>
@@ -455,1214 +342,407 @@ height:50vh;
 <p>这个算法不需要优先队列</p>
 <br>
 
-<h3 id="Bellman-Ford-算法的实现"><a href="#Bellman-Ford-算法的实现" class="headerlink" title="Bellman-Ford 算法的实现"></a>Bellman-Ford 算法的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ALGORITHM_BELLMANFORD_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALGORITHM_BELLMANFORD_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../Edge.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph, <span class="keyword">typename</span> Weight&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BellmanFord</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Graph&amp; G;</span><br><span class="line">    <span class="keyword">int</span> s;</span><br><span class="line">    Weight* distTo;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;*&gt; from;</span><br><span class="line">    <span class="keyword">bool</span> hasNegativeCycle;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">detectNegativeCycle</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 如果还能进行松弛操作, 就说明有负权环</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.V(); i++)&#123;</span><br><span class="line">            <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, i)</span></span>;</span><br><span class="line">            <span class="keyword">for</span>(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())</span><br><span class="line">                <span class="keyword">if</span>(from[e-&gt;w()] == <span class="literal">NULL</span> || distTo[e-&gt;v()] + e-&gt;wt() &lt; distTo[e-&gt;w()])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    BellmanFord(Graph&amp; graph, <span class="keyword">int</span> s):G(graph)&#123;</span><br><span class="line">        assert(s &gt;= <span class="number">0</span> &amp;&amp; s &lt; G.V());</span><br><span class="line">        <span class="keyword">this</span>-&gt;s = s;</span><br><span class="line">        distTo = <span class="keyword">new</span> Weight[G.V()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.V(); i++)&#123;</span><br><span class="line">            from.push_back(<span class="literal">NULL</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// BellmanFord</span></span><br><span class="line">        distTo[s] = Weight();</span><br><span class="line">        <span class="comment">// 对所有节点进行v-1次松弛操作</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> pass = <span class="number">1</span>; pass &lt; G.V(); pass++)&#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 对每个节点进行一次松弛</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.V(); i++)&#123;</span><br><span class="line">                <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, i)</span></span>;</span><br><span class="line">                <span class="keyword">for</span>(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())&#123;</span><br><span class="line">                    <span class="comment">// Relaxation 如果没访问过e-&gt;w(),或通过e-&gt;v()的路径比原本的路径更小</span></span><br><span class="line">                    <span class="keyword">if</span>(from[e-&gt;w()] == <span class="literal">NULL</span> || distTo[e-&gt;v()] + e-&gt;wt() &lt; distTo[e-&gt;w()])&#123;</span><br><span class="line">                        distTo[e-&gt;w()] = distTo[e-&gt;v()] + e-&gt;wt();</span><br><span class="line">                        from[e-&gt;w()] = e;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果还能继续松弛就说明有负权环</span></span><br><span class="line">        hasNegativeCycle = detectNegativeCycle();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~BellmanFord()&#123;</span><br><span class="line">        <span class="keyword">delete</span>[] distTo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">negativeCycle</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hasNegativeCycle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Weight <span class="title">shortestPathTo</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        assert(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</span><br><span class="line">        assert(!hasNegativeCycle);</span><br><span class="line">        <span class="keyword">return</span> distTo[w];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasPathTo</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        assert(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</span><br><span class="line">        <span class="keyword">return</span> from[w] != <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shortestPath</span><span class="params">(<span class="keyword">int</span> w, <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; &amp;vec)</span></span>&#123;</span><br><span class="line">        assert(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</span><br><span class="line">        assert(!hasNegativeCycle);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">stack</span>&lt;Edge&lt;Weight&gt;*&gt; s;</span><br><span class="line">        Edge&lt;Weight&gt;* e = from[w];</span><br><span class="line">        <span class="keyword">while</span>(e-&gt;v() != <span class="keyword">this</span>-&gt;s)&#123;</span><br><span class="line">            s.push(e);</span><br><span class="line">            e = from[e-&gt;v()];</span><br><span class="line">        &#125;</span><br><span class="line">        s.push(e);</span><br><span class="line">        <span class="keyword">while</span>(!s.empty())&#123;</span><br><span class="line">            e = s.top();</span><br><span class="line">            vec.push_back(*e);</span><br><span class="line">            s.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</span><br><span class="line">        assert(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</span><br><span class="line">        assert(!hasNegativeCycle);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">vector</span>&lt;Edge&lt;Weight&gt;&gt; vec;</span><br><span class="line">        shortestPath(w, vec);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vec.size(); i++) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; vec[i].v() &lt;&lt; <span class="string">"-&gt;"</span>;</span><br><span class="line">            <span class="keyword">if</span> (i + <span class="number">1</span> == vec.size())</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; vec[i].w() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//ALGORITHM_BELLMANFORD_H</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Bellman-Ford-算法的实现"><a href="#Bellman-Ford-算法的实现" class="headerlink" title="Bellman-Ford 算法的实现"></a>Bellman-Ford 算法的实现</h3><pre><code class="c++">#ifndef ALGORITHM_BELLMANFORD_H
+#define ALGORITHM_BELLMANFORD_H
 
+#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &quot;../Edge.h&quot;
 
-    </article>
-    <!-- license  -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://daolinzhou.github.io/Blog">Daolin</a>
-            <p>原文链接：<a href="https://daolinzhou.github.io/Blog/2019/08/28/shortest-path/">https://daolinzhou.github.io/Blog/2019/08/28/shortest-path/</a>
-            <p>发表日期：<a href="https://daolinzhou.github.io/Blog/2019/08/28/shortest-path/">August 28th 2019, 3:18:51 pm</a>
-            <p>更新日期：<a href="https://daolinzhou.github.io/Blog/2019/08/28/shortest-path/">August 28th 2019, 5:12:11 pm</a>
-            <p>版权声明：</p>
+using namespace std;
+
+template &lt;typename Graph, typename Weight&gt;
+class BellmanFord{
+private:
+    Graph&amp; G;
+    int s;
+    Weight* distTo;
+    vector&lt;Edge&lt;Weight&gt;*&gt; from;
+    bool hasNegativeCycle;
+
+    bool detectNegativeCycle(){
+        // 如果还能进行松弛操作, 就说明有负权环
+        for(int i = 0; i &lt; G.V(); i++){
+            typename Graph::adjIterator adj(G, i);
+            for(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next())
+                if(from[e-&gt;w()] == NULL || distTo[e-&gt;v()] + e-&gt;wt() &lt; distTo[e-&gt;w()])
+                    return true;
+        }
+        return false;
+    }
+
+public:
+    BellmanFord(Graph&amp; graph, int s):G(graph){
+        assert(s &gt;= 0 &amp;&amp; s &lt; G.V());
+        this-&gt;s = s;
+        distTo = new Weight[G.V()];
+        for(int i = 0; i &lt; G.V(); i++){
+            from.push_back(NULL);
+        }
+
+        // BellmanFord
+        distTo[s] = Weight();
+        // 对所有节点进行v-1次松弛操作
+        for(int pass = 1; pass &lt; G.V(); pass++){
+
+            // 对每个节点进行一次松弛
+            for(int i = 0; i &lt; G.V(); i++){
+                typename Graph::adjIterator adj(G, i);
+                for(Edge&lt;Weight&gt;* e = adj.begin(); !adj.isEnd(); e = adj.next()){
+                    // Relaxation 如果没访问过e-&gt;w(),或通过e-&gt;v()的路径比原本的路径更小
+                    if(from[e-&gt;w()] == NULL || distTo[e-&gt;v()] + e-&gt;wt() &lt; distTo[e-&gt;w()]){
+                        distTo[e-&gt;w()] = distTo[e-&gt;v()] + e-&gt;wt();
+                        from[e-&gt;w()] = e;
+                    }
+                }
+            }
+        }
+        // 如果还能继续松弛就说明有负权环
+        hasNegativeCycle = detectNegativeCycle();
+    }
+
+    ~BellmanFord(){
+        delete[] distTo;
+    }
+
+    bool negativeCycle(){
+        return hasNegativeCycle;
+    }
+
+    Weight shortestPathTo(int w){
+        assert(w &gt;= 0 &amp;&amp; w &lt; G.V());
+        assert(!hasNegativeCycle);
+        return distTo[w];
+    }
+
+    bool hasPathTo(int w){
+        assert(w &gt;= 0 &amp;&amp; w &lt; G.V());
+        return from[w] != NULL;
+    }
+
+    void shortestPath(int w, vector&lt;Edge&lt;Weight&gt;&gt; &amp;vec){
+        assert(w &gt;= 0 &amp;&amp; w &lt; G.V());
+        assert(!hasNegativeCycle);
+
+        stack&lt;Edge&lt;Weight&gt;*&gt; s;
+        Edge&lt;Weight&gt;* e = from[w];
+        while(e-&gt;v() != this-&gt;s){
+            s.push(e);
+            e = from[e-&gt;v()];
+        }
+        s.push(e);
+        while(!s.empty()){
+            e = s.top();
+            vec.push_back(*e);
+            s.pop();
+        }
+    }
+
+    void showPath(int w){
+        assert(w &gt;= 0 &amp;&amp; w &lt; G.V());
+        assert(!hasNegativeCycle);
+
+        vector&lt;Edge&lt;Weight&gt;&gt; vec;
+        shortestPath(w, vec);
+        for(int i = 0; i &lt; vec.size(); i++) {
+            cout &lt;&lt; vec[i].v() &lt;&lt; &quot;-&gt;&quot;;
+            if (i + 1 == vec.size())
+                cout &lt;&lt; vec[i].w() &lt;&lt; endl;
+        }
+    }
+
+};
+
+#endif //ALGORITHM_BELLMANFORD_H</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/算法与数据结构/">算法与数据结构</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/图论算法/">图论算法</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/Blog/2019/08/30/macm101/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">离散数学-MACM101</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2019/08/25/Minimum-Span-Trees/">
+                        <span class="hidden-mobile">图论(五)-最小生成树</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
         </div>
+      </div>
+    </div>
     
-    <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/Blog/2019/08/30/macm101/" title= "离散数学-MACM101">
-                    <div class="nextTitle">离散数学-MACM101</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/Blog/2019/08/25/Minimum-Span-Trees/" title= "图论(五)-最小生成树">
-                    <div class="prevTitle">图论(五)-最小生成树</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
 
-<!-- City版安装代码已完成 -->
+      </div>
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
+  </div>
+</div>
+
+<!-- Custom -->
 
 
     
-    
+  </main>
 
-    <!-- 评论 -->
-</main>
-            <!-- profile -->
-            
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
         </div>
-        <footer class="footer footer-unloaded">
-    <!-- social  -->
-    
-    <div class="social">
-        
-    
-        
-    
-        
-            
-                <a href="//github.com/DaoLinZhou" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    <!-- powered by Hexo  -->
-    <div class="copyright">
-        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
-    </div>
-    <!-- 不蒜子  -->
-    
-    <div class="busuanzi-container">
-    
-     
-    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-    
-    </div>
-    
-</footer>
-    </div>
-    <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#松弛操作-Relaxation"><span class="toc-number">1.</span> <span class="toc-text">松弛操作 (Relaxation)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dijkstra-算法"><span class="toc-number">2.</span> <span class="toc-text">Dijkstra 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dijkstra算法的思想"><span class="toc-number">2.1.</span> <span class="toc-text">Dijkstra算法的思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dijkstra实现"><span class="toc-number">2.1.1.</span> <span class="toc-text">Dijkstra实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bellman-Ford算法和负权边"><span class="toc-number">3.</span> <span class="toc-text">Bellman-Ford算法和负权边</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bellman-Ford-算法的思想"><span class="toc-number">3.1.</span> <span class="toc-text">Bellman-Ford 算法的思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Ford-算法的实现"><span class="toc-number">3.1.1.</span> <span class="toc-text">Bellman-Ford 算法的实现</span></a></li></ol></li></ol></li></ol>
-    </div>
-    
-    <div class="back-top iconfont-archer">&#xe639;</div>
-    <div class="sidebar sidebar-hide">
-    <ul class="sidebar-tabs sidebar-tabs-active-0">
-        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
-        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
-        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
-    </ul>
-    <div class="sidebar-content sidebar-content-show-archive">
-          <div class="sidebar-panel-archives">
-    <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-and-search">
-        <div class="total-archive">
-        Total : 46
-        </div>
-        <!-- search  -->
-        
-    </div>
-    
-    <div class="post-archive">
-    
-    
-    
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/Blog/2020/04/10/machine-learning/" >python3入门机器学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/Blog/2020/04/04/stat-203/" >统计自整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/Blog/2020/03/06/play-with-linear-algebra-4/" >线性代数补充知识</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/Blog/2020/01/24/play-with-linear-algebra-3/" ><专为程序员设计的线性代数>学习笔记(3)</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/Blog/2019/12/20/play-with-linear-algebra-2/" ><专为程序员设计的线性代数>学习笔记(2)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/Blog/2019/12/19/stat-for-programmer/" ><专为程序员设计的统计课>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/01</span><a class="archive-post-title" href= "/Blog/2019/12/01/play-with-linear-algebra/" ><专为程序员设计的线性代数>学习笔记(1)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/Blog/2019/11/28/learn-assembly-language/" >汇编语言学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/Blog/2019/11/18/IDEA-shortcut-KEY/" >IDEA 快捷键</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/Blog/2019/11/08/c-experience/" >c++ 音视频服务器学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/Blog/2019/10/20/git-common-command/" >git学习笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/Blog/2019/10/11/python3-skills-2/" >python3编程技巧(二)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/Blog/2019/09/27/python3-skills-1/" >python3编程技巧(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/Blog/2019/09/26/python-excel-database/" >Python操作Excel和MySql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Blog/2019/09/21/quick-develop-python-spider/" >高速开发小型python爬虫</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/Blog/2019/09/07/simple-algorithm-problem-solving-experience/" >简单算法的解题经验(一)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/Blog/2019/08/30/macm101/" >离散数学-MACM101</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/Blog/2019/08/28/shortest-path/" >图论(六)-最短路径</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/Minimum-Span-Trees/" >图论(五)-最小生成树</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/Blog/2019/08/25/weight-graph/" >图论(四)-有权图</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/Blog/2019/08/21/Path/" >图论(三)-寻路</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Connected-component/" >图论(二)-连通分量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/Blog/2019/08/20/Unweighted-graph-basics/" >图论(一)-无权图基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/Blog/2019/08/15/UnionFind/" >并查集 UnionFind</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/Blog/2019/08/13/BST/" >二分搜索树 Binary Search Tree</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/15</span><a class="archive-post-title" href= "/Blog/2019/07/15/Memory-management/" >内存管理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/Blog/2019/07/13/what-is-printf-scanf/" >printf 和 scanf 的本质及流的重定向</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/Blog/2019/07/06/Heap/" >堆 Heap</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/Blog/2019/07/05/Counting-Sort/" >计数排序 Counting Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/Blog/2019/07/04/Binary-Search/" >二分搜索法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/Blog/2019/07/02/optimize-sql/" >调优sql</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/Blog/2019/06/30/cpp入门学习/" >C++入门学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/Blog/2019/06/29/database-structure/" >数据库架构</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/Blog/2019/06/28/HTTP-and-HTTPS/" >HTTP 和 HTTPS</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/Blog/2019/06/27/Quick-Sort/" >快速排序</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/HTTP-basic/" >HTTP 基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/Blog/2019/06/25/Merge-Sort/" >归并排序的两种经典实现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/24</span><a class="archive-post-title" href= "/Blog/2019/06/24/Tcp-sliding-window/" >TCP的滑动窗口</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/UDP基础/" >UDP基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/Blog/2019/06/23/学习资料/" >学习资料自收集 (置顶文章)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Insert-Sort/" >插入排序 Insert Sort 和 希尔排序 Shell Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/tcp-wavehand/" >TCP 四次挥手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/Blog/2019/06/22/Selection-Sort/" >选择排序 Selection Sort</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP三次握手/" >TCP三次握手</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/TCP报文格式/" >TCP报文格式</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/Blog/2019/06/20/hello-world/" >HelloWorld</a>
-        </li>
-    
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
   </div>
-        <div class="sidebar-panel-tags">
-    <div class="sidebar-tags-name">
-    
-        <span class="sidebar-tag-name" data-tags="搜索算法"><span class="iconfont-archer">&#xe606;</span>搜索算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
-    
-        <span class="sidebar-tag-name" data-tags="排序算法"><span class="iconfont-archer">&#xe606;</span>排序算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="图论算法"><span class="iconfont-archer">&#xe606;</span>图论算法</span>
-    
-        <span class="sidebar-tag-name" data-tags="工具"><span class="iconfont-archer">&#xe606;</span>工具</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="tcp"><span class="iconfont-archer">&#xe606;</span>tcp</span>
-    
-        <span class="sidebar-tag-name" data-tags="UDP"><span class="iconfont-archer">&#xe606;</span>UDP</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
-        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
-    
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
-    
-        <span class="sidebar-tag-name" data-tags="闲聊"><span class="iconfont-archer">&#xe606;</span>闲聊</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="excel"><span class="iconfont-archer">&#xe606;</span>excel</span>
-    
-        <span class="sidebar-tag-name" data-tags="爬虫"><span class="iconfont-archer">&#xe606;</span>爬虫</span>
-    
-        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
-    
-        <span class="sidebar-tag-name" data-tags="c++"><span class="iconfont-archer">&#xe606;</span>c++</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性代数"><span class="iconfont-archer">&#xe606;</span>线性代数</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
-    
-        <span class="sidebar-tag-name" data-tags="算法刷题"><span class="iconfont-archer">&#xe606;</span>算法刷题</span>
-    
-        <span class="sidebar-tag-name" data-tags="统计学"><span class="iconfont-archer">&#xe606;</span>统计学</span>
-    
-        <span class="sidebar-tag-name" data-tags="离散数学"><span class="iconfont-archer">&#xe606;</span>离散数学</span>
-    
-    </div>
-    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
-    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
-    缺失模块。<br/>
-    1、请确保node版本大于6.2<br/>
-    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
-    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
-    3、在根目录_config.yml里添加配置：
-    <pre style="color: #787878; font-size: 0.6rem;">
-jsonContent:
-  meta: false
-  pages: false
-  posts:
-    title: true
-    date: true
-    path: true
-    text: false
-    raw: false
-    content: false
-    slug: false
-    updated: false
-    comments: false
-    link: false
-    permalink: false
-    excerpt: false
-    categories: true
-    tags: true</pre>
-    </div> 
-    <div class="sidebar-tags-list"></div>
 </div>
-        <div class="sidebar-panel-categories">
-    <div class="sidebar-categories-name">
-    
-        <span class="sidebar-category-name" data-categories="算法与数据结构"><span class="iconfont-archer">&#xe60a;</span>算法与数据结构</span>
-    
-        <span class="sidebar-category-name" data-categories="面试必会"><span class="iconfont-archer">&#xe60a;</span>面试必会</span>
-    
-        <span class="sidebar-category-name" data-categories="快捷开发"><span class="iconfont-archer">&#xe60a;</span>快捷开发</span>
-    
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="爬虫"><span class="iconfont-archer">&#xe60a;</span>爬虫</span>
-    
-        <span class="sidebar-category-name" data-categories="人工智能"><span class="iconfont-archer">&#xe60a;</span>人工智能</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验"><span class="iconfont-archer">&#xe60a;</span>算法解题经验</span>
-    
-        <span class="sidebar-category-name" data-categories="算法解题经验/学习笔记"><span class="iconfont-archer">&#xe60a;</span>算法解题经验/学习笔记</span>
-    
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
     </div>
-    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
-    <div class="sidebar-categories-list"></div>
-</div>
-    </div>
-</div> 
-    <script>
-    var siteMeta = {
-        root: "/Blog/",
-        author: "Daolin"
-    }
-</script>
-    <!-- CDN failover -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof window.$ === 'undefined')
-        {
-            console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/Blog/lib/jquery.min.js">\x3C/script>')
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
         }
-    </script>
-    <script src="/Blog/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-    
-        <script src="/Blog/scripts/share.js" async></script>    
-     
-    </body>
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "图论(六)-最短路径&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
 </html>
-
-
