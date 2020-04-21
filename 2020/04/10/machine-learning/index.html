@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    16.4k 字
+                    16.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      63 分钟
+                      66 分钟
                   </span>
                 
 
@@ -1495,7 +1495,54 @@ if __name__ == &#39;__main__&#39;:
 <p>相应的一个改进方式就是使用均值方差归一化</p>
 <br>
 
-<h3 id="均值方差归一化-standardization"><a href="#均值方差归一化-standardization" class="headerlink" title="均值方差归一化 (standardization)"></a>均值方差归一化 (standardization)</h3>
+<h3 id="均值方差归一化-standardization-standardize"><a href="#均值方差归一化-standardization-standardize" class="headerlink" title="均值方差归一化 (standardization / standardize)"></a>均值方差归一化 (standardization / standardize)</h3><p>均值方差归一化: 把所有数据归一到均值为0方差为1的分布中(统计学中求z值)</p>
+<p>这样做的结果是: 数据并不保证在0-1之间, 但是所有数据的均值是在0的位置, 并且整体数据的方差为1</p>
+<p>这种归一化的方式适用于<strong>数据分布没有明显的边界; 有可能存在极端数据值</strong>, 其实即使数据有明显边界, 使用这种方式也是非常好的</p>
+<p>所以除非像考试分数这样有非常明确的边界, 一般情况都使用均值方差归一化<br>$$<br>x_{scale}= \frac {x-x_{mean}} s<br>$$<br>s为标准差, 就算是方差的开根</p>
+<p>统计学中的z值<br>$$<br>z = \frac {x-E(x)} {\sqrt {V(x)}}<br>$$</p>
+<h3 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h3><p>最值归一化</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+
+if __name__ == &#39;__main__&#39;:
+    # 向量的最值归一化
+    x = np.random.randint(0, 100, size=100)
+    normalized_x = (x - np.min(x)) / (np.max(x) - np.min(x))
+
+    # 矩阵的最值归一化
+    X = np.random.randint(0, 100, size=(50, 2))
+    X = np.array(X, dtype=float)
+    # 如果特征较多可以用循环
+    X[:, 0] = (X[:, 0] - np.min(X[:, 0])) / (np.max(X[:, 0]) - np.min(X[:, 0]))
+    X[:, 1] = (X[:, 1] - np.min(X[:, 1])) / (np.max(X[:, 1]) - np.min(X[:, 1]))
+
+    # plt.scatter(X[:, 0], X[:, 1])
+    # plt.show()
+    print(np.mean(X[:, 1]))
+    print(np.std(X[:, 1]))</code></pre>
+<br>
+
+<p>均值方程归一化</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+
+if __name__ == &#39;__main__&#39;:
+    X = np.random.randint(0, 100, (50, 2))
+    X = np.array(X, dtype=float)
+    for i in range(len(X[0])):
+        # 计算第i列的均值和标准差
+        mean_x = np.mean(X[:, i])
+        std_x = np.std(X[:, i])
+        # 均值方程归一化
+        X[:, i] = (X[:, i] - mean_x) / std_x
+
+    plt.scatter(X[:, 0], X[:, 1])
+    plt.show()
+    print(np.mean(X[:, 1])) # 约等于0
+    print(np.std(X[:, 1]))  # 约等于1</code></pre>
+<p>即使有outlier, 数据整体依然满足均值为0, 方差为1, (方差归一就说明标准差为1), 不会形成有偏的数据</p>
+<p>不过将这两种归一化的方式具体地应用在机器学习算法之前的<strong>数据处理</strong>的时候, 还是有一些注意事项</p>
+
             </div>
             <hr>
             <div>
