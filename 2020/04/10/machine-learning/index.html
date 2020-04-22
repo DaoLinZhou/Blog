@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    18.8k 字
+                    19.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      73 分钟
+                      76 分钟
                   </span>
                 
 
@@ -1687,8 +1687,43 @@ class StandardScaler:
 
 <br>
 
+<h1 id="线性回归法-Linear-Regression"><a href="#线性回归法-Linear-Regression" class="headerlink" title="线性回归法 Linear Regression"></a>线性回归法 Linear Regression</h1><ul>
+<li>解决回归问题</li>
+<li>思想简单, 实现容易</li>
+<li>许多强大的非线性模型的基础</li>
+<li>结果具有很好的可解释性</li>
+<li>蕴含机器学习中的很多重要思想</li>
+</ul>
+<br>
 
+<h2 id="什么是线性回归算法"><a href="#什么是线性回归算法" class="headerlink" title="什么是线性回归算法"></a>什么是线性回归算法</h2><p><img src="/Blog/intro/linear_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>现在在坐标平面上每一个点都表示一个数据, 线性回归算法说: 我们认为房屋的面积(X) 和房屋的价格(Y) 成线性关系</p>
+<p>即随着房屋面积的增大, 价格也跟着增大</p>
+<p>再这样的假设下, 我们可不可以找到一条直线, 最大程度”拟合”样本特征和样本输出之间的关系</p>
+<p><img src="/Blog/intro/linear_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>注意: 同样是画出一个二维平面图, 可是现在的二维平面图和kNN分类问题的二维平面图有很大的区别</p>
+<p><img src="/Blog/intro/knn_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于分类问题来说, <strong>横轴和纵轴都是样本的特征</strong>, 就是说每一个点有2个样本特征: 肿瘤的大小, 和肿瘤的发现时间</p>
+<p>而这个样本的输出标记是什么? 是被这个点是蓝色的点还是红色的点所表示的</p>
+<p><img src="/Blog/intro/linear_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>但是在线性回归算法例子中, 之后<strong>横轴是样本特征, 纵轴就已经是样本的输出标记了</strong></p>
+<p>这是因为在回归问题中, 真正要预测的是一个具体的数值, 这个具体的数值实在一个连续的空间里的, 而不是简单的可以用不同颜色代表不同类别来区分的, 所以它需要占用一个坐标轴的位置</p>
+<p>如果想看有两个样本特征的回归问题的话, 就需要在3维空间中进行观测了</p>
+<p><img src="/Blog/intro/linear_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于样本特征只有一个, 称为<strong>简单线性回归</strong></p>
+<p>顾名思义, 简单线性回归是更加简单的, 通过对简单线性回归的学习, 其实可以学习到线性回归算法的很多内容, 之后再将它推广到样本特征有多个的情况下(<strong>多元线性回归</strong>)</p>
+<br>
 
+<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p><img src="/Blog/intro/linear_reg_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>要找到一个回归线在最大程度拟合这些点, 回归线的形式就是y=ax+b, a是斜率, b是截距</p>
+<p><img src="/Blog/intro/linear_reg_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>相应对于第i个点来说就对应一个样本特征x<sup>(i)</sup>, 对应的输出标记就是y<sup>(i)</sup></p>
+<p><img src="/Blog/intro/linear_reg_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果我们找到y=ax+b这条直线的话, 换句话说找到 a 和 b 的话, 就可以把 x<sup>(i) </sup> 代入式子中</p>
+<p>得到的值就是使用简单线性回归法预测出来的对于x<sup>(i)</sup>这个值对应y的预测, 通常用 y_hat<sup>(i)</sup> 表示, 相应的, 预测值和真值之间就会有一个差距.</p>
+<p>假设我们找到了最佳拟合的直线方程, 那么我们就希望 y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距尽可能小</p>
+<p>表达 y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距:<br>$$<br>y^{(i)} - \hat y^{(i)}<br>$$<br>但是有可能值为负数, 这是不合理的, 因此还有一种办法就是使用绝对值<br>$$<br>|y^{(i)} - \hat y^{(i)}|<br>$$<br>使用绝对值表示是可以的, 但是在后面计算a, b的时候使用绝对值是非常不方便的, 因为这个函数不是处处可导的函数, 但是为了计算 a 和 b 的值需要找到方程的极值, 需要整个函数可导. <strong>不过, 在衡量线性回归法的性能时还会用到绝对值这个思想</strong></p>
+<p>如果不使用绝对值, 那么一个非常简单的思路就是求平方<br>$$<br>(y^{(i)} - \hat y^{(i)})^2<br>$$<br>既抵消了正负号, 这个函数又是一个处处可导的函数. 用它来衡量y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距, 相应的考虑到所有的样本的话, 就是这样的一个式子<br>$$<br>\sum^m_{i=1} (y^{(i)} - \hat y^{(i)})^2<br>$$<br>现在的目标就是使得上面这个式子尽可能小, 而我们知道<br>$$<br>\hat y^{(i)} = ax^{(i)}+b<br>$$<br>代入上面的式子中就是<br>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}+b)^2<br>$$</p>
 
             </div>
             <hr>
@@ -1746,7 +1781,7 @@ class StandardScaler:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1773,7 +1808,7 @@ class StandardScaler:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1782,7 +1817,7 @@ class StandardScaler:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
