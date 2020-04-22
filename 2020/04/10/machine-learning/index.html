@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    17.9k 字
+                    18.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      70 分钟
+                      73 分钟
                   </span>
                 
 
@@ -1638,6 +1638,57 @@ class StandardScaler:
 <blockquote>
 <p>scikit-learn中也包含最值归一化, sklearn.preprocessing.MinMaxScaler, 这个Scaler的使用过程和StandardScaler是完全一样的</p>
 </blockquote>
+<br>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>k近邻算法是解决分类问题的算法, 不仅如此, 它天然地可以解决多分类问题, 它的思想简单, 效果强大</p>
+<p>不仅如此, 使用k近邻算法还可以解决回归问题</p>
+<p><img src="/Blog/intro/knn_thinking.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>回归问题就是我们具体要预测的是一个数值, 对于要预测的节点, 找到离它最近的k个节点, 由于是监督学习所以都有真实的值</p>
+<p>上图的绿色节点的值大概可以预测为与它最近的3个节点的均值</p>
+<p>当然也可以考虑上离它最近的3个节点对应的距离, 它们可以代表权值, 100离得更近, 所以权值更高, 使用加权平均的算法预测.</p>
+<p>不管怎么说, k近邻算法是可以解决回归问题的</p>
+<p>scikit-learn中封装了KNeighborsRegressor这个类, 它就是使用k近邻算法解决回归问题的类</p>
+<br>
+
+<p><strong>缺点1: k近邻算法的缺点是效率低下</strong></p>
+<p>如果训练集有m个样本, n个特征, 则预测每一个新的数据需要O(m*n)</p>
+<p>k近邻算法也有一些优化方式, 可以使用树结构: KD-Tree, Ball-Tree</p>
+<p>但即使如此k近邻算法依然是效率非常低的算法</p>
+<br>
+
+<p><strong>缺点2 : 高度数据相关</strong></p>
+<p>当然, 机器学习算法就是喂给它数据来进行预测, 所以理论上来说, 所有机器学习算法都是高度数据相关的</p>
+<p>不过k近邻算法相对而言, 对outlier更加敏感, 假设我们用3近邻算法, 但在样本中有2个错误的值的话就足矣让预测出现错误了, 哪怕在样本空间中是有大量正确样本的</p>
+<br>
+
+<p><strong>缺点3 : 预测结果不具有可解释性</strong></p>
+<p>我们只是找到了和要预测样本距离比较近的样本我们就说要预测的样本属于这个类别, 但是我们要预测的样本为什么属于这个类别我们根本无从知晓</p>
+<p>很多研究上, 只是拿到结果是远远不够的, 我们希望对预测结果有一定的解释性, 进而能通过这些解释去推广或去制作新的工具</p>
+<br>
+
+<p><strong>缺点4 : 维数灾难</strong></p>
+<p>维数灾难的概念: 随着维度的增加, “看似相近”的两个点之间的距离越来越大</p>
+<p>而k近邻算法非常依赖两个点之间的距离的计算, 这使得一旦我们使用k近邻算法处理高维数据的时候就很有可能遭受维数灾难</p>
+<p><img src="/Blog/intro/knn_thinking_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>10000维看似恨到, 实际就只能表达一个100*100像素的灰色图片</p>
+<p>实际生产环境中, 很多领域处理成千上万, 乃至几十万维的数据都是非常正常的</p>
+<p>解决方案就是降维</p>
+<br>
+
+<h3 id="机器学习流程回顾"><a href="#机器学习流程回顾" class="headerlink" title="机器学习流程回顾"></a>机器学习流程回顾</h3><p><img src="/Blog/intro/knn_thinking_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先要把原始数据分为训练数据集和测试数据集, 之后对数据进行归一化, 将归一化后的数据进行训练得到最终的模型</p>
+<p><img src="/Blog/intro/knn_thinking_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>之后对于测试数据集也要使用同样的Scaler进行归一化, 然后计算分类的准确度</p>
+<p><img src="/Blog/intro/knn_thinking_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>为了获得最好的模型, 要使用网格搜索寻找最好的超参数, 进而得到最好的模型</p>
+<p class="note note-danger">注意: 机器学习算法有一些隐式的超参数, 就算最简单的kNN算法也有k, p, weight等等超参数</p>
+
+<br>
+
+<br>
+
+
+
 
             </div>
             <hr>
