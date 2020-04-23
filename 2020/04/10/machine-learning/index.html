@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    20.5k 字
+                    21.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      79 分钟
+                      83 分钟
                   </span>
                 
 
@@ -1723,7 +1723,7 @@ class StandardScaler:
 <p>得到的值就是使用简单线性回归法预测出来的对于x<sup>(i)</sup>这个值对应y的预测, 通常用 y_hat<sup>(i)</sup> 表示, 相应的, 预测值和真值之间就会有一个差距.</p>
 <p>假设我们找到了最佳拟合的直线方程, 那么我们就希望 y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距尽可能小</p>
 <p>表达 y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距:<br>$$<br>y^{(i)} - \hat y^{(i)}<br>$$<br>但是有可能值为负数, 这是不合理的, 因此还有一种办法就是使用绝对值<br>$$<br>|y^{(i)} - \hat y^{(i)}|<br>$$<br>使用绝对值表示是可以的, 但是在后面计算a, b的时候使用绝对值是非常不方便的, 因为这个函数不是处处可导的函数, 但是为了计算 a 和 b 的值需要找到方程的极值, 需要整个函数可导. <strong>不过, 在衡量线性回归法的性能时还会用到绝对值这个思想</strong></p>
-<p>如果不使用绝对值, 那么一个非常简单的思路就是求平方<br>$$<br>(y^{(i)} - \hat y^{(i)})^2<br>$$<br>既抵消了正负号, 这个函数又是一个处处可导的函数. 用它来衡量y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距, 相应的考虑到所有的样本的话, 就是这样的一个式子<br>$$<br>\sum^m_{i=1} (y^{(i)} - \hat y^{(i)})^2<br>$$<br>现在的目标就是使得上面这个式子尽可能小, 而我们知道<br>$$<br>\hat y^{(i)} = ax^{(i)}+b<br>$$<br>代入上面的式子中就是<br>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}+b)^2<br>$$<br>现在目标就是找到 a 和 b 的值, 使得这个式子尽可能小</p>
+<p>如果不使用绝对值, 那么一个非常简单的思路就是求平方<br>$$<br>(y^{(i)} - \hat y^{(i)})^2<br>$$<br>既抵消了正负号, 这个函数又是一个处处可导的函数. 用它来衡量y<sup>(i)</sup> 和 y_hat<sup>(i)</sup> 的差距, 相应的考虑到所有的样本的话, 就是这样的一个式子<br>$$<br>\sum^m_{i=1} (y^{(i)} - \hat y^{(i)})^2<br>$$<br>现在的目标就是使得上面这个式子尽可能小, 而我们知道<br>$$<br>\hat y^{(i)} = ax^{(i)}+b<br>$$<br>代入上面的式子中就是<br>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}-b)^2<br>$$<br>现在目标就是找到 a 和 b 的值, 使得这个式子尽可能小</p>
 <p>注意: 对于这个式子来说只有a和b两个值是未知数, 我们已知所有的 y<sup>(i)</sup>和x<sup>(i)</sup>, 因为是监督学习, 我们要首先提供一组数据, 这组数据中的每一个样本都有它对应的x和y</p>
 <br>
 
@@ -1755,6 +1755,41 @@ class StandardScaler:
 <p><img src="/Blog/intro/linear_reg_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<p>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}-b)^2=J(a,b)<br>$$<br>把这个式子叫做 J(a, b), 一定要注意, 对于这个式子a和b才是未知数, 而不是x, y. x和y是监督学习提供给我们的已知的信息</p>
+<p>数学上很多时候用 J 表示损失函数, 有一些教材使用 cost 的方式所谓损失函数</p>
+<p>现在要求损失函数的最小值, 就是求这个函数的极值</p>
+<p>求函数极值的一个最基本的方法就是对这个函数的各个未知分量求导(求偏导) 让它的导数等于0, 在导数等于 0 的地方, 就是函数极值的地方</p>
+<p><img src="/Blog/intro/linear_reg_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="推导b"><a href="#推导b" class="headerlink" title="推导b"></a>推导b</h4><p>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}-b)^2<br>$$</p>
+<p>对b求偏导, 把其余未知量都当作常量, 对b求导</p>
+<p><img src="/Blog/intro/linear_reg_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们可以将它拆开<br>$$<br>\sum^m_{i=1}y^{(i)}-a\sum^m_{i=1}x^{(i)}-\sum^m_{i=1}b=0<br>$$<br>由于b是一个常数, 所以最后一项相当于m个b相乘, 因此式子被化成这个样子<br>$$<br>\sum^m_{i=1}y^{(i)}-a\sum^m_{i=1}x^{(i)}-m*b=0<br>$$</p>
+<p>$$<br>mb=\sum^m_{i=1}y^{(i)}-a\sum^m_{i=1}x^{(i)}<br>$$</p>
+<p>此时等式两边同时除以m, 所有 y<sup>(i)</sup> 的和除以m就是y的均值, 同理所有 x<sup>(i)</sup> 的和除以m就是x的均值<br>$$<br>b=\bar y-a\bar x<br>$$<br><br></p>
+<h4 id="推导a"><a href="#推导a" class="headerlink" title="推导a"></a>推导a</h4><p>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}-b)^2<br>$$</p>
+<p>对a求偏导, 把其余未知量都当作常量, 对a求导</p>
+<p><img src="/Blog/intro/linear_reg_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>由于我们已经求出 b 的表达式, 我们就可以把 b 带入式子中<br>$$<br>\sum^m_{i=1} (y^{(i)} - ax^{(i)}-\bar y+a\bar x)x^{(i)}=0<br>$$<br>现在对于这个式子来说只有a这一个未知数, 所以整理出来以后就能得到 a 的表达式</p>
+<p>首先把外面的 x<sup>(i)</sup> 乘进括号里<br>$$<br>\sum^m_{i=1} (x^{(i)}y^{(i)} - a(x^{(i)})^2-x^{(i)}\bar y+a\bar xx^{(i)})<br>$$</p>
+<p>$$<br>\sum^m_{i=1} (x^{(i)}y^{(i)} - x^{(i)}\bar y-a(x^{(i)})^2+a\bar xx^{(i)})<br>$$</p>
+<p>$$<br>\sum^m_{i=1} (x^{(i)}y^{(i)} - x^{(i)}\bar y)-\sum^m_{i=1} (a(x^{(i)})^2-a\bar xx^{(i)})<br>$$</p>
+<p>此时未知数a都在后面, 作为所有项的一个归并项<br>$$<br>\sum^m_{i=1} (x^{(i)}y^{(i)} - x^{(i)}\bar y)-a\sum^m_{i=1} ((x^{(i)})^2-\bar xx^{(i)})=0<br>$$</p>
+<p>$$<br>a=\frac{\sum^m_{i=1} (x^{(i)}y^{(i)} - x^{(i)}\bar y)} {\sum^m_{i=1} ((x^{(i)})^2-\bar xx^{(i)})}<br>$$</p>
+<p>其实这个a已经是最后的结果了, 如果编程的话, 使用按照这个式子去计算 a 是没有问题的</p>
+<p>不过我们在对这个式子进行一下整理, 会得到一个更为简洁的表达式, 而对于这个更加简洁的表达式, 我们可以在编程时使用一些技巧加速它的过程</p>
+<p> 看看对于a这个式子还能怎么变型<br>$$<br>a=\frac{\sum^m_{i=1} (x^{(i)}y^{(i)} - x^{(i)}\bar y)} {\sum^m_{i=1} ((x^{(i)})^2-\bar xx^{(i)})}<br>$$<br>由于<br>$$<br>\sum^m_{i=1} x^{(i)}=m\bar x<br>$$<br><img src="/Blog/intro/linear_reg_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>相当于是将x和y的位置对调了, 同时还能推出这个, 因为x_bar, y_bar都是常数</p>
+<p><img src="/Blog/intro/linear_reg_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这两项是一样的</p>
+<p><img src="/Blog/intro/linear_reg_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>有了这个结论, 就可以对a这个式子进行下变换<br>$$<br>a=\frac{\sum^m_{i=1} (x^{(i)}y^{(i)} - x^{(i)}\bar y)} {\sum^m_{i=1} ((x^{(i)})^2-\bar xx^{(i)})}<br>$$<br><img src="/Blog/intro/linear_reg_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因为<br>$$<br>\sum^m_{i=1}\bar xy^{(i)} =\sum^m_{i=1} \bar x\bar y<br>$$</p>
+<p>$$<br>\sum^m_{i=1}\bar xx^{(i)} =\sum^m_{i=1} \bar x\bar x<br>$$</p>
+<p>用因式分解整理一下</p>
+<p><img src="/Blog/intro/linear_reg_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时a就变成了更为干净的一个式子,虽然和原来的复杂度差不多. 在具体实现是其实我们会看到, 对于这个式子在实现的时候会简单很多</p>
 
             </div>
             <hr>
