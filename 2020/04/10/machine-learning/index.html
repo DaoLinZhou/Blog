@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    21.5k 字
+                    22.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      83 分钟
+                      87 分钟
                   </span>
                 
 
@@ -1790,6 +1790,116 @@ class StandardScaler:
 <p>用因式分解整理一下</p>
 <p><img src="/Blog/intro/linear_reg_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>此时a就变成了更为干净的一个式子,虽然和原来的复杂度差不多. 在具体实现是其实我们会看到, 对于这个式子在实现的时候会简单很多</p>
+<br>
+
+<h2 id="实现Simple-Linear-Regression"><a href="#实现Simple-Linear-Regression" class="headerlink" title="实现Simple Linear Regression"></a>实现Simple Linear Regression</h2><p>通过上面的公式进行变成实现公式</p>
+<p><img src="/Blog/intro/fomular_simp_l_r.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/simple_linear_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+
+if __name__ == &#39;__main__&#39;:
+    # 后面会拓展为X来表示矩阵
+    x = np.array([1., 2., 3., 4., 5.])
+    y = np.array([1., 3., 2., 3., 5.])
+
+    x_mean = np.mean(x)
+    y_mean = np.mean(y)
+
+    num = 0.0
+    d = 0.0
+    for x_i, y_i in zip(x, y):
+        num += (x_i - x_mean) * (y_i - y_mean)
+        d += (x_i - x_mean) ** 2
+    a = num / d
+    b = y_mean - a * x_mean
+
+    print(a)   # 0.8
+    print(b)   # 0.4
+
+    # 画预测线
+    y_hat = a * x + b
+    plt.scatter(x, y)
+    plt.plot(x, y_hat, color=&quot;red&quot;)
+    plt.axis([0, 6, 0, 6])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/fomular_simp_l_r_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果新来了一个x=6, 那么预测的y就是</p>
+<pre><code class="python">x_predict = 6
+y_predict = a * x_predict + b    # 5.2</code></pre>
+<p>一旦把公式推导出来后, 实现是非常容易的</p>
+<br>
+
+<p>使用scikit-learn中的封装方法对SimpleLinearRegression进行封装</p>
+<pre><code class="python">import numpy as np
+
+# 第一个版本
+class SimpleLinearRegression1:
+
+    def __init__(self):
+        &quot;&quot;&quot;初始化 Simple Linear Regression 模型&quot;&quot;&quot;
+        self.a_ = None
+        self.b_ = None
+
+    def fit(self, x_train, y_train):
+        &quot;&quot;&quot; 根据训练数据集x_train, y_train训练Simple Linear Regression 模型 &quot;&quot;&quot;
+        assert x_train.ndim == 1, \
+            &quot;Simple Linear Regressor can only solve single feature training data&quot;
+        assert len(x_train) == len(y_train), \
+            &quot;the size of x_train must be equal to the size of y_train&quot;
+        x_mean = np.mean(x_train)
+        y_mean = np.mean(y_train)
+
+        num = 0.0
+        d = 0.0
+        for x_i, y_i in zip(x_train, y_train):
+            num += (x_i - x_mean) * (y_i - y_mean)
+            d += (x_i - x_mean) ** 2
+        self.a_ = num / d
+        self.b_ = y_mean - self.a_ * x_mean
+
+        return self
+
+    def predict(self, x_predict):
+        &quot;&quot;&quot;给定待预测数据集x_predict, 返回表示x_predict的结果向量&quot;&quot;&quot;
+        assert x_predict.ndim == 1, \
+            &quot;Simple Linear Regressor can only solve single feature training data.&quot;
+        assert self.a_ is not None and self.b_ is not None, \
+            &quot;must fit before predict!&quot;
+
+        return np.array([self._predict(x) for x in x_predict])
+
+    def _predict(self, x_single):
+        &quot;&quot;&quot;给定单个待预测数据x_single, 返回x_signle的预测结果值&quot;&quot;&quot;
+        return self.a_ * x_single + self.b_
+
+    def __repr__(self):
+        return &quot;SimpleLinearRegression1()&quot;</code></pre>
+<p>可以看到和kNN算法的区别, 根本不需要保存训练数据集, 训练数据集的意义就是训练模型的参数</p>
+<p>一旦fit得到的参数a和b, 那么训练数据集就没有用了</p>
+<p>在具体预测时, 只需要使用学习到的a和b这两个值对每一个预测数据进行计算就好了</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    x = np.array([1., 2., 3., 4., 5.])
+    y = np.array([1., 3., 2., 3., 5.])
+    x_predict = 6
+
+    reg1 = SimpleLinearRegression1()
+    reg1.fit(x, y)
+    y_predict = reg1.predict(np.array([x_predict]))
+
+    print(reg1.a_)        # 0.8
+    print(reg1.b_)        # 0.4
+    print(y_predict)    # [5.2]</code></pre>
+<br>
+
+<h2 id="向量化运算"><a href="#向量化运算" class="headerlink" title="向量化运算"></a>向量化运算</h2><p><img src="/Blog/intro/linear_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们的目的是优化这样一个损失函数, 使得这个损失函数达到最小值</p>
+<p><img src="/Blog/intro/fomular_simp_l_r.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>b的计算非常简单, 主要是a的计算</p>
+<p>然而使用for循环的方式效率是比较低的, 如果我们把循环的方式改为向量运算的方式, 性能会大大提升, 这就是向量化运算</p>
+<p>然而, 仔细观察a这个式子</p>
+<p><img src="/Blog/intro/simple_linear_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>a的分子相当于两个向量进行点乘, 即两个向量各个元素相乘再相加.<br>$$<br>\vec w*\vec v,\ \vec w=\left[\begin{matrix} x^1-\bar x\ \cdots \x^m-\bar x \end{matrix}\right],\ \vec v=\left[\begin{matrix} y^1-\bar y\ \cdots \y^m-\bar y \end{matrix}\right]<br>$$</p>
 
             </div>
             <hr>
