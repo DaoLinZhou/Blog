@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>python3入门机器学习 - Daolin&#39;s Repository</title>
+  <title>Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -108,7 +108,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/Blog/intro/sincegate.jpg') no-repeat center center;
+         style="background: url('/Blog/intro/eye.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    22.2k 字
+                    24.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      87 分钟
+                      97 分钟
                   </span>
                 
 
@@ -166,7 +166,12 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <p>机器学习常见算法: </p>
+              <p>title: python3入门机器学习<br>date: 2020-04-10 19:41:51<br>tags:</p>
+<ul>
+<li>python3</li>
+<li>机器学习<br>categories: 人工智能<br>banner_img: /intro/sincegate.jpg<br>index_img: /intro/lris_flowers_9.PNG</li>
+</ul>
+<p>机器学习常见算法: </p>
 <ol>
 <li>k近邻算法 kNN</li>
 </ol>
@@ -917,7 +922,7 @@ np.sum((x &gt; 3) &amp; (x &lt; 10)) # 计算 3&lt;x&lt;10 的个数</code></pre
 
 <br>
 
-<h1 id="最基础的分类算法-k近邻算法-kNN"><a href="#最基础的分类算法-k近邻算法-kNN" class="headerlink" title="最基础的分类算法-k近邻算法 (kNN)"></a>最基础的分类算法-k近邻算法 (kNN)</h1><p>k近邻算法(k-Nearest Neighbors) 非常适合入门</p>
+<h1 id="k近邻算法-kNN"><a href="#k近邻算法-kNN" class="headerlink" title="k近邻算法 (kNN)"></a>k近邻算法 (kNN)</h1><p>k近邻算法(k-Nearest Neighbors) 是最基础的分类算法, 非常适合入门</p>
 <p>kNN算法特点:</p>
 <ol>
 <li>思想极度简单</li>
@@ -1899,30 +1904,228 @@ class SimpleLinearRegression1:
 <p>然而使用for循环的方式效率是比较低的, 如果我们把循环的方式改为向量运算的方式, 性能会大大提升, 这就是向量化运算</p>
 <p>然而, 仔细观察a这个式子</p>
 <p><img src="/Blog/intro/simple_linear_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>a的分子相当于两个向量进行点乘, 即两个向量各个元素相乘再相加.<br>$$<br>\vec w*\vec v,\ \vec w=\left[\begin{matrix} x^1-\bar x\ \cdots \x^m-\bar x \end{matrix}\right],\ \vec v=\left[\begin{matrix} y^1-\bar y\ \cdots \y^m-\bar y \end{matrix}\right]<br>$$</p>
+<p>a的分子相当于两个向量进行点乘, 即两个向量各个元素相乘再相加. </p>
+<p><img src="/Blog/intro/vec_simple_linear_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p> a的分母就是两个w进行点乘</p>
+<p>这样就可以直接使用numpy中向量的运算法则快速地求出来</p>
+<pre><code class="python">class SimpleLinearRegression2:
+
+    def __init__(self):
+        &quot;&quot;&quot;初始化 Simple Linear Regression 模型&quot;&quot;&quot;
+        self.a_ = None
+        self.b_ = None
+
+    def fit(self, x_train, y_train):
+        &quot;&quot;&quot; 根据训练数据集x_train, y_train训练Simple Linear Regression 模型 &quot;&quot;&quot;
+        assert x_train.ndim == 1, \
+            &quot;Simple Linear Regressor can only solve single feature training data&quot;
+        assert len(x_train) == len(y_train), \
+            &quot;the size of x_train must be equal to the size of y_train&quot;
+        x_mean = np.mean(x_train)
+        y_mean = np.mean(y_train)
+
+        w = x_train - x_mean
+        v = y_train - y_mean
+
+        # 向量化运算
+        self.a_ = w.dot(v)/w.dot(w)
+        self.b_ = y_mean - self.a_ * x_mean
+
+        return self
+
+    def predict(self, x_predict):
+        &quot;&quot;&quot;给定待预测数据集x_predict, 返回表示x_predict的结果向量&quot;&quot;&quot;
+        assert x_predict.ndim == 1, \
+            &quot;Simple Linear Regressor can only solve single feature training data.&quot;
+        assert self.a_ is not None and self.b_ is not None, \
+            &quot;must fit before predict!&quot;
+
+        return np.array([self._predict(x) for x in x_predict])
+
+    def _predict(self, x_single):
+        &quot;&quot;&quot;给定单个待预测数据x_single, 返回x_signle的预测结果值&quot;&quot;&quot;
+        return self.a_ * x_single + self.b_
+
+    def __repr__(self):
+        return &quot;SimpleLinearRegression2()&quot;</code></pre>
+<br>
+
+<h2 id="衡量线性回归法的指标"><a href="#衡量线性回归法的指标" class="headerlink" title="衡量线性回归法的指标"></a>衡量线性回归法的指标</h2><p><img src="/Blog/intro/train_test_split.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>kNN算法是把原始数据集分为<strong>训练数据集</strong>和<strong>测试数据集</strong>, 用训练数据集训练出模型, 然后使用模型来预测测试数据集, 将预测结果和真实的结果进行对比, 得到<strong>分类准确度</strong>, 用它来衡量算法的性能</p>
+<p>而对于回归算法, 应该如何评价模型的好坏?</p>
+<br>
+
+<p>以简单线性回归算法为例, 来说明问题.</p>
+<p><img src="/Blog/intro/linear_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而在使用的时候也是要把原始数据分为训练数据集和测试数据集</p>
+<p>而找到a和b使得上面的式子尽可能小其实是对训练数据集来说的</p>
+<p><img src="/Blog/intro/simple_linear_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实也就是 y_train的真实数据 和 y_train的预测数据 的差的平方尽可能小</p>
+<p><img src="/Blog/intro/simple_linear_reg_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当我们训练结束后得到 a 和 b, 将x_test代入a 和 b 中去. 相应地得到 y 的预测值<br>$$<br>\hat y^{(i)}<em>{test} = ax^{(i)}</em>{test}+b<br>$$<br>显然可以和训练时的目标函数一样, 把测试数据代入损失函数作为衡量标准</p>
+<p><img src="/Blog/intro/simple_linear_reg_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>不过这里有一个问题, 这个衡量标准是和m相关的</p>
+<p>如果两个人都做了一个房产预测算法, A用这个标准得到的误差的平方和的累计是1000, 而B得到的误差是800. 这就说明B的短发更好吗?</p>
+<p>显然不能, 因为我们不知道A, B 的测试数据集的数量. 如果A的测试数据集有10000个元素, 误差的累计只有1000, 而B的测试数据集有10个元素, 误差的累计就已经达到800</p>
+<br>
+
+<h3 id="均方误差-MSE-Mean-Squared-Error"><a href="#均方误差-MSE-Mean-Squared-Error" class="headerlink" title="均方误差 MSE (Mean Squared Error)"></a>均方误差 MSE (Mean Squared Error)</h3><p>所以我们可以非常简单地改进一下这个衡量标准<br>$$<br>\frac 1m\sum^m_{i=1}(y^{(i)}<em>{test} - \hat y^{(i)}</em>{test})^2<br>$$<br>就是取一下平均值, 相当于让衡量标准和测试样本数无关</p>
+<p>这个衡量标准还是有关问题, 就是量纲上的问题. 如果预测房产以万元为单位, 那么这个衡量标准就是万元的平方</p>
+<p>这个量纲有的时候可能会带来麻烦, 所以一个简单的改进方式就是开一下根</p>
+<br>
+
+<h3 id="均方根误差-RMSE-Root-Mean-Squared-Error"><a href="#均方根误差-RMSE-Root-Mean-Squared-Error" class="headerlink" title="均方根误差 RMSE (Root Mean Squared Error)"></a>均方根误差 RMSE (Root Mean Squared Error)</h3><p>$$<br>\sqrt {\frac 1m\sum^m_{i=1}(y^{(i)}<em>{test} - \hat y^{(i)}</em>{test})^2} = \sqrt {MSE_{test}}<br>$$</p>
+<p>这样, 量纲就和y的量纲是一致的</p>
+<p>其实 RMSE 和 MSE 本质是一样的 (尽管两者的值不同)</p>
+<p>MSE大, RMSE也跟着大, 反之亦然. 他们具体的区别就是在作报告时, 对量纲是否敏感</p>
+<p>在某些时候, 使用RMSE采用同样的量纲的话, 这个误差背后的<strong>意义</strong>将更加明显</p>
+<br>
+
+<h3 id="平均绝对误差-MAE-Mean-Absolute-Error"><a href="#平均绝对误差-MAE-Mean-Absolute-Error" class="headerlink" title="平均绝对误差 MAE (Mean Absolute Error)"></a>平均绝对误差 MAE (Mean Absolute Error)</h3><p>对于线性回归算法还有另外一个评测标准:<br>$$<br>\frac 1m\sum^m_{i=1}|y^{(i)}<em>{test} - \hat y^{(i)}</em>{test}|<br>$$<br>它的意思就是, 既然对于每一个 y<sup>i</sup>都预测了一个y_hat<sup>i</sup> , 那么直接计算它们距离(差的绝对值) 的和再取平均值就可以衡量线性回归算法了</p>
+<p>线性回归算法在训练的过程中, 损失函数没有定义成这样的形式是因为绝对值不是一个处处可导的函数, 所以它不方便求极值</p>
+<p>但是这样一个方法完全可以用来评价线性回归算法</p>
+<p class="note note-warning">评价一个算法所使用的标准, 和训练模型时最优化的目标函数是可以完全不一致的</p>
+
+<br>
+
+<p>用真实数据作为例子</p>
+<pre><code class="python">from math import sqrt
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from SimpleLinearRegression import SimpleLinearRegression
+from model_selection import train_test_split
+
+# 波士顿房产数据
+if __name__ == &#39;__main__&#39;:
+    boston = datasets.load_boston()
+    # 由于是简单线性回归, 所以只取一个维度的特征
+    x = boston.data[:, 5]
+    y = boston.target
+
+    x = x[y &lt; 50]
+    y = y[y &lt; 50]
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, seed=666)
+    reg = SimpleLinearRegression()
+    reg.fit(x_train, y_train)
+
+    # 可视化展示数据及预测线
+    plt.scatter(x_train, y_train)
+    plt.plot(x_train, reg.predict(x_train), color=&quot;r&quot;)
+    plt.show()
+
+    y_predict = reg.predict(x_test)
+
+    # MSE
+    mse_test = np.sum((y_predict-y_test)**2) / len(y_test)
+    # RMSE 可以解释为平均误差在4.9万美元左右
+    rmse_test = sqrt(mse_test)
+    # MAE 在mae尺度下, 平均误差为3.5万美元左右
+    mae_test = np.sum(np.abs(y_predict-y_test)) / len(y_test)
+
+    print(mse_test)     # 24.15
+    print(rmse_test)    # 4.91
+    print(mae_test)     # 3.54</code></pre>
+<p>同样可以把这三个指标封装到函数中</p>
+<pre><code class="python">def mean_squared_error(y_true, y_predict):
+    &quot;&quot;&quot;计算y_true和y_predict之间的MSE&quot;&quot;&quot;
+    assert len(y_true) == len(y_predict), \
+        &quot;the size of y_true must be equal to the size of y_predict&quot;
+    return np.sum((y_true - y_predict) ** 2) / len(y_true)
+
+
+def root_mean_squared_error(y_true, y_predict):
+    &quot;&quot;&quot;计算y_true和y_predict之间的RMSE&quot;&quot;&quot;
+    return sqrt(mean_squared_error(y_true, y_predict))
+
+
+def mean_absolute_error(y_true, y_predict):
+    &quot;&quot;&quot;计算y_true和y_predict之间的MAE&quot;&quot;&quot;
+    assert len(y_true) == len(y_predict), \
+        &quot;the size of y_true must be equal to the size of y_predict&quot;
+    return np.sum(np.absolute(y_true-y_predict)) / len(y_true)</code></pre>
+<br>
+
+<p>scikit-learn中的MSE和MAE</p>
+<p>使用方法和我们自己封装的也是一样的</p>
+<pre><code class="python">print(mean_squared_error(y_test, y_predict))
+print(mean_absolute_error(y_test, y_predict))</code></pre>
+<br>
+
+<h3 id="RMSE-vs-MAE"><a href="#RMSE-vs-MAE" class="headerlink" title="RMSE vs MAE"></a>RMSE vs MAE</h3><p><img src="/Blog/intro/simple_linear_reg_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们说RMSE和MAE的量纲是一样的, 都是原始数据中y对应的量纲</p>
+<p>但是在上面编程的例子中发现 RMSE(4.91) 比 MAE(3.54) 要大一些</p>
+<p>其实通过这个式子就能理解这个原因, 这个原因是因为RMSE是将错误值进行平方, 平方后再累加开根, 如果某一个错误值非常大(假设为100), 经过平方之后这个差距就扩大到10000</p>
+<p><strong>就是说RMSE有放大样本中预测结果和真实结果之间较大的差距的趋势</strong></p>
+<p>而MAE是没有这个趋势的, 它直接反应样本的预测结果和真实结果之间的差距, 没有平方操作</p>
+<p>因此某种意义上讲, <strong>让RMSE这个值更小相对意义更大一些</strong>, 因为这就意味着整个样本中<strong>最大的错误值</strong>相应比较小</p>
+<p>而我们训练回归算法的时候, 目标函数就是MSE, 即RMSE根号下的那一部分, 而这个本质和优化RMSE是一样的</p>
+<p>换句话说在简单线性回归的训练的过程中, 我们使用目标函数就是在想办法减少最终预测的结果最大的误差相应的差距</p>
+<p>这也是目标函数选取误差的平方, 而不是绝对值的另外一个优势</p>
+<br>
+
+<h2 id="最好的衡量线性回归法的指标-R-Square"><a href="#最好的衡量线性回归法的指标-R-Square" class="headerlink" title="最好的衡量线性回归法的指标 R Square"></a>最好的衡量线性回归法的指标 R Square</h2><p><img src="/Blog/intro/simple_linear_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>上面提到的RMSE, MAE 其实还有它们的问题</p>
+<p>回忆一下分类问题指标, 就是准确度, 1最好, 0最差</p>
+<p>即使解决不同的分类问题, 我们也可以很容易地比较它们之间的优劣</p>
+<p>但是 RMSE 和 MAE 都是没有这样的性质的, 例如: 预测房产的误差是10000, 而预测成绩的误差是10, 那么我们如何判断算法作用在哪个问题上更好? </p>
+<p>无法判断, 因为10000和10对应的是不同种类的东西, 不能直接比较, 这就是RMSE, MAE的局限性</p>
+<p>但这个问题是可以解决的, 就是采用一个新的指标 R Squared</p>
+<br>
+
+<p>r方的计算方法如下</p>
+<p><img src="/Blog/intro/r_square.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>SS<sub>residual</sub> : Residual Sum of Squares</p>
+<p>SS<sub>total</sub> : Total Sum of Square</p>
+<p>有的教材也写作<br>$$<br>R^2 = 1-\frac {SS_{error}}{SS_{total}}<br>$$<br>其实就是这么计算的</p>
+<p><img src="/Blog/intro/simple_linear_reg_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="R-Square-有什么意义-它为什么好"><a href="#R-Square-有什么意义-它为什么好" class="headerlink" title="R Square 有什么意义, 它为什么好"></a>R Square 有什么意义, 它为什么好</h3><p><img src="/Blog/intro/simple_linear_reg_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>分子是一个模型预测产生的错误</p>
+<p>分母也可以理解为一个模型, 模型就是y=y的均值, 只不过这个模型和x无关, 就是说, 不管来哪个x, 我都预测结果是y的均值</p>
+<p>这是一个非常朴素的模型, 对于这样的模型, 通常在机器学习领域和统计学领域也有一个相应的名词 (Baseline Model)</p>
+<p>这个模型的错误肯定是比较多的, 因为完全不考虑x, 直接生硬的将所有输入都预测为样本均值, 而模型预测产生的错误相应应该是比较少的, 因为它充分考虑了 x 和 y 的关系</p>
+<br>
+
+<p>基于此, 就可以这样理解这个式子</p>
+<p>我们使用 Baseline 模型进行预测会产生非常多的错误, 而用我们自己的模型进行预测相应的也会产生一些错误, 但是同时也会减少一些错误, 而用1减去它们, 其实就相当于衡量了<strong>模型拟合住数据的地方</strong></p>
+<p>相当于衡量了模型没有产生错误的响应的指标</p>
+<p><img src="/Blog/intro/simple_linear_reg_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>R Square 相当于把回归问题的结果也归约到0-1之间, 并且1是最好, 0是最差</p>
+<p>此时就可以使用这个指标来针对同样一个算法应用在不同问题上的结果进行比较</p>
+<p> <img src="/Blog/intro/simple_linear_reg_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>化简一下, 分母就是MSE, 分子就是y的方差, 如果写成这样, 计算R Square就变得更加容易了</p>
+<blockquote>
+<p>R Square背后还有更加深刻的统计意义, 可以参考</p>
+<p><a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92-Linear-Regression">统计自整理-线性回归</a></p>
+</blockquote>
+<p>R Square这个值衡量的是我们的模型对比 y=y的均值 这个基准模型的效果是怎样的</p>
+<br>
+
+<h3 id="编程实现R-Square"><a href="#编程实现R-Square" class="headerlink" title="编程实现R Square"></a>编程实现R Square</h3><pre><code class="python">def r2_score(y_true, y_predict):
+    &quot;&quot;&quot;计算 y_true和 y_predict 之间的 R Score&quot;&quot;&quot;
+    return 1 - mean_squared_error(y_true, y_predict) / np.var(y_true)</code></pre>
+<p>当然 scikit-learn 中的计算R Square的封装和我们的依然是一样的</p>
+<p>同样在SimpleLinearRegression中封装进score函数</p>
+<pre><code class="python">class SimpleLinearRegression:
+
+    # 其余方法略过... ...
+    def score(self, x_test, y_test):
+    &quot;&quot;&quot;根据测试数据集 x_test 和 y_test 确定当前模型的准确度&quot;&quot;&quot;
+    y_predict = self.predict(x_test)
+    return r2_score(y_test, y_predict)</code></pre>
+<br>
+
+<br>
+
 
             </div>
             <hr>
             <div>
               <p>
                 
-                  <span>
-                <i class="iconfont icon-inbox"></i>
-                    
-                      <a class="hover-with-bg" href="/Blog/categories/人工智能/">人工智能</a>
-                      &nbsp;
-                    
-                  </span>&nbsp;&nbsp;
-                
-                
-                  <span>
-                <i class="iconfont icon-tag"></i>
-                    
-                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
-                    
-                      <a class="hover-with-bg" href="/Blog/tags/机器学习/">机器学习</a>
-                    
-                  </span>
                 
               </p>
               
@@ -2117,7 +2320,7 @@ class SimpleLinearRegression1:
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "python3入门机器学习&nbsp;",
+        "&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
