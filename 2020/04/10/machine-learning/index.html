@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">ホーム</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">アーカイブ</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">カテゴリー</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">タグ</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">本ブログ情報　</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    24.9k 字
+                    26.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      97 分钟
+                      102 分钟
                   </span>
                 
 
@@ -2113,10 +2113,71 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
     return r2_score(y_test, y_predict)</code></pre>
 <br>
 
-<h2 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h2><p>之前一直解决的是简单线性回归问题, 也就是假设样本只有一个特征值, 但是在真实世界中一个样本是有很多特征值的</p>
+<h2 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h2><p>之前一直解决的是简单线性回归问题, 也就是假设样本只有一个特征值, 但是在真实世界中一个样本是有很多特征值的, 甚至有成千上万个特征值</p>
+<p><img src="/Blog/intro/muti_l_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这幅图中, 每一个点对应x坐标的一个值, 同时对应y坐标的一个输出的标记, 当x<sup>(i)</sup>只是一个数字的时候对应的就是简单线性回归问题</p>
 <br>
 
+<p>但如果x<sup>(i)</sup>对应一个向量的话</p>
+<p><img src="/Blog/intro/muti_l_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这种情况下, 其实就是多元线性回归问题, y就可以写作是</p>
+<p><img src="/Blog/intro/muti_l_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>换句话说, 数据有多少特征, 有多少个维度, 每一个特征前面都有一个系数, 于此同时, 整条直线还有一个截距, 用θ<sub>0</sub>表示</p>
+<p>如果可以学习到这些参数, 那么对于一个样本X<sup>(i)</sup>就可以这样求出多元线性回归对应的预测值</p>
+<p><img src="/Blog/intro/muti_l_reg_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>可以看到和简单线性回归是非常相似的, 区别只是从1个特征拓展到n个特征</p>
+<p>其实求解这个问题的思路也和简单线性回归方法是一致的, 依然是使子下面式子尽可能小<br>$$<br>\sum^m_{i=1}(y^{(i)}-\hat y^{(i)})^2<br>$$<br>因为这个式子表达的意思就是预测结果和真实结果之间的差的平方和</p>
+<p>一方面它是连续可导的, 另一方面它将限定最大的误差</p>
+<p><img src="/Blog/intro/muti_l_reg_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以将所有的θ整理为一个向量</p>
+<p><img src="/Blog/intro/muti_l_reg_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>把式子在改变一点</p>
+<p><img src="/Blog/intro/muti_l_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>让式子整体每一项都是一致的, 因此让θ<sub>0</sub>也乘以一个X的值, X<sup>(i)</sup>的第0个特征</p>
+<p>X<sup>(i)</sup>其实本来没有第0个特征, 这是一个虚构的特征, 为了能和θ<sub>0</sub>结合在一起, 让整个推导更加方便.</p>
+<p>这个第0个特征是恒等于1的</p>
+<p><img src="/Blog/intro/muti_l_reg_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就可以说,  X<sup>(i)</sup>是这样一个向量</p>
+<p><img src="/Blog/intro/muti_l_reg_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p> X<sup>(i)</sup>是一个行向量, 它代表从X矩阵中抽出一行, 因为此时X已经是一个矩阵了, 每一行代表一个样本, 每一列代表一个特征</p>
+<br>
+
+<p>此时把θ和 X<sup>(i)</sup>都表示为向量的形式的话</p>
+<p><img src="/Blog/intro/muti_l_reg_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就可以简单的把这样表示y的第i行的预测值<br>$$<br>\hat y^{(i)}=X^{(i)}*\theta<br>$$<br>依然是向量的点乘操作, 所有元素相乘再相加</p>
+<p>把这个式子再进行推广, 推广到所有的样本上</p>
+<p><img src="/Blog/intro/muti_l_reg_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>有可能一些机器学习书上不太区分X<sub>b</sub>和X, 但其实X<sub>b</sub>是比X多了一列. 这里为了表述的严谨, 把二者区分开, X代表原来的有m个样本, 每个样本有n个特征的矩阵(m * n), 而X<sub>b</sub>是一个m行n+1列的矩阵, 新增了一列, 在第一列的位置, 相应的值全都是1</p>
+</blockquote>
+<p>θ是一个有n+1个元素的列向量</p>
+<p><img src="/Blog/intro/muti_l_reg_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时<br>$$<br>\hat y = X_b*\theta<br>$$<br>y_hat是一个向量, 这个向量就是使用多元线性回归法得到的参数θ, 对X中每一个样本进行预测的结果 (矩阵点乘)</p>
+<p><img src="/Blog/intro/muti_l_reg_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此就把目标推导成这个样子, 前半部分是1 * m的行向量, 后半部分是m * 1的列向量</p>
+<p>此时多元线性回归问题就变成了估计一个θ使得下面式子最小<br>$$<br>(y-X_b<em>\theta)^T(y-X_b</em>\theta)<br>$$<br>依然是使用最小二乘法的思路, 对θ中的每一个变量求导, 让它的值等于0, 只不过此时是在整个矩阵上进行运算.</p>
+<blockquote>
+<p>在矩阵上求导, 求极值的过程的数学推导可能会超出一些院校的本科学习范围, 这里就不给出推导的过程了, 只给出结果:</p>
+<p><img src="/Blog/intro/muti_l_reg_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>也有不用极限的推导方法, 可以看<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95-least-squares-Approximation">线性代数补充知识-最小二乘法</a></p>
+<p>其实在使用多元线性回归时, 还有另外的方法能估计出θ的值</p>
+</blockquote>
+<p>这个式子被称为是: <strong>多元线性回归的正规方程解(Normal Equation)</strong></p>
+<p><img src="/Blog/intro/muti_l_reg_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p> 虽然看起来这个式子很好, 通过监督学习可以拿到 X<sub>b</sub>和y, 但其实这里是有一个问题的.</p>
+<p>问题: 时间复杂度高: O(n^3) (优化O(n^2.4))</p>
+<blockquote>
+<p>n没有区分是行数还是列数, 在实际应用时, 不管是样本量非常大, 例如有100万个样本(行数), 或者说样本特征非常多, 例如有100万个特征(列数), 使用正规方程解都会有计算非常慢的效率问题</p>
+<p>这个问题其实是有解决方案的, 而且这个解决方案通常是更常用的求解多元线性回归的一种方法</p>
+</blockquote>
+<p>这种能直接得到数学解的模型其实是非常少见的</p>
+<p>优点: 不需要对数据进行归一化处理</p>
+<p>因为通过数学分析, 我们最后估计出的θ就是原始数据进行数学运算的结果, 这种运算的过程中是不存来量纲的问题的, 最后求出来的θ也只是系数而已, 没有量纲的问题</p>
+<br>
+
+<br>
             </div>
             <hr>
             <div>
@@ -2173,7 +2234,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;ディレクトリ</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2200,7 +2261,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2209,7 +2270,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">キーワード</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
