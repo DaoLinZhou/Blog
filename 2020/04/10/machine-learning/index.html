@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    26.2k 字
+                    27.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      102 分钟
+                      106 分钟
                   </span>
                 
 
@@ -2177,7 +2177,135 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
 <p>因为通过数学分析, 我们最后估计出的θ就是原始数据进行数学运算的结果, 这种运算的过程中是不存来量纲的问题的, 最后求出来的θ也只是系数而已, 没有量纲的问题</p>
 <br>
 
+<h3 id="返回结果"><a href="#返回结果" class="headerlink" title="返回结果"></a>返回结果</h3><p>θ是由n+1个数值组成的向量, 但是对于实际上样本来说只有n个维度, θ<sub>0</sub>是截距. </p>
+<p><img src="/Blog/intro/muti_l_reg_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>在有的时候进行线性回归时, 最终报告给用户结果时, 有可能不是把θ这个整体报告给用户, 而是将截距(intercept)和系数(coefficients)两部分分开</p>
+<p>这样做的原因是因为在系数部分, 每一个值都对应着原来样本中的一个特征, 这个系数在某种程度上讲可以用来描述这些特征对于最终样本的贡献程度</p>
+<p> 而 θ<sub>0</sub> 和样本是不相干的, 它只是一个偏移. 所以把这两部分分开</p>
+<p>后序还会继续说明系数对于整体样本特征的解释</p>
 <br>
+
+<h3 id="编程实现LinearRegression"><a href="#编程实现LinearRegression" class="headerlink" title="编程实现LinearRegression"></a>编程实现LinearRegression</h3><pre><code class="python">import numpy as np
+from sklearn import datasets
+from model_selection import train_test_split
+from metrics import r2_score
+
+class LinearRegression:
+
+    def __init__(self):
+        &quot;&quot;&quot;初始化Linear Regression模型&quot;&quot;&quot;
+        self.coef_ = None
+        self.intercept_ = None
+        self._theta = None
+
+    def fit_normal(self, X_train, y_train):
+        &quot;&quot;&quot;根据训练数据集X_train, y_train训练Linear Regression&quot;&quot;&quot;
+        assert X_train.shape[0] == y_train.shape[0], \
+            &quot;the size of X_train must be equal to the size of y_train&quot;
+        X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
+        self._theta = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train)
+        self.intercept_ = self._theta[0]
+        self.coef_ = self._theta[1:]
+
+        return self
+
+    def predict(self, X_predict):
+        &quot;&quot;&quot;给定待预测数据集X_predict, 返回X_predict的结果向量&quot;&quot;&quot;
+        assert self.intercept_ is not None and self.coef_ is not None, \
+            &quot;must fit before predict&quot;
+        assert X_predict.shape[1] == len(self.coef_), \
+            &quot;the feature number of X_predict must be equal to X_train&quot;
+        X_b = np.hstack([np.ones((len(X_predict), 1)), X_predict])
+        return X_b.dot(self._theta)
+
+    def score(self, x_test, y_test):
+        &quot;&quot;&quot;根据测试数据集 x_test 和 y_test 确定当前模型的准确度&quot;&quot;&quot;
+        y_predict = self.predict(x_test)
+        return r2_score(y_test, y_predict)
+
+    def __repr__(self):
+        return &quot;LinearRegression()&quot;
+
+# 测试用例
+if __name__ == &#39;__main__&#39;:
+    boston = datasets.load_boston()
+    X = boston.data
+    y = boston.target
+
+    X = X[y &lt; 50]
+    y = y[y &lt; 50]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+    reg = LinearRegression()
+    reg.fit_normal(X_train, y_train)
+    print(reg.score(X_test, y_test)) # 0.8129</code></pre>
+<br>
+
+<p>之前说kNN也可以进行回归预测</p>
+<h3 id="对比scikit-learn中的kNN回归和线性回归"><a href="#对比scikit-learn中的kNN回归和线性回归" class="headerlink" title="对比scikit-learn中的kNN回归和线性回归"></a>对比scikit-learn中的kNN回归和线性回归</h3><pre><code class="python">from sklearn import datasets
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from model_selection import train_test_split
+from sklearn.neighbors import KNeighborsRegressor
+
+if __name__ == &#39;__main__&#39;:
+    # 准备数据
+    boston = datasets.load_boston()
+    X = boston.data
+    y = boston.target
+    X = X[y &lt; 50]
+    y = y[y &lt; 50]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+
+    # 线性回归
+    lin_reg = LinearRegression()
+    lin_reg.fit(X_train, y_train)
+    print(lin_reg.score(X_test, y_test))    # 0.8129
+
+    # kNN回归
+    knn_reg = KNeighborsRegressor()
+    knn_reg.fit(X_train, y_train)
+    print(knn_reg.score(X_test, y_test))    # 0.5865
+
+    # 尽管目前kNN算法效果不好, 但由于kNN有超参数, 所以用网格搜索找到最好的超参数
+    param_grid = [
+        {
+            &quot;weights&quot;: [&#39;uniform&#39;],
+            &quot;n_neighbors&quot;: [i for i in range(1, 11)]
+        },
+        {
+            &quot;weights&quot;: [&#39;distance&#39;],
+            &quot;n_neighbors&quot;: [i for i in range(1, 11)],
+            &quot;p&quot;: [i for i in range(1, 6)]
+        }
+    ]
+    knn_reg = KNeighborsRegressor()
+    grid_search = GridSearchCV(knn_reg, param_grid, n_jobs=-1, verbose=1)
+    grid_search.fit(X_train, y_train)
+    print(grid_search.best_params_)
+    print(grid_search.best_score_)  # 是哟个CV方式衡量的, 0.652, 和前面的score没有比较性
+    print(grid_search.best_estimator_.score(X_test, y_test))    # 0.716
+
+    # 虽然最后的值稍小, 一种原因是因为找到的是使用CV衡量标准中score最高的模型, 而不是我们的计算方法得到的score最高的模型
+    # 第二个原因就是没有对数据进行归一化(尽管Linear Regression不需要进行归一化, 但kNN需要)
+
+    # 归一化后的kNN回归
+    standardScaler = StandardScaler()
+    standardScaler.fit(X_train, y_train)
+    X_train_standard = standardScaler.transform(X_train)
+    X_test_standard = standardScaler.transform(X_test)
+
+    knn_reg = KNeighborsRegressor()
+    knn_reg.fit(X_train_standard, y_train)
+    print(knn_reg.score(X_test_standard, y_test))   # 0.8479</code></pre>
+<p>可以看到线性回归的 score为0.8129</p>
+<p>默认kNN的 score为 0.5865</p>
+<p>找到最佳超参数的kNN为 0.716</p>
+<p>归一化数据后默认kNN为 0.8479</p>
+<br>
+
+
             </div>
             <hr>
             <div>
@@ -2234,7 +2362,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2261,7 +2389,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2270,7 +2398,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
