@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    27.6k 字
+                    28.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      108 分钟
+                      112 分钟
                   </span>
                 
 
@@ -2324,7 +2324,72 @@ if __name__ == &#39;__main__&#39;:
 <p>梯度下降法不仅仅是可以解决线性回归问题中的一种方法, 更是在机器学习中求解最优模型的通用的方法</p>
 <p>甚至对于某些模型来说, 只能使用梯度下降法求得最优模型</p>
 <p>这是因为对于更复杂的模型来说, 是无法得到一个非常简洁的公式来获得这些模型相应的参数的</p>
+<br>
 
+<br>
+
+<h1 id="梯度下降法-Gradient-Descent"><a href="#梯度下降法-Gradient-Descent" class="headerlink" title="梯度下降法 Gradient Descent"></a>梯度下降法 Gradient Descent</h1><ul>
+<li>不是一个机器学习算法</li>
+<li>是一种基于搜索的最优化方法</li>
+<li>作用: 最小化一个损失函数</li>
+<li>梯度上升法: 最大化一个效用函数</li>
+</ul>
+<p><img src="/Blog/intro/gradient_descent.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当我们定义一个损失函数之后, 如果取不同的参数, 都对应一个J的值, 而J应该有一个最小值</p>
+<p>对于最小化一个损失函数这个过程来说, 相当于是在这样一个坐标系中找到一个合适的参数使得损失函数J是最小值</p>
+<blockquote>
+<p>在二维平面上, 所以相当于参数只有一个. 依然是使用它来理解梯度下降法, 后面会将其拓展到高维的形式</p>
+</blockquote>
+<br>
+
+<p>对于损失函数J来说, 每取一个theta值, 相应的它就有一个损失函数J, 如果这一点的导数不为0, 那么这个点肯定不在一个极值点上</p>
+<p><img src="/Blog/intro/gradient_descent_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于导数(一阶导数), 通常写作:<br>$$<br>\frac {dJ} {d\theta}<br>$$<br>在直线方程中, 导数代表斜率. 在曲线方程中, 导数代表切线斜率</p>
+<p>换一个角度理解: <strong>导数代表theta单位变化时, J 相应的变化</strong> </p>
+<p>而上图中蓝色点的导数为负数, 所以当theta增大 J 变小, theta减小 J 增大</p>
+<p><em>*因此导数也可以代表方向, 对应 J 增大的 *方向</em> **</p>
+<p>所以在上图蓝色点, J 增大的方向应该是在x轴的负方向上, 也就是theta减少的时候</p>
+<p>我们希望找到 J 的最小值, 所以我们希望这个点能够向对应 J 减小的方向移动, 所以就应该向这个导数的负方向移动.</p>
+<p>对应还应该移动一个步长, 这个步长我们通常称为η(yita)<br>$$<br>-η \frac {dJ} {d\theta}<br>$$<br>就是说对于一个点来说, 求出它的导数就知道对应这个点J增大的方向, 但是如果向 J 减小的方向继续前进的话只需要将这个导数乘以一个 -η 就好了</p>
+<p><img src="/Blog/intro/gradient_descent_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通常η会通常会提前区号一个值, 例如0.1</p>
+<p>这个点对应的theta值就会首先减去0.1乘以导数</p>
+<p><img src="/Blog/intro/gradient_descent_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>相应的就是蓝色的点在向右移动, theta在增大, 这是因为导数为负值, 减去负数相当于加上正数. 相应的 J 就会减少一些</p>
+<p>不过在新的点上再取一个导数, 这个导数还不等于0, 所以它还不处于一个极值点, 就尝试再把这个点的导出乘以η值, 就相当于theta又向右移动了一步, 以此类推</p>
+<p><img src="/Blog/intro/gradient_descent_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们就不断使用这个过程, 找到对于损失函数 J 来说, theta取哪里J的值最小</p>
+<p>这个点是跟着导数的方向逐渐在损失函数中下降的, 这也是这个方法叫做<strong>梯度下降法</strong>的原因</p>
+<p>为什叫梯度? 这是因为上面的例子中是在一维的函数, 所以直接用导数就可以了. 但在多维函数中, 要对各个方向的分量分别求导, 最终得到的方向就是<strong>梯度</strong></p>
+<p>就是说梯度代表方向, 对应损失函数 J 增大的<strong>方向</strong></p>
+<br>
+
+<ul>
+<li>η称为学习率(learning rate)</li>
+<li>η的取值影响获得最优解的速度</li>
+<li>η取值不合适, 甚至得不到最优解</li>
+<li>η是梯度下降法的一个超参数</li>
+</ul>
+<p>如果η太小, 每一次这一点向 J 最小的位置滚动的距离就小, 速度就慢</p>
+<p><img src="/Blog/intro/gradient_descent_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果η太大, 甚至导致不收敛, 使用梯度下降法但损失却增大了</p>
+<p><img src="/Blog/intro/gradient_descent_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="局部最优解和全局最优解"><a href="#局部最优解和全局最优解" class="headerlink" title="局部最优解和全局最优解"></a>局部最优解和全局最优解</h2><p>梯度下降法还有其他的注意事项:</p>
+<p><strong>并不是所有函数都有唯一的极值点.</strong> </p>
+<p><img src="/Blog/intro/gradient_descent_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>加入用梯度下降法寻找这个函数对应J的最小值, 初始点从红点出发</p>
+<p><img src="/Blog/intro/gradient_descent_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最终找到的点可能不是整个函数最小值的点, 对于这种情况, 我们找到的是局部最优解, 但是对于整个函数来说, 这个局部最优解可能不是全局最优解</p>
+<p>搜索过程中, 可能只是找到了一个我们能看到的最好的解而已, 但是这个所谓最好的解不是真正的, 在全局层面上的最优解 </p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>多次运行, 随机化初始点(可能找不到全局最优解, 但可能找到一个相比于已有解更好的解)</li>
+<li>梯度下降法的初始点也是一个超参数(起始点是非常重要的)</li>
+</ul>
+<p>而在线性回归中使用梯度下降法, 线性回归法的损失函数具有唯一解</p>
+<br>
             </div>
             <hr>
             <div>
