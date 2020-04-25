@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    27.1k 字
+                    27.6k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      106 分钟
+                      108 分钟
                   </span>
                 
 
@@ -2305,6 +2305,25 @@ if __name__ == &#39;__main__&#39;:
 <p>归一化数据后默认kNN为 0.8479</p>
 <br>
 
+<h2 id="更多关于线性回归模型的讨论"><a href="#更多关于线性回归模型的讨论" class="headerlink" title="更多关于线性回归模型的讨论"></a>更多关于线性回归模型的讨论</h2><h3 id="线性回归模型的可解释性"><a href="#线性回归模型的可解释性" class="headerlink" title="线性回归模型的可解释性"></a>线性回归模型的可解释性</h3><p><img src="/Blog/intro/muti_l_reg_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>线性回归模型的系数是可以解读, 系数的正负代表它对应的特征和最终预测的目标是正相关还是负相关, 如果为正说明是正相关, 换句话说这个特征越大, 最终预测的结果就越大. 而系数绝对值的大小就说明了影响的程度</p>
+<br>
+
+<h3 id="线性回归总结"><a href="#线性回归总结" class="headerlink" title="线性回归总结"></a>线性回归总结</h3><p>线性回归算法是典型的参数学习, 而kNN是非参数学习</p>
+<p>只能解决回归问题, 虽然很多分类方法中, 使用了线性回归的思想, 线性回归是基础(逻辑回归). 对比kNN: 既可以解决分类问题, 又可以解决回归问题</p>
+<p>线性回归对数据有假设: 数据间有线性关系. 对比kNN: 对数据没有假设</p>
+<blockquote>
+<p>其实可以稍微改进一下线性回归法, 使得它可以处理非线性问题. 也就是说线性回归法的思路不仅仅可以解决线性问题. </p>
+</blockquote>
+<p>优点: 对数据具有强解释性</p>
+<br>
+
+<p>之前说多元线性回归的正规方程解(Normal Equation)的复杂度太高了</p>
+<p><img src="/Blog/intro/muti_l_reg_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么还有什么解法?   <strong>梯度下降法</strong></p>
+<p>梯度下降法不仅仅是可以解决线性回归问题中的一种方法, 更是在机器学习中求解最优模型的通用的方法</p>
+<p>甚至对于某些模型来说, 只能使用梯度下降法求得最优模型</p>
+<p>这是因为对于更复杂的模型来说, 是无法得到一个非常简洁的公式来获得这些模型相应的参数的</p>
 
             </div>
             <hr>
@@ -2362,7 +2381,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2389,7 +2408,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2398,7 +2417,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
