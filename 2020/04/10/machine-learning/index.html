@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    30.8k 字
+                    30.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      120 分钟
+                      121 分钟
                   </span>
                 
 
@@ -2530,7 +2530,7 @@ if __name__ == &#39;__main__&#39;:
 <p><img src="/Blog/intro/gradient_descent_program_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>X<sub>0</sub>依然恒等于1</p>
 <p><img src="/Blog/intro/gradient_descent_program_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>而这个结果是一个行向量, 为了规范起见, 要把它转换成列向量, 即求它的转置<br>$$<br>\frac 2m <em>X_b^T</em>(X_b\theta-y)<br>$$<br><img src="/Blog/intro/gradient_descent_program_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而这个结果是一个行向量, 为了规范起见, 要把它转换成列向量, 即求它的转置<br>$$<br>\frac 2 m X_b^T(X_b\theta-y)<br>$$<br><img src="/Blog/intro/gradient_descent_program_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此, 求导的那个函数就可以简写为这样</p>
 <pre><code class="python">def dJ(theta, X_b, y):
     return X_b.T.dot(X_b.dot(theta) - y) * 2 / len(X_b)</code></pre>
@@ -2594,6 +2594,11 @@ if __name__ == &#39;__main__&#39;:
 <p>这也有改进方式, 那就是随机梯度下降法</p>
 <br>
 
+<h2 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h2><p><img src="/Blog/intro//Blog/intro/gradient_descent_program_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>之前的梯度下降法一直是想要把最优化的损失函数某一点的θ的梯度值准确地求出来</p>
+<p>每一项都要对所有的样本进行计算(每一项都有Σm)</p>
+<p>这种梯度下降法也被称为<strong>批量梯度下降法(Batch Gradient Descent)</strong></p>
+<p>就是说每一次计算的过程都要将样本的信息批量地进行计算, 但是这显然就带来了一个问题, 如果 样本量m 非常大, 那么计算梯度本身也是非常耗时的</p>
 
             </div>
             <hr>
@@ -2651,7 +2656,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2678,7 +2683,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2687,7 +2692,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
