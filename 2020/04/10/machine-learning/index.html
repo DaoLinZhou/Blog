@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    29.7k 字
+                    30.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      116 分钟
+                      120 分钟
                   </span>
                 
 
@@ -2448,8 +2448,7 @@ if __name__ == &#39;__main__&#39;:
 
 <p><img src="/Blog/intro/gradient_descent_program_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>也就是说这个函数对应就是损失函数<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
-<p>$$<br>=\sum^m_{i=1}(y^{(1)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
-$$</p>
+<p>$$<br>=\sum^m_{i=1}(y^{(1)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
 <p><img src="/Blog/intro/muti_l_reg_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>相应的, 在J上对θ去求梯度值, 就是在J函数上针对θ每一个维度求偏导</p>
 <p><img src="/Blog/intro/gradient_descent_program_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -2470,7 +2469,130 @@ $$</p>
 <p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<h2 id="编程实现多元线性回归中的梯度下降"><a href="#编程实现多元线性回归中的梯度下降" class="headerlink" title="编程实现多元线性回归中的梯度下降"></a>编程实现多元线性回归中的梯度下降</h2><p>之前说在多元线性回归中用正规方程解求θ的时间复杂度很高, 而用梯度下降求解则快很多</p>
+<p>因此, 把梯度下降的过程封装进LinearRegression类中</p>
+<p>公式:<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
+<p>$$<br>=\sum^m_{i=1}(y^{(1)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
+<p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">class LinearRegression:
 
+    # 省略其余代码
+    def fit_normal(self, X_train, y_train):
+        pass
+
+    def fit_gd(self, X_train, y_train, eta=0.01, n_iters=10000):
+        &quot;&quot;&quot;根据训练数据集X_train, y_train, 使用梯度下降法训练Linear Regression模型&quot;&quot;&quot;
+        assert X_train.shape[0] == y_train.shape[0], \
+            &quot;the size of X_train must be equal to the size of y_train&quot;
+
+        # 计算损失函数的值
+        def J(theta, X_b, y):
+            try:
+                return np.sum((y - X_b.dot(theta)) ** 2) / len(X_b)
+            except:
+                return float(&#39;inf&#39;)
+
+        # 计算梯度(导数)
+        def dJ(theta, X_b, y):
+            res = np.empty(len(theta))
+            res[0] = np.sum(X_b.dot(theta) - y)
+            for i in range(1, len(theta)):
+                res[i] = (X_b.dot(theta) - y).dot(X_b[:, i])
+            return res * 2 / len(X_b)
+
+        # 梯度下降
+        def gradient_descent(X_b, y, initial_theta, eta, n_iters=10000, epsilon=1e-8):
+            theta = initial_theta
+            for _ in range(n_iters):
+                gradient = dJ(theta, X_b, y)
+                last_theta = theta
+                theta = theta - eta * gradient
+                # 如果误差可以忽略不计
+                if abs(J(theta, X_b, y) - J(last_theta, X_b, y)) &lt; epsilon:
+                    break
+            return theta
+
+        X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
+
+        initial_theta = np.zeros(X_b.shape[1])
+        self._theta = gradient_descent(X_b, y_train, initial_theta, eta, n_iters)
+
+        self.intercept_ = self._theta[0]
+        self.coef_ = self._theta[1:]
+
+        return self</code></pre>
+<br>
+
+<h2 id="线性回归中梯度下降法的向量化"><a href="#线性回归中梯度下降法的向量化" class="headerlink" title="线性回归中梯度下降法的向量化"></a>线性回归中梯度下降法的向量化</h2><p>向量化处理主要集中在求梯度的过程</p>
+<p><img src="/Blog/intro/gradient_descent_program_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>上面的dJ函数中是一项一项的把每个元素都求出来, 使用了一个循环. 而这个能否向量化, 转换成矩阵的运算?</p>
+<p>首先把第0项和其他项统一</p>
+<p><img src="/Blog/intro/gradient_descent_program_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>X<sub>0</sub>依然恒等于1</p>
+<p><img src="/Blog/intro/gradient_descent_program_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而这个结果是一个行向量, 为了规范起见, 要把它转换成列向量, 即求它的转置<br>$$<br>\frac 2m <em>X_b^T</em>(X_b\theta-y)<br>$$<br><img src="/Blog/intro/gradient_descent_program_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此, 求导的那个函数就可以简写为这样</p>
+<pre><code class="python">def dJ(theta, X_b, y):
+    return X_b.T.dot(X_b.dot(theta) - y) * 2 / len(X_b)</code></pre>
+<p>如果用这个方法来处理真实的数据</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    boston = datasets.load_boston()
+    X = boston.data
+    y = boston.target
+
+    X = X[y &lt; 50]
+    y = y[y &lt; 50]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+
+    reg = LinearRegression()
+    # score 0.7616
+    reg.fit_gd(X, y, eta=0.000001, n_iters=int(1e6))
+    print(reg.score(X_test, y_test))</code></pre>
+<p>很耗时, 而且score才0.76. 就是说用来很长时间还是达不到cost函数的最小值</p>
+<p>而如果再增加循环次数会更加耗时</p>
+<p>这种情况应该怎么办?</p>
+<br>
+
+<h2 id="梯度下降法和数据归一化"><a href="#梯度下降法和数据归一化" class="headerlink" title="梯度下降法和数据归一化"></a>梯度下降法和数据归一化</h2><p>之所以会出现这种情况是因为数据整体不在一个规模上</p>
+<p><img src="/Blog/intro/gradient_descent_program_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>解决的方法就是进行数据归一化, <strong>使用梯度下降法前, 最好进行数据归一化</strong></p>
+<blockquote>
+<p>注意: 在使用<strong>正规方程</strong>解线性回归算法时<strong>不需要</strong>进行<strong>数据归一化</strong></p>
+<p>这是因为我们将线性回归问题的求解过程整体变成了公式的计算, 公式的计算中牵扯的中间搜索的过程比较少, 所以不需要进行数据归一化</p>
+<br>
+
+<p>可是当使用梯度下降法的时候就不一样了</p>
+<p>由于有η这个变量, 所以首先就会有一个问题, 如果最终这些数值不在一个维度上就会影响最终梯度的结果, 而梯度的结果在乘以η是每次真正走的<strong>步长</strong>, 这个步长就有可能太大或太小</p>
+<p>如果将所有数据进行归一化, 问题就完全解决了</p>
+</blockquote>
+<p> 进行数据归一化后的</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    boston = datasets.load_boston()
+    X = boston.data
+    y = boston.target
+
+    X = X[y &lt; 50]
+    y = y[y &lt; 50]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+
+    standardScaler = StandardScaler()
+    standardScaler.fit(X_train)
+    X_train_standard = standardScaler.transform(X_train)
+    X_test_standard = standardScaler.transform(X_test)
+
+    reg = LinearRegression()
+    # score 0.8129
+    reg.fit_gd(X_train_standard, y_train)
+    print(reg.score(X_test_standard, y_test))</code></pre>
+<p>归一化后不仅运行快, score也高了很多, 和使用正规方程的score是一致的, 也就是说找到了损失函数的最小值</p>
+<br>
+
+<p>梯度下降法的优势: 在<strong>特征数量</strong>非常多的时候(成千上万), 使用梯度下降是快于正规方程法的</p>
+<p>然而就是这样的梯度下降法在计算梯度的时候要让每一个样本都参与计算, 如果<strong>样本数量</strong>过多, 其实计算梯度也比较慢</p>
+<p>这也有改进方式, 那就是随机梯度下降法</p>
+<br>
 
 
             </div>
@@ -2529,7 +2651,7 @@ $$</p>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2556,7 +2678,7 @@ $$</p>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2565,7 +2687,7 @@ $$</p>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
