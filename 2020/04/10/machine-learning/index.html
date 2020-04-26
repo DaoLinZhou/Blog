@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    28.8k 字
+                    29.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      112 分钟
+                      116 分钟
                   </span>
                 
 
@@ -2347,10 +2347,10 @@ if __name__ == &#39;__main__&#39;:
 <p>对于导数(一阶导数), 通常写作:<br>$$<br>\frac {dJ} {d\theta}<br>$$<br>在直线方程中, 导数代表斜率. 在曲线方程中, 导数代表切线斜率</p>
 <p>换一个角度理解: <strong>导数代表theta单位变化时, J 相应的变化</strong> </p>
 <p>而上图中蓝色点的导数为负数, 所以当theta增大 J 变小, theta减小 J 增大</p>
-<p><em>*因此导数也可以代表方向, 对应 J 增大的 *方向</em> **</p>
+<p>*<em>因此导数也可以代表方向, 对应 J 增大的 方向 *</em>(重点)</p>
 <p>所以在上图蓝色点, J 增大的方向应该是在x轴的负方向上, 也就是theta减少的时候</p>
 <p>我们希望找到 J 的最小值, 所以我们希望这个点能够向对应 J 减小的方向移动, 所以就应该向这个导数的负方向移动.</p>
-<p>对应还应该移动一个步长, 这个步长我们通常称为η(yita)<br>$$<br>-η \frac {dJ} {d\theta}<br>$$<br>就是说对于一个点来说, 求出它的导数就知道对应这个点J增大的方向, 但是如果向 J 减小的方向继续前进的话只需要将这个导数乘以一个 -η 就好了</p>
+<p>对应还应该移动一个步长, 这个步长我们通常称为η(yita 或 eta)<br>$$<br>-η \frac {dJ} {d\theta}<br>$$<br>就是说对于一个点来说, 求出它的导数就知道对应这个点J增大的方向, 但是如果向 J 减小的方向继续前进的话只需要将这个导数乘以一个 -η 就好了</p>
 <p><img src="/Blog/intro/gradient_descent_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>通常η会通常会提前区号一个值, 例如0.1</p>
 <p>这个点对应的theta值就会首先减去0.1乘以导数</p>
@@ -2390,6 +2390,89 @@ if __name__ == &#39;__main__&#39;:
 </ul>
 <p>而在线性回归中使用梯度下降法, 线性回归法的损失函数具有唯一解</p>
 <br>
+
+<h2 id="编程可视化"><a href="#编程可视化" class="headerlink" title="编程可视化"></a>编程可视化</h2><pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+
+def dJ(theta):
+    return 2 * (theta - 2.5)
+
+def J(theta):
+    try:
+        return (theta-2.5)**2 - 1.
+    except:
+        return float(&#39;inf&#39;)
+
+if __name__ == &#39;__main__&#39;:
+    plot_x = np.linspace(-1, 6, 141)
+    plot_y = (plot_x - 2.5) ** 2 - 1
+
+    eta = 1.1
+    epsilon = 1e-8
+
+    theta = 0.0
+    theta_history = [theta]
+
+    # 最大循环10次
+    for _ in range(10):
+        gradient = dJ(theta)
+        last_theta = theta
+        theta = theta - eta * gradient
+        theta_history.append(theta)
+
+        # 走的这一步带来的损失函数上的差距可以忽略不计
+        if abs(J(theta) - J(last_theta)) &lt; epsilon:
+            break
+
+    plt.plot(plot_x, J(plot_x))
+    plt.plot(np.array(theta_history), J(np.array(theta_history)), color=&quot;r&quot;, marker=&quot;+&quot;)
+    plt.show()
+
+    print(theta)
+    print(J(theta))
+    print(len(theta_history))</code></pre>
+<p><img src="/Blog/intro/gradient_descent_program.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果η较小, 取0.001</p>
+<p><img src="/Blog/intro/gradient_descent_program_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果η较大, 取0.8</p>
+<p><img src="/Blog/intro/gradient_descent_program_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>只要η不超过某一个限度就可以, 每一次可以减少一定损失函数的值就可以, 不一定非要沿着一边下去</p>
+<p>但如果η太大,取1.1, 就需要设置最大循环次数</p>
+<p><img src="/Blog/intro/gradient_descent_program_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="多元线性回归中的梯度下降法"><a href="#多元线性回归中的梯度下降法" class="headerlink" title="多元线性回归中的梯度下降法"></a>多元线性回归中的梯度下降法</h2><p><img src="/Blog/intro/gradient_descent_program_4.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>\nabla 是梯度符号, \nabla J是一个向量, 每一个元素都是\theta的偏导<br>$$<br>这样就把梯度下降拓展到高维空间中, 区别只是之前处理的导数只是一个数字, 现在处理的导数是一个向量</p>
+<p>这种情况下, 梯度下降法依然是成立的, 下图是对一个有两个参数的梯度下降法进行可视化</p>
+<p><img src="/Blog/intro/gradient_descent_program_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/gradient_descent_program_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>也就是说这个函数对应就是损失函数<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
+<p>$$<br>=\sum^m_{i=1}(y^{(1)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+$$</p>
+<p><img src="/Blog/intro/muti_l_reg_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>相应的, 在J上对θ去求梯度值, 就是在J函数上针对θ每一个维度求偏导</p>
+<p><img src="/Blog/intro/gradient_descent_program_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而可以看到, 最终向量上的每一项都是若干项(m项)的求和, </p>
+<p>显然, 梯度的大小将和样本的数量有关, 样本数量越大, 在求出来的梯度中, 每一个元素也就越大. 这是不合理的</p>
+<p>我们希望, 最后求出的梯度中, 每一个元素的值应该和m是无关的</p>
+<p>为此, 我们让整个梯度值再除以一个m</p>
+<p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这么写其实相当于目标函数本身不是<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$<br>而是这样一个式子<br>$$<br>J(\theta)=\frac 1m\sum_{i=1}^m(y^{(1)}-\hat y^{(i)})^2<br>$$<br>对这个式子求梯度, 得到的才是我们想要的结果</p>
+<p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而这个式子其实就是MSE<br>$$<br>J(\theta)=MSE(y,\hat y)<br>$$<br>有的机器学习的教材对于在线性回归中使用梯度下降法会把优化的目标函数写成这样:<br>$$<br>J(\theta)=\frac 1{2m}\sum_{i=1}^m(y^{(1)}-\hat y^{(i)})^2<br>$$<br>是为了把梯度最终结果分母上的2消掉, 但其实这个2影响并不大</p>
+<p>但如果没有1/m, 梯度中的每一个元素就会非常大</p>
+ <br>
+
+<p>也就是说:</p>
+<p>当使用梯度下降法来求一个函数的最小值时, 有时候要对目标函数进行一些特殊的设计, 不见得所有的目标函数都非常合适</p>
+<p>虽然理论上每一个梯度都非常大的话, 依然可以通过调节η得到想要的结果, 但是这回影响效率<br>$$<br>J(\theta)=\frac 1m\sum_{i=1}^m(y^{(1)}-\hat y^{(i)})^2=MSE(y,\hat y)<br>$$<br>而这里我们就对这个目标函数进行优化. 相应梯度的值就被这个式子所表达</p>
+<p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+
+
+
             </div>
             <hr>
             <div>
@@ -2446,7 +2529,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2473,7 +2556,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2482,7 +2565,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
