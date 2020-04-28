@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -643,7 +643,7 @@ print(mean_absolute_error(y_test, y_predict))</code></pre>
 <p>此时<br>$$<br>\hat y = X_b*\theta<br>$$<br>y_hat是一个向量, 这个向量就是使用多元线性回归法得到的参数θ, 对X中每一个样本进行预测的结果 (矩阵点乘)</p>
 <p><img src="/Blog/intro/muti_l_reg_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此就把目标推导成这个样子, 前半部分是1 * m的行向量, 后半部分是m * 1的列向量</p>
-<p>此时多元线性回归问题就变成了估计一个θ使得下面式子最小<br>$$<br>(y-X_b<em>\theta)^T(y-X_b</em>\theta)<br>$$<br>依然是使用最小二乘法的思路, 对θ中的每一个变量求导, 让它的值等于0, 只不过此时是在整个矩阵上进行运算.</p>
+<p>此时多元线性回归问题就变成了估计一个θ使得下面式子最小<br>$$<br>(y-X _b<em>\theta)^T(y-X _b</em>\theta)<br>$$<br>依然是使用最小二乘法的思路, 对θ中的每一个变量求导, 让它的值等于0, 只不过此时是在整个矩阵上进行运算.</p>
 <blockquote>
 <p>在矩阵上求导, 求极值的过程的数学推导可能会超出一些院校的本科学习范围, 这里就不给出推导的过程了, 只给出结果:</p>
 <p><img src="/Blog/intro/muti_l_reg_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -873,7 +873,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -900,7 +900,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -909,7 +909,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
