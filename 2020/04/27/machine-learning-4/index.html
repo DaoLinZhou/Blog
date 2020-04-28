@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -504,7 +504,8 @@ if __name__ == &#39;__main__&#39;:
 <p>因此n_iters最好代表<strong>所有样本</strong>遍历的次数. 而且如果随机选取索引进行遍历的话有可能某些样本被遍历多次, 而有些样本没有被遍历. </p>
 <p>因此我们作两次循环, 外层就是对n_iters进行循环, 每次循环的过程中都把所有的样本看一遍, 如何保证把所有样本都看一遍同时还是随机的? 使用洗牌算法, 乱序之后从第一个样本看到最后一个样本</p>
 <pre><code class="python">class LinearRegression:
-`    def fit_sgd(self, X_train, y_train, n_iters=5, t0=5, t1=50):
+
+    def fit_sgd(self, X_train, y_train, n_iters=5, t0=5, t1=50):
         &quot;&quot;&quot;根据训练数据集X_train, y_train, 使用随机梯度下降法训练Linear Regression模型&quot;&quot;&quot;
         assert X_train.shape[0] == y_train.shape[0], \
             &quot;the size of X_train must be equal to the size of y_train&quot;
@@ -707,7 +708,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -734,7 +735,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -743,7 +744,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
