@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    6.9k 字
+                    7.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      26 分钟
+                      28 分钟
                   </span>
                 
 
@@ -190,7 +190,7 @@
 <p>我们希望找到 J 的最小值, 所以我们希望这个点能够向对应 J 减小的方向移动, 所以就应该向这个导数的负方向移动.</p>
 <p>对应还应该移动一个步长, 这个步长我们通常称为η(yita 或 eta)<br>$$<br>-η \frac {dJ} {d\theta}<br>$$<br>就是说对于一个点来说, 求出它的导数就知道对应这个点J增大的方向, 但是如果向 J 减小的方向继续前进的话只需要将这个导数乘以一个 -η 就好了</p>
 <p><img src="/Blog/intro/gradient_descent_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>通常η会通常会提前区号一个值, 例如0.1</p>
+<p>通常η会通常会提前取好一个值, 例如0.1</p>
 <p>这个点对应的theta值就会首先减去0.1乘以导数</p>
 <p><img src="/Blog/intro/gradient_descent_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>相应的就是蓝色的点在向右移动, theta在增大, 这是因为导数为负值, 减去负数相当于加上正数. 相应的 J 就会减少一些</p>
@@ -245,14 +245,13 @@ if __name__ == &#39;__main__&#39;:
     plot_x = np.linspace(-1, 6, 141)
     plot_y = (plot_x - 2.5) ** 2 - 1
 
-    eta = 1.1
+    eta = 0.01
     epsilon = 1e-8
 
     theta = 0.0
     theta_history = [theta]
 
-    # 最大循环10次
-    for _ in range(10):
+    for _ in range(1000):
         gradient = dJ(theta)
         last_theta = theta
         theta = theta - eta * gradient
@@ -285,8 +284,8 @@ if __name__ == &#39;__main__&#39;:
 <br>
 
 <p><img src="/Blog/intro/gradient_descent_program_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>也就是说这个函数对应就是损失函数<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
-<p>$$<br>=\sum^m_{i=1}(y^{(1)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
+<p>也就是说这个函数对应就是损失函数<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(i)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
+<p>$$<br>=\sum^m_{i=1}(y^{(i)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
 <p><img src="/Blog/intro/muti_l_reg_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>相应的, 在J上对θ去求梯度值, 就是在J函数上针对θ每一个维度求偏导</p>
 <p><img src="/Blog/intro/gradient_descent_program_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -295,23 +294,25 @@ if __name__ == &#39;__main__&#39;:
 <p>我们希望, 最后求出的梯度中, 每一个元素的值应该和m是无关的</p>
 <p>为此, 我们让整个梯度值再除以一个m</p>
 <p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>这么写其实相当于目标函数本身不是<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$<br>而是这样一个式子<br>$$<br>J(\theta)=\frac 1m\sum_{i=1}^m(y^{(1)}-\hat y^{(i)})^2<br>$$<br>对这个式子求梯度, 得到的才是我们想要的结果</p>
+<p>这么写其实相当于目标函数本身不是<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(i)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$<br>而是这样一个式子<br>$$<br>J(\theta)=\frac 1m\sum_{i=1}^m(y^{(i)}-\hat y^{(i)})^2<br>$$<br>对这个式子求梯度, 得到的才是我们想要的结果</p>
 <p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>而这个式子其实就是MSE<br>$$<br>J(\theta)=MSE(y,\hat y)<br>$$<br>有的机器学习的教材对于在线性回归中使用梯度下降法会把优化的目标函数写成这样:<br>$$<br>J(\theta)=\frac 1{2m}\sum_{i=1}^m(y^{(1)}-\hat y^{(i)})^2<br>$$<br>是为了把梯度最终结果分母上的2消掉, 但其实这个2影响并不大</p>
+<p>而这个式子其实就是MSE<br>$$<br>J(\theta)=MSE(y,\hat y)<br>$$<br>有的机器学习的教材对于在线性回归中使用梯度下降法会把优化的目标函数写成这样:<br>$$<br>J(\theta)=\frac 1{2m}\sum_{i=1}^m(y^{(i)}-\hat y^{(i)})^2<br>$$<br>是为了把梯度最终结果分母上的2消掉, 但其实这个2影响并不大</p>
 <p>但如果没有1/m, 梯度中的每一个元素就会非常大</p>
  <br>
 
 <p>也就是说:</p>
 <p>当使用梯度下降法来求一个函数的最小值时, 有时候要对目标函数进行一些特殊的设计, 不见得所有的目标函数都非常合适</p>
-<p>虽然理论上每一个梯度都非常大的话, 依然可以通过调节η得到想要的结果, 但是这回影响效率<br>$$<br>J(\theta)=\frac 1m\sum_{i=1}^m(y^{(1)}-\hat y^{(i)})^2=MSE(y,\hat y)<br>$$<br>而这里我们就对这个目标函数进行优化. 相应梯度的值就被这个式子所表达</p>
+<p>虽然理论上每一个梯度都非常大的话, 依然可以通过调节η得到想要的结果, 但是这回影响效率<br>$$<br>J(\theta)=\frac 1m\sum_{i=1}^m(y^{(i)}-\hat y^{(i)})^2=MSE(y,\hat y)<br>$$<br>而这里我们就对这个目标函数进行优化. 相应梯度的值就被这个式子所表达</p>
 <p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h2 id="编程实现多元线性回归中的梯度下降"><a href="#编程实现多元线性回归中的梯度下降" class="headerlink" title="编程实现多元线性回归中的梯度下降"></a>编程实现多元线性回归中的梯度下降</h2><p>之前说在多元线性回归中用正规方程解求θ的时间复杂度很高, 而用梯度下降求解则快很多</p>
 <p>因此, 把梯度下降的过程封装进LinearRegression类中</p>
-<p>公式:<br>$$<br>J(\theta)=\sum^m_{i=1}(y^{(1)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
-<p>$$<br>=\sum^m_{i=1}(y^{(1)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
+<p>公式:<br>$$<br>J(\theta)=\frac 1m \sum^m_{i=1}(y^{(i)}-\theta_0-\theta_1X_1^{(i)}-\theta_2X_2^{(i)}-…-\theta_nX_n^{(i)})^2<br>$$</p>
+<p>$$<br>=\frac 1m \sum^m_{i=1}(y^{(i)}-X_b^{(i)}\theta)^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
+<p>$$<br>=\frac 1m (y-X_b\theta)\cdot(y-X_b\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
 <p><img src="/Blog/intro/gradient_descent_program_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_gd.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <pre><code class="python">class LinearRegression:
 
     # 省略其余代码
@@ -366,6 +367,7 @@ if __name__ == &#39;__main__&#39;:
 <p>上面的dJ函数中是一项一项的把每个元素都求出来, 使用了一个循环. 而这个能否向量化, 转换成矩阵的运算?</p>
 <p>首先把第0项和其他项统一</p>
 <p><img src="/Blog/intro/gradient_descent_program_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_gd.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>X<sub>0</sub>依然恒等于1</p>
 <p><img src="/Blog/intro/gradient_descent_program_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>而这个结果是一个行向量, 为了规范起见, 要把它转换成列向量, 即求它的转置<br>$$<br>\frac 2 m X_b^T(X_b\theta-y)<br>$$<br><img src="/Blog/intro/gradient_descent_program_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -427,7 +429,7 @@ if __name__ == &#39;__main__&#39;:
 <p>归一化后不仅运行快, score也高了很多, 和使用正规方程的score是一致的, 也就是说找到了损失函数的最小值</p>
 <br>
 
-<p>梯度下降法的优势: 在<strong>特征数量</strong>非常多的时候(成千上万), 使用梯度下降是快于正规方程法的</p>
+<p>梯度下降法的优势: 在<strong>特征数量</strong>非常多的时候(成千上万), 使用梯度下降是快于正规方程法的, 因为当特征数量多M<sup>T</sup>M这个方阵的行数和列数就更多, 使用正规方程法求矩阵的逆就更耗时</p>
 <p>然而就是这样的梯度下降法在计算梯度的时候要让每一个样本都参与计算, 如果<strong>样本数量</strong>过多, 其实计算梯度也比较慢</p>
 <p>这也有改进方式, 那就是随机梯度下降法</p>
 <br>
@@ -681,6 +683,51 @@ if __name__ == &#39;__main__&#39;:
 <p>由于机器学习本身就是在解决不确定的世界中不确定的问题, 本身很有可能没有一个固定的最优解, 因此随机扮演着非常重要的角色</p>
 <br>
 
+<p>自己尝试的小批量梯度下降</p>
+<pre><code class="python">class LinearRegression:
+    def fit_mbgd(self, X, y, k=10, n_iters=5, t0=5, t1=50):
+        &quot;&quot;&quot;根据训练数据集X_train, y_train, 使用小批量梯度下降法训练Linear Regression模型&quot;&quot;&quot;
+        assert X_train.shape[0] == y_train.shape[0], \
+            &quot;the size of X_train must be equal to the size of y_train&quot;
+        assert n_iters &gt;= 1
+        assert k &gt;= 1
+        # 每次取k个样本, 所以k最大为样本容量
+        k = min(len(X), k)
+
+        def dJ_mbgd(theta, X_b_k, y_k):
+            return X_b_k.T.dot(X_b_k.dot(theta) - y_k) * 2 / len(X_b_k)
+
+        def dJ(X_b, y, initial_theta, k=10, n_iters=5, t0=5, t1=50):
+            def learning_rate(n_iters, t0, t1):
+                return t0 / (n_iters + t1)
+
+            m = len(X_b)
+            res = np.empty(m)
+            theta = initial_theta
+            for cur_iter in range(n_iters):
+                # 每一个样本索引重复k遍, 洗牌并且k个一组, 每次取一组
+                indexes = np.array([i for i in range(m)] * k)
+                np.random.shuffle(indexes)
+                indexes = indexes.reshape(-1, k)
+
+                for i in range(m):
+                    X_b_new = X_b[indexes[i]]
+                    y_new = y[indexes[i]]
+                    gradient = dJ_mbgd(theta, X_b_new, y_new)
+                    theta = theta - gradient * learning_rate(cur_iter*m + i, t0, t1)
+
+            return theta
+
+        X_b = np.hstack([np.ones((len(X), 1)), X])
+        initial_theta = np.zeros(X_b.shape[1])
+        self._theta = dJ(X_b, y, initial_theta, k, n_iters, t0, t1)
+
+        self.intercept_ = self._theta[0]
+        self.coef_ = self._theta[1:]
+
+        return self</code></pre>
+<br>
+
 <h3 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h3><p><img src="/Blog/intro/gradient_descent_debug_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>如果某些场景, 我们想求某一个函数的最大值, 就可以使用梯度上升法, 此时只不过是加上η乘以导数.</p>
 <p>因为梯度本身就代表增大的方向, 直接向这个方向走就好了</p>
@@ -753,7 +800,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -780,7 +827,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -789,7 +836,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
