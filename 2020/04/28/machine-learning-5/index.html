@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.5k 字
+                    2.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      5 分钟
+                      8 分钟
                   </span>
                 
 
@@ -241,7 +241,7 @@
 <p>也可以使用点乘的定义推导</p>
 <p><img src="/Blog/intro/PCA_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 </blockquote>
-<p>此时我们的目标就变成:<br>$$<br>Var(X_{project})=\frac 1 m\sum_{i=1}^m(\vec w\cdot X^{(i)})^2<br>$$<br>求方向向量w(模为1), 让这个式子最大</p>
+<p>此时我们的目标就变成:<br>$$<br>Var(X_{project})=\frac 1 m\sum_{i=1}^m( X^{(i)} \cdot \vec w )^2<br>$$<br>求方向向量w(模为1), 让这个式子最大</p>
 <p>而把点乘展开以后就是这样的式子:<br>$$<br>Var(X_{project})=\frac 1 m\sum_{i=1}^m(X_1^{(i)}w_1+X_2^{(i)}w_2+\cdots+X_n^{(i)}w_n)^2<br>$$<br>就是X<sup>(i)</sup>的每一个维度和w的每一个维度相乘再相加</p>
 <p>现在主成分分析法就变成了一个<strong>求目标函数的最优化问题, 使用梯度上升法解决</strong></p>
 <blockquote>
@@ -250,7 +250,7 @@
 </blockquote>
 <br>
 
-<p class="note note-primary"></p><h5>和线性回归的不同</h5><p></p>
+<p class="note note-primary">和线性回归的不同</p>
 
 <blockquote>
 <p>注意: 和线性回归不同, 线性回归中横轴是特征, 纵轴是输出标记, 而PCA算法中, 横纵轴都是特征</p>
@@ -260,6 +260,106 @@
 <p><img src="/Blog/intro/PCA_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这些线是垂直于x轴, 而不是垂直与线的</p>
 </blockquote>
+<br>
+
+<br>
+
+<h2 id="梯度上升法求PCA"><a href="#梯度上升法求PCA" class="headerlink" title="梯度上升法求PCA"></a>梯度上升法求PCA</h2><p><img src="/Blog/intro/PCA_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这里用 f(x) 而不是 J(x), 因为一般情况下J是用来描述损失函数的</p>
+<p>如果想要用梯度上升法, 关键就是求f(x)的梯度</p>
+<blockquote>
+<p>注意X已知, 是<strong>非监督学习</strong>(没有y)提供的样本信息, 而w才是未知数</p>
+</blockquote>
+<p><img src="/Blog/intro/PCA_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/PCA_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/PCA_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>由于得到的是一个行向量, 所以对整体进行转置来得到列向量<br>$$<br>=\frac 2m X^TXw<br>$$<br><img src="/Blog/intro/PCA_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<pre><code class="python">import numpy as np
+
+
+def demean(X):
+    return X - np.mean(X, axis=0)
+
+
+def f(w, X):
+    return np.sum(X.dot(w)**2) / len(X)
+
+
+def df_math(w, X):
+    return X.T.dot(X).dot(w)
+
+
+def df_debug(w, X, epsilon=0.0001):
+    res = np.empty(len(w))
+    for i in range(len(w)):
+        w_1 = w.copy()
+        w_2 = w.copy()
+        w_1[i] += epsilon
+        w_2[i] -= epsilon
+        res[i] = (f(w_1, X) - f(w_2, X)) / (2*epsilon)
+    return res
+
+
+def direction(w):
+    return w / np.linalg.norm(w)
+
+
+def gradient_ascent(df, X, w, eta, n_iters=int(1e4), epsilon=1e-8):
+
+    w = direction(w)
+    for _ in range(n_iters):
+
+        gradient = df(w, X)
+        last_w = w
+        w = w + eta * gradient
+        w = direction(w)    # 注意1: 每次求一个单位方向
+
+        if abs(f(w, X) - f(last_w, X)) &lt; epsilon:
+            break
+    return w
+
+
+if __name__ == &#39;__main__&#39;:
+    X = np.empty((100, 2))
+    # [0, 100)之间随机分布的100个样本
+    X[:, 0] = np.random.uniform(0, 100, size=100)
+    X[:, 1] = 0.75 * X[:, 0] + 3. + np.random.normal(0, 10, 100)
+
+    # demean
+    X_demean = demean(X)
+
+    # 梯度上升法
+    # 初始化的值不能是零向量, w=0本身就是极值点(最小值), 梯度为0
+    initial_w = np.random.random(X.shape[1])    # 注意2: 不能从0向量开始
+    eta = 0.001
+
+    # 注意3: 不能只用StandardScaler标准化数据
+    # 我们希望找到一个轴, 使得方差最大
+    # 但一旦归一化了, 方差就为1, 就不存在最大的方差了
+
+    res = gradient_ascent(df_debug, X_demean, initial_w, eta)
+    print(res)
+    res = gradient_ascent(df_math, X_demean, initial_w, eta)
+    print(res)</code></pre>
+<p>得到的主成分是我们第一个得到的, 所以也叫第一主成分</p>
+<p><img src="/Blog/intro/PCA_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果生成的数据都在一条直线上</p>
+<pre><code class="python">X2 = np.empty((100, 2))
+X2[:,0] = np.random.uniform(0., 100., size=100)
+X2[:,1] = 0.75 * X2[:,0] + 3.
+
+plt.scatter(X2[:,0], X2[:,1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/PCA_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">X2_demean = demean(X2)
+w2 = gradient_ascent(df_math, X2_demean, initial_w, eta)
+
+plt.scatter(X2_demean[:,0], X2_demean[:,1])
+plt.plot([0, w2[0]*30], [0, w2[1]*30], color=&#39;r&#39;)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/PCA_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
