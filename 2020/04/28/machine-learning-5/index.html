@@ -236,7 +236,7 @@
 <p>其实就是正交映射<br>$$<br>X_{project}^{(i)}=\frac {\vec w\cdot X^{(i)}} {\vec w\cdot\vec w}\cdot \vec w<br>$$</p>
 <p>$$<br>\frac {\vec w\cdot X^{(i)}} {\vec w\cdot\vec w}<br>$$</p>
 <p>而这个式子将得到一个数, 这个数代表把w伸缩多少倍才能得到投影</p>
-<p>而如果w的模为1, 即w是标准基的话(w只表示方向), 那么距离(模)就表示为<br>$$<br>||X_{project}^{(i)}|| = \frac {\vec w\cdot X^{(i)}} {\vec w\cdot\vec w}<br>$$<br>而如果w的模为1, 那么分子就是w的模的平方, 因此就可以化简为<br>$$<br>||X_{project}^{(i)}||=\vec w\cdot X^{(i)}<br>$$</p>
+<p>而如果w的模为1, 即w是标准基的话(w只表示方向), 那么距离(模)就表示为:<br>$$<br>||X_{project}^{(i)}|| = \frac {\vec w\cdot X^{(i)}} {\vec w\cdot\vec w}<br>$$<br>而如果w的模为1, 且分子就是w的模的平方, 因此就可以化简为<br>$$<br>||X_{project}^{(i)}||=\vec w\cdot X^{(i)}<br>$$</p>
 <blockquote>
 <p>也可以使用点乘的定义推导</p>
 <p><img src="/Blog/intro/PCA_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -249,6 +249,8 @@
 <p>主要关注用搜索的策略来求主成分分析法</p>
 </blockquote>
 <br>
+
+<p class="note note-primary"></p><h5>和线性回归的不同</h5><p></p>
 
 <blockquote>
 <p>注意: 和线性回归不同, 线性回归中横轴是特征, 纵轴是输出标记, 而PCA算法中, 横纵轴都是特征</p>
