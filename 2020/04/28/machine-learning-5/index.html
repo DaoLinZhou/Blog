@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.1k 字
+                    3.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      8 分钟
+                      12 分钟
                   </span>
                 
 
@@ -241,7 +241,8 @@
 <p>也可以使用点乘的定义推导</p>
 <p><img src="/Blog/intro/PCA_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 </blockquote>
-<p>此时我们的目标就变成:<br>$$<br>Var(X_{project})=\frac 1 m\sum_{i=1}^m( X^{(i)} \cdot \vec w )^2<br>$$<br>求方向向量w(模为1), 让这个式子最大</p>
+<p>此时我们的目标就变成:<br>$$<br>Var(X_{project})=\frac 1 m\sum_{i=1}^m( X^{(i)} \cdot \vec w )^2<br>$$<br>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ =\frac 1 m ||X\cdot \vec w||^2<br>$$</p>
+<p>求方向向量w(模为1), 让这个式子最大</p>
 <p>而把点乘展开以后就是这样的式子:<br>$$<br>Var(X_{project})=\frac 1 m\sum_{i=1}^m(X_1^{(i)}w_1+X_2^{(i)}w_2+\cdots+X_n^{(i)}w_n)^2<br>$$<br>就是X<sup>(i)</sup>的每一个维度和w的每一个维度相乘再相加</p>
 <p>现在主成分分析法就变成了一个<strong>求目标函数的最优化问题, 使用梯度上升法解决</strong></p>
 <blockquote>
@@ -360,6 +361,126 @@ plt.scatter(X2_demean[:,0], X2_demean[:,1])
 plt.plot([0, w2[0]*30], [0, w2[1]*30], color=&#39;r&#39;)
 plt.show()</code></pre>
 <p><img src="/Blog/intro/PCA_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p class="note note-danger">
+三个注意事项
+<ol>
+    <li>把方向向量的模归一</li>
+    <li>不能从零向量开始梯度上升</li>
+    <li>不可以对数据进行归一化</li>
+</ol></p>
+
+<br>
+
+<br>
+
+<h2 id="求数据的前n个主成分"><a href="#求数据的前n个主成分" class="headerlink" title="求数据的前n个主成分"></a>求数据的前n个主成分</h2><p><img src="/Blog/intro/PCA_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>将样本点都映射到这个轴上, 这个轴就是第一主成分</p>
+<p>得到的这些样本点的方差是最大的</p>
+<p><img src="/Blog/intro/PCA_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>不过样本点本身都是二维的坐标点, 将它映射到轴上之后并没有变成一维的数据</p>
+<p>只不过将这些坐标点相应的一个维度从原先的这样两个轴其中的一个轴变成这样斜着的轴</p>
+<p>相应由于它还是一个二维的数据, 它还应该有另外一个轴(对二维数据来说)</p>
+<p>如果对于一个n维数据来说, 对应的还应该有n个轴, 只不过这n个轴通过主成分分析法重新进行了排列, 使得第一个轴保持样本相应的方差是最大的, 第二个轴次之, 第三个轴再次之</p>
+<p>换言之, 主成分分析法本质是<strong>从一组坐标系, 转移到另外一组坐标系</strong> 这样一个过程</p>
+<p>之前只求出第一个轴所在的方向, 下一个问题就是如何求出下一个轴所在的方向?</p>
+<br>
+
+<p>也就是说, 在求出第一主成分以后, 如何求出下一个主成分?</p>
+<p>由于已经求出第一主成分了, 所以可以将数据进行改变, 将数据在第一个主成分上的分量去掉<br>$$<br>X_{project}^{(i)}=\frac {\vec w\cdot X^{(i)}} {\vec w\cdot\vec w}\cdot \vec w<br>$$<br>由于w的模为1, 所以分子为1<br>$$<br>X_{project}^{(i)}={\vec w\cdot X^{(i)}}\cdot \vec w=||X_{project}^{(i)}||\cdot \vec w<br>$$<br><img src="/Blog/intro/PCA_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么如何把 X 这个样本在 X_proj 上的分量去掉: 非常简单<br>$$<br>X^{(i)}-X_{proj}^{(i)}<br>$$<br>就是把X映射到与X_proj相垂直的轴上</p>
+<p>这个轴就是数据去除掉在第一主成分上的分量相应最终得到的结果</p>
+<p><img src="/Blog/intro/PCA_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>X’ 是 X 中所有的样本都去除了在第一主成分上的分量, 最终的结果</p>
+<p>现在想要求第二主成分就非常简单了</p>
+<p>只要在新的数据上(X’) 重新求第一主成分, 此时在X’上求出的第一主成分就是原来数据的第二主成分</p>
+<p>以此类推就可以求出第三主成分, 第四主成分</p>
+<br>
+
+<br>
+
+<pre><code class="python">import numpy as np
+
+
+def demean(X):
+    return X - np.mean(X, axis=0)
+
+
+def f(w, X):
+    return np.sum(X.dot(w)**2) / len(X)
+
+
+def df_math(w, X):
+    return X.T.dot(X).dot(w)
+
+
+def df_debug(w, X, epsilon=0.0001):
+    res = np.empty(len(w))
+    for i in range(len(w)):
+        w_1 = w.copy()
+        w_2 = w.copy()
+        w_1[i] += epsilon
+        w_2[i] -= epsilon
+        res[i] = (f(w_1, X) - f(w_2, X)) / (2*epsilon)
+    return res
+
+
+def direction(w):
+    return w / np.linalg.norm(w)
+
+
+def first_component(X, w, eta, n_iters=int(1e4), epsilon=1e-8):
+
+    w = direction(w)
+    for _ in range(n_iters):
+
+        gradient = df_math(w, X)
+        last_w = w
+        w = w + eta * gradient
+        w = direction(w)
+
+        if abs(f(w, X) - f(last_w, X)) &lt; epsilon:
+            break
+    return w
+
+
+def first_n_components(n, X, eta=0.01, n_iters=int(1e4), epsilon=1e-8):
+    X_pca = X.copy()
+    X_pca = demean(X_pca)
+
+    res = []
+    for i in range(n):
+        # 得到第一主成分
+        initial_w = np.random.random(X_pca.shape[1])
+        w = first_component(X_pca, initial_w, eta)
+        res.append(w)
+
+        # 把第一主成分从原本的样本中去除
+        X_pca = X_pca - X_pca.dot(w).reshape(-1, 1) * w
+
+    return res
+
+
+if __name__ == &#39;__main__&#39;:
+    X = np.empty((100, 2))
+    # [0, 100)之间随机分布的100个样本
+    X[:, 0] = np.random.uniform(0, 100, size=100)
+    X[:, 1] = 0.75 * X[:, 0] + 3. + np.random.normal(0, 10, 100)
+
+    res = first_n_components(2, X)
+    print(res)</code></pre>
+<p>绿色是第一主成分的方向放大30倍的线</p>
+<p>红色是第二主成分的方向放大30倍的线</p>
+<p>二者垂直</p>
+<p><img src="/Blog/intro/PCA_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>把数据映射到第一主成分上</p>
+<p><img src="/Blog/intro/PCA_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>映射到第二主成分上</p>
+<p><img src="/Blog/intro/PCA_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>但PCA的主要作用是用于降维, 现在为止, 只不过是将原本所处的坐标系转换到了一个新的坐标系中, 如何把原来的样本数据映射到低维空间?</p>
 
             </div>
             <hr>
@@ -417,7 +538,7 @@ plt.show()</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -444,7 +565,7 @@ plt.show()</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -453,7 +574,7 @@ plt.show()</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
