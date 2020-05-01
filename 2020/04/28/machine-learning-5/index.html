@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.9k 字
+                    6.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      24 分钟
+                      28 分钟
                   </span>
                 
 
@@ -747,6 +747,132 @@ for i in range(10):
 <p><img src="/Blog/intro/pca_p_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>在二维空间中, 其实很多数字的区分度是很明显的</p>
 <p>如果我们只想区分蓝色的数字和紫色的数字, 很有可能降维到2维就足够了</p>
+<br>
+
+<br>
+
+<h2 id="尝试MNIST数据集-手写数字"><a href="#尝试MNIST数据集-手写数字" class="headerlink" title="尝试MNIST数据集(手写数字)"></a>尝试MNIST数据集(手写数字)</h2><pre><code class="python">import numpy as np
+from sklearn.datasets import fetch_openml
+from sklearn.decomposition import PCA
+from sklearn.neighbors import KNeighborsClassifier
+
+if __name__ == &#39;__main__&#39;:
+
+    # 下载mnist
+    mnist = fetch_openml(&quot;mnist_784&quot;)
+
+    X, y = mnist[&#39;data&#39;], mnist[&#39;target&#39;]
+
+    # 一共有70000个数据, 每个数据有784个维度, 前60000是训练数据
+    # 这里取前6000作为训练, 后1000作为测试
+    X_train = np.array(X[:6000], dtype=float)
+    y_train = np.array(y[:6000], dtype=float)
+    X_test = np.array(X[69000:], dtype=float)
+    y_test = np.array(y[69000:], dtype=float)
+
+    # 训练原本的数据
+    knn_clf = KNeighborsClassifier()
+    # scikit-learn中的kNN在数据量非常大的时候会用树结构进行存储, 而不是简单的拷贝
+    knn_clf.fit(X_train, y_train)
+    # score = 0.945
+    print(&quot;before PCA, score =&quot;, knn_clf.score(X_test, y_test))
+
+    # PCA降维
+    pca = PCA(0.9)
+    pca.fit(X_train)
+    X_train_reduction = pca.transform(X_train)
+    X_test_reduction = pca.transform(X_test)
+
+    # 训练降维后的数据
+    knn_clf = KNeighborsClassifier()
+    knn_clf.fit(X_train_reduction, y_train)
+    # score = 0.954
+    # 降维之后, 不仅运行速度变快了, 准确率也变高了
+    # 这就是PCA另外一个应用: 降噪, 将原有数据所包含的噪音消除了
+    # 这使得可以更加准确地得到特征
+    print(&quot;after PCA, score =&quot;, knn_clf.score(X_test_reduction, y_test))</code></pre>
+<p>这就体现出PCA的另外一个重要功能: 降噪</p>
+<p>因此通过PCA降维处理后的数据, 不仅速度变快, 准确率反而更高了. 这是非常好的结果.</p>
+<blockquote>
+<p>kNN没有对数据进行归一化, 这是因为这784个维度本身代表的就是28*28方阵中, 每一个像素的灰度. 也就是说每一个维度的尺度是一样的, 因此不用归一化</p>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="使用PCA对数据进行降噪"><a href="#使用PCA对数据进行降噪" class="headerlink" title="使用PCA对数据进行降噪"></a>使用PCA对数据进行降噪</h2><pre><code class="python">X = np.empty((100, 2))
+X[:, 0] = np.random.uniform(0, 100, size=100)
+X[:, 1] = 0.75 * X[:, 0] + 3 + np.random.normal(0, 10, size=100)
+
+plt.scatter(X[:, 0], X[:, 1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/pca_p_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实有一个问题, 这个数据集展现出这样一个结果</p>
+<p>有没有可能实际数据集就是一根直线? 换句话说这个数据集展现出是在一个直线上下进行抖动分布. 这种抖动和这个直线的距离是噪音, 可能是测量仪器本身有误差, 测量手段有问题…</p>
+<p>在这个过程中使用PCA, 使用transform降维成1维数据, 再用inverse_transform将1维数据转回二维数据</p>
+<p>然后再绘制这些数据, 此时数据就成为了一条直线</p>
+<p><img src="/Blog/intro/PCA_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们完全可以把这个过程理解为: <strong>将原有的数据的噪音给去除了</strong></p>
+<p>然而在实际情况下, 我们不好说这样的数据就是一点噪音都没有了, 也不好说所有的抖动都是噪音, 所以总体而言我们还是倾向于说: <strong>丢失了信息</strong></p>
+<p>不过我们丢失的信息很<strong>有可能有大部分是噪音</strong>, 这也造成了对于mnist数据集来说进行降维处理后, 识别准确率反而提高了</p>
+<blockquote>
+<p>当然现在判断识别准确率的方式还是非常简陋的, 对如何判断识别准确率后续还会强调</p>
+</blockquote>
+<br>
+
+<p>再举一个例子, 依然是手写识别</p>
+<p>这次故意给数据添加一些噪音</p>
+<pre><code class="python">import numpy as np
+from sklearn import datasets
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+
+# 展示数据
+def plot_digits(data):
+    fig, axes = plt.subplots(10, 10, figsize=(10, 10),
+                             subplot_kw={&#39;xticks&#39;: [], &#39;yticks&#39;: []},
+                             gridspec_kw=dict(hspace=0.1, wspace=0.1))
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(data[i].reshape(8, 8),
+                  cmap=&#39;binary&#39;, interpolation=&#39;nearest&#39;,
+                  clim=(0, 16))
+    plt.show()
+
+
+if __name__ == &#39;__main__&#39;:
+    digits = datasets.load_digits()
+    X = digits.data
+    y = digits.target
+
+    # 创建一个有噪音的数据集
+    noisy_digits = X + np.random.normal(0, 4, size=X.shape)
+
+    # 100个样本, 每10个样本是一个类别
+    # 1-10为0, 11-20为1....每个元素对应10个样本
+    example_digits = noisy_digits[y == 0][:10]
+    for num in range(1, 10):
+        X_num = noisy_digits[y==num, :][:10]
+        example_digits = np.vstack([example_digits, X_num])
+
+    # 展示去噪前的数据
+    plot_digits(example_digits)
+
+    # 感觉噪音比较大, 所以只保留50%的信息
+    pca = PCA(0.5)
+    pca.fit(noisy_digits)
+    print(pca.n_components_) # 12维
+
+    # 降维在升维, 降噪
+    components = pca.transform(example_digits)
+    filtered_digits = pca.inverse_transform(components)
+
+    # 展示去噪后的数据
+    plot_digits(filtered_digits)</code></pre>
+<p>降噪前的数据</p>
+<p><img src="/Blog/intro/pca_p_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>降噪后的数据</p>
+<p><img src="/Blog/intro/pca_p_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <br>
