@@ -785,6 +785,7 @@ if __name__ == &#39;__main__&#39;:
     knn_reg = KNeighborsRegressor()
     knn_reg.fit(X_train_standard, y_train)
     print(knn_reg.score(X_test_standard, y_test))   # 0.8479</code></pre>
+<p><strong>scikit-learn中线性回归添不添加第一列的1是无所谓的</strong>, (代表截距的列), 添加和不添加结果是一样的</p>
 <p>可以看到线性回归的 score为0.8129</p>
 <p>默认kNN的 score为 0.5865</p>
 <p>找到最佳超参数的kNN为 0.716</p>

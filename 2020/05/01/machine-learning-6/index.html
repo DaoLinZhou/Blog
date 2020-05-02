@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.1k 字
+                    2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      8 分钟
                   </span>
                 
 
@@ -238,11 +238,131 @@ if __name__ == &#39;__main__&#39;:
 </blockquote>
 <p>多项式回归再机器学习算法上并没有新的地方, 完全是使用线性回归的思路. 它的关键在于<strong>为原来的数据样本添加新的特征</strong>, 而我们得到新的特征的方式是原有特征的多项式组合, 采用这样的方式就可以解决非线性问题</p>
 <p class="note note-warning">
-    于此同时, 这个思路也值得注意, PCA算法是对数据进行降维处理, 而多项式回归算法显然是做相反的事情, 它让数据集升维, 升高维度后(添加新的特征之后), 使得算法可以更好地拟合高维度的数据. 
-    <br>
+    于此同时, 这个思路也值得注意, PCA算法是对数据进行降维处理, 而多项式回归算法显然是做相反的事情, <b>它让数据集升维</b>, 升高维度后(添加新的特征之后), 使得算法可以更好地拟合高维度的数据. 
     这个思路在后面SVM中还会再次见到
 </p>
 
+<br>
+
+<br>
+
+<h2 id="scikit中的多项式回归"><a href="#scikit中的多项式回归" class="headerlink" title="scikit中的多项式回归"></a>scikit中的多项式回归</h2><p>PolynomialFeatures</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+
+
+if __name__ == &#39;__main__&#39;:
+    x = np.random.uniform(-3, 3, size=100)
+    X = x.reshape(-1, 1)
+    y = 0.5 * x**2 + x + 2 + np.random.normal(0, 1, size=100)
+
+       # 设置最高为2次项
+    poly = PolynomialFeatures(degree=2)
+    poly.fit(X)
+    X2 = poly.transform(X)
+
+    print(X2[:5, :])
+    &quot;&quot;&quot;
+    分别是X的 0次方, 1次方, 2次方
+    [[ 1.         -1.24170356  1.54182773]
+     [ 1.          2.89819499  8.39953419]
+     [ 1.         -2.08666526  4.35417192]
+     [ 1.          2.40031645  5.76151905]
+     [ 1.          1.07686046  1.15962845]]
+    &quot;&quot;&quot;
+    lin_reg2 = LinearRegression()
+    lin_reg2.fit(X2, y)
+    y_predict2 = lin_reg2.predict(X2)
+
+    # scikit-learn中线性回归添不添加第一列的1是无所谓的
+    # X3 = X2[:, 1:]
+    # lin_reg3 = LinearRegression()
+    # lin_reg3.fit(X3, y)
+    # y_predict3 = lin_reg3.predict(X3)
+    # print(all((y_predict2 - y_predict3) &lt; 1e-6))
+
+    plt.scatter(x, y)
+    plt.plot(np.sort(x), y_predict2[np.argsort(x)], color=&quot;r&quot;)
+    plt.show()</code></pre>
+<blockquote>
+<p>可以看到, 此时使用线性回归传入的矩阵第一列全是1, 也就是传入的是一个X_b矩阵(可以回到线性回归章节看X_b和X矩阵有什么不同)</p>
+<p>然而在之前使用线性回归我们只传一个X矩阵, scikit-learn中, 二者是无所谓的</p>
+</blockquote>
+<pre><code class="python">    # [0.         1.03198969 0.5154626 ]
+    print(lin_reg2.coef_)
+    # 2.1146972475744947
+    print(lin_reg2.intercept_)</code></pre>
+<p>这个0就是对于第一列所有数据拟合结果为0</p>
+<br>
+
+<br>
+
+<h3 id="关于PolynomialFeatures"><a href="#关于PolynomialFeatures" class="headerlink" title="关于PolynomialFeatures"></a>关于PolynomialFeatures</h3><p>现在的所有例子中X都有一个特征, 如果X中有两个特征会怎么样</p>
+<pre><code class="python">import numpy as np
+from sklearn.preprocessing import PolynomialFeatures
+
+if __name__ == &#39;__main__&#39;:
+    X = np.arange(1, 11).reshape(-1, 2)
+    poly = PolynomialFeatures(degree=2)
+    poly.fit(X)
+    X2 = poly.transform(X)
+    print(X2.shape)     # (5, 6)
+    print(X2)
+    &quot;&quot;&quot;
+    第一列是0次幂, 第二列和第三列是一次幂的项, x1和x2
+    二次幂的特征有3列, 分别x1平方, x1乘以x2, x2平方
+    [[  1.   1.   2.   1.   2.   4.]
+     [  1.   3.   4.   9.  12.  16.]
+     [  1.   5.   6.  25.  30.  36.]
+     [  1.   7.   8.  49.  56.  64.]
+     [  1.   9.  10.  81.  90. 100.]]
+    &quot;&quot;&quot;</code></pre>
+<p>可以想象, 如果是3次幂, 则会有10列</p>
+<p><img src="/Blog/intro/muti_reg_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当 degree 传入 i 的话, PolynomialFeatures将会自动生成degree &lt;= i 的所有多项式的项</p>
+<p>也就是说经过PolynomialFeatures之后, 样本的总特征数将呈现指数级增长</p>
+<p>这个特性一方面使得PolynomialFeatures非常强大, 因为它涉及到所有可能的多项式的特征, 不过于此同时也会带来一些问题 (过拟合与欠拟合问题)</p>
+<br>
+
+<h3 id="Pipeline-管道"><a href="#Pipeline-管道" class="headerlink" title="Pipeline 管道"></a>Pipeline 管道</h3><p>可以方便使用多项式回归的方式</p>
+<p>我们使用多项式回归的过程是怎样的? </p>
+<ol>
+<li><p>要将原本的数据通过PolynomialFeatures生成多项式的特征的样本数据</p>
+</li>
+<li><p>之前是将生成的多项式样本数据直接送给了LinearRegression</p>
+<p>但如果degree的值非常大, 这些样本数据之间生成的差距就会非常大例如1的100次方和10的100次方</p>
+<p>而由于数据分布不均衡, 在梯度下降的过程中就会非常慢, 此时最好进行数据归一化</p>
+</li>
+</ol>
+<p>因此整体进行了3步:</p>
+<p><strong>生成多项式的特征, 数据的归一化, 线性回归</strong></p>
+<p>而Pipeline就可以将这三步合在一起, 使得每一次在调用的时候不用重复这三步</p>
+<pre><code class="python">import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+from sklearn.linear_model import LinearRegression
+
+if __name__ == &#39;__main__&#39;:
+    x = np.random.uniform(-3, 3, size=100)
+    X = x.reshape(-1, 1)
+    y = 0.5 * x ** 2 + x + 2 + np.random.normal(0, 1, size=100)
+
+    poly_reg = Pipeline([
+        # 字符串只是名词
+        (&#39;poly&#39;, PolynomialFeatures(degree=2)),
+        (&#39;std_scaler&#39;, StandardScaler()),
+        (&#39;lin_reg&#39;, LinearRegression())
+    ])
+
+    # 非常智能地, 先将X通过PolynomialFeatures
+    # 再通过StandardScaler, 最后得到全新的X和y再送给LinearRegression
+    poly_reg.fit(X, y)
+    y_predict = poly_reg.predict(X)</code></pre>
+<p>也能得到一个二次曲线</p>
+<p>scikit-learn并没有多项式回归这样的类, 但是我们可以通过Pipeline方便地自己创建出多项式回归的类</p>
 <br>
 
 <br>
