@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.8k 字
+                    4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      15 分钟
                   </span>
                 
 
@@ -351,7 +351,7 @@ if __name__ == &#39;__main__&#39;:
     y = 0.5 * x ** 2 + x + 2 + np.random.normal(0, 1, size=100)
 
     poly_reg = Pipeline([
-        # 字符串只是名词
+        # 字符串只是名字, 任意取即可
         (&#39;poly&#39;, PolynomialFeatures(degree=2)),
         (&#39;std_scaler&#39;, StandardScaler()),
         (&#39;lin_reg&#39;, LinearRegression())
@@ -447,6 +447,116 @@ if __name__ == &#39;__main__&#39;:
 
 <br>
 
+<h2 id="为什么要训练数据集和测试数据集"><a href="#为什么要训练数据集和测试数据集" class="headerlink" title="为什么要训练数据集和测试数据集"></a>为什么要训练数据集和测试数据集</h2><h3 id="衡量基准的偏移"><a href="#衡量基准的偏移" class="headerlink" title="衡量基准的偏移"></a>衡量基准的偏移</h3><p>机器学习主要解决的问题是过拟合</p>
+<p>在看一眼上面生成的曲线:</p>
+<p><img src="/Blog/intro/muti_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>虽然我们学习整个曲线使得整个样本的均方误差最小, 但如果用这根曲线进行预测的话</p>
+<p><img src="/Blog/intro/predict_poly_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>紫色点是新的样本点, 经过拟合曲线预测的结果, 很显然紫色的点看起来和蓝色的点不在一个趋势上. 这个预测值很有可能是错误的</p>
+<p>换句话说, 在过拟合的情况下, 虽然这个曲线能把原来的样本点拟合的非常好, 但一旦来了新的样本点, 它就不能进行很好的预测了</p>
+<p>此时就称<strong>这个模型的泛化能力是非常弱的</strong></p>
+<br>
+
+<p>我们训练模型不是为了最大程度地拟合这些点, 而是为了获得一个可以预测的模型, 当面对新的数据时, 通过模型可以得到很好的解答</p>
+<p>正因为如此, 我们衡量模型对于<strong>训练数据</strong>拟合程度有多好是没有意义的</p>
+<p>我们真正需要衡量的是<strong>模型的泛化能力有多好</strong></p>
+<br>
+
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>面对这种情况应该怎么做? 很简单, 之前也一直在使用</p>
+<p>就是使用: <strong>训练测试数据集的分离</strong></p>
+<p><img src="/Blog/intro/knn_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>获得模型只使用训练数据集, 而测试数据对于模型来说就是全新的数据, 如果使用训练数据得到的模型面对测试数据也能得到很好的结果的话, 我们就说模型的泛化能力是很强的</p>
+<p>因为它能通过训练数据得到的结果很好的给出测试数据这些从来没有见过的数据的结果</p>
+<p>但如果模型面对测试数据效果很差, 就说明模型的泛化能力是很弱的, 多半我们就遭遇了过拟合</p>
+<br>
+
+<br>
+
+<pre><code class="python">import numpy as np
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+
+def PolynomialRegression(degree):
+    return Pipeline([
+        (&quot;ploy&quot;, PolynomialFeatures(degree=degree)),
+        (&quot;standard&quot;, StandardScaler()),
+        (&quot;lin_reg&quot;, LinearRegression())
+    ])
+
+
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(666)
+    x = np.random.uniform(-3, 3, size=100)
+    X = x.reshape(-1, 1)
+    y = 0.5 * x ** 2 + x + 2 + np.random.normal(0, 1, size=100)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+    lin_reg = LinearRegression()
+    lin_reg.fit(X_train, y_train)
+    y_predict = lin_reg.predict(X_test)
+    # 2.21
+    print(mean_squared_error(y_test, y_predict))
+
+    poly2_reg = PolynomialRegression(degree=2)
+    poly2_reg.fit(X_train, y_train)
+    y2_predict = poly2_reg.predict(X_test)
+    # 0.80
+    print(mean_squared_error(y_test, y2_predict))
+
+    poly10_reg = PolynomialRegression(degree=10)
+    poly10_reg.fit(X_train, y_train)
+    y10_predict = poly10_reg.predict(X_test)
+    # 0.92, 说明degree=10的时候模型泛化能力变弱了
+    print(mean_squared_error(y_test, y10_predict))
+
+    poly100_reg = PolynomialRegression(degree=100)
+    poly100_reg.fit(X_train, y_train)
+    y100_predict = poly100_reg.predict(X_test)
+    # 13123135111, 这个误差非常大, 预测结果极差
+    print(mean_squared_error(y_test, y100_predict))</code></pre>
+<p>上面的实验实际上是在测试模型的复杂度</p>
+<p>多项式回归degree的阶数越高, 模型就越复杂, 而机器算法是有这样一个图的</p>
+<p><img src="/Blog/intro/predict_poly_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><strong>模型的复杂度</strong>对于不同的算法来说是不同的意思</p>
+<p>对于多项式回归来说, 阶数越高模型越复杂</p>
+<p>而对于kNN来说k越小模型越复杂, k越大模型越简单, k取最大值(即样本总数)的时候是最简单的, 问题就变成了看整个样本里那种样本最多</p>
+<blockquote>
+<p>对于不同算法来说, 模型复杂度的定义不一样</p>
+<p>但是每一个模型都可以通过参数的调整使得它从简单变复杂</p>
+</blockquote>
+<p><strong>模型准确率</strong>代表模型能多么好地预测数据</p>
+<br>
+
+<p><img src="/Blog/intro/predict_poly_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于训练数据来说, 随着模型复杂度的上升, 准确率也在上升</p>
+<p>而对于测试数据来说, 前期随着模型复杂度的上升, 准确率也在上升, 而在一定程度后, 模型的复杂程度再上升是会导致准确率下降的</p>
+<p>其实就是这样一个过程:  欠拟合-&gt;合适-&gt;过拟合</p>
+<br>
+
+<p>这张图只是示意图, 对于不同的算法放进来得到的图是不一样的</p>
+<p>但整体是这样一个趋势</p>
+<br>
+
+<p class="note note-success">欠拟合(underfitting): 算法训练的模型不能完整表述数据关系
+<br><br>
+过拟合(overfitting): 算法所训练的模型过多地表达了数据间的<b>噪音</b>关系(通常采集到的数据都是有噪音的)</p>
+
+<br>
+
+<p>其实我们要找到是泛化能力最好的地方, 换句话说, 对于测试数据模型准确率最高的地方.</p>
+<p><img src="/Blog/intro/predict_poly_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而其实之前使用<strong>网格搜索</strong>一直就是这么干的</p>
+<p>一直就是把数据分为训练数据集和测试数据集, 对于不同参数训练出的模型去寻找使得测试数据集的结果最好的对应的那组参数作为最终获得的模型参数</p>
+<p>然而使用这种方式虽然已经可以评测模型的泛化能力了, 但它还不是最好的方法.</p>
+<br>
+
+<br>
+
 
             </div>
             <hr>
@@ -504,7 +614,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -531,7 +641,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -540,7 +650,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

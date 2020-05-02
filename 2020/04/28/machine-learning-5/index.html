@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    7.9k 字
+                    9.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      32 分钟
+                      36 分钟
                   </span>
                 
 
@@ -946,8 +946,80 @@ if __name__ == &#39;__main__&#39;:
 <ol>
 <li>特征脸和特征值的关系</li>
 <li>PCA是如何求出每个主成分所表述原本数据集方差的比率的</li>
+<li>是否可以反过来从最不重要的成分开始解析, 即最小化投影后的方差来反向进行主成分分析. 这样就可以使用最小二乘法?</li>
 </ol>
 </blockquote>
+<br>
+
+<h1 id="补充2-关于PCA的explained-variance-ratio-的思考"><a href="#补充2-关于PCA的explained-variance-ratio-的思考" class="headerlink" title="补充2: 关于PCA的explained_variance_ratio_的思考"></a>补充2: 关于PCA的explained_variance_ratio_的思考</h1><p>scikit-learn中的PCA在fit之后可以通过explained_variance_ratio_查看各个主成分所表示原本数据集的比率</p>
+<p>而这个功能是如何实现的? 在没有足够的相关知识下尝试进行反推</p>
+<br>
+
+<p>首先, 一个非常自然的想法就是: <strong>求出所有的主成分所能表示的方差和, 在求每个方差和总方差的比例</strong></p>
+<p>尝试:</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    X = np.empty((100, 2))
+    X[:, 0] = np.random.uniform(0, 100, size=100)
+    X[:, 1] = 0.75 * X[:, 0] + 3 + np.random.normal(0, 10, size=100)
+
+    # 求原本数据的主成分
+    pca = PCA(n_components=2)
+    pca.fit(X)
+    new_X = pca.transform(X)
+    # [0.96314273 0.03685727]
+    print(pca.explained_variance_ratio_)
+
+    # ratio是通过每个维度的方差除以总方差得来的
+    var_X_1 = np.var(new_X[:, 0])
+    var_X_2 = np.var(new_X[:, 1])
+    var_total = var_X_1 + var_X_2
+    # 0.9631427325012338  ,  0.036857267498766076
+    print(var_X_1 / var_total, &quot; , &quot;, var_X_2/var_total)
+    # 1459.7675646638604
+    print(var_total)</code></pre>
+<p>new_X是新的坐标系下的X, 它的维度和X一样, 因此它的第0列就是把X投影到第一主成分后的模(长度), 它的第一列就是投影到第二主成分后的模</p>
+<p>得到的结果的确如我所猜测, 这种方法确实可以求出来每个主成分的方差在总方差上的占比</p>
+<p>也就是说如果我们要想求方差的比例, 必须<strong>先求出总体的方差和</strong></p>
+<br>
+
+<p>然而这未免有一些大材小用了, 为了求比例就要把所有的主成分都求出来.</p>
+<p>因此再分析一下上面到底求的是什么</p>
+<p>首先new_X的所有维度的均值都为0, 这是因为再PCA内部进行了demean操作<br>$$<br>Var(x) = \frac 1m \sum_{i=1}^m(x_i-\bar x)^2<br>$$<br>当x的均值为0时, 方差就是求各项的平方和在除以总数<br>$$<br>Var(x) = \frac 1m \sum_{i=1}^mx_i^2<br>$$<br>m是一个常数, 也就是说我们对new_X的第0列求方差就是<strong>把X投影到第一主成分后, 所有样本模的平方和</strong>再除以m</p>
+<p>或者说对所有样本以第一主成分进行降维, 降成一维数据后, 所表示的值就是模</p>
+<p><img src="/Blog/intro/pca_thinking.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>同理对第二列求方差就是<strong>把X投影到第二主成分后, 所有样本模的平方和</strong>再除以m</p>
+<p>因此推广到n维: 求<strong>所有主成分方差和</strong>就是求<strong>demean后的样本所有维度的平方和</strong>, <strong>也就是demean后的样本数据的模的平方</strong>再除以m</p>
+<p><img src="/Blog/intro/pca_thinking_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而这个demean后的样本数据的模的平方不仅可以在主成分轴上表示, 在原始的数据轴上也可以表示, 计算方法也是所有维度的平方和 (根据向量模的定义) 再除以m</p>
+<p><img src="/Blog/intro/pca_thinking_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>也就是说, 无论在哪个坐标系下, demean后的数据的总方差就等于所有样本的各个维度的值的平方和再除以m</p>
+<pre><code class="python">X = demean(X)
+print(np.sum(X**2)/len(X))</code></pre>
+<p>此时就可以通过编程实现了, 把demean后的矩阵中X所有项的平方和再除以样本个数就是总方差</p>
+<p>因为PCA本身就有demean的操作</p>
+<p>求出总方差之后就可以非常简单的对各个主成分的方差求比例了</p>
+<br>
+
+<p>然而可以进一步思考: 如果不进行demean操作, 如何求出总方差?</p>
+<p>因为demean只是偏移了一下坐标系, 点与点之间的距离没有变, 而方差描述的就是平均距离</p>
+<p>其实上面的步骤的核心是<strong>对样本数据各个维度求方差在加起来</strong>, 只不过由于样本各个维度的均值都为0, 所以表现出来就是对每个样本模的平方进行加和</p>
+<p>而如果不进行demean的话, 核心思想也是对各个维度求方差在加和.</p>
+<pre><code class="python"># 转换坐标前的总方差和转换坐标后的中放出一样
+var_X_1 = np.var(X[:, 0])
+var_X_2 = np.var(X[:, 1])
+var_total = var_X_1 + var_X_2
+print(var_total)</code></pre>
+<p>此时就不能使用样本的模来求总方差了, 因为模改变了, 但点与点之间各个维度的方差和没有改变. 如果一定要用样本的模来求总方差, 则一定要先demean</p>
+<pre><code class="python"># 测试, 总体方差=均值归一化后点的模的平方和
+X = demean(X)
+norms = np.array([np.linalg.norm(i) for i in X])**2
+var_total = np.sum(norms) / len(X)
+print(var_total)</code></pre>
+<br>
+
+<p>但总而言之, 由于PCA本身就要进行一步demean, 所以最方便最快捷的操作还是</p>
+<pre><code class="python">X = demean(X)
+print(np.sum(X**2)/len(X))</code></pre>
 
             </div>
             <hr>
@@ -1011,7 +1083,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1038,7 +1110,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1047,7 +1119,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
