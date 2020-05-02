@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2k 字
+                    2.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      8 分钟
+                      11 分钟
                   </span>
                 
 
@@ -363,6 +363,86 @@ if __name__ == &#39;__main__&#39;:
     y_predict = poly_reg.predict(X)</code></pre>
 <p>也能得到一个二次曲线</p>
 <p>scikit-learn并没有多项式回归这样的类, 但是我们可以通过Pipeline方便地自己创建出多项式回归的类</p>
+<br>
+
+<br>
+
+<h2 id="过拟合和欠拟合"><a href="#过拟合和欠拟合" class="headerlink" title="过拟合和欠拟合"></a>过拟合和欠拟合</h2><p>有了多项式回归就可以对非线性数据进行拟合, 进而求解回归问题</p>
+<p>不过, 过度的使用多项式回归将会牵扯机器学习领域一个非常重要的问题: <strong>过拟合 (over fitting)</strong> 和 <strong>欠拟合(under fitting)</strong></p>
+<br>
+
+<p>用实际的例子解释什么叫过拟合与欠拟合</p>
+<pre><code class="python">import numpy as np
+from sklearn.metrics import mean_squared_error
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+
+def PolynomialRegression(degree):
+    return Pipeline([
+        (&quot;ploy&quot;, PolynomialFeatures(degree=degree)),
+        (&quot;standard&quot;, StandardScaler()),
+        (&quot;lin_reg&quot;, LinearRegression())
+    ])
+
+
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(666)
+    x = np.random.uniform(-3, 3, size=100)
+    X = x.reshape(-1, 1)
+    y = 0.5 * x ** 2 + x + 2 + np.random.normal(0, 1, size=100)
+
+    lin_reg = LinearRegression()
+    lin_reg.fit(X, y)
+    y_predict = lin_reg.predict(X)
+
+    # 使用均方误差进行衡量
+    # MSE=3.07
+    print(mean_squared_error(y, y_predict))
+
+    # degree 传入2的结果是非常好的
+    poly2_reg = PolynomialRegression(2)
+    poly2_reg.fit(X, y)
+    y2_predict = poly2_reg.predict(X)
+
+    # MSE=1.09
+    print(mean_squared_error(y, y2_predict))
+</code></pre>
+<p>然而如果degree传入其他值会怎么样?</p>
+<pre><code class="python">    poly10_reg = PolynomialRegression(10)
+    poly10_reg.fit(X, y)
+    y10_predict = poly10_reg.predict(X)
+    # MSE=1.05
+    print(mean_squared_error(y, y10_predict))</code></pre>
+<p>可以看出, degree=10的情况下MSE=1.05, 比degree=2的情况还要小</p>
+<p>此时画图看看拟合曲线</p>
+<p><img src="/Blog/intro/muti_reg_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>甚至可以更加极端, 让degree=100, MSE就更小了</p>
+<pre><code class="python">    poly100_reg = PolynomialRegression(100)
+    poly100_reg.fit(X, y)
+    y100_predict = poly100_reg.predict(X)
+    # MSE=0.68
+    print(mean_squared_error(y, y100_predict))</code></pre>
+<p><img src="/Blog/intro/muti_reg_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>实际上当degree=100时, 绘制的图形并不是我们计算出来的拟合曲线, 这是因为这个图像绘制的曲线只是原有的数据点之间对应的y的预测值连接出来的结果</p>
+<p>不过有很多地方没有数据点, 所以这个连接的结果和原来的曲线不一样, 真正的曲线图像:</p>
+<p><img src="/Blog/intro/muti_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这里就可以分析一下, 显然: <strong>多项式回归, degree传入的值越高最终的拟合结果就会越好.</strong> </p>
+<blockquote>
+<p>道理非常简单, 有这么多样本点, 我们总能找到一根曲线, 这根曲线能将所有的样本点都进行拟合</p>
+<p>就是说让所有的样本点都落在曲线上, 使得整体的均方误差为0 (相应的degree的取值应该是非常高的)</p>
+</blockquote>
+<p>这个拟合的结果虽然从均方误差的角度来看是更加好的, 但它真的是能反应样本数值走势的曲线吗? 显然并不是这样</p>
+<p>虽然使得所有拟合的点获得了更小的误差, 但是这根曲线完全不是我们想要的样子, 这种情况就称为<strong>过拟合(over fitting)</strong></p>
+<p>而直接使用一根来拟合样本数据, 这种方式显然也没有非常好地反应原始数据的样本特征, 但它的错误不是太过复杂了, 而是太过简单了. 这种情况就称为<strong>欠拟合(under fitting)</strong></p>
+<br>
+
+<p>如果原始数据是用过二次方程生成的, 使用一次方程得到的结果就是<strong>欠拟合</strong>, 而使用高于二次的方程进行预测就是<strong>过拟合</strong></p>
+<p>如何识别过拟合和欠拟合?</p>
 <br>
 
 <br>
