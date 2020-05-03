@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.9k 字
+                    6.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      19 分钟
+                      26 分钟
                   </span>
                 
 
@@ -628,6 +628,148 @@ if __name__ == &#39;__main__&#39;:
 <p><img src="/Blog/intro/learning_graph_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>依然是train是上升, test下降, 但整体这个图像和前面的图像也有巨大区别. 区别在于: <strong>在相对稳定的时候, train和test两个曲线的间距是比较大的</strong></p>
 <p>这就说明, 模型在训练数据集上拟合的比较好, 但在测试数据集上误差依然很大, 这种情况通常就是过拟合, 泛化能力不够</p>
+<br>
+
+<br>
+
+<h2 id="验证数据集与交叉验证"><a href="#验证数据集与交叉验证" class="headerlink" title="验证数据集与交叉验证"></a>验证数据集与交叉验证</h2><p><img src="/Blog/intro/learning_graph_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>train-test-split 比只使用训练数据得到的模型靠谱的多, 但是严格来说, 它有它不靠谱的地方</p>
+<p>问题就是这样做有可能<strong>针对测试数据集过拟合</strong></p>
+<p>虽然是使用训练数据获得了模型, 但每次通过测试数据来测试模型的好坏, 一旦发现模型不好, 就换一个参数重新训练</p>
+<p>这个过程模型是围绕测试数据集打转的: 我们在想办法寻找一组参数, 这组参数使得<strong>用训练数据集获得的模型在测试数据集上效果最好</strong></p>
+<p>如何解决这个问题?</p>
+<br>
+
+<h3 id="验证数据集"><a href="#验证数据集" class="headerlink" title="验证数据集"></a>验证数据集</h3><p>解决的办法是把数据分成3部分: 训练数据集, 验证数据集, 测试数据集</p>
+<p><img src="/Blog/intro/learning_graph_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><strong>训练数据集</strong>依然是用于训练模型</p>
+<p><strong>验证数据集</strong>做的是<strong>原来测试数据集</strong>做的事情, 把验证数据送给模型, 找到一组参数使得模型针对验证数据来说达到最优</p>
+<p>这样的一个模型在训练结束之后, <strong>测试数据</strong>再给模型, 这样才能得到这个模型最终的性能</p>
+<br>
+
+<p>换句话说, <strong>测试数据集是不参与模型的创建的</strong>, 而训练数据集(用于训练)和验证数据集(用于评判)都参与了模型的创建</p>
+<p>但是测试数据对模型是完全不可知的, 相当于在模拟真正的真实环境中, 模型完全不知道的一个数据</p>
+<p>在创建过程结束之后, 确定好这就是模型, 再把测试数据送进去, 得到模型最终的性能</p>
+<p><img src="/Blog/intro/learning_graph_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最终用测试数据得到的模型的测试结果是更加准确的, 可以评判模型的结果</p>
+<br>
+
+<p><img src="/Blog/intro/learning_graph_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>不过这么做还是有一个问题, 这个问题在于<strong>随机</strong></p>
+<p>由于每一次验证数据集都是随机的从原来的数据中切出来的, 因此训练数据集有可能过拟合验证数据集, 但是只有这一个数据集, 一旦这个验证数据集中有比较极端的数据, 就可能导致模型不准确</p>
+<br>
+
+<h3 id="交叉验证-Cross-Validation"><a href="#交叉验证-Cross-Validation" class="headerlink" title="交叉验证 Cross Validation"></a>交叉验证 Cross Validation</h3><p>是比较正规的, 比较标准的, 调整模型参数的时候, 看模型性能的方式</p>
+<p>什么是交叉验证?</p>
+<p><img src="/Blog/intro/learning_graph_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于训练数据来说, 通常分成k份, 假设分为3份, ABC</p>
+<p>接下来就是将ABC分别作为验证数据集</p>
+<p><img src="/Blog/intro/learning_graph_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样一来, 每一个训练数据集与验证数据集的搭配都会产生一个模型</p>
+<p><img src="/Blog/intro/learning_graph_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这三个模型在每一个对应的验证数据集上都会求出一个指标, 这些<strong>性能指标的平均</strong>作为最终衡量当前算法得到的模型的标准</p>
+<p><img src="/Blog/intro/learning_graph_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样做由于有一个求平均的过程, 所以不会由于一份验证数据集中极端的数据而导致最终训练出来的模型有过大的偏差</p>
+<p>所以这样做比只设立一个验证数据集要靠谱</p>
+<p>因此通常调参的时候要使用交叉验证的方式的</p>
+<br>
+
+<pre><code class="python">import numpy as np
+from sklearn import datasets
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
+
+if __name__ == &#39;__main__&#39;:
+    digits = datasets.load_digits()
+    X = digits.data
+    y = digits.target
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=666)
+
+    # 测试 train_test_split
+    best_score, best_p, best_k = 0, 0, 0
+    for k in range(2, 11):
+        for p in range(1, 5):
+            knn_clf = KNeighborsClassifier(weights=&quot;distance&quot;, n_neighbors=k, p=p)
+            knn_clf.fit(X_train, y_train)
+            score = knn_clf.score(X_test, y_test)
+            if score &gt; best_score:
+                best_score, best_p, best_k = score, p, k
+    print(&quot;Best K =&quot;, best_k)
+    print(&quot;Best P =&quot;, best_p)
+    print(&quot;Best Score =&quot;, best_score)
+    &quot;&quot;&quot;
+    Best K = 3
+    Best P = 4
+    Best Score = 0.9860917941585535
+    &quot;&quot;&quot;
+
+    # 使用交叉验证
+    # 传入一个算法以及一个X_train, y_train,
+    # 就会自动进行交叉验证的过程, 同时返回生成的k个模型每个模型对应的准确率
+    best_score, best_p, best_k = 0, 0, 0
+    for k in range(2, 11):
+        for p in range(1, 5):
+            knn_clf = KNeighborsClassifier(weights=&quot;distance&quot;, n_neighbors=k, p=p)
+            # 默认将训练数据集分成五份进行交叉验证, 不同机器可能不一样, 可以通过cv参数指定分成几份
+            scores = cross_val_score(knn_clf, X_train, y_train, cv=5)
+            score = np.mean(scores)
+            if score &gt; best_score:
+                best_score, best_p, best_k = score, p, k
+    print(&quot;Best K =&quot;, best_k)
+    print(&quot;Best P =&quot;, best_p)
+    print(&quot;Best Score =&quot;, best_score)
+    &quot;&quot;&quot;
+    Best K = 2
+    Best P = 2
+    Best Score = 0.9851507321274763
+    &quot;&quot;&quot;</code></pre>
+<p>通常情况下我们还是更原意相信 Cross Validation 的结果, 因为train-test-split可能仅仅是过拟合了这组测试数据集而已</p>
+<p>而我们交叉验证最后的score不是上面的0.985, 进行交叉验证只是为了拿到最好的p和k, 通过这组参数就可以得到一个最佳的KNN模型, 用这个模型再去预测测试数据集得到的结果才是真正的score</p>
+<pre><code class="python">    best_knn_clf = KNeighborsClassifier(weights=&quot;distance&quot;, n_neighbors=2, p=2)
+    best_knn_clf.fit(X_train, y_train)
+    real_score = best_knn_clf.score(X_test, y_test)
+    print(real_score)    # 0.980528511821975</code></pre>
+<p>这个score才是用三交叉验证(因为默认是分成3份) 的方式找到了KNN算法最佳参数组合的score, k=2, p=2</p>
+<p>X_test 和 y_test 在寻找参数的过程中是完全没有用到的, 也就是说用完全没有见过的模型来测试准确率</p>
+<p>不过, 这些其实在用网格搜索的时候已经进行了, 这是scikit-learn中网格搜索自带的功能GridSearchCV 的CV就是交叉验证的意思</p>
+<p>网格搜索:</p>
+<pre><code class="python">    param_grid = [
+        {
+            &#39;weights&#39;: [&#39;distance&#39;],
+            &#39;n_neighbors&#39;: [i for i in range(2, 11)],
+            &#39;p&#39;: [i for i in range(1, 6)]
+        }
+    ]
+    knn_clf = KNeighborsClassifier()
+
+    # 交叉验证默认把数据分成5份, 也可以通过参数cv指定分成几份
+    # 总共验证5*9*5=255组
+    # Fitting 5 folds for each of 45 candidates, totalling 225 fits
+    grid_search = GridSearchCV(knn_clf, param_grid, verbose=1, cv=5)
+    grid_search.fit(X_train, y_train)
+
+    # 0.9851507321274763
+    print(grid_search.best_score_)   
+    # {&#39;n_neighbors&#39;: 2, &#39;p&#39;: 2, &#39;weights&#39;: &#39;distance&#39;}
+    print(grid_search.best_params_)  
+
+    # 通过最好的模型对测试数据集进行测试
+    best_knn_clf = grid_search.best_estimator_
+    print(best_knn_clf.score(X_test, y_test))   # 0.980528511821975</code></pre>
+<p>可以看到得到的所有结果都和交叉验证是吻合的</p>
+<br>
+
+<p>交叉验证调参的过程中, 评价模型的准确度更加靠谱</p>
+<p>通常要把训练集分成k份, 就叫做 k-folds cross validation</p>
+<p>缺点: 每次训练k个模型, 相当于整体性能慢了k倍, 但是找到的参数通常可以更加信赖</p>
+<br>
+
+<h3 id="留一法-LOO-CV"><a href="#留一法-LOO-CV" class="headerlink" title="留一法 LOO-CV"></a>留一法 LOO-CV</h3><p>极端情况下, k-folds cross validation可以变成一种叫做*<em>留一法(LOO-CV) *</em>的交叉验证方式 (Leave-One-Out Cross Validation)</p>
+<p>如果训练数据集有m个样本, 就把它分成m份</p>
+<p>换句话说每次都将m-1份样本进行训练, 然后去看剩下的一个样本预测的准不准,  将这些结果进行平均, 作为衡量当前参数下模型的预测的准确度</p>
+<p>这么做将完全不受随机的影响, 最接近模型的真正的性能指标</p>
+<p>缺点: 计算量巨大 (一般计算量不够的时候都不会采用; 但在一些论文中, 为了学术严谨, 可能会采用)</p>
 <br>
 
 <br>
