@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      36 分钟
+                      37 分钟
                   </span>
                 
 
@@ -593,7 +593,7 @@ class PCA:
         initial_w = np.random.random(X.shape[1])
         self.components_ = np.empty(shape=(self.n_components, X.shape[1]))
         for i in range(self.n_components):
-            w = first_component(X, initial_w, eta, n_iters)
+            w = first_component(X_pca, initial_w, eta, n_iters)
             self.components_[i, :] = w
             # self.components_[i] = w
 
@@ -946,7 +946,7 @@ if __name__ == &#39;__main__&#39;:
 <ol>
 <li>特征脸和特征值的关系</li>
 <li>PCA是如何求出每个主成分所表述原本数据集方差的比率的</li>
-<li>是否可以反过来从最不重要的成分开始解析, 即最小化投影后的方差来反向进行主成分分析. 这样就可以使用最小二乘法?</li>
+<li>是否可以反过来从最不重要的成分开始解析, 即最小化投影后的方差来反向进行主成分分析. 这样就可以使用最小二乘法? 不可以, 因为w会渐渐靠近0, 梯度也渐渐归0</li>
 </ol>
 </blockquote>
 <br>
@@ -992,7 +992,8 @@ if __name__ == &#39;__main__&#39;:
 <p><img src="/Blog/intro/pca_thinking_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>而这个demean后的样本数据的模的平方不仅可以在主成分轴上表示, 在原始的数据轴上也可以表示, 计算方法也是所有维度的平方和 (根据向量模的定义) 再除以m</p>
 <p><img src="/Blog/intro/pca_thinking_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>也就是说, 无论在哪个坐标系下, demean后的数据的总方差就等于所有样本的各个维度的值的平方和再除以m</p>
+<p>也就是说, 无论在哪个坐标系下, demean后的数据的总方差就等于所有样本的各个维度的值的平方和再除以m,</p>
+<p>因此对于矩阵来说就是<strong>所有项的平方的和除以样本数</strong></p>
 <pre><code class="python">X = demean(X)
 print(np.sum(X**2)/len(X))</code></pre>
 <p>此时就可以通过编程实现了, 把demean后的矩阵中X所有项的平方和再除以样本个数就是总方差</p>
@@ -1001,7 +1002,7 @@ print(np.sum(X**2)/len(X))</code></pre>
 <br>
 
 <p>然而可以进一步思考: 如果不进行demean操作, 如何求出总方差?</p>
-<p>因为demean只是偏移了一下坐标系, 点与点之间的距离没有变, 而方差描述的就是平均距离</p>
+<p>因为demean只是偏移了一下坐标系, 点与点之间的距离没有变, 而方差是<strong>描述样本整体分布的疏密的指标</strong></p>
 <p>其实上面的步骤的核心是<strong>对样本数据各个维度求方差在加起来</strong>, 只不过由于样本各个维度的均值都为0, 所以表现出来就是对每个样本模的平方进行加和</p>
 <p>而如果不进行demean的话, 核心思想也是对各个维度求方差在加和.</p>
 <pre><code class="python"># 转换坐标前的总方差和转换坐标后的中放出一样
@@ -1020,6 +1021,11 @@ print(var_total)</code></pre>
 <p>但总而言之, 由于PCA本身就要进行一步demean, 所以最方便最快捷的操作还是</p>
 <pre><code class="python">X = demean(X)
 print(np.sum(X**2)/len(X))</code></pre>
+<br>
+
+<br>
+
+<p>补充3: 主成分分析的另一种可能求法</p>
 
             </div>
             <hr>
@@ -1083,7 +1089,7 @@ print(np.sum(X**2)/len(X))</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1110,7 +1116,7 @@ print(np.sum(X**2)/len(X))</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1119,7 +1125,7 @@ print(np.sum(X**2)/len(X))</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
