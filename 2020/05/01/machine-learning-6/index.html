@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    6.7k 字
+                    9.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      26 分钟
+                      35 分钟
                   </span>
                 
 
@@ -599,7 +599,7 @@ if __name__ == &#39;__main__&#39;:
 <br>
 
 <p>为了适用于其他算法, 将这个过程提炼成一个函数</p>
-<pre><code class="python">def plot_learning_curve(algo, X_train, X_test, y_train, y_predict):
+<pre><code class="python">def plot_learning_curve(algo, X_train, X_test, y_train, y_test):
     train_score = []
     test_score = []
     for i in range(1, len(X_train)+1):
@@ -774,6 +774,226 @@ if __name__ == &#39;__main__&#39;:
 
 <br>
 
+<h2 id="偏差方差权衡-Bias-Variance-Trade-off"><a href="#偏差方差权衡-Bias-Variance-Trade-off" class="headerlink" title="偏差方差权衡 Bias Variance Trade off"></a>偏差方差权衡 Bias Variance Trade off</h2><p>过拟合与欠拟合都会使得训练的机器学习模型在真实的预测的过程中产生各种误差</p>
+<p>那么出现这个种误差应该怎么进行分类? 即偏差方差的权衡</p>
+<br>
+
+<h3 id="偏差和方差"><a href="#偏差和方差" class="headerlink" title="偏差和方差"></a>偏差和方差</h3><p><img src="/Blog/intro/bias_var.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>偏差描述偏离了中心的程度, 方差描述数据之间的密集程度</p>
+<p>机器学习可以理解为是<strong>解决一个问题</strong>, 这个问题就是靶子的中心</p>
+<p>而根据数据来拟合一个模型, 进而预测这个问题. 拟合出的模型就是打出去的这些枪</p>
+<p>那么模型就有可能犯<strong>偏差</strong>和<strong>方差</strong>两种错误</p>
+<br>
+
+<p>所以一般来说, 我们训练一个模型, 这个模型会有误差, 这个误差通常来源于3方面<br>$$<br>模型误差=偏差(Bias)+方差(Variance)+不可避免的误差<br>$$<br>不可避免的误差我们是无能为力的, 它是客观存在的</p>
+<p>例如: 采集的数据本身就是有噪音的, 这是无论怎样改进模型, 改进算法都不能避免的</p>
+<p>但是偏差和方差这两个问题却是和算法/模型相关</p>
+<br>
+
+<h3 id="偏差"><a href="#偏差" class="headerlink" title="偏差"></a>偏差</h3><p><img src="/Blog/intro/bias_var.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>导致偏差的主要原因: <strong>对问题本身的假设不正确</strong></p>
+<p>例如: 在非线性回归中使用线性回归</p>
+<p><strong>欠拟合</strong>(underfitting) 就是这样一个例子, 由于训练算法对于整个数据是欠拟合的, 所以导致整体模型具有非常高的偏差</p>
+<p>还有可能是<strong>训练数据采用的特征和这个问题完全没有关系</strong></p>
+<br>
+
+<h3 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h3><p><img src="/Blog/intro/bias_var.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>表现: <strong>数据一点点扰动都会较大地影响模型</strong>. </p>
+<p>通常原因: 使用的模型太复杂.</p>
+<p>模型没有完全地学习到问题的实质, 而学习到了很多的噪音</p>
+<p><strong>过拟合</strong>(overfitting) 会极大地引入方差</p>
+<br>
+
+<h3 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h3><blockquote>
+<p>有一些算法天生是高方差的算法. 如kNN</p>
+<p><strong>非参数学习</strong>通常都是<strong>高方差</strong>算法. 因为不对数据进行任何假设</p>
+<p>有一些算法天生是高方差算法. 如线性回归.</p>
+<p><strong>参数学习</strong>通常都是<strong>高偏差</strong>算法. 因为对数据具有极强的假设</p>
+</blockquote>
+<p>大多数算法具有相应的参数, 可以调整偏差和方差</p>
+<p>例如kNN算法中的k, k越小, 模型越复杂, 模型的方差越大, 偏差越小</p>
+<p>例如线性回归中使用多项式回归</p>
+<br>
+
+<p>可以看出偏差可方差通常是矛盾的, 互相制约. </p>
+<p>​        降低偏差, 会提高方差</p>
+<p>​        降低方差, 会提高偏差</p>
+<br>
+
+<p>如果算法训练出的模型, 通过实践发现是一个低偏差, 低方差的模型, 固然非常好, 但实际情况下通常不是这么理想的</p>
+<p>通常算法本身具有错误, 这个时候我们通常需要观察算法主要的错误是集中在偏差的位置还是方差的位置</p>
+<p>看看能不能让偏差和方差到达一定的<strong>平衡</strong>. 换句话说: 不要特别高的方差, 也不要特别高的偏差</p>
+<p>我们可能不能完全杜绝错误, 但是让它有一点偏差, 也有一点方差, 而不是集中在一个方向上</p>
+<p>达到这个目标, 通常也是机器学习算法在调参的过程中要做到主要的一个事情</p>
+<br>
+
+<p>机器学习的主要挑战来自于<strong>方差</strong></p>
+<p>这个说法只局限于<strong>算法层面</strong>上, 在问题层面上不一定是这个样子.</p>
+<p>因为我们还对很多问题的理解太过肤浅, 对特征的选择非常重要(<strong>特征工程</strong>)</p>
+<p>但假设已经有了比较好的数据, 数据也有比较好的特征. 问题主要是通过算法基于数据得到可靠的结果, 此时主要挑战大多是来自于方差的</p>
+<p>换句话说, 可以很容易就让模型非常复杂, 而让模型偏差非常低, 而这样的模型由于具有高方差, 泛化能力很差, 最终也没有非常好的表现. </p>
+<blockquote>
+<p>过拟合问题是很多算法工程师都要解决的问题</p>
+</blockquote>
+<p>解决<strong>过拟合的问题/高方差问题</strong>的通常手段:</p>
+<ol>
+<li><p>降低模型复杂度</p>
+</li>
+<li><p>减少数据维度; 降噪 (通常高方差问题就是因为模型学习了太多噪音信息)</p>
+</li>
+<li><p>增加样本数, 增大训练数据规模 (有的时候算法具有高方差是因为模型太过复杂, 模型中的参数非常多, 而样本数不足以支撑计算这么复杂的参数)</p>
+<p>神经网络和深度学习就是最典型的一个例子.</p>
+</li>
+<li><p>使用验证集</p>
+</li>
+<li><p><strong>模型正则化</strong></p>
+</li>
+</ol>
+<br>
+
+<br>
+
+<h2 id="模型正则化-Regularization"><a href="#模型正则化-Regularization" class="headerlink" title="模型正则化 Regularization"></a>模型正则化 Regularization</h2><p>解决过拟合问题, 或者说模型中含有巨大方差误差的问题有一个非常标准的处理手段: 模型正则化</p>
+<p><img src="/Blog/intro//Blog/intro/muti_reg_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>上面的图是使用多项式回归过拟合的例子, 曲线非常弯曲陡峭, 对于这根曲线来说, 相应的每个多项式的项前面的系数数会非常大, 也就是说对于θ系数, 某些θ会非常大</p>
+<p>模型正则化做的事情就是希望<strong>限制这些系数的大小</strong></p>
+<br>
+
+<h3 id="岭回归-Ridge-Regression"><a href="#岭回归-Ridge-Regression" class="headerlink" title="岭回归 Ridge Regression"></a>岭回归 Ridge Regression</h3><p>模型正则化是以怎样的思路解决这个问题?</p>
+<p>回到线性回归问题的目标:</p>
+<p><img src="/Blog/intro/model_regular.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>希望这个损失函数尽可能小, 这等同于求原始数据y和使用θ预测的y_hat的均方误差尽可能小 (因为目标函数就等于MSE乘以样本总数)</p>
+<p><img src="/Blog/intro/model_regular_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>但是这里如果过拟合的话, θ的系数就会非常大, 怎么限制让theta的系数不要太大? 改变一下损失函数, 将损失函数变成这个样子</p>
+<p><img src="/Blog/intro/model_regular_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最后这一项是所有θ<sub>i</sub>的平方和在乘以一个常数 α/2</p>
+<br>
+
+<p>将这个函数加进目标函数里<br>$$<br>\alpha \frac 12 \sum_{i=1}^n \theta_i^2<br>$$<br>此时要让目标函数尽可能小就不仅要让MSE尽可能小, 还要顾及后面这一项</p>
+<p>而这一项是所有θ<sub>i</sub>的平方和, 所以要让这一项非常小就要让所有θ<sub>i</sub>非常小. </p>
+<p>通过这个方式, 在最小化 J(θ) 的时候相应的就要考虑让所有 θ<sub>i</sub> 都小</p>
+<br>
+
+<p><img src="/Blog/intro/model_regular_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>有几个细节需要注意</p>
+<ol>
+<li>对所有θ<sub>i</sub>求平方和时<strong>没有把θ<sub>0</sub>加进去</strong>, 这是因为θ<sub>0</sub> 本身不是任何一个x的系数, 它只是一个截距. 它只决定整个<strong>曲线的高低</strong>, 但不决定<strong>曲线每一部分的的陡峭和缓和程度</strong></li>
+<li>这个1/2 是一个惯例, <strong>加不加都可以</strong>, 加上1/2 的原因是因为求解线性回归使用梯度下降法, 需要对 J(θ) 进行求导, 由于在后面的狮子里每一项都有一个平方, 所以求导后就会是2乘θ<sub>i</sub>, 这个2和1/2相互抵消了</li>
+<li>α是一个新的超参数, 它是一个权重, 代表我们希望θ小的程度占优化整个损失函数程度多少</li>
+</ol>
+<p>如果α=0, 相当于J(θ)没有加入模型正则化.</p>
+<blockquote>
+<p>模型正则化不仅有这一种方式, 还有其他方式</p>
+</blockquote>
+<p>这种模型正则化的方式又被称为<strong>岭回归 Ridge Regression</strong></p>
+<br>
+
+<p>编程实践</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+
+def PolynomialRegression(degree):
+    return Pipeline([
+        (&quot;poly&quot;, PolynomialFeatures(degree=degree)),
+        (&quot;standard&quot;, StandardScaler()),
+        (&quot;lin_reg&quot;, LinearRegression())
+    ])
+
+
+def RidgeRegression(degree, alpha):
+    return Pipeline([
+        (&quot;poly&quot;, PolynomialFeatures(degree=degree)),
+        (&quot;standard&quot;, StandardScaler()),
+        (&quot;ridge_reg&quot;, Ridge(alpha=alpha))
+    ])
+
+
+# 封装绘图的代码, 为指定模型图
+def plot_model(model):
+    X_plot = np.linspace(-3, 3, 100).reshape(100, 1)
+    y_plot = model.predict(X_plot)
+
+    plt.scatter(x, y)
+    plt.plot(X_plot[:, 0], y_plot, color=&quot;r&quot;)
+    plt.axis([-3, 3, 0, 6])
+    plt.show()
+
+
+def test_ridge_regression(degree, alpha, X_train, X_test, y_train, y_test):
+    # 训练岭回归模型
+    ridge_reg = RidgeRegression(degree, alpha)
+    ridge_reg.fit(X_train, y_train)
+
+    # 计算测试数据集的mse
+    y_predict = ridge_reg.predict(X_test)
+    print(mean_squared_error(y_test, y_predict))
+
+    # 绘制曲线
+    plot_model(ridge_reg)
+
+
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(42)
+    x = np.random.uniform(-3.0, 3.0, size=100)
+    X = x.reshape(-1, 1)
+    y = 0.5 * x + 3 + np.random.normal(0, 1, 100)
+
+    np.random.seed(666)
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+    # 多项式回归
+    poly_reg = PolynomialRegression(20)
+    poly_reg.fit(X_train, y_train)
+    y_poly_predict = poly_reg.predict(X_test)
+    # 167.94
+    print(mean_squared_error(y_test, y_poly_predict))
+    plot_model(poly_reg)
+
+    # 岭回归, degree和多项式回归一样取20, 观察alpha对曲线的影响
+    # mse = 1.32
+    test_ridge_regression(20, 0.0001, X_train, X_test, y_train, y_test)   
+    # mse = 1.18
+    test_ridge_regression(20, 1, X_train, X_test, y_train, y_test)  
+    # mse = 1.31
+    test_ridge_regression(20, 100, X_train, X_test, y_train, y_test)   
+    # mse = 1.84
+    test_ridge_regression(20, 100000000, X_train, X_test, y_train, y_test)      
+
+</code></pre>
+<p>可以看到, 使用岭回归进行预测的泛化能力, 远强于普通的多项式回归, 所有岭回归预测的值 mse 都远远小于多项式回归的mse</p>
+<br>
+
+<p>多项式回归的曲线</p>
+<p><img src="/Blog/intro/model_regular_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>alpha = 0.0001 时的RidgeRegression的曲线</p>
+<p><img src="/Blog/intro/model_regular_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>alpha=1 时的RidgeRegression的曲线</p>
+<p><img src="/Blog/intro/model_regular_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>alpha=100 时的RidgeRegression的曲线, 这个曲线已经相当平滑了</p>
+<p><img src="/Blog/intro/model_regular_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>alhpa特别特别大的时候的曲线, 近乎就是一条直线, 优化损失函数就变成优化最后一项, 就是要让所有θ的平方和尽量小, 所有θ=0</p>
+<p><img src="/Blog/intro/model_regular_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>使用岭回归就引入了另外一个超参数α</p>
+</blockquote>
+<br>
+
+<br>
+
 
             </div>
             <hr>
@@ -831,7 +1051,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -858,7 +1078,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -867,7 +1087,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
