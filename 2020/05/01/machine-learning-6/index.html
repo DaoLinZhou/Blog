@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    9.1k 字
+                    12.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      35 分钟
+                      50 分钟
                   </span>
                 
 
@@ -167,6 +167,12 @@
             
             <div class="markdown-body">
               <p>多项式回归</p>
+<p>过拟合与欠拟合</p>
+<p>学习曲线</p>
+<p>交叉验证</p>
+<p>偏差错误与方差错误</p>
+<p>模型正则化: 岭回归, LASSO, 弹性网</p>
+<p>L1, L2正则, Lp范数</p>
 <a id="more"></a>
 
 <h1 id="多项式回归与模型泛化"><a href="#多项式回归与模型泛化" class="headerlink" title="多项式回归与模型泛化"></a>多项式回归与模型泛化</h1><br>
@@ -888,7 +894,7 @@ if __name__ == &#39;__main__&#39;:
 <p>这种模型正则化的方式又被称为<strong>岭回归 Ridge Regression</strong></p>
 <br>
 
-<p>编程实践</p>
+<p>编程实践: 使用岭回归</p>
 <pre><code class="python">import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression, Ridge
@@ -994,6 +1000,339 @@ if __name__ == &#39;__main__&#39;:
 
 <br>
 
+<h3 id="LASSO回归-LASSO-Regularization"><a href="#LASSO回归-LASSO-Regularization" class="headerlink" title="LASSO回归 LASSO Regularization"></a>LASSO回归 LASSO Regularization</h3><p>LASSO 就是 Least Absolute Shrinkage and Selection Operator Regression</p>
+<br>
+
+<p>岭回归的任务是</p>
+<p><img src="/Blog/intro/LASSO.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实LASSO回归的原理和岭回归是一样的, 只不过在怎么表达θ最小这件事情上选用了一个不同的指标</p>
+<p><img src="/Blog/intro/LASSO_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们可以用<strong>θ的平方</strong>来代表θ的大小, 也可以用<strong>θ的绝对值</strong>来代表θ的大小</p>
+<p>α依然是用于调节正则化项, 让θ尽可能小的程度占优化整个损失函数的程度</p>
+<p>LASSO 就是 Least Absolute Shrinkage and Selection Operator Regression</p>
+<blockquote>
+<p>Selection Operator 选择运算符, LASSO有一定的Selection的功能, 后面会介绍</p>
+</blockquote>
+<br>
+
+<p>LASSO回归加入的正则化项和岭回归有一些不同, 但是从数学的意义上理解似乎都是让θ<sub>i</sub>尽可能小</p>
+<p>那么最终LASSO的结果是什么样子的, 和岭回归又有怎样的不同</p>
+<p>LASSO的效果</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression, Lasso
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+
+def PolynomialRegression(degree):
+    return Pipeline([
+        (&quot;poly&quot;, PolynomialFeatures(degree=degree)),
+        (&quot;standard&quot;, StandardScaler()),
+        (&quot;lin_reg&quot;, LinearRegression())
+    ])
+
+
+def LassoRegression(degree, alpha):
+    return Pipeline([
+        (&quot;poly&quot;, PolynomialFeatures(degree=degree)),
+        (&quot;standard&quot;, StandardScaler()),
+        (&quot;lasso_reg&quot;, Lasso(alpha=alpha))
+    ])
+
+
+def plot_model(model):
+    X_plot = np.linspace(-3, 3, 100).reshape(100, 1)
+    y_plot = model.predict(X_plot)
+
+    plt.scatter(x, y)
+    plt.plot(X_plot[:, 0], y_plot, color=&quot;r&quot;)
+    plt.axis([-3, 3, 0, 6])
+    plt.show()
+
+
+def test_lasso_regression(degree, alpha, X_train, X_test, y_train, y_test):
+    # 训练岭回归模型
+    lasso_reg = LassoRegression(degree, alpha)
+    lasso_reg.fit(X_train, y_train)
+
+    # 计算测试数据集的mse
+    y_predict = lasso_reg.predict(X_test)
+    print(mean_squared_error(y_test, y_predict))
+
+    # 绘制曲线
+    plot_model(lasso_reg)
+
+
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(42)
+    x = np.random.uniform(-3.0, 3.0, size=100)
+    X = x.reshape(-1, 1)
+    y = 0.5 * x + 3 + np.random.normal(0, 1, 100)
+
+    np.random.seed(666)
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+    poly_reg = PolynomialRegression(20)
+    poly_reg.fit(X_train, y_train)
+    y_poly_predict = poly_reg.predict(X_test)
+    # 167.94
+    print(mean_squared_error(y_test, y_poly_predict))
+    plot_model(poly_reg)
+
+    # LASSO 回归
+    # 比Ridge的alpha大了不少, 这是因为Ridge的那一项是theta的平方和
+    # 1.149
+    test_lasso_regression(20, 0.01, X_train, X_test, y_train, y_test)
+    # 1.121
+    test_lasso_regression(20, 0.1, X_train, X_test, y_train, y_test)
+    # 1.840
+    test_lasso_regression(20, 1, X_train, X_test, y_train, y_test)
+</code></pre>
+<p>使用方式和Ridge一样</p>
+<br>
+
+<p>多项式回归的曲线:</p>
+<p><img src="/Blog/intro/model_regular_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>LASSO回归 alpha = 0.01</p>
+<p><img src="/Blog/intro/LASSO_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>LASSO回归 alpha = 0.1</p>
+<p><img src="/Blog/intro/LASSO_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>LASSO回归 alpha = 1</p>
+<p><img src="/Blog/intro/LASSO_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>和Ridge Regression不同, Ridge Regression的曲线虽然越来越平缓, 但是它始终是一个曲线的样子</p>
+<p>而LASSO Regression在alpha取0.1的时候, 这条线近乎就是一条直线. 这个特性是由LASSO这个式子正则化的特殊性所决定的</p>
+<br>
+
+<h3 id="对比-Ridge-和-LASSO"><a href="#对比-Ridge-和-LASSO" class="headerlink" title="对比 Ridge 和 LASSO"></a>对比 Ridge 和 LASSO</h3><p><img src="/Blog/intro/LASSO_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>在alpha=100的Ridge中, 我们很难让得到的模型是倾斜的直线, 它总是弯曲的形状</p>
+<p>而在alpha=0.1的LASSO中, 虽然得到的也是一根曲线, 但近乎是一条直线</p>
+<p>直线和曲线的区别在哪里?</p>
+<p>Ridge Regression得到的是曲线, 就说明依然有很多X(特征)有系数</p>
+<p>当使用LASSO时, 很多X前面不在有系数, 系数为0, 也就是一部分θ<sub>i</sub>等于0</p>
+<p>这样正是LASSO的一个特点: <strong>LASSO趋向于使得一部分theta值变为0. 所以可以作为特征选择用</strong></p>
+<br>
+
+<p>这也就是LASSO中Selection Operator的意思, 如果使用LASSO的过程中某些θ等于0, 就代表LASSO认为这个θ对应的特征是完全没有用的. 而剩下θ不等于0的特征就是LASSO认为有用的特征</p>
+<p>LASSO可以当作<strong>特征选择</strong>用</p>
+<br>
+
+<h4 id="为什么会产生这样一个作用"><a href="#为什么会产生这样一个作用" class="headerlink" title="为什么会产生这样一个作用:"></a>为什么会产生这样一个作用:</h4><p>先看Ridge Regression<br>$$<br>J(\theta)=MSE(y,\hat y;\theta)+\frac \alpha 2 \sum_{i=1}^n\theta_i^2<br>$$<br>当alpha趋于无穷时, 只来看后面的θ, 此时θ一定是逐渐变为0, 但我们要看它是怎么变为0的, 用梯度下降法的角度考虑, 后面这一项对应的梯度就是</p>
+<p><img src="/Blog/intro/LASSO_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每一个式子对每一个theta求导就是这样, 而每一个theta都是有值的, 所以在梯度下降的过程中, 就会以这样的曲线下降到0点</p>
+<p><img src="/Blog/intro/LASSO_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>在这样一个过程中, θ都是有值的</p>
+<br>
+
+<p>但是LASSO不同<br>$$<br>J(\theta)=MSE(y,\hat y;\theta)+ \alpha  \sum_{i=1}^n|\theta_i|<br>$$<br>LASSO的损失函数中, 如果alpha趋于无穷, 后边的θ有绝对值, 其实是不可导的, 不过也可以用一个分类函数来刻画它的导数</p>
+<p><img src="/Blog/intro/LASSO_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个梯度就是α乘以一个向量, 这个向量里的值不是正负1就是0, 也就是说, 在坐标里表示</p>
+<p><img src="/Blog/intro/LASSO_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>下降的过程中, 首先将一个维度降维0 (-1, -1的方向), 再沿着轴的方向到达零点(0, -1的方向)</p>
+<p>LASSO并不是以曲线的方式, 而是以直线的方式下降, 下降的过程中, 某些位置就会达到0点, 使得LASSO Regression最后的结果包含很多0</p>
+<blockquote>
+<p>另外一个点就是: </p>
+<p>使用平方的方式虽然限制的是整体, 更主要限制的是最大的θ, 让最大的theta尽可能小, 可以想象一下将一组数的平方和降低最有效的方法就是将最大的数降低, 直到有另一个数比这个数大</p>
+<p>而通过绝对值限制整体, 当对某一个数进行降低时, 只有再这个数等于0的时候才会停止.</p>
+</blockquote>
+<br>
+
+<p>正是因为这样的特性, LASSO可能会错误地将一些原本是有用的特征也变为0</p>
+<p>所以从计算的准确度来讲, 还是Ridge更为准确</p>
+<p>但是如果特征特别大, 例如多项式回归degree=100, 此时使用LASSO也可以起到将模型变小这样一个作用</p>
+<br>
+
+<p><img src="/Blog/intro/LASSO_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>岭回归和LASSO回归都是在原始的损失函数后面添加一项</p>
+<p>这一项的作用都是期望尽量减少学习到的theta的大小, 使得模型的泛化能力更强</p>
+<br>
+
+<p>对于这两种方式, 在损失函数后面添加的两项不同. 实际上正两种计算方式在之前就出现过</p>
+<p><img src="/Blog/intro/LASSO_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>机器学习领域中, 对于不同的应用可能会发明一些不同的名词来表达不同的衡量标准</p>
+<ul>
+<li><p>Ridge 和 LASSO 是用来衡量正则化</p>
+</li>
+<li><p>MSE 和 MAE 是用来衡量回归结果的好坏</p>
+</li>
+<li><p>欧拉距离和曼哈顿距离是用来衡量两点之间距离的大小</p>
+</li>
+</ul>
+<p><strong>但是他们背后本质的数学思想是非常相近的, 表达出的数学的含义也近乎是一致的</strong></p>
+<p>只不过应用在不同的场景中, 就产生不同的效果, 进而生成了不同的名词</p>
+</blockquote>
+<br>
+
+<h2 id="L1-L2-和弹性网络"><a href="#L1-L2-和弹性网络" class="headerlink" title="L1, L2, 和弹性网络"></a>L1, L2, 和弹性网络</h2><h3 id="L1正则-L2正则"><a href="#L1正则-L2正则" class="headerlink" title="L1正则, L2正则"></a>L1正则, L2正则</h3><p>而谈到距离, 之前在kNN算法中提到两点之间距离的重要性, 同时提出一个概念: 明可夫斯基距离</p>
+<p><img src="/Blog/intro/LASSO_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>将这种形式再进行一次泛化</p>
+<p><img src="/Blog/intro/LASSO_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于任意一个向量x都可以求这样一个值:</p>
+<p>第i个维度的绝对值的p次方, 求和之后再开p次方根</p>
+<p>在数学上我们通常称之为: <strong>Lp范数</strong>, </p>
+<blockquote>
+<p>如果p=1就是L1范数, p=2就是L2范数</p>
+</blockquote>
+<p>当p=1, 就是从0点到x的曼哈顿距离, p=2就是从0点到x的欧拉距离</p>
+<blockquote>
+<p>又引入了一个新的概念, 这个概念是和之前学的概念完全不冲突的 </p>
+</blockquote>
+<br>
+
+<p>对于岭回归Ridge的这个正则化的项通常称为<strong>L2的正则项</strong>, 和<strong>L2的范数</strong>的区别就是<strong>没有开根</strong>. </p>
+<p>不过有的时候也就直接称之为L2范数了, 因为正则项是用在损失函数中进行最优化的, 而加上开根号是不影响最终的结果的, 但是不开根式子更加简单</p>
+<p><img src="/Blog/intro/LASSO_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>LASSO回归添加的正则项是L1正则项</p>
+<p><img src="/Blog/intro/LASSO_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>相应的就有Ln正则项, 只要依据Lp范数这个式子取写即可</p>
+<p>不过在模型正则化的过程中很少使用p&gt;2的正则项, 但是理论上, 在数学上是存在这些正则项的</p>
+<br>
+
+<h3 id="L0正则项"><a href="#L0正则项" class="headerlink" title="L0正则项"></a>L0正则项</h3><p>实际上还存在L0正则项这个概念</p>
+<p><img src="/Blog/intro/LASSO_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就是让<strong>θ的个数</strong>尽量小, θ越少越好, 这一项描述的是非零θ的个数</p>
+<p>同样L0正则也很少被使用, 因为对于L0正则, 求解这个问题(最优化损失函数)是一个NP难的问题</p>
+<blockquote>
+<p>不能使用梯度下降法这类的方式, 甚至求解出一个数学公式</p>
+<p>这一项本事是一个离散项, 它是一个离散最优化问题, 可能要穷举各种θ为0的可能性, 依次来计算出 J(θ), 进而决定出让哪些θ为0, 哪些不为0</p>
+<p>如果想限制θ的个数, 实际用L1取代, 因为L0正则的优化是一个NP难的问题</p>
+</blockquote>
+<br>
+
+<h3 id="弹性网-Elastic-Net"><a href="#弹性网-Elastic-Net" class="headerlink" title="弹性网 Elastic Net"></a>弹性网 Elastic Net</h3><p><img src="/Blog/intro/LASSO_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>无论是岭回归还是LASSO, 无论是L1正则还是L2正则. 都是对MSE后面添加一个L1正则项或L2正则项形成新的损失函数</p>
+<p>而弹性网则是结合这两种方式, 在MSE后面添加一个L1正则项, 再添加一个L2正则项, 只不过引入一个新的<strong>超参数r</strong>, 来<strong>表示两个正则项之间的比例是怎样的</strong></p>
+<p>L1正则项前面是r, 而L2正则项前面是1-r, (除以2时因为这是LASSO本身带的1/2, 和新来的超参数r是没有关系的)</p>
+<p>通过这样一个方式对原有模型进行正则化处理, 就同时结合了岭回归和LASSO回归的优势. 这种回归就称为<strong>弹性网</strong></p>
+<blockquote>
+<p>实际应用进行模型正则化的过程中, 通常应该先尝试岭回归, 对于岭回归来说它的计算是相对精准的. </p>
+<p>如果计算量撑得住的话, 因为岭回归不具有特征选择的功能, 所以特征数太多的话整体计算量会非常大</p>
+<p>此时应该优先选择弹性网, 这是因为弹性网结合了岭回归计算的优点, 又结合LASSO可以进行特征选择这样的优势</p>
+<p>而LASSO回归的缺点在于由于它急于将某些 θ 降为0, 这个过程可能会产生一些错误</p>
+</blockquote>
+<p>由此可以总结出机器学习算法的一点共同性</p>
+<blockquote>
+<p>弹性网同时结合了岭回归和LASSO回归的优势</p>
+<p>小批量梯度下降法结合了批量梯度下降法和随机梯度下降法的优势</p>
+<p>机器学习中经常使用这样的方式创建出新的方法, 其实它想表达的内容是非常简单的</p>
+</blockquote>
+<br>
+
+<h1 id="补充-岭回归的理论与编程"><a href="#补充-岭回归的理论与编程" class="headerlink" title="补充: 岭回归的理论与编程"></a>补充: 岭回归的理论与编程</h1><p>岭回归的目的是最小化这样一个损失函数<br>$$<br>J(\theta) = ||y-X\theta||^2 + \alpha \sum_{i=0}^n \theta^2<br>$$</p>
+<p>$$<br>J(\theta)=(y-X\theta)^T\cdot(y-X\theta)+\alpha\cdot\theta^T\theta<br>$$</p>
+<p><img src="/Blog/intro/ridge_regression_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此求出来θ的公式<br>$$<br>\theta=(X^TX+\alpha I)^{-1}\cdot X^Ty<br>$$</p>
+<h2 id="思路1"><a href="#思路1" class="headerlink" title="思路1"></a>思路1</h2><p>然而在编程中有一个问题, 就是, 编程的时候, 对所有θ<sub>i</sub>求平方和时<strong>没有把θ<sub>0</sub>加进去</strong>, 而在前面的式子的计算中却又使用了θ<sub>0</sub></p>
+<p>而在公式推导的时候是没有区分</p>
+<p>而其实解决的办法也很简单, 那就是在计算之前进行一次demean操作, 同时记录一下X各个维度的mean, 在求出所有系数之后在进行偏移</p>
+<p>因为线性回归一定会经过mean, 所以代入就可以求出偏移量θ<sub>0</sub></p>
+<p><strong>相当于把回归线的中心先偏移到原点, 求出回归线的形状之后, 在偏移回去</strong></p>
+<p>这就是下面函数 fit-math-2 的实现思路</p>
+<pre><code class="python">from metrics import r2_score
+import numpy as np
+
+
+class Ridge:
+
+    def __init__(self, alpha=0):
+        self.coef_ = None
+        self.intercept_ = None
+        self._theta = None
+        self.alpha = alpha
+
+    def fit_math_1(self, X_train, y_train):
+        assert X_train.shape[0] == y_train.shape[0], \
+            &quot;the size of X_train must be equal to the size of y_train&quot;
+        X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
+
+        # 岭回归的第一行第一列应该为0, X_b的第一列表示的是截距, 而岭回归不应该计算截距
+        alphaMatrix = self.alpha * np.identity(X_b.shape[1])
+        alphaMatrix[0][0] = 0
+
+        self._theta = np.linalg.inv(X_b.T.dot(X_b)+alphaMatrix).dot(X_b.T).dot(y_train)
+        self.intercept_ = self._theta[0]
+        self.coef_ = self._theta[1:]
+        return self
+
+    def fit_math_2(self, X_train, y_train):
+        assert X_train.shape[0] == y_train.shape[0], \
+            &quot;the size of X_train must be equal to the size of y_train&quot;
+
+        # demean
+        X_means = np.mean(X_train, axis=1)
+        X = X_train - X_means
+        y_mean = np.mean(y_train)
+        y = y_train - y_mean
+
+        alphaMatrix = self.alpha * np.identity(X.shape[1])
+
+        self.coef_ = np.linalg.inv(X.T.dot(X)+alphaMatrix).dot(X.T).dot(y)
+        self.intercept_ = y_mean - self.coef_.dot(X_means)
+        self._theta = np.concatenate([self.intercept_, self.coef_])
+        return self
+
+    def fit(self, X_train, y_train):
+        return self.fit_math_1(X_train, y_train)
+
+    def predict(self, X_predict):
+        assert self.intercept_ is not None and self.coef_ is not None, \
+            &quot;must fit before predict&quot;
+        assert X_predict.shape[1] == len(self.coef_), \
+            &quot;the feature number of X_predict must be equal to X_train&quot;
+        X_b = np.hstack([np.ones((len(X_predict), 1)), X_predict])
+        return X_b.dot(self._theta)
+
+    def score(self, x_test, y_test):
+        &quot;&quot;&quot;根据测试数据集 x_test 和 y_test 确定当前模型的准确度&quot;&quot;&quot;
+        y_predict = self.predict(x_test)
+        return r2_score(y_test, y_predict)
+
+    def __repr__(self):
+        return &quot;Ridge()&quot;</code></pre>
+<br>
+
+<h2 id="思路2"><a href="#思路2" class="headerlink" title="思路2"></a>思路2</h2><p>而 fit-math-1这个函数的思路是这样的: </p>
+<p>线性回归的公式是这样:<br>$$<br>\theta=(X^TX)^{-1}\cdot X^Ty<br>$$<br>而岭回归, 考虑<strong>所有</strong>θ<sub>i</sub>的公式是这样<br>$$<br>\theta=(X^TX+\alpha I)^{-1}\cdot X^Ty<br>$$</p>
+<blockquote>
+<p>注意此时<strong>X代表的是X_b</strong>, 也就是在原本X前面添加一列向量, 这列向量全是1, 因为此时考虑θ<sub>0</sub></p>
+</blockquote>
+<p>可以看出区别只有αI这一部分, X<sup>T</sup>X是n阶方阵, n为X的列数, 也就是特征的个数, 也就是θ的个数</p>
+<p>因此大胆假设, 在对角线第一个位置加上α就说明要约束第一个θ, 也就是θ<sub>0</sub></p>
+<p>对角线第二个位置加上alpha就是说明要约束第二个θ, 也就是θ<sub>1</sub>.</p>
+<p>因此如果我们不希望约束θ<sub>0</sub>的时候, 就把对角线第一个位置加上0而不是alpha, 就可以了.</p>
+<blockquote>
+<p>测试结果是一样的, 说明这个思路是正确的 </p>
+<p>这样甚至可以玩一些花样, 可以通过调整对角线上的元素来实现:</p>
+<ol>
+<li><p>对某些系数希望添加约束, 某些系数不约束</p>
+</li>
+<li><p>某些系数的约束加强, 对某些系数的约束减弱</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="数学验证思路2"><a href="#数学验证思路2" class="headerlink" title="数学验证思路2"></a>数学验证思路2</h2><p>此时就相当于最优化这样一个损失函数, α<sub>i</sub>是对第i个θ元素的约束<br>$$<br>J(\theta) = ||y-X\theta||^2 + \sum_{i=0}^n \alpha_i\cdot\theta_i^2<br>$$</p>
+<p>$$<br>J(\theta) = ||y-X\theta||^2 + \theta^T\cdot \alpha  \cdot \theta<br>$$</p>
+<p><strong>α是一个对角矩阵</strong>, α对角线的第一个元素相当于对θ第一个元素的约束, α对角线的的第二个元素相当于对θ第二个元素的约束</p>
+<p>依然是求导, 和上面没有任何变化, 只不过α此时是一个矩阵</p>
+<p>此时的解就是<br>$$<br>\theta=(X^TX+\alpha)^{-1}\cdot X^Ty<br>$$</p>
+<blockquote>
+<p>由于自己定义的θ中, 第0项代表的是截距(偏移量), 所以把α的对角线上第1个元素设为0就代表不对这个系数进行约束</p>
+</blockquote>
 
             </div>
             <hr>
@@ -1051,7 +1390,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1078,7 +1417,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1087,7 +1426,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
