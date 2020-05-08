@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.4k 字
+                    6.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      8 分钟
+                      28 分钟
                   </span>
                 
 
@@ -167,6 +167,7 @@
             
             <div class="markdown-body">
               <p>逻辑回归 Logistic Regression</p>
+<p>OvR 与 OvO</p>
 <a id="more"></a>
 
 <h1 id="逻辑回归-Logistic-Regression"><a href="#逻辑回归-Logistic-Regression" class="headerlink" title="逻辑回归 Logistic Regression"></a>逻辑回归 Logistic Regression</h1><p>逻辑回归: 解决<strong>分类</strong>问题</p>
@@ -354,29 +355,546 @@ $$<br>\sigma(t) = \frac 1 {1+e^{-t}}=(1+e^{-t})^{-1}<br>$$<br>所以结果就是
 
 <br>
 
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre><code class="python">import numpy as np
+from sklearn import datasets
+import matplotlib.pyplot as plt
+from metrics import accuracy_score
+from model_selection import train_test_split
 
 
+class LogisticRegression:
+
+    def __init__(self):
+        &quot;&quot;&quot;初始化Linear Regression模型&quot;&quot;&quot;
+        self.coef_ = None
+        self.intercept_ = None
+        self._theta = None
+
+    # 用于对接scikit-learn的接口
+    def fit(self, X_train, y_train):
+        return self.fit_gd(X_train, y_train)
+
+    def _sigmoid(self, t):
+        return 1. / (1. + np.exp(-t))
+
+    def fit_gd(self, X_train, y_train, eta=0.01, n_iters=10000):
+        &quot;&quot;&quot;根据训练数据集X_train, y_train, 使用梯度下降法训练Logistic Regression模型&quot;&quot;&quot;
+        assert X_train.shape[0] == y_train.shape[0], \
+            &quot;the size of X_train must be equal to the size of y_train&quot;
+
+        # 计算损失函数的值
+        def J(theta, X_b, y):
+            y_hat = self._sigmoid(X_b.dot(theta))
+            try:
+                return - np.sum(y*np.log(y_hat) + (1-y)*np.log(1-y_hat)) / len(X_b)
+            except:
+                return float(&#39;inf&#39;)
+
+        # 计算梯度(导数)
+        def dJ(theta, X_b, y):
+            return X_b.T.dot(self._sigmoid(X_b.dot(theta)) - y) / len(X_b)
+
+        # 梯度下降
+        def gradient_descent(X_b, y, initial_theta, eta, n_iters=10000, epsilon=1e-8):
+            theta = initial_theta
+            for _ in range(n_iters):
+                gradient = dJ(theta, X_b, y)
+                last_theta = theta
+                theta = theta - eta * gradient
+                # 如果误差可以忽略不计
+                if abs(J(theta, X_b, y) - J(last_theta, X_b, y)) &lt; epsilon:
+                    break
+            return theta
+
+        X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
+
+        initial_theta = np.zeros(X_b.shape[1])
+        self._theta = gradient_descent(X_b, y_train, initial_theta, eta, n_iters)
+
+        self.intercept_ = self._theta[0]
+        self.coef_ = self._theta[1:]
+
+        return self
+
+    def predict_proba(self, X_predict):
+        &quot;&quot;&quot;给定待预测数据集X_predict, 返回X_predict的结果向量&quot;&quot;&quot;
+        assert self.intercept_ is not None and self.coef_ is not None, \
+            &quot;must fit before predict&quot;
+        assert X_predict.shape[1] == len(self.coef_), \
+            &quot;the feature number of X_predict must be equal to X_train&quot;
+        X_b = np.hstack([np.ones((len(X_predict), 1)), X_predict])
+        return self._sigmoid(X_b.dot(self._theta))
+
+    def predict(self, X_predict):
+        &quot;&quot;&quot;给定待预测数据集X_predict, 返回X_predict的结果向量&quot;&quot;&quot;
+        assert self.intercept_ is not None and self.coef_ is not None, \
+            &quot;must fit before predict&quot;
+        assert X_predict.shape[1] == len(self.coef_), \
+            &quot;the feature number of X_predict must be equal to X_train&quot;
+        proba = self.predict_proba(X_predict)
+        return np.array(proba &gt;= 0.5, dtype=&#39;int&#39;)
+
+    def score(self, x_test, y_test):
+        &quot;&quot;&quot;根据测试数据集 x_test 和 y_test 确定当前模型的准确度&quot;&quot;&quot;
+        y_predict = self.predict(x_test)
+        return accuracy_score(y_test, y_predict)
+
+    def __repr__(self):
+        return &quot;LogicRegression()&quot;
 
 
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    X = iris.data
+    y = iris.target
+
+    # 逻辑回归只能解决二分类问题, 为了可视化只取两个特征
+    X = X[y &lt; 2, :2]
+    y = y[y &lt; 2]
+
+    plt.scatter(X[y==0, 0], X[y==0, 1], color=&quot;red&quot;)
+    plt.scatter(X[y==1, 0], X[y==1, 1], color=&quot;blue&quot;)
+    plt.show()
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+    log_reg = LogisticRegression()
+    log_reg.fit_gd(X_train, y_train)
+    # 准确率1.0
+    print(log_reg.score(X_test, y_test))
+</code></pre>
+<p><img src="/Blog/intro/logic_reg_cost_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h2><p>上面的逻辑回归就是根据线性回归实现的, 它也能求出一组θ. 那么这组θ有什么几何意义?</p>
+<br>
+
+<p>再回忆一下逻辑回归的原理</p>
+<p><img src="/Blog/intro/logic_reg_ju.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们很容易就得到这样一个结论</p>
+<p><img src="/Blog/intro/logic_reg_ju_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当 θ<sup>T</sup>X<sub>b</sub> &gt;= 0 的时候, 也就是p<sub>hat</sub> &gt;= 0.5 的时候, 此时把样本分类为y=1, 反之分类为y=0</p>
+<p>换句话说, 分类的边界点在θ<sup>T</sup>X<sub>b</sub> = 0这个位置, 这个位置就称为<strong>决策边界</strong></p>
+<p>而θ<sup>T</sup>X<sub>b</sub> = 0 同时代表一条直线, </p>
+<p> <img src="/Blog/intro/logic_reg_ju_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>不过通常在表达直线时是通过y=ax+b的形式, 此时y=x<sub>2</sub></p>
+<p><img src="/Blog/intro/logic_reg_ju_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">def x2(x1):
+    return (-log_reg.coef_[0] * x1 - log_reg.intercept_) / log_reg.coef_[1]
 
 
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    X = iris.data
+    y = iris.target
+
+    X = X[y &lt; 2, :2]
+    y = y[y &lt; 2]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+    log_reg = LogisticRegression()
+    log_reg.fit_gd(X_train, y_train)
+    # 1.0
+    print(log_reg.score(X_test, y_test))
+
+    x1_plot = np.linspace(4, 8, 1000)
+    x2_plot = x2(x1_plot)
+
+    plt.scatter(X[y == 0, 0], X[y == 0, 1], color=&quot;red&quot;)
+    plt.scatter(X[y == 1, 0], X[y == 1, 1], color=&quot;blue&quot;)
+    plt.plot(x1_plot, x2_plot)
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这就是决策边界, 这个边界大体上将数据分为了两部分</p>
+<p>如果在这条直线的下面, 则分类为1, 相反, 如果得到的结果小于0, 也就是说在直线上方就分类为0</p>
+<p>如果等于0就正好落在决策边界上, 此时无论分类成0还是分类成1都是正确的</p>
+<br>
+
+<p>可以看到有一个红色点不在决策边界的一侧, 这是分类错误的情况, 不过测试的结果准确率是100%, 说明这个点在训练数据集中</p>
+<br>
+
+<p>对于逻辑回归算法来说, 它得到的决策边界是一条直线, 所以它依然是线性回归算法中的一种, 它对应的分类标准本质就是判断点是在直线上面还是下面</p>
+<blockquote>
+<p>不过无论是kNN算法还是逻辑回归算法, 它们都可以通过添加多项式项来使得决策边界不再是一根直线</p>
+</blockquote>
+<br>
+
+<h3 id="不规则的决策边界的绘制方法"><a href="#不规则的决策边界的绘制方法" class="headerlink" title="不规则的决策边界的绘制方法"></a>不规则的决策边界的绘制方法</h3><p>在特征平面中, 分布着无数的点, 对于每一个点, 都可以使用模型来判断它分为哪一类.</p>
+<p>对平面中足够密地所有的点都判断一下它应该分为那一类</p>
+<p><img src="/Blog/intro/logic_reg_ju_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>得到的就是决策边界</p>
+<pre><code class="python">def plot_decision_boundary(model, axis):
+    x0, x1 = np.meshgrid(
+        np.linspace(axis[0], axis[1], int((axis[1] - axis[0]) * 100)).reshape(-1, 1),
+        np.linspace(axis[2], axis[3], int((axis[3] - axis[2]) * 100)).reshape(-1, 1),
+    )
+    X_new = np.c_[x0.ravel(), x1.ravel()]
+    y_predict = model.predict(X_new)
+
+    zz = y_predict.reshape(x0.shape)
+    custom_cmap = ListedColormap([&#39;#EF9A9A&#39;, &#39;#FFF59D&#39;, &#39;#90CAF9&#39;])
+
+    plt.contourf(x0, x1, zz, cmap=custom_cmap)
+
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    X = iris.data
+    y = iris.target
+
+    X = X[y &lt; 2, :2]
+    y = y[y &lt; 2]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, seed=666)
+    log_reg = LogisticRegression()
+    log_reg.fit_gd(X_train, y_train)
+    # 1.0
+    print(log_reg.score(X_test, y_test))
+
+    x1_plot = np.linspace(4, 8, 1000)
+    x2_plot = x2(x1_plot)
+
+    plot_decision_boundary(log_reg, axis=[4, 7.5, 1.5, 4.5])
+
+    plt.scatter(X[y == 0, 0], X[y == 0, 1], color=&quot;red&quot;)
+    plt.scatter(X[y == 1, 0], X[y == 1, 1], color=&quot;blue&quot;)
+    plt.plot(x1_plot, x2_plot)
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="kNN算法的决策边界"><a href="#kNN算法的决策边界" class="headerlink" title="kNN算法的决策边界"></a>kNN算法的决策边界</h3><p>kNN算法也有决策边界, 虽然不是用数学的方式计算出表达式</p>
+<p>但依然可以使用这种方式进行绘制</p>
+<pre><code class="python">knn_clf = KNeighborsClassifier()
+knn_clf.fit(X_train, y_train)
+
+plot_decision_boundary(knn_clf, axis=[4, 7.5, 1.5, 4.5])
+plt.scatter(X[y == 0, 0], X[y == 0, 1], color=&quot;red&quot;)
+plt.scatter(X[y == 1, 0], X[y == 1, 1], color=&quot;blue&quot;)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个边界是一个曲线</p>
+<p>而对于kNN算法来说支持多分类, 如果作用在三个类别上</p>
+<pre><code class="python">knn_clf_all = KNeighborsClassifier()
+knn_clf_all.fit(iris.data[:, :2], iris.target)
+plot_decision_boundary(knn_clf_all, axis=[4, 8, 1.5, 4.5])
+plt.scatter(iris.data[iris.target == 0, 0], iris.data[iris.target == 0, 1])
+plt.scatter(iris.data[iris.target == 1, 0], iris.data[iris.target == 1, 1])
+plt.scatter(iris.data[iris.target == 2, 0], iris.data[iris.target == 2, 1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看出决策边界是非常不规则的, 这样弯弯曲曲的样子就是<strong>过拟合</strong>的一种表现</p>
+<p>kNN的k越小, 模型就越复杂, 这里就可视化地看到了模型有多复杂, 决策边界非常不规则</p>
+<br>
+
+<p>如果n=50, 决策边界就规整了很多</p>
+<pre><code class="python">knn_clf_all = KNeighborsClassifier(n_neighbors=50)
+knn_clf_all.fit(iris.data[:, :2], iris.target)
+plot_decision_boundary(knn_clf_all, axis=[4, 8, 1.5, 4.5])
+plt.scatter(iris.data[iris.target == 0, 0], iris.data[iris.target == 0, 1])
+plt.scatter(iris.data[iris.target == 1, 0], iris.data[iris.target == 1, 1])
+plt.scatter(iris.data[iris.target == 2, 0], iris.data[iris.target == 2, 1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>整体分成三大块, 非常清晰</p>
+<blockquote>
+<p>又一次验证了, 对于kNN算法来说, k的值越大, 模型越简单, 决策边界整体越规整</p>
+</blockquote>
+<p><strong>模型的复杂与简单意味着决策边界的不同</strong></p>
+<br>
+
+<br>
+
+<h2 id="在逻辑回归使用多项式特征"><a href="#在逻辑回归使用多项式特征" class="headerlink" title="在逻辑回归使用多项式特征"></a>在逻辑回归使用多项式特征</h2><p>直线这种分类方式太简单了, 显然有很多其他情况</p>
+<p><img src="/Blog/intro/logic_reg_ju_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这些样本点来说, 是不可能使用一根直线来很好地分割成两部分</p>
+<p>这是因为这些样本点的分布是非线性的</p>
+<p>实际上这些样本点可以用圆形开分割决策边界</p>
+<p><img src="/Blog/intro/logic_reg_ju_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然现在的决策回归算法是无法得到这样一个圆形的决策边界的</p>
+<p>而对于一个圆形, 它的方程是这个样子<br>$$<br>x_1^2+x_2^2-r^2=0<br>$$<br>能否让逻辑回归学习到这样的决策边界?</p>
+<p>和线性回归一样, 只要引入多项式项就好了</p>
+<p>如果把x<sub>1</sub><sup>2</sup>整体看作一个特征x<sub>2</sub><sup>2</sup>整体也看作一个特征</p>
+<p>其实就相当于学习到x<sub>1</sub><sup>2</sup>前面的系数为1, x<sub>2</sub><sup>2</sup>前面的系数也为1, 以及一个θ<sub>0</sub>是-r<sup>2</sup>. </p>
+<p>此时的决策边界针对 x<sub>1</sub><sup>2</sup>, x<sub>2</sub><sup>2</sup>来说还是一个线性的决策边界, 但是针对x<sub>1</sub> 和 x<sub>2</sub>这两个特征来说, 就是非线性的决策边界</p>
+<blockquote>
+<p>也就是说从线性回归转换成多项式回归的思路对逻辑回归也是适用的, 此时就可以对非线性的数据进行比较好的分类</p>
+</blockquote>
+<br>
+
+<p>使用普通逻辑回归的决策边界</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+
+from LogisticRegression import LogisticRegression
 
 
+def plot_decision_boundary(model, axis):
+    x0, x1 = np.meshgrid(
+        np.linspace(axis[0], axis[1], int((axis[1] - axis[0]) * 100)).reshape(-1, 1),
+        np.linspace(axis[2], axis[3], int((axis[3] - axis[2]) * 100)).reshape(-1, 1),
+    )
+    X_new = np.c_[x0.ravel(), x1.ravel()]
+    y_predict = model.predict(X_new)
+
+    zz = y_predict.reshape(x0.shape)
+    custom_cmap = ListedColormap([&#39;#EF9A9A&#39;, &#39;#FFF59D&#39;, &#39;#90CAF9&#39;])
+
+    plt.contourf(x0, x1, zz, cmap=custom_cmap)
 
 
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(666)
+    X = np.random.normal(0, 1, size=(200, 2))
+    y = np.array(X[:, 0]**2 + X[:, 1]**2 &lt; 1.5, dtype=&#39;int&#39;)
+
+    log_reg = LogisticRegression()
+    log_reg.fit(X, y)
+    plot_decision_boundary(log_reg, [-4, 4, -4, 4])
+    plt.scatter(X[y == 0, 0], X[y == 0, 1])
+    plt.scatter(X[y == 1, 0], X[y == 1, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然有非常多的错误分类</p>
+<br>
+
+<p>添加多项式项后的逻辑回归</p>
+<pre><code class="python">def PolynomialLogisticRegression(degree):
+    return Pipeline([
+        (&quot;poly&quot;, PolynomialFeatures(degree)),
+        (&quot;std&quot;, StandardScaler()),
+        (&quot;log_reg&quot;, LogisticRegression())
+    ])
 
 
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(666)
+    X = np.random.normal(0, 1, size=(200, 2))
+    y = np.array(X[:, 0]**2 + X[:, 1]**2 &lt; 1.5, dtype=&#39;int&#39;)
+
+    poly_log_reg = PolynomialLogisticRegression(2)
+    poly_log_reg.fit(X, y)
+    # 准确率高达95%
+    print(poly_log_reg.score(X, y))
+
+    plot_decision_boundary(poly_log_reg, [-4, 4, -4, 4])
+    plt.scatter(X[y == 0, 0], X[y == 0, 1])
+    plt.scatter(X[y == 1, 0], X[y == 1, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/logic_reg_ju_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>决策边界是这样一个圆形</p>
+<p>而如果degree=20, 决策边界就是这样, 毫无疑问, 发生了过拟合</p>
+<p><img src="/Blog/intro/logic_reg_ju_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+ <br>
+
+<p>解决过拟合的方式除了降低degree, 就是进行模型的正则化</p>
+<p>实际上对于逻辑回归来说, 真实情况很少是用一根直线进行分类的, 通常都要为它加上多项式项, 此时模型的正则化就变得必不可少</p>
+<br>
+
+<h2 id="逻辑回归中使用正则化"><a href="#逻辑回归中使用正则化" class="headerlink" title="逻辑回归中使用正则化"></a>逻辑回归中使用正则化</h2><p>正则化的方式是对于损失函数添加一个新的项, 这一项可以是<br>$$<br>J(\theta) +\alpha L_2<br>$$<br>L2 就是 L2正则项, 用这种新的式子对整体损失函数进行优化. 一方面让原来的损失函数 J(θ) 尽可能小, 另一方面, 让L2正则项限制θ不要太大</p>
+<br>
+
+<p>除了在L1, L2前面添加超参数, 还有一种方式就是在 J(θ) 前添加超参数</p>
+<p><img src="/Blog/intro/logic_reg_ju_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用这种方式就相当于如果C越大, 就越会集中火力将 J(θ) 减小到最小. 如果C越小, L1或L2正则项就更加重要, 因此就会尽力将L1L2正则项变得更加小</p>
+<p>所以在 J(θ) 前面添加 C 某种程度上可以理解为在正则项前面加α的倒数. 依然有这两项, 只不过为了平衡这两项之间的关系, 在 J(θ) 前增加了系数</p>
+<p><strong>在对模型进行正则化的时候我们更偏向于在 J(θ) 前面添加 C</strong></p>
+<p>scikit-learn中逻辑回归的正则化使用的就是这种方式</p>
+<blockquote>
+<p>实际上这样的情况下<strong>不得不</strong>进行正则化, 因为L1L2前面的系数不为0, 至少为1</p>
+</blockquote>
+<br>
+
+<p>scikit-learn中的逻辑回归默认C=1, 使用L2正则项</p>
+<pre><code class="python">def PolynomialLogisticRegression(degree, C=1., penalty=&#39;l2&#39;):
+    return Pipeline([
+        (&quot;poly&quot;, PolynomialFeatures(degree)),
+        (&quot;std&quot;, StandardScaler()),
+        # 如果想使用l1范数, 就必须设置solver=&#39;liblinear&#39;
+        (&quot;log_reg&quot;, LogisticRegression(C=C, penalty=penalty, solver=&#39;liblinear&#39;))
+    ])
+
+if __name__ == &#39;__main__&#39;:
+    np.random.seed(666)
+    X = np.random.normal(0, 1, size=(200, 2))
+    y = np.array(X[:, 0] ** 2 + X[:, 1] &lt; 1.5, dtype=&#39;int&#39;)
+    # 因为要测试正则化, 挑选20个点, 强制它们为1
+    for _ in range(20):
+        y[np.random.randint(200)] = 1
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+
+    # 单项式的逻辑回归
+    log_reg = LogisticRegression()
+    log_reg.fit(X_train, y_train)
+    print(log_reg.score(X_train, y_train))  # 0.793
+    print(log_reg.score(X_test, y_test))    # 0.86
+    plot_decision_boundary(log_reg, [-4, 4, -4, 4])
+    plt.scatter(X[y==0, 0], X[y==0, 1])
+    plt.scatter(X[y==1, 0], X[y==1, 1])
+    plt.show()
+
+    poly_log_reg = PolynomialLogisticRegression(2)
+    poly_log_reg.fit(X_train, y_train)
+    print(poly_log_reg.score(X_train, y_train)) # 0.906
+    print(poly_log_reg.score(X_test, y_test))   # 0.94
+    plot_decision_boundary(poly_log_reg, [-4, 4, -4, 4])
+    plt.scatter(X[y==0, 0], X[y==0, 1])
+    plt.scatter(X[y==1, 0], X[y==1, 1])
+    plt.show()</code></pre>
+<p>单项式的逻辑回归</p>
+<p><img src="/Blog/intro/sk_log_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>多项式的逻辑回归, degree=2</p>
+<p><img src="/Blog/intro/sk_log_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>degree=20, score=0.92, 是比上面的score小的, 有过拟合产生</p>
+<p><img src="/Blog/intro/sk_log_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>当C=0.1时, 同时使用默认的l2范数</p>
+<pre><code class="python">poly_log_reg = PolynomialLogisticRegression(20, C=0.1)
+poly_log_reg.fit(X_train, y_train)
+plot_decision_boundary(poly_log_reg, [-4, 4, -4, 4])
+plt.scatter(X[y==0, 0], X[y==0, 1])
+plt.scatter(X[y==1, 0], X[y==1, 1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/sk_log_reg_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>当使用l1范数时</p>
+<pre><code class="python">poly_log_reg = PolynomialLogisticRegression(20, C=0.1, penalty=&#39;l1&#39;)
+poly_log_reg.fit(X_train, y_train)
+plot_decision_boundary(poly_log_reg, [-4, 4, -4, 4])
+plt.scatter(X[y==0, 0], X[y==0, 1])
+plt.scatter(X[y==1, 0], X[y==1, 1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/sk_log_reg_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>l1会使大部分的多项式项的系数为0, 使得整个决策边界弯弯曲曲</p>
+<br>
+
+<p>使用l1正则还是l2正则, C取值为多少, degree取多少</p>
+<p>这些都是超参数, 具体使用时要用表格搜索.</p>
+<br>
+
+<p>然而还有一个问题, 对于逻辑回归来说, 只能解决二分类问题. 但是我们依然可以使用一些技术手段扩展逻辑回归的使用场景, 让它也可以解决多分类问题</p>
+<br>
+
+<h2 id="OvR与OvO"><a href="#OvR与OvO" class="headerlink" title="OvR与OvO"></a>OvR与OvO</h2><p>逻辑回归只能解决二分类问题, 但我们可以通过改造逻辑回归来解决多分类问题</p>
+<p>解决多分类问题: </p>
+<ul>
+<li>OvR</li>
+<li>OvO</li>
+</ul>
+<blockquote>
+<p>这种改造方式不是只针对逻辑回归这一种改造方式, 而是一个通用的, 对近乎所有二分类算法都适用的</p>
+</blockquote>
+<br>
+
+<h3 id="OvR-One-vs-Rest"><a href="#OvR-One-vs-Rest" class="headerlink" title="OvR (One vs Rest)"></a>OvR (One vs Rest)</h3><p><img src="/Blog/intro/ovr.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设有4个类别, 用4个点表示.</p>
+<p>显然这样无法直接使用逻辑回归来解决.</p>
+<p>我们可以选取某一个类别, 例如选取红色类别, 而其余3个点融合成一个类别”其他类别”(rest)</p>
+<p><img src="/Blog/intro/ovr_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个过程同样可以在其他的类别上进行</p>
+<p><img src="/Blog/intro/ovr_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果有4个类别, 相应就有4个不同的分类问题. 每次都选择一个类别和剩余类别进行二分类任务</p>
+<p>对于每一个二分类任务, 都能得到一个概率.</p>
+<p><strong>n个类别就进行n次分类, 选择分类得分最高的(概率最高的)</strong></p>
+<p>如果处理一个二分类问题的用时是t的话, 处理n个问题就是nt这么多的事件</p>
+<br>
+
+<h3 id="OvO-One-vs-One"><a href="#OvO-One-vs-One" class="headerlink" title="OvO (One vs One)"></a>OvO (One vs One)</h3><p><img src="/Blog/intro/ovr.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实就是一对一地进行比较</p>
+<p>每次只挑出两个类别, 然后进行二分类任务</p>
+<p><img src="/Blog/intro/OVO.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个过程可以重复进行, 如果有4个类别, 就能形成六个两两的对</p>
+<p><img src="/Blog/intro/OVO_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于每一个二分类问题, 都可以估计一下, 它处于这个二分类问题中的那个类别, 然后对于这些分类结果就可以进行投票</p>
+<p>看对于这个样本, 对于这6票中, 那个分类的票数最多, 就可以判定在那个类别中</p>
+<p><strong>n个类别就进行C(n, 2)次分类, 选择赢数最高的分类</strong></p>
+<br>
+
+<p>很显然OvO的方式是比OvR消耗的时间多</p>
+<p>但是虽然OvO耗时更多, 但是它的分类结果是更加准确的</p>
+<p>这是因为每次只用真实的两个类别进行比较, 而没有混淆其他类别信息. 所以它更倾向于得到新来的样本真实属于那个类别</p>
+<br>
+
+<p>scikit-learn中的逻辑回归内部实现了ovr和ovo</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from sklearn import datasets
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 
+def plot_decision_boundary(model, axis):
+    x0, x1 = np.meshgrid(
+        np.linspace(axis[0], axis[1], int((axis[1] - axis[0]) * 100)).reshape(-1, 1),
+        np.linspace(axis[2], axis[3], int((axis[3] - axis[2]) * 100)).reshape(-1, 1),
+    )
+    X_new = np.c_[x0.ravel(), x1.ravel()]
+    y_predict = model.predict(X_new)
+
+    zz = y_predict.reshape(x0.shape)
+    custom_cmap = ListedColormap([&#39;#EF9A9A&#39;, &#39;#FFF59D&#39;, &#39;#90CAF9&#39;])
+
+    plt.contourf(x0, x1, zz, cmap=custom_cmap)
 
 
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    X = iris.data[:, :2]
+    y = iris.target
 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+    # scikit-learn的逻辑回归默认使用OvR, solver=newton-cg
+    log_reg = LogisticRegression(multi_class=&quot;ovr&quot;, solver=&quot;liblinear&quot;)
+    log_reg.fit(X_train, y_train)
+    # print(log_reg.score(X_test, y_test))
 
+    plot_decision_boundary(log_reg, axis=[4, 8.5, 1.5, 4.5])
+    plt.scatter(X[y==0, 0], X[y==0, 1])
+    plt.scatter(X[y==1, 0], X[y==1, 1])
+    plt.scatter(X[y==2, 0], X[y==2, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/OVO_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>如果使用ovo</p>
+<pre><code class="python">log_reg = LogisticRegression(multi_class=&quot;multinomial&quot;, solver=&quot;newton-cg&quot;)
+log_reg.fit(X_train, y_train)
 
+plot_decision_boundary(log_reg, axis=[4, 8.5, 1.5, 4.5])
+plt.scatter(X[y==0, 0], X[y==0, 1])
+plt.scatter(X[y==1, 0], X[y==1, 1])
+plt.scatter(X[y==2, 0], X[y==2, 1])
+plt.show()</code></pre>
+<p><img src="/Blog/intro/OVO_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>scikit-learn还封装了两个类, 这两个类可以用来支持OvO和OvR两种方式, 因此可以使用任意二分类算法通过这两个类完成多分类任务</p>
+<pre><code class="python">from sklearn import datasets
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.multiclass import OneVsRestClassifier, OneVsOneClassifier
 
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    X = iris.data
+    y = iris.target
 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+    # scikit-learn的逻辑回归默认使用OvR
+    log_reg = LogisticRegression()
+    log_reg.fit(X_train, y_train)
+    print(log_reg.score(X_test, y_test))
+
+    ovr = OneVsRestClassifier(log_reg)
+    ovr.fit(X_train, y_train)
+    print(ovr.score(X_test, y_test))
+
+    ovo = OneVsOneClassifier(log_reg)
+    ovo.fit(X_train, y_train)
+    print(ovo.score(X_test, y_test))</code></pre>
+<br>
 
 
             </div>
