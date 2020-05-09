@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -176,7 +176,7 @@
     
       <div class="col-12 col-md-4 m-auto">
         <a href="/Blog/2020/05/08/machine-learning-8/" target="_self">
-          <img src="/Blog/intro/logic_reg_ju_6.PNG" srcset="/Blog/img/loading.gif" alt="python3入门机器学习(8)-评价分类结果"
+          <img src="/Blog/intro/cureve_p_r.PNG" srcset="/Blog/img/loading.gif" alt="python3入门机器学习(8)-评价分类结果"
                class="index-img img-fluid rounded index-thumbnails">
         </a>
       </div>
@@ -190,26 +190,14 @@
         
         
           
+          
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">
-
-评价分类结果分类算法的评价逻辑回归算法是一个非常常用的分类算法
-评价算法的好坏对于回归问题来说, MSE, MAE, RMSE, R2都是非常好的指标
-但是对于分类算法来说, 至今为止只使用分类准确度这一个指标
-
-
-分类准确度的问题实际上分类准确度在评价算法时是有一个很重要的问题的
-
-
-举一个例子:
-一个癌症预测系统, 输入体检信息, 可以判断是否有癌症
-假设做出来的系统的预测准确率99.9%
-那么这个系统是一个好的系统还是不好的系统 ?
-
-99.9% 很高, 可能很多人都认为是一个好的系统, 然而实际上是不够好的
-
-如果在实际情况下, 癌症产生的概率只有0.1%, 那意味着我们的系统检测</div>
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">混淆矩阵 Confusion Matrix
+精准率 Precision 和 召回率 Recall
+F1 Score-精准率和召回率的调和平均值 
+精准率召回率曲线
+ROC曲线...</div>
         </div>
       </a>
 
@@ -655,7 +643,7 @@ numpy数据基础...</div>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -664,7 +652,7 @@ numpy数据基础...</div>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

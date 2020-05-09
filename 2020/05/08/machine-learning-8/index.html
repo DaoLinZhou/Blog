@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.9k 字
+                    4.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      19 分钟
                   </span>
                 
 
@@ -166,7 +166,12 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <a id="more"></a>
+              <p>混淆矩阵 Confusion Matrix</p>
+<p>精准率 Precision 和 召回率 Recall</p>
+<p>F1 Score-精准率和召回率的调和平均值 </p>
+<p>精准率召回率曲线</p>
+<p>ROC曲线</p>
+<a id="more"></a>
 
 <h1 id="评价分类结果"><a href="#评价分类结果" class="headerlink" title="评价分类结果"></a>评价分类结果</h1><h2 id="分类算法的评价"><a href="#分类算法的评价" class="headerlink" title="分类算法的评价"></a>分类算法的评价</h2><p>逻辑回归算法是一个非常常用的分类算法</p>
 <p>评价算法的好坏对于<strong>回归问题</strong>来说, MSE, MAE, RMSE, R<sup>2</sup>都是非常好的指标</p>
@@ -467,43 +472,213 @@ print(recall_score(y_test, y_predict_2)) # 0.53</code></pre>
 <p>那么具体设计一个分类算法时, threshold应该安装什么标准选取?</p>
 <br>
 
+<p>用可视化的方式再深度理解一下精准率和召回率之间的关系</p>
+<pre><code class="python">precisions = []
+recalls = []
+# 每隔0.1个单位就计算一次精准率和召回率
+thresholds = np.arange(np.min(decision_scores), np.max(decision_scores), 0.1)
+for threshold in thresholds:
+    y_predict = np.array(decision_scores &gt;= threshold, dtype=&quot;int&quot;)
+    precisions.append(precision_score(y_test, y_predict))
+    recalls.append(recall_score(y_test, y_predict))
 
+plt.plot(thresholds, precisions)
+plt.plot(thresholds, recalls)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/cureve_p_r.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然蓝色的曲线是精确率, 它随着threshold的增大而增大, 而黄色的曲线是召回率, 它随着threshold的增大而降低</p>
+<br>
 
+<h2 id="精准率-召回率曲线"><a href="#精准率-召回率曲线" class="headerlink" title="精准率-召回率曲线"></a>精准率-召回率曲线</h2><p>把横轴看作精确率, 纵轴看作召回率</p>
+<pre><code class="python">plt.plot(precisions, recalls)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/cureve_p_r_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>随着precision增大, recall逐渐减小</p>
+<p>在这个曲线上, 通常会看到一个非常陡峭的下降的点, 这个点就是精确率和召回率平衡最好的位置(在这之后召回率会急剧下降)</p>
+<br>
 
+<p>而在scikit-learn中有一个方法可以直接获得曲线</p>
+<pre><code class="python"># thresholds的元素个数比Precision和recall少一个
+# 最后一个Precision和recall是1和0, 没有对应的threshold
+precisions, recalls, thresholds = precision_recall_curve(y_test, decision_scores)
+plt.plot(thresholds, precisions[:-1])
+plt.plot(thresholds, recalls[:-1])
+plt.show()
 
+plt.plot(precisions, recalls)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/cureve_p_r_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cureve_p_r_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个函数会根据数据自动寻找合适的threshold, 以及它认为最重要的那部分数据. 所以和自己画的图不一样</p>
+<p>但是依然可以看出二者互相制约</p>
+<br>
 
+<p>precision-recall曲线整体是这样的</p>
+<p><img src="/Blog/intro/cureve_p_r_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>假设有两个算法, 或者同一个算法中用两组超参数</p>
+<p>每训练出一个模型就对应一个Precision-Recall曲线</p>
+<p><img src="/Blog/intro/cureve_p_r_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然<strong>外面曲线的模型</strong>是优于里面曲线的模型的</p>
+<p>所以如果一个模型<strong>PR曲线更靠外</strong>的话, 这个模型就更加好</p>
+<p>于此我们可以看到, PR曲线可以作为选择模型, 选择算法, 选择超参数的一个指标</p>
+<br>
 
+<p>有的时候曲线更靠外这个说法有些抽象, 所以有时, 也会以<strong>曲线与X轴Y轴包裹的面积</strong>来衡量模型好坏. 面积越大, 模型越好</p>
+<p>虽然如此, 但是通常我们不用PR曲线的面积来衡量模型的优劣, 而是使用了另外一根曲线和XY轴包裹的面积来衡量模型的优劣: ROC 曲线</p>
+<br>
 
+<br>
 
+<h2 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h2><p>Receiver Operation Characteristic Curve</p>
+<p>是一个统计学上经常使用的术语, 用于描述 TPR 和 FPR 之间的关系</p>
+<br>
 
+<h3 id="TPR"><a href="#TPR" class="headerlink" title="TPR"></a>TPR</h3><p>True Positive Rate的缩写</p>
+<p><img src="/Blog/intro/tpr.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实TPR和Recall是一个意思</p>
+<p>预测为1, 预测对了的数量. 占真实为1的百分比</p>
+<br>
 
+<h3 id="FPR"><a href="#FPR" class="headerlink" title="FPR"></a>FPR</h3><p>False Positive Rete的缩写</p>
+<p><img src="/Blog/intro/fpr.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>预测为1, 但预测错了, 占真实值为0的百分比</p>
+<br>
 
+<p><img src="/Blog/intro/tpr_fpr.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>TPR和FPR依然存在联系</p>
+<p>同样假设1为五角星, 是我们关注的, 0为圆圈. 分割线右边预测为1(五角星)</p>
+<p><img src="/Blog/intro/tpr_fpr_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>threshold逐渐降低, FPR和TPR逐渐升高</p>
+<p>FPR和TPR是呈现一个相一致的趋势, TPR越高, FPR也越高</p>
+<p>为了提高TPR, 就要拉低threshold, 此时犯FP错误的概率也会增高</p>
+<br>
 
+<h3 id="编程绘制曲线"><a href="#编程绘制曲线" class="headerlink" title="编程绘制曲线"></a>编程绘制曲线</h3><p>实现TPR和FPR, 绘制曲线</p>
+<pre><code class="python">def TPR(y_true, y_predict):
+    tp = TP(y_true, y_predict)
+    fn = FN(y_true, y_predict)
+    try:
+        return tp / (tp + fn)
+    except:
+        return 0.0
 
+def FPR(y_true, y_predict):
+    fp = FP(y_true, y_predict)
+    tn = TN(y_true, y_predict)
+    try:
+        return fp / (fp + tn)
+    except:
+        return 0.0
 
+if __name__ == &#39;__main__&#39;:
+    digits = datasets.load_digits()
+    X = digits.data
+    y = digits.target.copy()
 
+    # 手动让数据集偏斜, 只关注等于9的手写数字
+    y[digits.target == 9] = 1
+    y[digits.target != 9] = 0
 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+    # 获得模型
+    log_reg = LogisticRegression()
+    log_reg.fit(X_train, y_train)
+    decision_scores = log_reg.decision_function(X_test)
 
+    fprs = []
+    tprs = []
+    thresholds = np.arange(np.min(decision_scores), np.max(decision_scores), 0.1)
+    for threshold in thresholds:
+        y_predict = np.array(decision_scores &gt;= threshold, dtype=&quot;int&quot;)
+        fprs.append(FPR(y_test, y_predict))
+        tprs.append(TPR(y_test, y_predict))
+    plt.plot(fprs, tprs)
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/tpr_fpr_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>scikit-learn中提供的ROC曲线</p>
+<pre><code class="python">from sklearn.metrics import roc_curve
 
+fprs, tprs, threshold = roc_curve(y_test, decision_scores)
+plt.plot(fprs, tprs)
+plt.show()</code></pre>
+<br>
 
+<p><img src="/Blog/intro/tpr_fpr_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这条曲线来说, 我们通常关注曲线下方面积的大小</p>
+<p>面积越大, 就说明分类效果越好</p>
+<p>因为ROC曲线上ROC越小的时候, 也就是FPR越低的时候, 也就是犯False Positive的错误越少的时候, 如果曲线的值越高, 也就是TPR越大, 得到True Positive结果越多的时候. 曲线整体就会被抬的越高, 曲线下方面积就会越大, 此时分类算法就更好</p>
+<br>
 
+<h3 id="如何求这个面积"><a href="#如何求这个面积" class="headerlink" title="如何求这个面积"></a>如何求这个面积</h3><pre><code class="python"># 自己实现的
+dx = np.empty(len(fprs)-1)
+for i in range(len(fprs)-1):
+    dx[i] = fprs[i+1]-fprs[i]
+print(np.array(tprs[1:]).dot(dx))
 
+# scikit-learn中的方法
+# Area Under the Curve
+from sklearn.metrics import roc_auc_score
+# 0.98
+print(roc_auc_score(y_test, decision_scores))</code></pre>
+<p>面积最大为1</p>
+<p>其实ROC-AUC对于非常有偏的数据并不敏感</p>
+<p>不像Precision-Recall那样对有偏的数据那么敏感, 所以看模型的精准率和召回率是非常有必要的</p>
+<br>
 
+<p>那么ROC-AUC的用途在哪里?</p>
+<p><img src="/Blog/intro/tpr_fpr_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>用途主要在于比较<strong>两个模型</strong>的优劣</p>
+<p>两个算法, 两个模型, 或者同样一个算法的两组超参数得到的模型</p>
+<p>这样的情况下, 应该选择ROC下方面积更大的模型. 我们认为这样的模型是一个更好的模型</p>
+<br>
 
+<br>
 
-
-
-
-
-
-
-
-
-
-
-
+<h2 id="多分类问题中的混淆矩阵"><a href="#多分类问题中的混淆矩阵" class="headerlink" title="多分类问题中的混淆矩阵"></a>多分类问题中的混淆矩阵</h2><p>confusion_matrix天然支持多分类问题</p>
+<p>和二分类问题中的混淆矩阵解读的方式的一样的</p>
+<p>矩阵中是第i行第j列的位置, 行这个方向代表真值, 列方向代表预测值</p>
+<p>因此真值为 i , 我们预测为 j 的样本数量</p>
+<pre><code class="python">print(confusion_matrix(y_test, y_predict))
+&quot;&quot;&quot;
+[[147,   0,   1,   0,   0,   1,   0,   0,   0,   0],
+ [  0, 123,   1,   2,   0,   0,   0,   3,   4,  10],
+ [  0,   0, 134,   1,   0,   0,   0,   0,   1,   0],
+ [  0,   0,   0, 138,   0,   5,   0,   1,   5,   0],
+ [  2,   5,   0,   0, 139,   0,   0,   3,   0,   1],
+ [  1,   3,   1,   0,   0, 146,   0,   0,   1,   0],
+ [  0,   2,   0,   0,   0,   1, 131,   0,   2,   0],
+ [  0,   0,   0,   1,   0,   0,   0, 132,   1,   2],
+ [  1,   9,   2,   3,   2,   4,   0,   0, 115,   4],
+ [  0,   1,   0,   5,   0,   3,   0,   2,   2, 134]]
+&quot;&quot;&quot;</code></pre>
+<p>对角线位置的元素最大, 就是数字本身就是i, 同时我们预测为i. 就是说算法犯的错误还是比较少的</p>
+<p>不过在一些位置还是会犯一些错误, 可以通过绘制矩阵直观地看到犯错误比较多的地方</p>
+<pre><code class="python">cfm = confusion_matrix(y_test, y_predict)
+plt.matshow(cfm, cmap=plt.cm.gray)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/tpr_fpr_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图中, 越亮的地方代表数值越大, 越暗的地方数值越小, 对角线的方块是最亮的, 之后少数错误</p>
+<p>然而我们关注的是犯错的地方在哪, 所以在对矩阵进行相应的一些处理</p>
+<pre><code class="python">row_sums = np.sum(cfm, axis=1)
+err_matrix = cfm / row_sums
+# 不关系预测正确的元素, 所以对角线填充为0
+np.fill_diagonal(err_matrix, 0)
+plt.matshow(err_matrix, cmap=plt.cm.gray)
+plt.show()</code></pre>
+<p><img src="/Blog/intro/tpr_fpr_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>越亮的地方, 犯的错误越多. 有了这样的提示就可以改进算法了</p>
+<p>改进方式就是: 得到的结果又把它规约成了一个二分类问题, 换句话说, 现在多分类问题算法结果很容易混淆1和9, 以及1和8</p>
+<p>所以我们可以微调 1和9,1和8 这两个二分类问题中的threshold来提高整体多分类问题的准确度</p>
+<blockquote>
+<p>也有可能问题的出现不在算法层面上, 有可能在样本数据的层面上</p>
+<p>所以此时最好拿出样本看看来直观地理解为什么会有这样的分类错误产生</p>
+<p>很有可能样本数据也有一定的问题, 即使样本数据没有问题, 通过这样的观察, 我们也很有可能总结出新的样本特征</p>
+</blockquote>
+<br>
 
 
             </div>
@@ -562,7 +737,7 @@ print(recall_score(y_test, y_predict_2)) # 0.53</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -589,7 +764,7 @@ print(recall_score(y_test, y_predict_2)) # 0.53</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -598,7 +773,7 @@ print(recall_score(y_test, y_predict_2)) # 0.53</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
