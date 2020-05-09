@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -141,6 +141,60 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a href="/Blog/2019/06/29/database-structure/">
+        <p class="h4 index-header">数据库架构</p>
+      </a>
+
+      <a href="/Blog/2019/06/29/database-structure/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+从一个面试题说起如何设计一个关系型数据库?
+
+
+开始设计: 
+
+数据库最重要的就是存储模块(文件系统), 将数据持久化存入磁盘中
+但仅仅是存储是不够的, 还要有一些响应的模块来进行管理
+
+
+细分模块
+存储管理: 对数据的格式, 和文件的分隔进行统一管理. 即: 把物理数据通过逻辑的形式表述出来
+
+缓存机制: 把取出来的数据块放在缓存里, 下次需要直接从内存返回, 而不用IO
+
+SQL解析: 为了让外部可以通过SQL进行数据库操作, 需要SQL解析模块, 把sql语句解析并执行.(为了提升效率, 可以把sql 缓存到缓存里, 编译好的SQL方便下一次直接进行解析, 注意缓存不易过大, 算法里</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-06-29&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/Blog/categories/面试必会/">面试必会</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/Blog/tags/数据库/">数据库</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -547,48 +601,6 @@ O(1)
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a href="/Blog/2019/06/20/TCP三次握手/">
-        <p class="h4 index-header">TCP三次握手</p>
-      </a>
-
-      <a href="/Blog/2019/06/20/TCP三次握手/">
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">我将通过Wireshark 这款软件对B站进行抓包, 来分析TCP的三次握手
-...</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-06-20&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/Blog/categories/面试必会/">面试必会</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/Blog/tags/网络/">网络</a>&nbsp;
-          
-            <a href="/Blog/tags/tcp/">tcp</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -625,7 +637,7 @@ O(1)
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -634,7 +646,7 @@ O(1)
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

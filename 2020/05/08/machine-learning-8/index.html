@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>python3入门机器学习(8)-评价分类结果 - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/longyinl.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Friday, May 8th 2020, 2:32 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.7k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      6 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<h1 id="评价分类结果"><a href="#评价分类结果" class="headerlink" title="评价分类结果"></a>评价分类结果</h1><h2 id="分类算法的评价"><a href="#分类算法的评价" class="headerlink" title="分类算法的评价"></a>分类算法的评价</h2><p>逻辑回归算法是一个非常常用的分类算法</p>
+<p>评价算法的好坏对于<strong>回归问题</strong>来说, MSE, MAE, RMSE, R<sup>2</sup>都是非常好的指标</p>
+<p>但是对于<strong>分类算法</strong>来说, 至今为止只使用<strong>分类准确度</strong>这一个指标</p>
+<br>
+
+<h3 id="分类准确度的问题"><a href="#分类准确度的问题" class="headerlink" title="分类准确度的问题"></a>分类准确度的问题</h3><p>实际上分类准确度在评价算法时是有一个很重要的问题的</p>
+<br>
+
+<p>举一个例子:</p>
+<p>一个癌症预测系统, 输入体检信息, 可以判断是否有癌症</p>
+<p>假设做出来的系统的预测准确率99.9%</p>
+<p>那么这个系统是一个好的系统还是不好的系统 ?</p>
+<blockquote>
+<p>99.9% 很高, 可能很多人都认为是一个好的系统, 然而实际上是不够好的</p>
+</blockquote>
+<p>如果在实际情况下, 癌症产生的概率只有0.1%, 那意味着我们的系统检测所有人都是健康, 即可达到99.9%的准确率. 因为只有0.1%的人有癌症</p>
+<p>这样实际就相当于系统什么都没作, 但是准确度却达到了99.9%</p>
+<blockquote>
+<p>更极端一些, 癌症产生的概率只有0.01%, 那意味着我们的系统检测所有人都是健康, 即可达到99.99%的准确率</p>
+<p>这意味着机器学习系统是失败的, 因为它比预测所有人都是健康的准确度更低</p>
+</blockquote>
+<p>这就是使用分类准确度衡量分类系统的问题所在</p>
+<br>
+
+<p>这样的问题发生在数据是极度偏斜的情况</p>
+<p>对于<strong>极度偏斜(Skewed Data)的数据</strong>, 只使用<strong>分类准确度</strong>是远远不够的</p>
+<p>对于这样的数据如果使用分类准确度的话, 可能得到一个非常高的分类准确度, 但其实算法是不够好的, 甚至是非常烂的</p>
+<p>正因为这种情况, 所以需要引入其他的指标来判断分类算法的好坏</p>
+<br>
+
+<h2 id="混淆矩阵-Confusion-Matrix"><a href="#混淆矩阵-Confusion-Matrix" class="headerlink" title="混淆矩阵 Confusion Matrix"></a>混淆矩阵 Confusion Matrix</h2><p>对于二分类问题</p>
+<p>混淆矩阵是一个2乘2的矩阵</p>
+<p><img src="/Blog/intro/confusion_matrix.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每一行代表对于要预测的问题的真实值</p>
+<p>每一列代表分类算法预测的值</p>
+<p><img src="/Blog/intro/confusion_matrix_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>依然从一个例子出发, 假设有10000人检测癌症, 1代表患病, 0代表不患病</p>
+<table>
+<thead>
+<tr>
+<th align="center">真实\预测</th>
+<th align="center">0</th>
+<th align="center">1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>0</strong></td>
+<td align="center">9978</td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td align="center"><strong>1</strong></td>
+<td align="center">2</td>
+<td align="center">8</td>
+</tr>
+</tbody></table>
+<p>对于这10000个人中,</p>
+<p>有9978个人本身没有患癌症, 同时算法预测他们也没有患癌症. </p>
+<p>有12个人没有患癌症, 但是算法却预测他们患癌症了</p>
+<p>有2个人患癌症, 但是算法预测错误, 算法说他们没有患癌症</p>
+<p>有8个人患癌症, 算法预测正确</p>
+<br>
+
+<h3 id="精准率和召回率"><a href="#精准率和召回率" class="headerlink" title="精准率和召回率"></a>精准率和召回率</h3><h3 id="精准率-precision"><a href="#精准率-precision" class="headerlink" title="精准率(precision)"></a>精准率(precision)</h3><p>$$<br>precision = \frac {TP} {TP+FP}<br>$$</p>
+<p><img src="/Blog/intro/confusion_matrix_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就是预测数据为1, 预测对了的概率是多少</p>
+<p>分母是这一列的值的和, 而分子是预测对的值</p>
+<br>
+
+<p>为什么管他叫精准率</p>
+<p><strong>因为通常在有偏的数据中, 我们将分类1作为真正关注的对象</strong></p>
+<p>精准率就是预测<strong>我们关注的事件</strong>有多准</p>
+<p>例如在医疗中将1作为真正的患病, 精准率, 就是预测癌症真正的成功率</p>
+<p>精准率=40%就可以解释为: 每做100次患病预测, 平均会有40次预测是对的</p>
+<br>
+
+<h3 id="召回率-recall"><a href="#召回率-recall" class="headerlink" title="召回率(recall)"></a>召回率(recall)</h3><p>$$<br>recall=\frac {TP}{TP+FN}<br>$$</p>
+<p><img src="/Blog/intro/confusion_matrix_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>召回率的分母真实值为1的那一行, 分子是真实值为1, 而预测值也为1的值</p>
+<p><strong>召回率就是事件真实发生, 并且被我们正确预测的比例</strong></p>
+<p>在这个例子中就是有10个癌症患者, 对于这10个癌症患者我们成功预测出了几个</p>
+<p>召回率=80%可以解释为: 每当有100个癌症患者进行检测, 我们能成功找到80个癌症患者</p>
+<br>
+
+<blockquote>
+<p>精准率是: 我们作100次分类为1的预测, 其中有几次是准确的</p>
+<p>召回率是: 实际有100次分类为1的事件发生, 我们预测出几个</p>
+</blockquote>
+<p><img src="/Blog/intro/confusion_matrix_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="为什么说精准率和召回率是比分类准确度更好的指标"><a href="#为什么说精准率和召回率是比分类准确度更好的指标" class="headerlink" title="为什么说精准率和召回率是比分类准确度更好的指标?"></a>为什么说精准率和召回率是比分类准确度更好的指标?</h3><p>对于极度有偏的数据, 10000个人, 我们预测所有人都是健康的, 这种情况下</p>
+<table>
+<thead>
+<tr>
+<th align="center">真实\预测</th>
+<th align="center">0</th>
+<th align="center">1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>0</strong></td>
+<td align="center">9990</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"><strong>1</strong></td>
+<td align="center">10</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p>准确度为99.9%, 因为9990个人全都预测对了</p>
+<p>精准率 = 0/(0+0) 无意义, 通常定义此时的精准率也为0, 因为它做了一个没有意义的事, 所以直接给它一个可能的最低值</p>
+<p>召回率 = 0/(10+0) = 0</p>
+<p>我们已经知道这个系统没有意义: 它对所有人的预测都为0</p>
+<p>它的精准率是99.9%, 但它的精准率和召回率都是最低值</p>
+<p>通过这两个指标判断出这个预测算法是完全没有用的</p>
+<br>
+
+<h3 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h3><pre><code class="python">import numpy as np
+from sklearn import datasets
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+
+def TN(y_true, y_predict):
+    assert len(y_true) == len(y_predict)
+    return np.sum((y_true == 0) &amp; (y_predict == 0))
+
+def FP(y_true, y_predict):
+    assert len(y_true) == len(y_predict)
+    return np.sum((y_true == 0) &amp; (y_predict == 1))
+
+def FN(y_true, y_predict):
+    assert len(y_true) == len(y_predict)
+    return np.sum((y_true == 1) &amp; (y_predict == 0))
+
+def TP(y_true, y_predict):
+    assert len(y_true) == len(y_predict)
+    return np.sum((y_true == 1) &amp; (y_predict == 1))
+
+def confusion_matrix(y_true, y_predict):
+    return np.array([
+        [TN(y_true, y_predict), FP(y_true, y_predict)],
+        [FN(y_true, y_predict), TP(y_true, y_predict)]
+    ])
+
+def precision_score(y_true, y_predict):
+    tp = TP(y_true, y_predict)
+    fp = FP(y_true, y_predict)
+    try:
+        return tp / (tp + fp)
+    except:
+        return 0.0
+
+def recall_score(y_true, y_predict):
+    tp = TP(y_true, y_predict)
+    fn = FN(y_true, y_predict)
+    try:
+        return tp / (tp + fn)
+    except:
+        return 0.0
+
+if __name__ == &#39;__main__&#39;:
+    digits = datasets.load_digits()
+    X = digits.data
+    y = digits.target.copy()
+
+    # 手动让数据集偏斜, 只关注等于9的手写数字
+    y[digits.target == 9] = 1
+    y[digits.target != 9] = 0
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+    log_reg = LogisticRegression()
+    log_reg.fit(X_train, y_train)
+    # 0.975
+    # print(log_reg.score(X_test, y_test))
+    y_log_predict = log_reg.predict(X_test)
+    print(TN(y_test, y_log_predict))  # 403
+    print(FP(y_test, y_log_predict))  # 2
+    print(FN(y_test, y_log_predict))  # 9
+
+    # 精准率 0.9473
+    print(precision_score(y_test, y_log_predict))
+    # 召回率 0.8
+    print(recall_score(y_test, y_log_predict))</code></pre>
+<br>
+
+<p>scikit-learn中的混淆矩阵, 精准率和召回率</p>
+<pre><code class="python">from sklearn.metrics import confusion_matrix, precision_score, recall_score
+
+# scikit-learn中的混淆矩阵
+print(confusion_matrix(y_test, y_log_predict))
+print(precision_score(y_test, y_log_predict))
+print(recall_score(y_test, y_log_predict))</code></pre>
+<p>调用方式和我们自己写的是一样的</p>
+<br>
+
+<p>实际上只引入了两个指标: 精准率与召回率</p>
+<p>其他的概念都是为这两个指标服务的. 但是对于两个指标应该如何解读?</p>
+<p>比如说一种算法精准率高而召回率低, 另一种算法精准率低而召回率高. 此时对于这两种算法应该如何取舍.</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/人工智能/">人工智能</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/机器学习/">机器学习</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/05/05/machine-learning-7/">
+                        <span class="hidden-mobile">python3入门机器学习(7)-逻辑回归</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "python3入门机器学习(8)-评价分类结果&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
