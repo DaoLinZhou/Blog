@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>python3入门机器学习(9)-SVM支撑向量机 - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/science_gate_time.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Saturday, May 9th 2020, 3:42 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      4 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>支撑向量机 SVM</p>
+<a id="more"></a>
+
+<h1 id="支撑向量机-SVM"><a href="#支撑向量机-SVM" class="headerlink" title="支撑向量机 SVM"></a>支撑向量机 SVM</h1><h2 id="什么叫支撑向量机"><a href="#什么叫支撑向量机" class="headerlink" title="什么叫支撑向量机?"></a>什么叫支撑向量机?</h2><p>SVM (Support Vector Machine)</p>
+<p>使用支撑向量机的思想既可以解决<strong>分类问题</strong>, 也可以解决<strong>回归问题</strong></p>
+<blockquote>
+<p>主要介绍如何用SVM的思想解决分类问题, 最后会介绍如何用这个思想解决回归问题</p>
+</blockquote>
+<br>
+
+<p>逻辑回归的算法就是在特征空间中找到一个决策边界</p>
+<p><img src="/Blog/intro/svm.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果在决策边界的一侧, 算法就认为属于某一类, 在另一侧就是另外一类</p>
+<p>不过对于一些数据存在这样的问题: <strong>决策边界不唯一</strong></p>
+<p><img src="/Blog/intro/svm_1.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这种决策边界不唯一的问题有一个术语: <strong>不适定问题</strong></p>
+<br>
+
+<p>逻辑回归算法是如何解决不适定问题?</p>
+<p>逻辑回归的思路: 定义一个概率函数, Sigmoid函数, 根据概率函数进行建模, 形成一个<strong>损失函数</strong>. 通过最小化损失函数从而求得一个决策边界</p>
+<p>这个损失函数完全有训练数据集所决定的.</p>
+<br>
+
+<p>支撑向量机解决的思路稍微有一些不同.</p>
+<p>假设得到的决策边界是这样一根线</p>
+<p><img src="/Blog/intro/svm.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然在训练数据集上, 非常好的将数据分成了两部分. 但是现在对于机器学习算法有一个非常重要的问题: <strong>算法的泛化能力</strong></p>
+<p>换句话说, 对未知的数据进行判断是机器学习算法真正的目的</p>
+<p><img src="/Blog/intro/svm_2.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>左上角有一个样本, 根据这个决策边界, 这个点会被归为蓝色样本. 但是直观地看就会觉得将这个数据点分成红色类别是更加合理的</p>
+<p>换句话说: 求出的决策边界的泛化效果不够好</p>
+<p>这是为什么? 这是因为<strong>决策边界离红色的点太近了</strong></p>
+<p>这就导致其他的点可能依然距离红色的点很近, 却被分在了决策边界的另外一侧</p>
+<br>
+
+<p>那么什么样的泛化边界效果可能比较好?</p>
+<p><img src="/Blog/intro/svm_3.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个直线的特点: 离这个直线最近的那些点, 尽可能的远</p>
+<p><img src="/Blog/intro/svm_4.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>换句话说我期望: <strong>决策边界距离红色的点尽可能远, 离蓝色点也尽可能远, 同时它还能很好地分布红色和蓝色两个类别</strong></p>
+<p>相当于是要找到一个决策边界, 这个决策边界不仅要很好的将训练数据集中的样本进行划分, 同时考虑到未来, 期望泛化能力尽可能好</p>
+<p class="note note-info"> SVM这种思想, 对未来的泛化能力尽可能的好的考量, 没有寄望在数据的预处理阶段, 或者是找到模型之后在对模型正则化的方式.而是将对泛化能力的考量直接放在算法内部</p>
+
+<p>我们要找到一条决策边界, 这个边界距离样本尽可能远</p>
+<p>我们直观地去看的话, 这样的边界泛化能力就是好的</p>
+<blockquote>
+<p>实际上这个假设背后也是有数学理论的</p>
+<p>数学上可以严格地证明出使用SVM的思路找到的决策边界的泛化能力是好的</p>
+<p>也正是这个原因, SVM也是统计学中非常重要的一个方法, 它的背后有极强的统计理论的支撑</p>
+</blockquote>
+<br>
+
+<p><img src="/Blog/intro/svm_4.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>再看SVM要找的决策边界有什么特点?</p>
+<p>这个决策边界要离这两个类别的数据点都尽可能远</p>
+<p>这个意思就是这两个类别中, 离决策边界最近的那些点到决策边界的距离尽可能远</p>
+<p>红色类别中有两个点, 蓝色类别中有一个点, 这三个点到决策边界的距离是一样的. 同时它们是离决策边界最近的点. (这三个点称为<strong>支撑向量</strong>)</p>
+<p>这些特殊的数据点又定义出了两根直线, 这两根直线和决策边界的直线是平行的</p>
+<p><img src="/Blog/intro/svm_5.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>这两个直线相当于定义了一个区域. 在这两根直线中, 将不再有任何数据点. SVM最终得到的决策边界, 就相当于这个<strong>区域中间的线</strong></p>
+<p><img src="/Blog/intro/svm_6.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>支撑向量定义了一个区域, 而决策边界就是被这个区域所定义的</p>
+<p>换句话说, 找到的最优的决策边界是由<strong>支撑向量</strong>定义的</p>
+<p>这三根直线之间的距离是一样的(称为d), 而最外面两个直线的距离称为 margin, margin = d + d</p>
+<p><strong>SVM要最大化margin</strong></p>
+<blockquote>
+<p>又把一个机器学习的思路转化成最优值求解</p>
+</blockquote>
+<br>
+
+<p>目前为止都是对<strong>线性可分</strong>的问题说的, 就是样本点存在一个直线(高维中: 存在一个超平面) 可以将这些点划分. 这种算法通常又被称为<strong>Hard Margin SVM</strong> (严格的)</p>
+<p>但是在真实情况下, 很多数据是<strong>线性不可分</strong>的, 此时SVM可以通过改进得到 <strong>Soft Margin SVM</strong></p>
+<br>
+
+<p>“SVM要最大化margin” 是自然语言的表述, 要真的最大化margin, 首先要做到就是要用数学语言表达出margin</p>
+<p>就是说求出margin的数学表达式, 之后就是找到其中未知数的一组取值最大化margin</p>
+<p class="note note-danger">对于机器学习算法, 尤其是参数学习算法来说, 就是把解决问题的思想首先转化成一个<b>最优化问题</b>, 下面我们的目的就变成了最优化目标函数</p>
+
+<br>
+
+<br>
+
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/人工智能/">人工智能</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/机器学习/">机器学习</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/05/08/machine-learning-8/">
+                        <span class="hidden-mobile">python3入门机器学习(8)-评价分类结果</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "python3入门机器学习(9)-SVM支撑向量机&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
