@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.4k 字
+                    3.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      4 分钟
+                      11 分钟
                   </span>
                 
 
@@ -247,6 +247,108 @@
 <br>
 
 <br>
+
+<h2 id="SVM背后的最优化问题"><a href="#SVM背后的最优化问题" class="headerlink" title="SVM背后的最优化问题"></a>SVM背后的最优化问题</h2><p><img src="/Blog/intro/svm_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>margin = 2d</p>
+<p>换句话说, SVM 要最大化margin的话, 也就是说要最大化d.</p>
+<p>也就是说, 找到d的表达式也可以求解这个问题</p>
+<p>接下来就是看如何用数学语言表达d</p>
+<br>
+
+<p>回忆解析几何, 点到直线的距离</p>
+<p>(x<sub>0</sub>, y<sub>0</sub>) 到 Ax+By+C=0 的距离为:<br>$$<br>\frac {|Ax_0+By_0+C|} {\sqrt{A^2+B^2}}<br>$$<br>如果拓展到n维</p>
+<p><img src="/Blog/intro/svm_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>向量x<sub>b</sub> 其实是在x的第0个元素的位置添加一个1, 这是因为θ向量中, 有一个θ<sub>0</sub></p>
+<p>将它转化为 w<sup>T</sup>x+b=0 的形式, 相当于将θ<sub>0</sub>x<sub>0</sub>这一项拿出来当作截距. 这个截距就用b来表示</p>
+<p>而将样本中真是的特征用一个向量w 表示. w是weight(权值)的简写</p>
+<p>w向量相当于给x向量每一个特征附上一个权值</p>
+<p>对于 θ 来说, 如果样本x有n个特征的话, θ中有n+1个元素, w中有n个元素. b是截距. b和w这n+1个元素组合起来就是θ</p>
+<br>
+
+<p>为什么用 w<sup>T</sup>x+b=0 这种形式来表示方程?<br>$$<br>\frac {|Ax_0+By_0+C|} {\sqrt{A^2+B^2}}<br>$$<br>二维屏幕中这个公式, 分母的位置是和截距C没有关系的. 这一点可以同样扩展到n维空间</p>
+<p>n维空间中任意一个点 x<sub>0</sub> 到 w<sup>T</sup>x+b=0 这个直线的距离是:<br>$$<br>\frac {|w^Tx_0+b|} {||w||}<br>$$<br>下面就可以把这个知识带到SVM算法的思路中了 </p>
+<p><img src="/Blog/intro/svm_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于SVM算法来说我们期望的是这两类: <span style="color:red;">红色样本的数据点</span>和<span style="color:blue;">蓝色样本的数据点</span>. 离最终求得的决策边界 (假设决策边界为w<sup>T</sup>x+b=0)最近的点到决策边界的距离为b.</p>
+<p>换句话说: <strong>所有点到决策边界的距离都应该是大于等于b的</strong></p>
+<br>
+
+<p>把这样一个想法分别用这两类来讨论的话, 相应的就可以得到这样一个式子</p>
+<p><img src="/Blog/intro/svm_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这两类, 一类叫做1, 一类叫做 -1 (之前一直管一类叫做1, 一类叫做0, 然而为了后续的一些计算才叫做1和-1) </p>
+<p>不过这两类在数学上起什么值是<strong>不影响</strong>的, 只要是两个不同的值, 能把这两类区分开即可</p>
+<p>对于属于1的这一类, 相当于任取一个 y<sup>(i)</sup>=1 的样本, 都应该有<strong>点到直线的距离</strong>大于等于d</p>
+<p>对于属于-1的这一类, 点在直线的另一侧. 它的坐标代入直线方程都小于0, 同理点到直线的距离小于等于-d</p>
+<br>
+
+<p>对这个式子在进行一下变形:</p>
+<p><img src="/Blog/intro/svm_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>d肯定是一个正数, 因为它代表距离, 所以不等号的符号是不变的</p>
+<p>对于这个式子来说可以仔细观察一下分母, w是一个n维的向量, 但是w的模是一个数, 于此同时d也是一个数, 换句话说: <strong>分母是一个数</strong></p>
+<p>对于分子来说, 可以想象成将<strong>w这个向量中的每一个元素</strong>都除以分母这个数, 再加上b这个截距也除以分母这个数</p>
+<p>对于这个新的w向量叫做w<sub>d</sub>, 新的截距b叫做b<sub>d</sub></p>
+<p><img src="/Blog/intro/svm_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>换句话说, 我们就知道了上下两根直线的直线方程应该是:</p>
+<p><img src="/Blog/intro/svm_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>不过在这里, 我们最初假设SVM最初的决策平面中间的直线是w<sup>T</sup>x+b=0, 中间直线的参数是w和b, 上下两根直线的参数是w<sub>d</sub>和b<sub>d</sub></p>
+<p>他们之间就差 <strong>w的模乘以d</strong> 这个常数这么多倍.</p>
+<p>所以对于 w<sup>T</sup>x+b=0 这个方程, 左右两边同时除以 w的模乘以d 这个常数</p>
+<p><img src="/Blog/intro/svm_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>让中间的直线的方程转化为w<sub>d</sub><sup>T</sup>x+b<sub>d</sub>=0</p>
+<br>
+
+<p><img src="/Blog/intro/svm_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样整理完, 相当于在式子中, 所有的未知数都使用了w<sub>d</sub>和b<sub>d</sub>.</p>
+<p>w<sub>d</sub>是一个含有n个元素的向量, b<sub>d</sub>是一个数</p>
+<p>既然所有的未知量都是w<sub>d</sub>和b<sub>d</sub>, 为了方便书写就把下角标d给去掉</p>
+<p><img src="/Blog/intro/svm_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><strong>此时的w和b, 和最开始使用的w和b是不同的</strong>, 它们之间相差一个系数关系</p>
+<blockquote>
+<p>现在的w, d只是一个符号而已, 来代替之前公式里出现的w<sub>d</sub>和b<sub>d</sub></p>
+</blockquote>
+<p>对支撑向量机SVM来说就是求解这两个式子代表的条件下, w和b应该是多少</p>
+<p>依然, 两个式子非常不方便, 可以使用一个技巧融合成一个式子</p>
+<p><img src="/Blog/intro/svm_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/svm_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们的目标是最大化d, 怎么表达d呢?</p>
+<p>d代表的是支撑向量到决策边界的距离</p>
+<p>换句话说, 最大化d就是最大化这个式子<br>$$<br>max\frac{|w^Tx+b|}{||w||}<br>$$<br>此时x应该是某一个支撑向量, 对于这某一个支撑向量, 代入w<sup>T</sup>x+b这个式子中要么等于1, 要么等于-1</p>
+<p>也就是说, 对于任意支撑向量, 要么是红色点中的支撑向量, 要么是蓝色点中的支撑向量</p>
+<p>不管在那一侧取绝对值之后的结果都是1</p>
+<p>所以最大化的目标就变成了:<br>$$<br>max \frac {1}{||w||}<br>$$<br>这就相当于最小化w的模<br>$$<br>min||w||<br>$$<br>然而在具体求解这个问题的时候通常最小化的不是它, 而是<br>$$<br>min \frac 12||w||^2<br>$$<br>原因也在于方便求导</p>
+<br>
+
+<p>因此整个支持向量机的算法就变成了这样一个最优化问题</p>
+<p><img src="/Blog/intro/svm_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最优化的目标函数是<br>$$<br>min \frac 12||w||^2<br>$$<br>不过有一个限定条件是:<br>$$<br>y^{(i)}(w^Tx^{(i)}+b)&gt;=1<br>$$<br>对于这样一个最优化问题, 它和之前讲的线性回归, 逻辑回归的最优化问题是不一样的</p>
+<p>之前讲的所有最优化问题是<strong>全局最优化问题</strong>, 换句话说是没有限定条件的</p>
+<p>而这个最优化问题是一个 <strong>有条件的最优化问题</strong></p>
+<p class="note note-danger">是否有条件在最优化领域求解这个问题方法是大不相同的</p>
+
+<p>如果最优化问题是全局最优化问题, 没有任何条件. 那非常简单只需要求导让它等于0, 相应的极值点就是取最大值或最小值的位置</p>
+<p>但是当是<strong>有条件的最优化问题</strong>的时候, 求解方法变得复杂了很多(需要用到<strong>拉普拉斯算子</strong>来进行求解)</p>
+<blockquote>
+<p>对于有条件的最优化问题具体怎么求解, 超纲了(我不会)</p>
+<p>所以略去对于有条件的最优化问题求解的数学推导</p>
+<p>不过一定要了解支撑向量机这样一个思想用数学表达出来就是在最优化这样一个有条件的目标函数</p>
+<p><img src="/Blog/intro/svm_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<p>解决这个问题是hard margin SVM问题, 它假设数据是线性可分的</p>
+<p>不过大多数时候数据不会那么好, 不会是线性可分的, 此时就必须用Soft Margin SVM</p>
+<br>
+
+<br>
+
+
+
+
+
+
+
+
+
+
 
 
             </div>
