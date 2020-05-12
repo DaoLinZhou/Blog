@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.2k 字
+                    5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      17 分钟
                   </span>
                 
 
@@ -340,15 +340,99 @@
 
 <br>
 
+<h2 id="Soft-Margin-和-SVM-的正则化"><a href="#Soft-Margin-和-SVM-的正则化" class="headerlink" title="Soft Margin 和 SVM 的正则化"></a>Soft Margin 和 SVM 的正则化</h2><p>正则化本身是一个概念, 并不是说所有模型添加的正则化项都是同样的L1范式和L2范式</p>
+<p>对于有一些模型来说, 要改变正则化策略. 但是我们对它进行实现的效果是一样的.</p>
+<br>
 
+<h3 id="什么是Soft-Margin-SVM"><a href="#什么是Soft-Margin-SVM" class="headerlink" title="什么是Soft Margin SVM ?"></a>什么是Soft Margin SVM ?</h3><p><img src="/Blog/intro/soft_margin_svm.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Hard Margin SVM 就是求解这样一个有条件下的最优化问题.</p>
+<p>当求出对应的w和b以后就求出了支撑向量基决策边界的方程</p>
+<br>
 
+<p>然而这里有一个问题: 如果有一个蓝色点的位置在这里</p>
+<p><img src="/Blog/intro/soft_margin_svm_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时对于Hard Margin SVM来说, 它首先要保证能正确分出这两类</p>
+<p>这种情况下求出的决策边界很有可能是这样的一个直线</p>
+<p><img src="/Blog/intro/soft_margin_svm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这样一根直线, 它的确非常正确的将训练数据集的两类数据分开了</p>
+<p>但是单独看这个图我们很可能会对它的泛化能力产生怀疑</p>
+<p>显然大多数蓝色的点都集中在左下角区域, 只有一个蓝色点靠近右上角. 很显然这个<strong>决策边界非常强地受到这个蓝色点的影响</strong></p>
+<p>但是很有可能这样的一个蓝色的点是一个outlier, 或者它根本就是一个错误的点. 或者它是一个极度特殊的点, 并不能代表一般情况</p>
+<br>
 
+<p><img src="/Blog/intro/soft_margin_svm_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>很有可能这样的决策边界会是更好的一个决策边界</p>
+<p>这个决策边界虽然将一个蓝色的点进行了错误的分类. 但很有可能当我们将这个结果放到真实的生产环境中进行实际的预测的时候效果更好: 也就是<strong>泛化能力更加高</strong></p>
+<br>
 
+<p>所以必须思考一个机制: 对于这个机制来说, SVM算法要有一定的容错能力, 在一些情况下, 应该考虑到可以把一些点进行错误地分类, 达到的结果还是希望泛化能力尽可能高</p>
+<p>更一般的例子: 蓝色数据点在这个位置</p>
+<p><img src="/Blog/intro/soft_margin_svm_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时数据是线性不可分的. 没有任何一条直线能把这组数据分成两类</p>
+<blockquote>
+<p>这种情况下Hard Margin SVM 算法就不是泛化能力强不强的问题了, 而是根本无法应用, 无法得到结果</p>
+</blockquote>
+<p>这种SVM就叫做Soft Margin SVM</p>
+<br>
 
+<p><img src="/Blog/intro/soft_margin_svm.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Hard Margin SVM的条件是这个式子必须大于等于1<br>$$<br>y^{(i)}(w^Tx^{(i)}+b)&gt;=1<br>$$<br>大于等于1的意思就是: 对于找到的 Margin 区域里必须是任何数据点都没有的. 所有的数据点都必须在 w<sup>T</sup>x+b=1 和 w<sup>T</sup>x+b=-1 这两条直线之外. </p>
+<p>现在对于这个条件加以宽松, 让所有数据点<strong>不一定</strong>都在 Margin 区域的外面, 因此给它一个宽松量 ζ(zeta)<br>$$<br>y^{(i)}(w^Tx^{(i)}+b)&gt;=1 - \zeta_i<br>$$<br>换句话说将有条件最优化中的条件宽松成这个样子</p>
+<p><img src="/Blog/intro/soft_margin_svm_5.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>\zeta_i\ge 0<br>$$<br>ζ也是有条件的, 就是大于等于0. 换句话说, 虚线要在上面那根直线的下面, 或者下面那根直线的上面. 才叫做可以让它犯错误</p>
+<p>如果ζ是负值的话, 虚线会在直线的外头, 条件就更加严格了</p>
+<br>
 
+<p>ζ不是一个固定的值, 对于每一个样本i, 都有一个相应的 ζ<sub>i</sub> , 也就是说对于每一个数据点都求出它对应的容错空间.</p>
+<p>单单有 ζ&gt;=0 这个条件是不够的, 如果取正无穷, 那么所有的数据点都将满足这样的条件, 此时容错的范围就太大了.</p>
+<p>ζ要做的事情是希望它有一定的容错空间, 但这个容错空间又不能太大. 如何表征容错空间不能太大这件事情?  将<strong>最小化的方程</strong>加上这样一项<br>$$<br>min \frac 12||w||^2+\sum_{i=1}^m\zeta_i<br>$$<br>就是加上所有ζ的和, 这样一来, 最小化的式子就同时顾及了</p>
+<ol>
+<li>前半部分, Hard Margin SVM最优化内容, 也就是SVM思想所要做的事情</li>
+<li>后半部分, 设立一堆ζ, 使得SVM算法可以容忍一定的分类错误, 但容忍的程度要尽量小</li>
+</ol>
+<p>二者之间要取得一个平衡. 这样写就是完整的Soft Margin SVM最优化问题的数学表达式</p>
+<br>
 
+<p>然而此时这两部分的比重占比是1:1</p>
+<p>就像正则化那样, 可以在后半部分添加一个参数C, 来平衡两部分所占的比例</p>
+<p><img src="/Blog/intro/soft_margin_svm_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果 C 在01之间, 整个式子将以优化前半部分为主</p>
+<p>如果 C 特别大, 则整个式子将以优化后半部分为主</p>
+<blockquote>
+<p>这个依然是一个<strong>有条件的最优化问题</strong>, 具体怎么求解是略去的</p>
+<p>scikit-learn中封装好了SVM, 调用即可</p>
+</blockquote>
+<br>
 
+<p><img src="/Blog/intro/soft_margin_svm_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这么写又叫在Soft Margin SVM中添加<strong>L1正则</strong>, 换句话说我们可以把ζ理解为是一个正则化项, 它在避免模型向极端方向发展</p>
+<blockquote>
+<p>对于线性 回归, 逻辑回归…加入正则化项的本质也依然是让模型针对训练数据集有更高的容错能力.</p>
+<p>当有这样的容错能力后, 使得模型对训练数据集中的极端数据点<strong>不那么敏感</strong>, 用这种方式期望它的泛化能力提升</p>
+</blockquote>
+<br>
 
+<p>有L1正则相应就有L2正则</p>
+<p><img src="/Blog/intro/soft_margin_svm_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>后半部分的表达式就变成 ζ 的平方和</p>
+<blockquote>
+<p>线性回归时L1正则是对 θ 的绝对值 求和, L2正则是对 θ 的平方求和</p>
+<p>因为 ζ &gt;= 0, 所以不用取绝对值</p>
+</blockquote>
+<p>其实从表达式的形式上, 它和线性回归, 逻辑回归对应的正则化项是一致的, 只不过在具体的意思上. ζ 的几何意义和 θ 的几何意义不同.</p>
+<br>
+
+<p>另外一点, C是在正则项的前面的, 然而在逻辑回归, 线性回归中我们倾向与把C放在损失函数前面</p>
+<p>但是, <strong>他们的表意是一样的</strong>: C越大, 容错空间越小</p>
+<p>SVM的式子中, 如果C取正无穷, 意味着我们逼迫ζ全都为0, 此时Soft Margin SVM就变成了Hard Margin SVM, 也就是说容错空间更小</p>
+<p>而线性回归, 逻辑回归中, C在MSE前面, C越大就意味着要尽量多的估计MSE这部分而不去顾及正则化那部分, 也是容错空间更小</p>
+<p>而<strong>C越小就意味着有更大的容错空间</strong></p>
+<p class="note note-primary">C的位置虽然不同, 但是它们的表意是一致的, 所以在上层可以使用一致的策略来解读C这个参数的含义的</p>
+
+<br>
+
+<p>至此线性SVM理论部分讲完了. 现在svm是求解w参数和b参数, 得到的决策边界是线性方程, 二维空间中是直线, 高维空间中是超平面</p>
+<p>SVM如果拓展解决非线性问题后续会继续介绍.</p>
+<br>
 
 
             </div>
@@ -407,7 +491,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -434,7 +518,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -443,7 +527,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
