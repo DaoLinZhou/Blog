@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.6k 字
+                    10.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      32 分钟
+                      39 分钟
                   </span>
                 
 
@@ -729,6 +729,118 @@ if __name__ == &#39;__main__&#39;:
 
 <br>
 
+<h2 id="高斯核函数-RBF-核"><a href="#高斯核函数-RBF-核" class="headerlink" title="高斯核函数 ( RBF 核 )"></a>高斯核函数 ( RBF 核 )</h2><p>是SVM算法使用最多的一种核函数</p>
+<p>K(x, y) 其实表示的是<strong>重新定义x和y的点乘</strong></p>
+<p>高斯核函数的定义是这样的<br>$$<br>K(x,y)=e^{-\gamma||x-y||^2}<br>$$<br>γ就像是多项式核函数中degree或C一样, 是一个超参数</p>
+<p>γ如何影响核函数进而影响机器学习算法, 在下一章会介绍</p>
+<p>首先仔细看一下这个核函数. 为什么被称为高斯核函数</p>
+<p>在概率论中有一个重要的函数: 高斯函数(正态分布)</p>
+<p><img src="/Blog/intro/gaosi_func.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个函数和高斯核函数是拥有一样的形态的</p>
+<ul>
+<li>高斯函数前面有一个非常大的系数, 而高斯核函数没有这个系数了</li>
+<li>对于高斯函数, 它的幂次方表达式中x-μ的平方的系数相当于 -1/(2σ<sup>2</sup>), 这整个系数在高斯核函数中被 γ 代替了, 负号是不变的 (其实γ的大小和1/(2σ<sup>2</sup>)是有着共同的关系的)</li>
+<li>最后在高斯函数中是x-μ的平方, 而在高斯核函数中, 由于表述的是两个向量之间的关系, 所以是两个向量的差的模的平方</li>
+</ul>
+<br>
+
+<p>高斯核函数又是也被叫做RBF核 Radial Basis Function Kernel, 又被翻译成 <strong>径向基函数</strong></p>
+<p>之前说对于多项式核函数的本质是把所有数据点首先添加了多项式项, 再将这些有了多项式项的新的特征进行点乘就形成了多项式核函数</p>
+<p>同理高斯核函数本质也应该是将原来的数据点先映射成一种新的特征向量, 然后是新的特征向量点乘的结果. 事实正是如此, 只不过高斯核函数表达出的数据的映射是非常复杂的</p>
+<blockquote>
+<p>高斯核函数的本质是将每一个样本点映射到一个无穷维的特征空间</p>
+<p>听起来非常抽象, 不对此进行数学推导</p>
+</blockquote>
+<p>通过这个说法, 高斯核函数对每个样本点的变形是非常复杂的, 但是经过这样的变形在点乘的结果是非常简单的, 就是这样一个式子<br>$$<br>K(x,y)=e^{-\gamma||x-y||^2}<br>$$<br>这就是核函数的威力, 不需要具体计算每一个样本点x和y到底经历了哪些变换, 我们直接关注点乘的结果就好了</p>
+<p>我们尝试用一个简单的例子来模拟一下高斯核函数到底在作什么事情</p>
+<br>
+
+<h3 id="为什么多项式特征可以处理非线性数据"><a href="#为什么多项式特征可以处理非线性数据" class="headerlink" title="为什么多项式特征可以处理非线性数据"></a>为什么多项式特征可以处理非线性数据</h3><p>首先回忆一下<strong>使用多项式特征为什么可以处理非线性的数据问题</strong>?</p>
+<p>依靠<strong>升维</strong>使得原本线性不可分的数据线性可分</p>
+<p>比如原本数据是x, 现在扩充x<sup>2</sup>项这就使得原本线性不可分的数据线性可分</p>
+<br>
+
+<p>另一个例子:</p>
+<p>原本是一维的数据有两个类, 跟显然现在数据是线性不可分的</p>
+<p><img src="/Blog/intro/gaosi_func_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>无法用一根直线把两个类别分开, 但是如果我们添加多项式特征的话, 相当于是让数据升维, 让每一个数据点不但有横轴x值, 还有纵轴, 让纵轴是x<sup>2</sup>. 所有数据点一下子就变成这个样子</p>
+<p><img src="/Blog/intro/poly_lin.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这些数据点在x轴上的位置是没有变的, 不过在y轴上也有一个取值, 这个取值就是x<sup>2</sup></p>
+<p>一旦这样做了,  此时就是线性可分</p>
+<p><img src="/Blog/intro/poly_lin_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通过升维让原本线性不可分的数据线性可分</p>
+<br>
+
+<h3 id="高斯核所做的事情"><a href="#高斯核所做的事情" class="headerlink" title="高斯核所做的事情"></a>高斯核所做的事情</h3><p>其实高斯核所做的事情也是一样的事情<br>$$<br>K(x,y)=e^{-\gamma||x-y||^2}<br>$$<br>为了方便可视化, 首先对核函数进行一个改变, 将y的值固定, 换句话说, y的值不取样本点, 而是取固定点, 取两个固定点当y, 分别为l1, l2</p>
+<p><img src="/Blog/intro/poly_lin_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图依然是原本是1维的样本数据点, 依然是线性不可分的</p>
+<p>在这个一维的样本空间中, 有两个特殊的点l1, l2 (landmark) 地标.</p>
+<p>高斯核函数做的升维的过程是在作一件什么事?</p>
+<p>如果有两个地标, 就将x升维成二维的样本点, 每个维度的取值为</p>
+<p><img src="/Blog/intro/poly_lin_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样就将原本是一维的样本点映射到二维的空间</p>
+<br>
+
+<p>用程序模拟一下, 这样的映射是怎样将原来线性不可分的数据变得线性可分的</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    # x就是样本数据, 只有一个特征
+    x = np.arange(-4, 5, 1)
+    y = np.array((x &gt;= -2) &amp; (x &lt;= 2), dtype=&quot;int&quot;)
+
+    plt.scatter(x[y==0], [0]*len(x[y==0]))
+    plt.scatter(x[y==1], [0]*len(x[y==1]))
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/poly_lin_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这显然是线性不可分的数据, 下面使用高斯核函数将一维数据映射到二维空间</p>
+<pre><code class="python"># x为数据点, l为地标
+def gaussian(x, l):
+    gamma = 1.0
+    # x和l是一维数据, 所以不用计算模
+    return np.exp(-gamma * (x-l)**2)
+
+if __name__ == &#39;__main__&#39;:
+    # x就是样本数据, 只有一个特征
+    x = np.arange(-4, 5, 1)
+    y = np.array((x &gt;= -2) &amp; (x &lt;= 2), dtype=&quot;int&quot;)
+
+    l1, l2 = -1, 1
+
+    X_new = np.empty((len(x), 2))
+    for i, data in enumerate(x):
+        X_new[i, 0] = gaussian(data, l1)
+        X_new[i, 1] = gaussian(data, l2)
+
+    plt.scatter(X_new[y==0, 0], X_new[y==0, 1])
+    plt.scatter(X_new[y==1, 0], X_new[y==1, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/poly_lin_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>换句话说, 用高斯核函数将原本的一维数据映射成这样的二维数据</p>
+<p>对于这样一个二维数据显然是线性可分的</p>
+<p><img src="/Blog/intro/poly_lin_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>用一种不同于多项式核的形式, 将一维数据映射为二维数据</p>
+<br>
+
+<p>之前的方式是将一维数据点使用这样的方式映射成二维数据</p>
+<p><img src="/Blog/intro/poly_lin_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>只不过对于这个高斯核的y的部分固定为两个地标点l1和l2</p>
+<p>但实际上核函数是这样的<br>$$<br>K(x,y)=e^{-\gamma||x-y||^2}<br>$$<br>所以可以看出y是每一个数据点</p>
+<p>换句话说高斯核函数干的事情和我们之前干的事情一样, 只不过地标点取得比我们之前取得要多得多.</p>
+<p><strong>高斯核: 对于每一个数据点都是landmark</strong></p>
+<p>对于每一个样本x, 都尝试对每一个样本y进行核函数的计算, 成为高维数据相对应的某一个维度的元素</p>
+<p>高斯核做的事情也是升维, 它将<strong>m乘n</strong>的数据映射成<strong>m乘m</strong>的数据</p>
+<p>原本只有n个维度的数据, 经过高斯核的映射就变成了m乘m维的数据(维度等于样本数据点的个数)</p>
+<blockquote>
+<p>高斯核函数的本质是将数据映射到<strong>无穷维</strong>的空间</p>
+<p>由于样本数据点可以有穷多个, 所以它映射到无穷维的空间.</p>
+<p>但当我们具体拿到的数据是有限个, 所以映射到m维空间</p>
+</blockquote>
+<br>
+
+<p>可以想象, 高斯核函数的<strong>开销是非常大</strong>的, 但是还是有一些应用是适合使用高斯核函数的</p>
+<p>例如: 初始数据维度就非常高, 但是我们样本数据的数量并不多, 换句话说 m &lt; n, 此时使用高斯核函数就非常划算了</p>
+<p>最典型的一个应用领域就是自然语言处理, 在自然语言处理领域通常我们会构建一个非常高维的特征空间, 但是很有可能样本数量是并不多的</p>
+<br>
+
 
             </div>
             <hr>
@@ -786,7 +898,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -813,7 +925,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -822,7 +934,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
