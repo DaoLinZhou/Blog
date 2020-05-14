@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.2k 字
+                    8.6k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      30 分钟
+                      32 分钟
                   </span>
                 
 
@@ -697,6 +697,13 @@ if __name__ == &#39;__main__&#39;:
 <p>为了计算方便, 展示2次多项式, 后面会再把它拓展成任意次项</p>
 </blockquote>
 <p> <img src="/Blog/intro/kernel_function_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>3次项和的平方<br>$$<br>(a+b+c)^2=a^2+b^2+c^2+2ab+2bc+2ca<br>$$<br>任意项的和的平方的表达式:<br>$$<br>(\sum_{i=1}^na_i)^2=\sum_{i=1}^na_i^2+2\sum_{i=2}^n\sum_{j=1}^{i-1}a_ia_j<br>$$<br>从算法的角度简单解释一些后半部分的原理<br>$$<br>2\sum_{i=2}^n\sum_{j=1}^{i-1}a_ia_j<br>$$<br>简单来说就是2乘以<strong>所有不相同两个a</strong>的组合, 这里有两层循环, 外循环是i从2到n, 那么内循环j首先不能和i重合, 其次i和j的组合不能重复, 因此 j只能在i的一侧, 要么j &lt; i, 要么j &gt; i.</p>
+<p>例如: i=4, j=1, 2, 3. 当i=5时, j=1, 2, 3, 4.</p>
+<p>可以想象一下, 原本集合中有j个已知元素, 此时来了一个新的元素, 那么就会生成j个新的组合, 新的元素和每个已知元素组成一种新的组合. 原本j=1, 之后来了一个新的元素i=2, 1和2就是新的组合, 又来了一个新的元素i=3, 3和1和2又有新的组合. 有点类似与冒泡排序的两两比较.</p>
+<p>当a<sub>i</sub>=x<sub>i</sub>y<sub>i</sub>时, 同时a<sub>0</sub>=1时<br>$$<br>(\sum_{i=1}^nx_iy_i+1)^2=(\sum_{i=1}^nx_iy_i)^2+1^2+2\sum_{i=2}^n\sum_{j=1}^{i-1}x_iy_ix_jy_j+2\sum_{i=1}^nx_iy_i\cdot1<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =(\sum_{i=1}^nx_iy_i)^2+\sum_{i=2}^n\sum_{j=1}^{i-1}\sqrt{2}x_ix_j\sqrt{2}y_iy_j+\sum_{i=1}^n\sqrt{2}x_i\sqrt{2}y_i+1<br>$$</p>
+</blockquote>
 <p>y’的变法和x’一样</p>
 <p>x’就是将x添加2次项的结果</p>
 <p>不过这里有个根2, 但其实影响不大, 因为最后送入线性SVM模型, 对于线性SVM来说求得是每一个特征的系数, 对于这些系数就相当于有一些二次项, 包括这些一次项前面自带了一个系数而已</p>
