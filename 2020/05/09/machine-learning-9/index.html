@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    6.9k 字
+                    8.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      25 分钟
+                      30 分钟
                   </span>
                 
 
@@ -649,6 +649,75 @@ if __name__ == &#39;__main__&#39;:
 <p>Kernel中传入poly参数其实我们也实现了使用多项式特征然后再进行SVM的过程.</p>
 <p>它的计算结果和直接使用PolynomialFeatures得到多项式特征再扔给SVM的结果是不一样的</p>
 <p>说明这个kernel计算是有不一样的地方, 那么这个核(Kernel)函数到底是什么意思?</p>
+<br>
+
+<br>
+
+<h2 id="什么是核函数"><a href="#什么是核函数" class="headerlink" title="什么是核函数"></a>什么是核函数</h2><p>再看一下SVM算法的本质是什么</p>
+<p><img src="/Blog/intro/soft_margin_svm_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>SVM算法本质就是求解这样一个最优化问题, 由于是有条件的最优化问题, 对于求解它没有进行数学推导.  不过在这里, 只是介绍性地说一下:</p>
+<p>在求解这个最优化问题的过程中, 我们还是要讲这个问题变形, 变成一个在数学上更好解的问题</p>
+<p><img src="/Blog/intro/kernel_function.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>不对推导过程进行详细介绍, 可以查些资料</p>
+</blockquote>
+<p>这里我们要关注的是, 当我们把左边的最优化问题转变成右边的最优化问题之后, 这个式子中有非常重要的一项.</p>
+<p><img src="/Blog/intro/kernel_function_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这项式子的后边部分套了两层 Σ, 且都是从1到m进行遍历</p>
+<p>相应的在后面的式子中有 x<sub>i</sub>x<sub>j</sub> , 换句话说, 我们转变的这个式子, 对于我们样本数据集任意的两个向量都要做一下向量间的点乘</p>
+<p>如果我们想使用多项式特征</p>
+<blockquote>
+<p>之前使用的方式是对于本来的样本数据 x<sub>i</sub> 添加多项式特征, 让它称为 x’<sub>i</sub>, 对于另外一个样本x<sub>j</sub>添加多项式特征, 让它称为 x’<sub>j</sub></p>
+<p>这样做完之后我们使用新的特征计算, 所以红色方块中的式子就变为<br>$$<br>x’^{(i)}\cdot x’^{(j)}<br>$$</p>
+</blockquote>
+<p>核函数是这样一个思想: 有没有可能不将 x<sub>i</sub> 和 x<sub>j</sub> 先分别转换成 x’<sub>i</sub> 和 x’<sub>j</sub>. 有没有可能找到一个函数K<br>$$<br>K(x^{(i)}, x^{(j)})=x’^{(i)}\cdot x’^{(j)}<br>$$<br>直接对原来的两个样本进行数学运算, 直接计算出 x’<sub>i</sub> 和 x’<sub>j</sub></p>
+<p>如果能设计出这样的一个函数K的话, 原来红色方块的内容就可以用K( x<sub>i</sub>, x<sub>j</sub> ) 表示</p>
+<p><img src="/Blog/intro/kernel_function_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/kernel_function_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>K 函数 取不同的函数, 就相当于在原始的样本上进行了一个变化, 把 x<sub>i</sub> 和 x<sub>j</sub> 变成 x’<sub>i</sub> 和 x’<sub>j</sub>, 在进行乘法</p>
+<p>K函数就是我们不进行这种变形了, 直接拿样本代入函数中, 用这个函数直接算出x’<sub>i</sub> 和 x’<sub>j</sub>点乘的结果.</p>
+<p>这个K函数就叫做<strong>核函数</strong></p>
+<br>
+
+<p>Kernel Function有的教材也叫Kernel Trick, 它其实是一个使用核函数的技巧</p>
+<p>这个描述还是挺准确的, 这是因为我们不使用核函数的话, 完全可以达到同样的效果, 它更像是一个数学的技巧, 把核函数应用在这里就免去了对原来的样本进行变形的步骤</p>
+<p>尤其是对于一些复杂的变形, 一方面计算量会有所减少, 另外一方面其实也节省了存储的空间 (因为通常是把低维的样本变成高维的数据, 存储高维的数据就会花很多的存储空间)</p>
+<p>不过使用核函数就不需要存储变化后的结果</p>
+<br>
+
+<p>通过上面的介绍可以发现核函数<strong>不是SVM算法特有的一种技巧</strong></p>
+<p>实质上只要算法转化成最优化问题, 在求解最优化问题中存在 x<sub>i</sub> 点乘 x<sub>j</sub> 这样的式子, 或者类似这样的式子, 我们就都可以应用核函数技巧</p>
+<br>
+
+<br>
+
+<h2 id="多项式核函数"><a href="#多项式核函数" class="headerlink" title="多项式核函数"></a>多项式核函数</h2><p>以多项式核函数为例, 具体理解核函数是如何运作的</p>
+<p>对于两个向量x, y<br>$$<br>K(x,y)=(x\cdot y+1)^2<br>$$</p>
+<blockquote>
+<p>为了计算方便, 展示2次多项式, 后面会再把它拓展成任意次项</p>
+</blockquote>
+<p> <img src="/Blog/intro/kernel_function_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>y’的变法和x’一样</p>
+<p>x’就是将x添加2次项的结果</p>
+<p>不过这里有个根2, 但其实影响不大, 因为最后送入线性SVM模型, 对于线性SVM来说求得是每一个特征的系数, 对于这些系数就相当于有一些二次项, 包括这些一次项前面自带了一个系数而已</p>
+<p>例如x最终结果的系数是1, 因此求出的系数就应该是根2分之1, 与根2相乘等于1</p>
+<p>这个根号2不影响结果.</p>
+<br>
+
+<p>而计算时完全不用计算这个复杂的式子, 直接点乘加一再平方就好了. 这个结果和变化成x’ y’ 的结果是一致的. 这就是核函数的优势. 大大降低了计算的复杂度</p>
+<p><img src="/Blog/intro/kernel_function_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>拓展一下, 由于核函数不仅仅能制造二次项多项式特征, 可以任意degree的特征<br>$$<br>K(x,y)=(x\cdot y+c)^d<br>$$<br>这就是传过来的degree, 另外常数项也可以传c, c和d就是另外两个超参数(分别对应 scikit-learn 的 SVC 中的 degree 参数和 coef0 参数)</p>
+<p>这就是<strong>多项式核函数</strong></p>
+<p>也就是scikit-learn中, kernel = poly的情况</p>
+<br>
+
+<p>理解核函数的基本概念: 其实就是<strong>替换原来的样本的x点乘y的操作</strong></p>
+<p>我们其实也可以用核函数的思路表示<strong>线性SVM</strong></p>
+<p><img src="/Blog/intro/kernel_function_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当理解核函数的概念之后, 就可以介绍很多核函数, 它们对应不同的对原始样本点的转换</p>
+<p>最为著名的核函数就是: 高斯核函数</p>
 <br>
 
 <br>
