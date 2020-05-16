@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.5k 字
+                    11.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      39 分钟
+                      44 分钟
                   </span>
                 
 
@@ -841,6 +841,137 @@ if __name__ == &#39;__main__&#39;:
 <p>最典型的一个应用领域就是自然语言处理, 在自然语言处理领域通常我们会构建一个非常高维的特征空间, 但是很有可能样本数量是并不多的</p>
 <br>
 
+<h2 id="高斯-RBF-核函数的gamma"><a href="#高斯-RBF-核函数的gamma" class="headerlink" title="高斯(RBF)核函数的gamma"></a>高斯(RBF)核函数的gamma</h2><p>$$<br>K(x,y)=e^{-\gamma||x-y||^2}<br>$$</p>
+<p>高斯核函数γ这个参数是什么意思?</p>
+<p>高斯核函数和高斯函数(正太分布)的形式是一致的, 而在概率论中正态分布的表达式有两个参数</p>
+<p>μ和σ, μ代表均值决定了高斯函数中心轴的位置, σ代表标准差, 描述样本数据分布的情况</p>
+<p><img src="/Blog/intro/gamma.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<ul>
+<li>σ越小, 钟形图案就越窄越集中. </li>
+<li>σ越大, 钟形图案就越平缓</li>
+</ul>
+<br>
+
+<p>同理这样一个影响在高斯核函数中是一致的</p>
+<p>不过高斯函数中<br>$$<br>-\frac1{2\sigma^2}<br>$$<br>这一项变为<br>$$<br>-\gamma<br>$$<br>所以γ的趋势和σ的趋势是相反的</p>
+<ul>
+<li>gamma越大, 高斯分布越窄, 越集中</li>
+<li>gamma越小, 高斯分布越宽, 越胖</li>
+</ul>
+<br>
+
+<h2 id="在scikit-learn中使用高斯核函数"><a href="#在scikit-learn中使用高斯核函数" class="headerlink" title="在scikit-learn中使用高斯核函数"></a>在scikit-learn中使用高斯核函数</h2><pre><code class="python">def RBFKernelSVC(gamma=1.0):
+    return Pipeline([
+        (&quot;std_scaler&quot;, StandardScaler()),
+        (&quot;SVC&quot;, SVC(kernel=&quot;rbf&quot;, gamma=gamma))
+    ])
+
+if __name__ == &#39;__main__&#39;:
+    # datasets 生成数据集
+    # 添加一点噪音, 可以理解为增大0.15标准差
+    X, y = datasets.make_moons(noise=0.15, random_state=666)
+
+    rbf_svc = RBFKernelSVC(gamma=1)
+    rbf_svc.fit(X, y)
+    plot_decision_boundary(rbf_svc, [-1.5, 2.5, -1.0, 1.5])
+    plt.scatter(X[y == 0, 0], X[y == 0, 1])
+    plt.scatter(X[y == 1, 0], X[y == 1, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/gamma_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这就是使用RBF Kernel在gamma=1的时候的决策边界</p>
+<br>
+
+<p>当gamma=100时, 决策边界:</p>
+<p><img src="/Blog/intro/gamma_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>之前讲过gamma取值越大, 意思就是正态分布钟形图案越窄, 而决策边界的变化就是: 针对其中的某一类, 针对这一类每一个样本点周围都形成一种钟形图案 (<strong>可以想象成我们实在俯视钟形图案, 蓝色点就是每一个钟形图案的顶点</strong>)</p>
+<p>由于gamma值比较大, 钟形图案就比较窄, 所以每一个蓝色点周围, 围绕了一定的区域, 我们的决策算法判定在这个区域中才是蓝色的点, 否则就是红色的点</p>
+<p>这也是RBF Kernel的几何意义</p>
+<p>我们这样得到的决策边界显然<strong>过拟合</strong>了, 过于和训练数据集相关了.</p>
+<br>
+
+<p>稍微减少一下gamma, gamma=10时:</p>
+<p><img src="/Blog/intro/gamma_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于每一个蓝色的点, 它的钟形图案变得宽了一些, 所以蓝色的点, 点和点离得比较近, 钟形图案就融合在一起, 最终形成这样的决策边界</p>
+<p>回头看gamma=1时, 就相当于钟形图案更宽了, 所以整体红色的范围就更大了</p>
+<br>
+
+<p>再减小gamma, gamma=0.5</p>
+<p><img src="/Blog/intro/gamma_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>结果是这样, 红色范围更大了</p>
+<br>
+
+<p>gamma=0.1</p>
+<p><img src="/Blog/intro/gamma_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时决策边界已经和线性的决策边界差不多了, 此时显然是under fitting<strong>欠拟合</strong>了</p>
+<br>
+
+<ul>
+<li><p>gamma非常小就欠拟合了</p>
+</li>
+<li><p>gamma非常大就过拟合了</p>
+</li>
+</ul>
+<p>调整gamma相当于再调整模型的复杂度, gamma越小, 模型复杂度越低. gamma越大, 模型复杂度越高</p>
+<br>
+
+<br>
+
+<h2 id="SVM思想解决回归问题"><a href="#SVM思想解决回归问题" class="headerlink" title="SVM思想解决回归问题"></a>SVM思想解决回归问题</h2><p><img src="/Blog/intro/svm_reg.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>回归问题本质就是找到这样的拟合线拟合所有数据点. <strong>怎么定义拟合, 就是各个回归算法的关键</strong></p>
+<p>例如: 线性回归算法定义拟合的方式就是数据点到预测直线的MSE最小</p>
+<br>
+
+<p>而对于SVM算法来说, 拟合的定义时另外一个定义:</p>
+<p>我们要指定一个margin值, 期望margin范围里包含的样本数据点越多越好</p>
+<p><img src="/Blog/intro/svm_reg_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果margin范围里, 样本数据点越多, 就代表这个范围能够比较好地表达样本数据点. 这种情况下取中间的直线作为真正的回归的结果.</p>
+<p>用SVM解决回归问题和用SVM解决分类问题是相反的思路:</p>
+<p>解决分类问题是期望margin里面的点越少越好, Hard Margin 更是要求一个点不能有</p>
+<p><img src="/Blog/intro/svm_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而解决回归问题期望在margin范围里点越多越好, 在具体训练SVM回归问题结果时, 是对margin进行指定, 此时就引入了一个超参数ε</p>
+<p>指定上下两根直线到中间直线的距离</p>
+<blockquote>
+<p>不推导这样的思路会对应一个什么样的最优化问题, 以及这个最优化问题具体应该怎样解决</p>
+</blockquote>
+<br>
+
+<p>scikit-learn中的SVR具体解决回归问题</p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVR, LinearSVR
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures
+
+def StandardLinearSVR(epsilon=0.1):
+    return Pipeline([
+        (&quot;std_scaler&quot;, StandardScaler()),
+        # 另外一个超参数C使用默认值
+        (&quot;linear_svr&quot;, LinearSVR(epsilon=epsilon))
+    ])
+
+def StandardSVR(epsilon=0.1):
+    return Pipeline([
+        (&quot;std_scaler&quot;, StandardScaler()),
+        (&quot;svr&quot;, SVR(kernel=&quot;rbf&quot;, epsilon=epsilon))
+    ])
+
+if __name__ == &#39;__main__&#39;:
+    boston = datasets.load_boston()
+    X = boston.data
+    y = boston.target
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+
+    svr = StandardLinearSVR()
+    svr.fit(X_train, y_train)
+
+    # 0.63572
+    print(svr.score(X_test, y_test))</code></pre>
+<p>许多超参数都可以调节: epsilon, C, kernel, polyFeatures的degree……</p>
+<p>由于SVM涉及的数学知识太深, 我们没有从底层对它进行实现, 但是SVM的思想已经介绍完了.</p>
 
             </div>
             <hr>
@@ -873,6 +1004,12 @@ if __name__ == &#39;__main__&#39;:
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2020/05/16/machine-learning-10/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">python3入门机器学习(10)-决策树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">
