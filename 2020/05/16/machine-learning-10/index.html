@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    813 字
+                    3.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      13 分钟
                   </span>
                 
 
@@ -169,7 +169,7 @@
               <p>决策树</p>
 <a id="more"></a>
 
-<h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><p>决策树: 非参数学习的算法</p>
+<h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><h2 id="决策树算法的思路"><a href="#决策树算法的思路" class="headerlink" title="决策树算法的思路"></a>决策树算法的思路</h2><p>决策树: 非参数学习的算法</p>
 <p>其实决策树的思路在生活中并不少见, 甚至不自觉地使用这种思路进行判断</p>
 <br>
 
@@ -233,7 +233,7 @@ if __name__ == &#39;__main__&#39;:
 <p>这样就形成了决策树</p>
 <br>
 
-<p>总结一下决策树:</p>
+<h3 id="决策树算法的特点"><a href="#决策树算法的特点" class="headerlink" title="决策树算法的特点"></a>决策树算法的特点</h3><p>总结一下决策树:</p>
 <ul>
 <li>非参数学习算法</li>
 <li>可以解决分类问题</li>
@@ -254,6 +254,294 @@ if __name__ == &#39;__main__&#39;:
 </li>
 </ol>
 <br>
+
+<br>
+
+<h2 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h2><p>信息熵是<strong>信息论</strong>的一个基础概念</p>
+<p>熵在信息论中代表: <strong>随机变量不确定度的度量</strong></p>
+<ul>
+<li><p>熵越大, 数据的不确定性越高, 数据越随机</p>
+</li>
+<li><p>熵越小, 数据的不确定性越低</p>
+</li>
+</ul>
+<p>其实熵这个概念是从<strong>物理-热力学</strong>中引申出的概念</p>
+<p>也可以这样理解, 熵越大, 粒子无规则地运动越剧烈, 不确定性越高; 熵越小, 粒子越倾向与静止的状态, 不确定性越低.</p>
+<br>
+
+<p>信息熵的计算公式: 香农提出的<br>$$<br>H=-\sum_{i=1}^k\ p_i\ log(p_i)<br>$$<br>一个系统信息熵的总和是这样计算的, p<sub>i</sub>是什么意思?</p>
+<p>就是对于一个系统中可能有<strong>k类的信息, 每一类信息所占比例就叫p<sub>i</sub></strong></p>
+<p>例如鸢尾花数据集中有3种鸢尾花, 每种鸢尾花所占比例可能为1/3, 那么p<sub>1</sub>, p<sub>2</sub>, p<sub>3</sub>就分别等于1/3</p>
+<p>为什么有一个负号? 因为p<sub>i</sub>一定是一个小于1的数, 由于log函数中如果传入的参数小于1, log(x) 的结果就会是负数, 再加上这个负号就变成大于0的数. </p>
+<p>所以最终计算出来的熵(H)肯定是大于0的</p>
+<br>
+$$
+H=-\sum_{i=1}^k\ p_i\ log(p_i)
+$$
+但是这个公式还是太抽象, 我们举几个例子:
+
+<p><img src="/Blog/intro/example_entropy.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然右边的数据的信息熵比左边的信息熵小.</p>
+<p>熵代表不确定性的度量, 熵越小, 不确定度就越低, 确定性越强</p>
+<p>如果熵越大, 系统就越不确定, 越随机.</p>
+<br>
+
+<p><img src="/Blog/intro/example_entropy.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这么看就是说: 右边的数据比左边的数据更确定</p>
+<p>由于右边的数据很多数据都在第三类里, 占70%之多, 所以右边数据是更确定的. 而左边数据每个类别各占1/3, 所以数据不确定性越强.</p>
+<p>按照设个思路在强一点: 如果第一类数据占100%, {1, 0, 0}<br>$$<br>H=-1\cdot log(1)=0<br>$$<br>这个信息熵就是这个公式的最低值. 放进信息熵的物理定义中就是: <strong>此时数据的不确定性是最低的, 它是最确定的</strong> (所有数据都在一类中没有任何不确定性)</p>
+<br>
+$$
+H=-\sum_{i=1}^k\ p_i\ log(p_i)
+$$
+以二分类问题为例, 感性地看一下信息熵的公式是什么样子的.
+
+<p>如果数据类别是两类, 一类是x, 另一类占得比例就是1-x, 此时信息熵的公式就是:<br>$$<br>H=-xlog(x)-(1-x)log(1-x)<br>$$<br><br></p>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+
+def entropy(p):
+    return -p * np.log(p) - (1-p) * np.log(1-p)
+
+if __name__ == &#39;__main__&#39;:
+    x = np.linspace(0.01, 0.99, 200)
+    y = entropy(x)
+
+    plt.plot(x, y)
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/example_entropy_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样一根曲线像是抛物线的样子, 且这个曲线的对称轴是0.5</p>
+<p>换句话说, 当x=0.5, 曲线取到了最大值, 相当于对于信息熵来说, 两个类别都是0.5时, 整个信息熵是最大的</p>
+<p>此时的数据是最不稳定的, 确定性最低. 此时数据到底是第一类还是第二类各有50%的可能性, 所以是最不确定的.</p>
+<p>无论是x值更小还是更大, 整个数据的信息熵都在降低. 无论更小还是更大我们的数据都更偏向某一类, 数据整体确定性更高了, 信息熵就变低了</p>
+<p>如果系统中有3类, 绘制的就是立体的曲面</p>
+<br>
+
+<p>如果系统偏向某一类, 就相当于一定程度有了确定性</p>
+<br>
+
+<p><img src="/Blog/intro/decision_tree_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<ol>
+<li><p>每个节点到底在哪个维度做划分?</p>
+</li>
+<li><p>某个维度的哪个值上做划分?</p>
+</li>
+</ol>
+<p>当有信息熵的概念, 这两个问题就好解决了.</p>
+<p>我们希望在<strong>每一个节点</strong>上都希望在<strong>某一个维度</strong>上基于<strong>某一个阈值</strong>划分</p>
+<p>我们在划分以后, 要做到事情, 就是要让划分为两部分之后相应的系统的整体信息熵降低, 换句话说让整个系统变得更加确定</p>
+<p>极端情况下, ABC三个叶子节点每个叶子节点中的数据只属于A类, B类, C类的话, 此时整个系统的信息熵就达到了0. </p>
+<p>我们要找在每一个节点上某一个维度的取值, 根据这个维度的这个取值进行划分使得总体信息熵比其他划分方式的信息熵都小. 我们称这样的划分就是当前<strong>最好的划分</strong></p>
+<br>
+
+<p>怎么找到这样的划分? 对所有划分可能性进行一次搜索即可</p>
+<h2 id="使用信息熵寻找最优划分"><a href="#使用信息熵寻找最优划分" class="headerlink" title="使用信息熵寻找最优划分"></a>使用信息熵寻找最优划分</h2><pre><code class="python">def entropy(y):
+    counter = Counter(y)
+    res = 0.0
+    for num in counter.values():
+        p = num / len(y)
+        res += -p * log(p)
+    return res
+
+
+# 基于维度d的value值进行划分
+def split(X, y, d, value):
+    # 维度d的value &lt;= value
+    index_a = (X[:, d] &lt;= value)
+    index_b = (X[:, d] &gt; value)
+    return X[index_a], X[index_b], y[index_a], y[index_b]
+
+
+# 尝试划分
+def try_split(X, y):
+    best_entropy = float(&#39;inf&#39;)
+    best_d, best_v = -1, -1     # 初始随便取值
+    for d in range(X.shape[1]):
+        # 阈值可选的值就是每两个样本点在d这个维度上中间的值
+        sorted_index = np.argsort(X[:, d])
+        # 每次寻找i-1和i在d这个维度的中间的值
+        for i in range(1, len(X)):
+            if X[sorted_index[i-1], d] != X[sorted_index[i], d]:
+                v = (X[sorted_index[i-1], d] + X[sorted_index[i], d]) / 2
+                X_l, X_r, y_l, y_r = split(X, y, d, v)
+                # 计算两个区域的信息熵的和
+                e = entropy(y_l) + entropy(y_r)
+                if e &lt; best_entropy:
+                    best_entropy, best_d, best_v = e, d, v
+    return best_entropy, best_d, best_v
+
+
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    # 保留后两个特征
+    X = iris.data[:, 2:]
+    y = iris.target
+
+    best_entropy, best_d, best_v = try_split(X, y)
+    print(best_entropy)  # 熵: 0.6931
+    print(best_d)        # 维度: 0
+    print(best_v)        # 阈值: 2.45
+    X1_l, X1_r, y1_l, y1_r = split(X, y, best_d, best_v)
+    print(entropy(y1_l))       # 信息熵为0, 把蓝色数据全都化为左边
+    print(entropy(y1_r))       # 信息熵为0.69
+
+    best_entropy2, best_d2, best_v2 = try_split(X1_r, y1_r)
+    print(best_entropy2)  # 熵: 0.4132
+    print(best_d2)        # 维度: 1
+    print(best_v2)        # 阈值: 1.75
+    X2_l, X2_r, y2_l, y2_r = split(X1_r, y1_r, best_d2, best_v2)
+    print(entropy(y2_l))       # 信息熵为0.3084
+    print(entropy(y2_r))       # 信息熵为0.1047</code></pre>
+<p>可以看到</p>
+<ul>
+<li>第一次决策节点为: 维度=0, 阈值=2.45</li>
+<li>第二次决策节点为: 维度=1, 阈值=1.75</li>
+</ul>
+<p>这和我们之前使用scikit-learn中得到结果的大致是一样的</p>
+<p><img src="/Blog/intro/decision_tree_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>模拟划分并没有把决策树建立起来, 就可以用构建二叉树的方式把这棵树构建起来</p>
+<blockquote>
+<p>kNN优化加速的思路就是用K-D tree把数据组织起来</p>
+<p>从底层实现机器学习算法很多时候是需要传统数据结构和算法的知识的, 不应该将二者分离地来看待</p>
+</blockquote>
+<p>尝试实现一个简单的基于熵的决策树</p>
+<pre><code class="python">from math import log
+from collections import Counter
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+from sklearn import datasets
+from sklearn.tree import DecisionTreeClassifier
+
+
+def plot_decision_boundary(model, axis):
+    x0, x1 = np.meshgrid(
+        np.linspace(axis[0], axis[1], int((axis[1] - axis[0]) * 100)).reshape(-1, 1),
+        np.linspace(axis[2], axis[3], int((axis[3] - axis[2]) * 100)).reshape(-1, 1),
+    )
+    X_new = np.c_[x0.ravel(), x1.ravel()]
+    y_predict = model.predict(X_new)
+
+    zz = y_predict.reshape(x0.shape)
+    custom_cmap = ListedColormap([&#39;#EF9A9A&#39;, &#39;#FFF59D&#39;, &#39;#90CAF9&#39;])
+
+    plt.contourf(x0, x1, zz, cmap=custom_cmap)
+
+
+class Node:
+    # res 表示判断完成后的类别, next是子节点用于继续判断
+    def __init__(self, d, v, res, left_is_small):
+        self.d = d
+        self.v = v
+        self.res = res
+        # Ture, 则判断&lt;=v; False, 则判断&gt;v
+        self.left_is_small = left_is_small
+        self.next = None
+
+
+class DecisionTree:
+
+    def __init__(self, max_depth):
+        self.max_depth = max_depth
+        self.root = None
+
+    def fit(self, X_train, y_train):
+        X_r = X_train
+        y_r = y_train
+
+        self.root = Node(-1, -1, -1, True)
+        cur_node = self.root
+
+        for _ in range(self.max_depth):
+            e, d, v = self.try_split(X_r, y_r)
+            X_l, X_r, y_l, y_r = self.split(X_r, y_r, d, v)
+            left_is_small = True
+            if self.entropy(y_l) &gt; self.entropy(y_r):
+                X_l, X_r, y_l, y_r = X_r, X_l, y_r, y_l
+                left_is_small = False
+            cur_node.next = Node(d, v, Counter(y_l).most_common(1)[0][0], left_is_small)
+            cur_node = cur_node.next
+        cur_node.next = Node(d, v, Counter(y_r).most_common(1)[0][0], not left_is_small)
+        self.root = self.root.next
+
+    def predict(self, X):
+        return np.array([self._predict(x) for x in X], dtype=&#39;int&#39;)
+
+    def _predict(self, x):
+        cur_node = self.root
+        while cur_node:
+            if cur_node.left_is_small:
+                if x[cur_node.d] &lt;= cur_node.v:
+                    return cur_node.res
+            else:
+                if x[cur_node.d] &gt; cur_node.v:
+                    return cur_node.res
+            cur_node = cur_node.next
+        return -1
+
+
+    def entropy(self, y):
+        counter = Counter(y)
+        res = 0.0
+        for num in counter.values():
+            p = num / len(y)
+            res += -p * log(p)
+        return res
+
+    # 基于维度d的value值进行划分
+    def split(self, X, y, d, value):
+        # 维度d的value &lt;= value
+        index_a = (X[:, d] &lt;= value)
+        index_b = (X[:, d] &gt; value)
+        return X[index_a], X[index_b], y[index_a], y[index_b]
+
+    # 尝试划分
+    def try_split(self, X, y):
+        best_entropy = float(&#39;inf&#39;)
+        best_d, best_v = -1, -1  # 初始随便取值
+        for d in range(X.shape[1]):
+            # 阈值可选的值就是每两个样本点在d这个维度上中间的值
+            sorted_index = np.argsort(X[:, d])
+            # 每次寻找i-1和i在d这个维度的中间的值
+            for i in range(1, len(X)):
+                if X[sorted_index[i - 1], d] != X[sorted_index[i], d]:
+                    v = (X[sorted_index[i - 1], d] + X[sorted_index[i], d]) / 2
+                    X_l, X_r, y_l, y_r = self.split(X, y, d, v)
+                    # 计算两个区域的信息熵的和
+                    e = self.entropy(y_l) + self.entropy(y_r)
+                    if e &lt; best_entropy:
+                        best_entropy, best_d, best_v = e, d, v
+        return best_entropy, best_d, best_v
+
+
+if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    # 保留后两个特征
+    X = iris.data[:, 2:]
+    y = iris.target
+
+    dt_clf = DecisionTree(max_depth=2)
+    dt_clf.fit(X, y)
+
+    plot_decision_boundary(dt_clf, axis=[0.5, 7.5, 0, 3])
+    plt.scatter(X[y == 0, 0], X[y == 0, 1])
+    plt.scatter(X[y == 1, 0], X[y == 1, 1])
+    plt.scatter(X[y == 2, 0], X[y == 2, 1])
+    plt.show()</code></pre>
+<p>绘图的结果和scikit-learn中的一样</p>
+<blockquote>
+<p>这个实现依然有不足之处, 待改进的部分:</p>
+<ol>
+<li>并不每次只判断熵最大的一边, 而是从两侧同时尝试split</li>
+<li>predict可以优化速度, 批量判断</li>
+<li>Node节点不够优雅</li>
+</ol>
+<p>但最起码实现了一部分.</p>
+</blockquote>
+
             </div>
             <hr>
             <div>
@@ -310,7 +598,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -337,7 +625,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -346,7 +634,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
