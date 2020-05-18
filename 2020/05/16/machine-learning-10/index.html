@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4k 字
+                    5.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      17 分钟
+                      23 分钟
                   </span>
                 
 
@@ -635,12 +635,157 @@ if __name__ == &#39;__main__&#39;:
 <p>与其纠结这个超参数, 不如调整其他超参数</p>
 <br>
 
+<h2 id="CART-与-决策树中的超参数"><a href="#CART-与-决策树中的超参数" class="headerlink" title="CART 与 决策树中的超参数"></a>CART 与 决策树中的超参数</h2><p>之前实现的决策树又有一个名字: <strong>CART</strong> (Classification And Regression Tree)</p>
+<p>这种决策树既可以解决分类问题, 又可以解决回归问题</p>
+<p>思想就是: 根据某一个维度d和某一个阈值v进行二分</p>
+<p>scikit-learn实现的决策树都是CART</p>
+<blockquote>
+<p>ID3, C4.5, C5.0 … 是用其他的方式创建决策树的方法</p>
+</blockquote>
+<br>
 
+<p>决策树复杂度:</p>
+<p><img src="/Blog/intro/complex_dt.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>决策树还有一个问题, 就是容易产生过拟合, 这一点和kNN是一样的. </p>
+<p>实际上所有的<strong>非参数学习算法</strong>都非常容易产生过拟合</p>
+<p>基于这些原因, 实际创建决策树时, 必须进行剪枝: 降低复杂度, 解决过拟合</p>
+<p>具体怎么剪枝? 其实之前创建决策树一直进行了剪枝</p>
+<p>因为在创建决策树时max_depth这个参数一直传的是2, 就是限制了整棵树的高度最多是2, 这实际上就是一个剪枝手段</p>
+<p>那么处理max_depth还有什么剪枝手段?</p>
+<br>
 
+<p>如果不指定max_depth</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    # 生成的非线性数据, 为了能更好看到过拟合的样子
+    X, y = datasets.make_moons(noise=0.25, random_state=666)
 
+    dt_clf = DecisionTreeClassifier()
+    dt_clf.fit(X, y)
 
+    plot_decision_boundary(dt_clf, axis=[-1.5, 2.5, -1.0, 1.5])
+    plt.scatter(X[y==0, 0], X[y==0, 1])
+    plt.scatter(X[y==1, 0], X[y==1, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/ofer_fitting_dt.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>如果depth为2</p>
+<pre><code class="python">dt_clf = DecisionTreeClassifier(max_depth=2)</code></pre>
+<p><img src="/Blog/intro/complex_dt_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<p>这个参数指定至少要有多少节点数据才对它进行拆分</p>
+<pre><code class="python">dt_clf = DecisionTreeClassifier(min_samples_split=10)</code></pre>
+<p><img src="/Blog/intro/complex_dt_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个参数调的越高就越不容易过拟合</p>
+<br>
+
+<p>对于一个叶子节点来说, 至少要有几个样本</p>
+<pre><code class="python">dt_clf = DecisionTreeClassifier(min_samples_leaf=6)</code></pre>
+<p><img src="/Blog/intro/complex_dt_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个参数如果太低就会过拟合, 极端情况下等于1时, 某些参数就会由这一个样本决定, 因此模型会对特殊的样本点非常敏感</p>
+<br>
+
+<p>指定最多有几个叶子节点</p>
+<pre><code class="python">dt_clf = DecisionTreeClassifier(max_leaf_nodes=4)</code></pre>
+<p><img src="/Blog/intro/complex_dt_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>实际使用这些参数时要避免欠拟合, 齐次参数间可以互相组合, 所以可以使用网格搜索的方式</p>
+<p>实际还有很多其他参数</p>
+<p><img src="/Blog/intro/complex_dt_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而实际上, 使用决策树解决分类问题, 回归问题. 无论怎么条件这些参数, 结果都不会特别的好</p>
+<p>决策树是有局限性的, 但是它也非常有用, 随即森林其中就使用了决策树的思路, 因此这些参数也可以用于随机森林的调参</p>
+<br>
+
+<br>
+
+<h2 id="决策树解决回归问题"><a href="#决策树解决回归问题" class="headerlink" title="决策树解决回归问题"></a>决策树解决回归问题</h2><p><img src="/Blog/intro/decision_tree_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当使用CART将决策树建立出来之后, 每个节点都包含若干个数据</p>
+<p>如果这些数据的输出值是类别的话, 就可以在叶子节点中让数据进行投票, 哪个类别的节点多, 就将样本归为哪个类别.</p>
+<p>如果数据的输出是具体的数的话, 来了一个新的样本点, 经过决策树来到某一个叶子节点, 就可以叶子节点的平均值来作为结果</p>
+<br>
+
+<p>scikit-learn中对决策树解决回归问题的封装</p>
+<pre><code>from sklearn.tree import DecisionTreeRegressor
+
+if __name__ == &#39;__main__&#39;:
+    boston = datasets.load_boston()
+    X = boston.data
+    y = boston.target
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+
+    # 参数和DecisionTreeClassifier是一样的
+    # 区别只是最后在叶子节点得到一个分类结果还是回归结果
+    dt_reg = DecisionTreeRegressor()
+    dt_reg.fit(X_train, y_train)
+
+    # 显然过拟合了, 在训练数据集上表现好, 但在测试数据集上表现很差
+    print(dt_reg.score(X_test, y_test))     # 0.589
+    print(dt_reg.score(X_train, y_train))   # 1,0</code></pre><p>决策树的模型非常适合绘制复杂度曲线, 因为有很多参数可以控制决策树模型的复杂度</p>
+<p><img src="/Blog/intro/predict_poly_reg_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p><a href="https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/12-Decision-Tree/Optional-01-Learning-Curve-for-Decision-Tree/Optional-01-Learning-Curve-for-Decision-Tree.ipynb" target="_blank" rel="noopener">决策树的学习曲线代码</a></p>
+<p><a href="https://github.com/liuyubobobo/Play-with-Machine-Learning-Algorithms/blob/master/12-Decision-Tree/Optional-02-Model-Complexity-Curve-for-Decision-Tree/Optional-02-Model-Complexity-Curve-for-Decision-Tree.ipynb" target="_blank" rel="noopener">模型复杂度曲线</a></p>
+</blockquote>
+<br>
+
+<h2 id="决策树的局限性"><a href="#决策树的局限性" class="headerlink" title="决策树的局限性"></a>决策树的局限性</h2><p><img src="/Blog/intro/decision_tree_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实看鸢尾花的分类结果时就能看出来, 决策树的边界都是横平竖直的. </p>
+<p>这样的边界显然是有局限性的, 例如这样的数据点的划分</p>
+<p><img src="/Blog/intro/complex_dt_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样的决策边界很可能无法反应数据的真实情况</p>
+<p><img src="/Blog/intro/complex_dt_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>肯可能真正的决策边界是一条斜线, 而决策树永远无法产生这样的决策边界.</p>
+<br>
+
+<p>还有更严重的事情, 假设数据集是这个样子</p>
+<p><img src="/Blog/intro/complex_dt_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时非常好区分, 就在中间划一根线条, 左边就是蓝色的类, 右边是红色的类</p>
+<p><img src="/Blog/intro/complex_dt_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可是, 同样是这个分布, 它可能只是稍微有些倾斜, 划分结果可能就是这个样子</p>
+<p><img src="/Blog/intro/complex_dt_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样的决策边界很有可能是不对的, 尤其是数据点在两侧的时候</p>
+<br>
+
+<p>另外还有一个<strong>大多数非参数学习共有的局限性</strong>: 对个别数据敏感</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    iris = datasets.load_iris()
+    # 保留后两个特征
+    X = iris.data[:, 2:]
+    y = iris.target
+
+    tree_clf = DecisionTreeClassifier(max_depth=2, criterion=&quot;entropy&quot;)
+    tree_clf.fit(X, y)
+    plot_decision_boundary(tree_clf, [0.5, 7.5, 0, 3])
+    plt.scatter(X[y==0, 0], X[y==0, 1])
+    plt.scatter(X[y==1, 0], X[y==1, 1])
+    plt.scatter(X[y==2, 0], X[y==2, 1])
+    plt.show()
+
+    # 删除第138行的元素(数据点)
+    X_new = np.delete(X, 138, axis=0)
+    y_new = np.delete(y, 138)
+    tree_clf2 = DecisionTreeClassifier(max_depth=2, criterion=&quot;entropy&quot;)
+    tree_clf2.fit(X_new, y_new)
+    plot_decision_boundary(tree_clf2, [0.5, 7.5, 0, 3])
+    plt.scatter(X[y==0, 0], X[y==0, 1])
+    plt.scatter(X[y==1, 0], X[y==1, 1])
+    plt.scatter(X[y==2, 0], X[y==2, 1])
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/decision_tree_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/complex_dt_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>只删除了一个样本点, 得到的决策边界的形态就和之前完全不同了</p>
+<p>这是所有非参数学习的缺点, 高度依赖调参, 才能得到一个较好的模型</p>
+<br>
+
+<p>决策树的主要用途并不完全是单独进行使用(虽然经济学或者相关领域对于一些现实问题很有可能就使用一颗决策树进行建模)</p>
+<p>不过机器学习领域的更重要的应用是使用<strong>集成学习</strong>的方式创建一种叫做”<strong>随机森林</strong>“的算法. 随机森林可以得到非常好的学习结果</p>
 
             </div>
             <hr>
@@ -674,6 +819,12 @@ if __name__ == &#39;__main__&#39;:
                   <div class="post-prev col-6">
                     
                     
+                      <a href="/Blog/2020/05/17/machine-learning-11/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">python3入门机器学习(11)-集成学习和随机森林</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </div>
                   <div class="post-next col-6">
                     
@@ -698,7 +849,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -725,7 +876,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -734,7 +885,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
