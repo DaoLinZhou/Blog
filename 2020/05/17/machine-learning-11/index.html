@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -243,8 +243,8 @@
 <p>根据Hard Voting, 最终结果为B</p>
 <br>
 
-<p>但是看这个数据好像有点问题, 虽然只有两个模型把这个数据分成A类. 但是这两个模型近乎是非常确定, 认为这个模型就应该分为A类; 相应有3个模型把这个数据分为B类, 但是他们分类为B的概率并不高.</p>
-<p>所以虽然分为A类的票数少, 但是它的权值应该更高一些.</p>
+<p>但是看这个数据好像有点问题, 虽然只有两个模型把这个数据分成A类. 但是这两个模型近乎是<strong>非常确定</strong>, 认为这个模型就应该分为A类; 相应有3个模型把这个数据分为B类, 但是他们分类为B的概率并不高.</p>
+<p>所以虽然分为A类的票数少, 但是它的<strong>权值</strong>应该更高一些.</p>
 <p>所谓Soft Voting就是这样的一个考虑</p>
 <p>计算分为每类的概率的平均值</p>
 <p><img src="/Blog/intro/soft_voting_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -252,30 +252,40 @@
 <p>换句话说, 它不仅要看把多少票投给A, 把多少票投给B, 还要看投给A的票到底有多大的概率确认分为A类, 看投给B的票到底有多大的概率确认分为B类</p>
 <br>
 
-<p>因此Soft Voting要求集合的每一个模型都能估计概率</p>
+<p>因此Soft Voting要求集合的<strong>每一个模型都能估计概率</strong></p>
 <p>逻辑回归就是根据一个概率模型创建的, 它有一个predict_proba方法, 有这个函数就说明是可以求出概率的</p>
 <p>借此回顾一下分类算法是不是都可以估计概率</p>
 <br>
 
-<p>逻辑回归, 本身就是基于概率模型的</p>
+<hr>
+
+<p><strong>逻辑回归</strong>, 本身就是基于概率模型的</p>
 <p><img src="/Blog/intro/logic_reg_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
-<p>kNN, 根据离他最近的几个点进行分类, 通过投票kNN会把这个点预测为是红色的类, 此时它属于红色类的概率就是66% = 2/3</p>
+<hr>
+
+<p><strong>kNN</strong>, 根据离他最近的几个点进行分类, 通过投票kNN会把这个点预测为是红色的类, 此时它属于红色类的概率就是66% = 2/3</p>
 <p><img src="/Blog/intro/knn_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>kNN也可以考虑权值, 考虑权值的话就看加权值所占的比重就可以了. 因此kNN算法也是支持计算概率的</p>
 <br>
 
-<p>决策树算法计算概率的方式和kNN算法计算概率的方式非常一致, 只不过样本在决策树中从根节点走到叶子节点, 在叶子节点中通常是包含多个类别的数据的, 它的基尼系数或信息熵不为0, 此时哪个类数据量大就分给哪个类. </p>
+<hr>
+
+<p><strong>决策树算法</strong>计算概率的方式和kNN算法计算概率的方式非常一致, 只不过样本在决策树中从根节点走到叶子节点, 在叶子节点中通常是包含多个类别的数据的, 它的基尼系数或信息熵不为0, 此时哪个类数据量大就分给哪个类. </p>
 <p><img src="/Blog/intro/decision_tree_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这个概率和kNN算法是一样的, 占比率最大的节点的数量除以总结点的数量</p>
 <br>
 
-<p>最复杂的是SVM算法</p>
+<hr>
+
+<p>最复杂的是<strong>SVM算法</strong></p>
 <p>对于SVM / SVC算法, 它本身是没有考虑概率的, 而是寻找一个统计上margin的最大值. 虽然如此, SVM算法依然可以使用一些方式来计算出概率</p>
 <p>这种方式代价就是更多的计算资源.</p>
 <p>具体是怎么计算出概率的就不涉及了, 不过scikit-learn中SVC有一个probability参数, 默认为False, 但是如果改为True, 就可以估计样本分到各个类别的概率</p>
 <br>
+
+<hr>
 
 <p>他们都可以直接或间接的算出样本分到各个类别的概率, 有这个概率就可以使用Soft Voting这种方式</p>
 <pre><code class="python">voting_clf2 = VotingClassifier(estimators=[
@@ -426,7 +436,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -453,7 +463,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -462,7 +472,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
