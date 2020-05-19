@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.9k 字
+                    6.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      10 分钟
+                      23 分钟
                   </span>
                 
 
@@ -169,6 +169,10 @@
               <p>集成学习</p>
 <p>Hard Voting Classifier</p>
 <p>Soft Voting Classifier</p>
+<p>Bagging 和 Pasting</p>
+<p>Bagging的并行处理与差异化</p>
+<p>随机森林</p>
+<p>Extra-Trees</p>
 <a id="more"></a>
 
 <h1 id="集成学习和随机森林"><a href="#集成学习和随机森林" class="headerlink" title="集成学习和随机森林"></a>集成学习和随机森林</h1><h2 id="什么是集成学习"><a href="#什么是集成学习" class="headerlink" title="什么是集成学习"></a>什么是集成学习</h2><p>集成学习: ensemble learning</p>
@@ -380,6 +384,278 @@ if __name__ == &#39;__main__&#39;:
 <br>
 
 <br>
+
+<h2 id="OOB-Out-of-Bag"><a href="#OOB-Out-of-Bag" class="headerlink" title="OOB (Out-of-Bag)"></a>OOB (Out-of-Bag)</h2><p>对于Bagging有一个非常重要的概念OOB. 什么是oob?</p>
+<p>放回取样导致一部分样本很有可能没有取到</p>
+<p>平均大约有37%的样本没有取到.</p>
+<p>这37% 的样本就叫做 Out of Bag , 从来没有被取出来的样本.</p>
+<p>如果有这样的情况的话, 其实在使用Bagging时就不用train-test-split了, 而是使用这部分没有取到的样本做<strong>测试 / 验证</strong></p>
+<p>scikit-learn中有一个属性 oob-score, 使用这个属性就能直接看对于Bagging, 这些Out-of-Bag样本作为测试数据集得到结果是怎样的</p>
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    X, y = datasets.make_moons(n_samples=500, noise=0.3, random_state=42)
+    # 如果想使用oob, 就要把oob_score设置为True
+    bagging_clf = BaggingClassifier(DecisionTreeClassifier(),
+                                    n_estimators=500, max_samples=100,
+                                    bootstrap=True, oob_score=True)
+    bagging_clf.fit(X, y)
+    print(bagging_clf.oob_score_)   # 0.918</code></pre>
+<br>
+
+<h2 id="Baggiing的更多探讨"><a href="#Baggiing的更多探讨" class="headerlink" title="Baggiing的更多探讨"></a>Baggiing的更多探讨</h2><h3 id="并行处理"><a href="#并行处理" class="headerlink" title="并行处理"></a>并行处理</h3><p>集成学习(Bagging)的思路极易进行<strong>并行化处理</strong>, 因为我们是独立训练若干个子模型, 每一个子模型都是从500个样本中取100个样本, 取样本的过程也是独立的</p>
+<p>scikit-learn中, 对于可以并行处理的算法都是传入n_jobs这个参数, 传入几就用几个核, -1就用上所有核</p>
+<p>Grid-SearchCV时使用过了</p>
+<pre><code class="python">bagging_clf = BaggingClassifier(DecisionTreeClassifier(),
+                                n_estimators=500, max_samples=100,
+                                bootstrap=True, oob_score=True, n_jobs=-1)</code></pre>
+<br>
+
+<h3 id="差异化"><a href="#差异化" class="headerlink" title="差异化"></a>差异化</h3><p>Bagging创建子模型要让子模型有一定差异化, 之前让子模型产生差异化的方式是让每个子模型都看<strong>更小的样本集</strong>, 其实还有其他产生差异化的方式</p>
+<br>
+
+<p>一个非常重要的方式就是<strong>针对特征进行随机取样</strong> (随机子空间:Random Subspaces)</p>
+<p>通常应用在特征非常多的情况, 例如图像识别: 每一个像素点都是一个特征, 每一个样本的特征量就比较大</p>
+<p>随机子空间: 所有特征组成一个特征空间, 每一次取样的时候是在一个子空间进行取样</p>
+<br>
+
+<p>如果同时使用bootstrap对样本的数量进行取样, 又对样本特征进行取样(Random Subspaces)</p>
+<p>这种采样方式又叫 Random Patches 随机补丁</p>
+<p>这个名字本身很形象</p>
+<p>数据本身就是一个矩阵, 每一行是一个样本, 每一列代表一个特征, Random Patches就是<strong>既在行的维度随机, 又在列的维度随机</strong>. 就如下图, 像是一块布上的很多补丁</p>
+<p><img src="/Blog/intro/random_patches.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>在特征空间上的随机采样也可以叫 bootstrap features</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    X, y = datasets.make_moons(n_samples=500, noise=0.3, random_state=42)
+    random_subspaces_clf = BaggingClassifier(DecisionTreeClassifier(),
+                                             # 总共有500个样本, 采用500就相当于没有随机
+                                             n_estimators=500, max_samples=500,
+                                             bootstrap=True, oob_score=True,
+                                             # 最大特征数为1, 设置针对特征进行采样
+                                             max_features=1, bootstrap_features=True)
+    random_subspaces_clf.fit(X, y)
+    print(random_subspaces_clf.oob_score_)  # 0.832</code></pre>
+<p>由于样本只有2个特征, 使用随机特征采样的方式是不合适的, 主要了解怎么使用的对样本进行随机采样的</p>
+<br>
+
+<br>
+
+<h2 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h2><p>我们用BaggingClassifier都是集合了大量决策树, 其实这种集合方式还有一个非常形象的名字: <strong>随机森林</strong></p>
+<p>BaggingClassifier中有500颗树, 它们就一起构成了一个森林, 对于每一棵树看到的样本都是不同的.</p>
+<br>
+
+<p>scikit-learn分装了一个随机森林类, 这个随机森林的模型还提供了更多的随机性: <strong>决策点在节点划分上, 在随机的特征子集上寻找最优划分特征</strong> (最好的维度/特征, 最优的阈值)</p>
+<p> 换句话说, 并不是在每一个节点上都在所有的特征上寻找最优划分, 这种划分方式增加了子模型的随机性</p>
+<blockquote>
+<p>集成学习中, 子模型有成百上千个的时候, 每一个子模型和其他的子模型越有差异越好, 创建这种差异性的一个方式就是增加随机性</p>
+</blockquote>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    X, y = datasets.make_moons(n_samples=500, noise=0.3, random_state=42)
+
+    # 随机森林
+    rf_clf = RandomForestClassifier(n_estimators=500, random_state=666, oob_score=True, n_jobs=-1)
+    rf_clf.fit(X, y)
+    print(rf_clf.oob_score_)    # 0.896</code></pre>
+<p>随机森林结合了BaggingClassifier和DecisionTreeClassifier, 它的参数也包含两者的大部分参数</p>
+<br>
+
+<h2 id="Extra-Trees"><a href="#Extra-Trees" class="headerlink" title="Extra-Trees"></a>Extra-Trees</h2><p>和随机森林非常类似还有另外一种方法. 有时候我们也可以叫它随机森林, 不过有些时候它有另外一个名字 <strong>Extra-Trees (全称: Extremely Random Trees) 极其随机森林</strong></p>
+<p>极其随机森林的随机表现在: 在决策树的节点划分上, 使用<strong>随机的特征和随机的阈值.</strong></p>
+<p>此时每颗决策树的差异就会更加大, 因为更加随机</p>
+<blockquote>
+<p>之前讲Bagging Classifier时说整体只要比大多数决策树的决策能力好一点就够了, 成百上千个决策树的决策结果也会是不错的</p>
+</blockquote>
+<p>这就时 Extra Trees 有应用价值的基础</p>
+<p>这种方式提供了额外的随机性, <strong>抑制过拟合, 遏制了方差, 但增大了偏差bias</strong></p>
+<p>由于Extra-Tree划分时毫不费劲, 使用随机的阈值, 随机的特征. 所以这个模型有另外一个优点: 更快的训练速度</p>
+<br>
+
+<pre><code class="python">et_clf = ExtraTreesClassifier(n_estimators=500, bootstrap=True, oob_score=True, random_state=666)
+et_clf.fit(X, y)
+print(et_clf.oob_score_)    # 0.892</code></pre>
+<br>
+
+<h2 id="集成学习解决回归问题"><a href="#集成学习解决回归问题" class="headerlink" title="集成学习解决回归问题"></a>集成学习解决回归问题</h2><table>
+<thead>
+<tr>
+<th>解决分类问题</th>
+<th>解决回归问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BaggingClassifier()</td>
+<td>BaggingRegressor()</td>
+</tr>
+<tr>
+<td>RandomForestClassifier()</td>
+<td>RandomForestRegressor()</td>
+</tr>
+<tr>
+<td>ExtraTreesClassifier()</td>
+<td>ExtraTreesRegressor()</td>
+</tr>
+</tbody></table>
+<p>使用方法都是类似的, 就不赘述了.</p>
+<br>
+
+<p>至此就是Bagging的方式进行集成学习的方式, 通过随机取样的方式进行集成学习.</p>
+<p>这种方式是非常常用的一种集成学习方式</p>
+<p>但这不是唯一的一种集中学习的方式.</p>
+<br>
+
+<h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>boosting是增强推动的意思</p>
+<p>这种集成学习的思路也是要集成多个模型, 不过和Bagging不同, 这些模型之间不是彼此独立的关系, 而是相互增强的关系</p>
+<p><strong>每个模型都在尝试增强(Boosting)整体的效果</strong></p>
+<br>
+
+<h3 id="Ada-Boosting"><a href="#Ada-Boosting" class="headerlink" title="Ada Boosting"></a>Ada Boosting</h3><p>首先有蓝色的原始数据集, 通过某一种学习的方法(假设解决回归问题, 当然也可以解决分类问题) (初始数据点的权值是一样的)</p>
+<p><img src="/Blog/intro/ada_boosting.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>通过这样的算法学习完之后, 显然所有的算法都会犯错误, 那么我们就可以得到这样一个结果</p>
+<p><img src="/Blog/intro/ada_boosting_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时数据点分成深色浅色,  浅色的点就是被第一个模型近乎毫无差别地被预测成功的点, 而深色的点和得到的模型差距比较远, 所以形成这样的样本点</p>
+<p>在这组样本点中, 数据和数据之间产生了<strong>权重</strong>的差别</p>
+<p>我们让上一次学习中没有很好被学习的点的权值增大一些, 而在上一次学习中已经很好学习的点的权值减小一些, 这样得到的新的样本数据再使用某一种学习算法进行学习. </p>
+<br>
+
+<p>经过第二次学习, 由得到一个模型, 同样也是有些样本点被准确预测, 有一些样本点没有被准确预测. 这样一来又形成一组新的数据</p>
+<p><img src="/Blog/intro/ada_boosting_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这组数据点中每一个点的权重又有差距, 再进行学习, 预测, 改变权值. 持续进行下去</p>
+<p><img src="/Blog/intro/ada_boosting_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>再这个过程中, <strong>每次生成的子模型都是在想办法弥补上一次没有成功预测的样本点,</strong> 换句话说每一个子模型都是在想办法推动 (Boosting), Boost上一个模型所犯的错误.</p>
+<p>经过这个过程Ada Boosting也可以生成非常多的子模型, 对于每一个子模型它是基于同样的一组样本点只不过这些样本点中, 点和点之间的权重不一样, 子模型认为哪些点更重要, 哪些点不重要的程度不同, 所以每一个子模型是有差异的.</p>
+<p>最终所有子模型进行投票作为Ada Boosting最终的学习结果</p>
+<br>
+
+<p>对于Ada Boosting来说, 怎样为数据点附上权值? </p>
+<p>我们可以把整体的思路转换成是求极值的问题, 背后也是有严格的数学推导</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    X, y = datasets.make_moons(n_samples=500, noise=0.3, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=666)
+
+    ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=2), n_estimators=500)
+    ada_clf.fit(X_train, y_train)
+    print(ada_clf.score(X_test, y_test))</code></pre>
+<br>
+
+<br>
+
+<h3 id="Gradient-Boosting"><a href="#Gradient-Boosting" class="headerlink" title="Gradient Boosting"></a>Gradient Boosting</h3><p>另一种Boosting的算法是Gradient Boosting</p>
+<p>思想是这样的:</p>
+<p>训练一个模型m1, 产生错误 e1</p>
+<p>针对e1训练第二个模型m2, 产生错误 e2</p>
+<p>针对e2训练第三个模型m3, 产生错误 e3</p>
+<p>最终预测结果是: m1 + m2 + m3 … …</p>
+<p><img src="/Blog/intro/ada_boosting_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>左边绿色的线是每个模型的预测线, 右边红色的线是最终模型的样子(所有预测模型相加的结果)</p>
+<table>
+<thead>
+<tr>
+<th align="center">当前模型(绿色的线)</th>
+<th align="left">总体模型(红色线)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">m1</td>
+<td align="left">m1</td>
+</tr>
+<tr>
+<td align="center">m2</td>
+<td align="left">m1 + m2</td>
+</tr>
+<tr>
+<td align="center">m3</td>
+<td align="left">m1 + m2 + m3</td>
+</tr>
+</tbody></table>
+<p>m2 是根据 m1 犯的错误 (y<sub>predict</sub>-y<sub>true</sub>) 得到的模型, m3 是根据 m2 犯的错误得到的模型 (y<sub>predict</sub>-y<sub>true</sub>) </p>
+<pre><code class="python"># GradientBoostingClassifier就是以决策树作为基础的, 不是项AdaBoosting那样可以选择
+gb_clf = GradientBoostingClassifier(max_depth=2, n_estimators=30)
+gb_clf.fit(X_train, y_train)
+print(gb_clf.score(X_test, y_test))</code></pre>
+<br>
+
+<p>和集成学习一样, Boosting可以解决回归问题</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>回归</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GradientBoostingClassifier</td>
+<td>GradientBoostingRegressor</td>
+</tr>
+<tr>
+<td>AdaBoostClassifier</td>
+<td>AdaBoostRegressor</td>
+</tr>
+</tbody></table>
+<br>
+
+<br>
+
+<h2 id="Stacking"><a href="#Stacking" class="headerlink" title="Stacking"></a>Stacking</h2><p>Voting Classifier 这种集成学习的方式就是: 假设有3个算法, 每个算法针对数据都进行预测, 最后综合这3个算法结果, 分类问题少数服从多数, 回归问题就是求均值</p>
+<br>
+
+<p>Stacking是另外一种思路:</p>
+<p><img src="/Blog/intro/stacking_clf.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先也假设有3个算法, 对于这3个算法先求出对于数据的预测结果. 但是不使用这3个预测结果综合来得到最后的结果</p>
+<p>而是以这3个预测结果进行输入, 再添加一层算法(以这三个算法为输入, 训练一个新的模型, 用这个新的模型的输出作为预测的结果)</p>
+<p><img src="/Blog/intro/stacking_clf_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>多了一个模型, 落在三个模型之上. “落”这个动作就是Stacking表示的意义</p>
+<blockquote>
+<p>这种思路同样可以解决分类问题, 解决的方法也非常简单: </p>
+<p>下面这3个模型预测的结果是某一类的概率, 概率是一个具体的数值</p>
+<p>将三个模型的概率值作为第四个模型的输入再得到一个总体的新的概率, 用这个概率进行分类</p>
+<p>分类问题和回归问题可以以概率作为桥梁, 将分类问题转换为回归问题, 回归问题转换为分类问题</p>
+<br>
+
+<p>逻辑回归也介绍过, 为什么逻辑回归解决的是分类问题, 但这种方法却叫逻辑<strong>回归</strong>, 原因在于计算的是样本分为某一类的概率</p>
+</blockquote>
+<br>
+
+<p>怎么训练一个Stacking?</p>
+<p><img src="/Blog/intro/stacking_clf_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们要做的是首先把训练数据集分成两份, 对于其中的一份用于训练这3个模型, 另外一份用于训练上面的那层模型</p>
+<br>
+
+<p>也就是说, 用第一个训练集把底下的三个模型训练好了, 在训练好了之后对于第二部分就可以直接扔进这些模型中得到一组输出.</p>
+<p>这组输出结果和第二份样本数据真值的输出就形成了一个新的数据集</p>
+<p>用这新的数据集训练第4个模型, 最终形成Stacking整体的模型</p>
+<br>
+
+<p>理解这一步之后, 就可以构建更加复杂的Stacking模型</p>
+<p><img src="/Blog/intro/stacking_clf_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>落了3层模型, 第一层的三个模型就得到3个输出, 把这3个输出作为输入就可以分别再训练3个模型.</p>
+<p>这三个模型(第二层)以第一层的输出作为输入再得到3个输出. 最终以这3个输出作为第三层(一个模型) 的输入, 第三层的输出结果作为整个集成学习Stacking的输出结果</p>
+<p>训练这样一个Stacking就要将原始数据集分成<strong>3份</strong>, 第一份由于训练第一层的3个模型, 第二份用于训练第二层的3个模型, 第三份用于训练最后一层的一个模型</p>
+<br>
+
+<p>所以对于Stacking来说, <strong>有几层</strong>也是一个超参数, <strong>每一层使用多少个模型</strong>也是一个超参数</p>
+<p>正因如此, 训练Stacking模型要复杂很多, 也因为这种复杂性, 它是非常容易<strong>过拟合</strong>的</p>
+ <br>
+
+<p><img src="/Blog/intro/stacking_clf_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图这样的方式已经非常像<strong>神经网络</strong>了, 只不过对于神经网络来说, 每一个神经元不是一个全新的算法, 而只是计算一个函数的值而已</p>
+<p>对于神经网络来说, 如果层数增多就已经是深度学习的模型了, 对于神经网络如果层数增多会引发一些新的问题, 这些问题就是深度学习要解决的问题</p>
+<p>神经网络正是因为这种灵活性, 非常<strong>容易发生过拟合</strong></p>
+<p>深度学习中很多话题就是在探讨对于这样一个模型, 我们要如何解决过拟合问题. 其中的很多技术其实适用于Stacking这个模型</p>
+<br>
+
+<p>Stacking这样的模型scikit-learn中根本没有提供任何接口来实现Stacking这个算法.</p>
+<br>
+
+<br>
+
+<p>集成学习本身是一种非常强大的方法, 背后也有非常多的理论基础, 有统计学的知识支撑</p>
+
             </div>
             <hr>
             <div>
@@ -436,7 +712,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -463,7 +739,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -472,7 +748,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
