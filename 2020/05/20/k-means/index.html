@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>内存管理 - Daolin&#39;s Repository</title>
+  <title>非监督机器学习算法KMeans - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -108,7 +108,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/Blog/intro/eye.jpg') no-repeat center center;
+         style="background: url('/Blog/intro/about-bg.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -121,7 +121,7 @@
               
                 <p class="mt-3 post-meta">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                  Monday, July 15th 2019, 12:16 pm
+                  Wednesday, May 20th 2020, 11:23 am
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    852 字
+                    2.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      9 分钟
                   </span>
                 
 
@@ -166,77 +166,236 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <p>内存由操作系统统一管理</p>
-<p>一个字节Byte有8个二进制位</p>
-<p>计算机插两根2G内存条 等同于 插一根4G内存条</p>
-<p>无论插多少根内存条, 计算机会把内存看成是一个整体来计算内存大小</p>
+              <p>kMeans算法以及其优化kMeans++算法</p>
 <a id="more"></a>
 
-<h2 id="32位操作系统"><a href="#32位操作系统" class="headerlink" title="32位操作系统"></a>32位操作系统</h2><p>32 位操作系统最大使用4G内存</p>
-<br>
-
-<p>32 位操作系统上, 地址总线是32位, 即寻址空间是32位</p>
-<p>32 位指的是: 给内存编号只能编到32个二进制位</p>
-<br>
-
-<p>两根地址总线有4种状态</p>
-<p><img src="/Blog/intro/2lines.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>32根地址总线就有2^32个状态, 2^32字节<br>$$<br>2^{32} = 2^{10} * 2^{10} * 2^{10} * 2^2<br>$$</p>
-<pre><code>= 1024 * 1024 * 1024 * 4
-= 1024 * 1024 * 4K
-= 1024 * 4M
-= 4G</code></pre><p>所以32位操作系统最多只能管理4G内存</p>
-<br>
-
-<h2 id="64位操作系统"><a href="#64位操作系统" class="headerlink" title="64位操作系统"></a>64位操作系统</h2><p>64位主机可以管理 2^64 字节</p>
-<p>2^30 =&gt; GB</p>
-<p>2^40 =&gt; TB</p>
-<p>… …</p>
-<p>64位系统下的内存足够使用了</p>
-<br>
-
-<h2 id="内存地址"><a href="#内存地址" class="headerlink" title="内存地址"></a>内存地址</h2><p>操作系统会对所有的内存进行编号, 编号 = 唯一的内存字节的地址, 1个字节存放8个二进制位的数据</p>
-<p>64 位操作系统内存地址编号, 二进制表示</p>
-<p>0000 0000 … … 0000 0000    (64 个 0)</p>
-<p>1111 1111 … … 1111 1111    (64 个 1)</p>
-<br>
-
-<p><img src="/Blog/intro/memory2.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>右边的每一个格子都代表计算机中的一个字节, 每个字节可以保存8个二进制位的数据, 假设他们都是0</p>
-<p>最高位 0xffffffffffffffff    16个f, 因为一个f 对应 1111 四个一, 16 * 4 = 64, 相当于64 个 1</p>
-<br>
-
-<h3 id="为什么要交给操作系统管理"><a href="#为什么要交给操作系统管理" class="headerlink" title="为什么要交给操作系统管理"></a>为什么要交给操作系统管理</h3><p>计算机中要同时运行多个程序</p>
-<p>如果由程序员对内存直接进行管理, 可能会出现多个程序对同一个地址来操作</p>
-<p>那么该内存应该分给那个程序</p>
-<p>我们不知道用户会在什么时候启用哪些程序, 也不知道哪个程序会占用哪个内存, 所以内存不应由程序员直接管理</p>
-<br>
-
-<p>当我们买计算机时, 第一个应用程序就是操作系统. 其他的应用程序都是安装到操作系统上的. 所以实际上 应用程序是由操作系统来调用的</p>
-<p><img src="/Blog/intro/useapplication.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<p>操作系统 不仅能给内存编号, 还可以给内存进行一定的规划</p>
-<p><strong>在64位操作系统中: 系统认为程序员使用的内存只要有前面48位就可以了</strong></p>
-<p><img src="/Blog/intro/memory3.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>即上图红框区域 0x0 到 0x7fffffffffffffff</p>
-<p>而0x7fffffffffffffff 之上的内存空间是给操作系统内核使用的</p>
-<br>
-
-<h3 id="用户内存和操作系统内存隔离的好处"><a href="#用户内存和操作系统内存隔离的好处" class="headerlink" title="用户内存和操作系统内存隔离的好处"></a>用户内存和操作系统内存隔离的好处</h3><ul>
-<li>操作系统的内存不会被大量占用</li>
-<li>避免机器卡住, 卡死, 死机等状态 (哪怕用户内存全部沾满, 操作系统内存也不会受到影响)</li>
-<li>可以通过操作系统把应用程序关闭</li>
-<li>使操作系统更安全</li>
+<h1 id="K-Means"><a href="#K-Means" class="headerlink" title="K Means"></a>K Means</h1><p>K-Means算法是无监督分类算法.</p>
+<p>无监督学习: 机器学习的一种方法, 没有给定事先标记过的训练示例, 自动对输入数据进行分类或分群</p>
+<p>无监督学习的优点: </p>
+<ul>
+<li>算法不受监督信息(偏见)的约束, 可能考虑到新的信息</li>
+<li>不需要标签数据, 极大程度扩大数据样本</li>
 </ul>
-<p><img src="/Blog/intro/memory4.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>假设我们写了一个c语言代码, 编译后存到磁盘</p>
-<p>一旦我们运行这个程序, 代码编译后的二进制数据就会加载到内存中, 即代码段</p>
-<p>我们可能会声明一些全局变量, 或者常量.这些放在数据段</p>
-<pre><code class="c">const int i;
-int global;</code></pre>
-<p>绿色区域为自由可分配内存</p>
-<p>栈: 第一个执行的函数, 如果这个函数调用其他函数会依次往下压栈.</p>
+<p>主要应用: <strong>聚类分析</strong>, 关联规则, 维度缩减</p>
+<br>
+
+<h2 id="K-Means-思想"><a href="#K-Means-思想" class="headerlink" title="K Means 思想"></a>K Means 思想</h2><p><img src="/Blog/intro/k-means.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>把数据聚集到 k 个簇, 使得<strong>所有点到对应簇中心的距离和最小</strong></p>
+<p>因此损失函数就是<br>$$<br>E = \sum_{i=1}^k\sum_{x\in C_i}||x-\mu_i||_2^2<br>$$</p>
+<blockquote>
+<p>损失函数是L2范数, 有空试试L1范数, 因为<strong>距离</strong>这个概念本身就是超参数</p>
+</blockquote>
+<p>计算k个簇中, 每个<strong>簇(C<sub>i</sub>)</strong> 中<strong>数据点(x)</strong> 到<strong>当前簇中心点(μ<sub>i</sub>)</strong> 的距离和<br>$$<br>\mu_i = \frac 1 {|C_i|}\sum_{x\in C_i}x<br>$$<br>当前簇中心点的计算方式是: 当前簇所有数据点的和除以数据点的个数</p>
+<br>
+
+<p>然而要找到以上问题的最优解是一个NP难问题, 需要遍历所有可能的簇划分, K-Means算法采用了贪心策略, 通过迭代优化来求近似解.</p>
+<p>算法流程如下:</p>
+<ol>
+<li>在样本中随机取k个样本点 μ<sub>1</sub>,μ<sub>2</sub>,…μ<sub>k</sub> 充当初始各个簇的中心点.</li>
+<li>计算所有样本点与各个簇中心之间的距离, 把样本点划入最近的簇中.</li>
+<li>根据簇中已有的样本点, 从新计算中心点 μ<sub>1</sub>,μ<sub>2</sub>,…μ<sub>k</sub></li>
+<li>重复2, 3步, 直到收敛</li>
+</ol>
+<br>
+
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre><code class="python">class KMeans:
+
+    def __init__(self, k=1, distance=&#39;l2&#39;):
+        self.k = k
+        self.center_points = None
+        self.distance = distance
+
+    def _distance(self, X1, X2):
+        if self.distance == &#39;l1&#39;:
+            return np.sum(np.abs(X1-X2), axis=1)
+        elif self.distance == &#39;l2&#39;:
+            return np.sum((X1-X2) ** 2, axis=1)
+
+    # 随机选k个点作为初始点
+    def _random_init_point(self, X):
+        self.center_points = X[np.random.permutation(X.shape[0])[:self.k]]
+
+    # 获取X数据集中的中心点, X中至少有一个值
+    def _get_center(self, X):
+        return np.sum(X, axis=0) / X.shape[0]
+
+    # 根据旧的中心点进行聚类, 返回新的中心点
+    def _clustering(self, X):
+        # 根据旧的中心点进行分类
+        y = self.predict(X)
+        new_center_points = np.empty(self.center_points.shape)
+        for i in range(self.k):
+            # 确保簇中至少有一个元素才求中心点
+            if np.sum(y==i) != 0:
+                new_center_points[i, :] = self._get_center(X[y == i, :])
+        return new_center_points
+
+    def fit(self, X, y=None, n_iters=int(1e9), epsilon=1e-7):
+        self._random_init_point(X)
+        dist_change = 1     # 初始化随便选, 只要比epsilon大即可
+        for _ in range(n_iters):
+            if dist_change &lt; epsilon:
+                return
+            # 获取新的中心点
+            new_center_points = self._clustering(X)
+            # 计算新的中心点的移动距离
+            dist_change = np.sum(self._distance(self.center_points, new_center_points))
+            # 更新中心点
+            self.center_points = new_center_points
+
+    # 根据中心点把X分为k类, 0, 1, 2, ... k-1类
+    def predict(self, X):
+        # k列, 第j行第i列代表: 第j个元素距离第i个中心点的距离
+        dist = np.zeros((X.shape[0], self.k))
+        for i in range(0, self.k):
+            dist[:, i] = self._distance(X, self.center_points[i])
+        # 选择所有距离中最小的那个节点作为输出标记
+        return np.argmin(dist, axis=1)</code></pre>
+<br>
+
+<pre><code class="python">def plot_decision_boundary(model, axis):
+    x0, x1 = np.meshgrid(
+        np.linspace(axis[0], axis[1], int((axis[1] - axis[0]) * 100)).reshape(-1, 1),
+        np.linspace(axis[2], axis[3], int((axis[3] - axis[2]) * 100)).reshape(-1, 1),
+    )
+    X_new = np.c_[x0.ravel(), x1.ravel()]
+    y_predict = model.predict(X_new)
+    zz = y_predict.reshape(x0.shape)
+    custom_cmap = ListedColormap([&#39;#EF9A9A&#39;, &#39;#FFF59D&#39;, &#39;#90CAF9&#39;])
+    plt.contourf(x0, x1, zz, cmap=custom_cmap)
+
+if __name__ == &#39;__main__&#39;:
+    centers = [[3, 3], [-4, -5], [-1, 2.5]]
+    X, _ = datasets.make_blobs(n_samples=1000, centers=centers, cluster_std=0.8)
+    kmeans_clf = KMeans(3, distance=&#39;l2&#39;)
+    km_clf.fit(X)
+
+    plot_decision_boundary(km_clf, axis=[-8, 6.5, -8, 6.5])
+    plt.scatter(X[:, 0], X[:, 1])
+    plt.scatter(km_clf.center_points[:, 0], km_clf.center_points[:, 1], color=&quot;red&quot;)
+    plt.show()</code></pre>
+<blockquote>
+<p>计算距离时不开根也没有关系, 因为我们并不是要用距离计算某个具体的值<br>而是使用<strong>相对的距离</strong>来判断分类的结果, 所以x^2大, |x|自然就大<br>只要距离能表示点与点之间的远近关系就行, 不用太精确</p>
+</blockquote>
+<p>使用欧拉距离(l2)得到分类结果</p>
+<p><img src="/Blog/intro/k_means.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用曼哈顿距离(l1)得到的分类结果</p>
+<p><img src="/Blog/intro/k_means_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>但是K Means有一个非常重要的缺点: <strong>初始随机的中心点会严重影响分类结果</strong></p>
+<p><img src="/Blog/intro/k_means_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/k_means_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="KMeams的优缺点"><a href="#KMeams的优缺点" class="headerlink" title="KMeams的优缺点"></a>KMeams的优缺点</h2><p>K-Means算法的优点:</p>
+<ol>
+<li>速度快</li>
+<li>对大数据集有较高的效率</li>
+</ol>
+<p>缺点:</p>
+<ol>
+<li>k要事先指定, 大多数时候我们是不知道要指定多少</li>
+<li>初始中心点严重影响分类结果</li>
+<li>算法计算分类中心时要对所有数据进行k次求模运算, 当样本量非常大的时候, 时间开销较大</li>
+</ol>
+<br>
+
+<h1 id="KMeans"><a href="#KMeans" class="headerlink" title="KMeans ++"></a>KMeans ++</h1><p>为什么会有这样的问题?</p>
+<p>很大一个原因就是两个初始的簇中心点太近了. 一个改进的思想就是: 尽可能远的选取聚类中心</p>
+<p><strong>距离当前已有的聚类中心更远的点更有概率被选为下一个聚类中心</strong></p>
+<br>
+
+<p>因此只要改进初始中心点的选取即可.</p>
+<ol>
+<li>从数据集中随机选一个初始的样本点作为第一个簇中心 C<sub>1</sub></li>
+<li>计算剩余样本点作为新的簇中心的概率</li>
+<li>选取根据这个概率抽取一个点作为下一个簇中心点</li>
+<li>重复2, 3直到找到k个中心点</li>
+</ol>
+<br>
+
+<p>问题就变成了怎么求剩余样本点作为新的簇中心的概率.</p>
+<p>当这个点距离已有的<strong>任何一个中心点越近</strong>, 它就越不可能是新的中心点; </p>
+<p>因此可以用这个点到离它最近的中心点的距离除以总距离表示概率</p>
+<p>点到离它最近的中心点的距离<br>$$<br>D(x^{(i)})=min(dist(x^{(i)}, C_1), …dist(x^{(i)}, C_n))<br>$$<br>点作为簇中心的概率<br>$$<br>P(x^{(i)})=\frac {D(x^{(i)})^2} {\sum D(x^{(j)})^2}<br>$$<br><br></p>
+<h2 id="新版本的KMeans"><a href="#新版本的KMeans" class="headerlink" title="新版本的KMeans"></a>新版本的KMeans</h2><pre><code class="python">class KMeans:
+
+    def __init__(self, k=1, init=&quot;k-means++&quot;, distance=&#39;l2&#39;):
+        assert init in [&quot;k-means&quot;, &quot;k-means++&quot;], \
+            &quot;init must be k-means or k-means++&quot;
+        assert distance in [&#39;l1&#39;, &#39;l2&#39;], \
+            &quot;distance must be l1 or l2&quot;
+        assert k &gt;= 1, &quot;k must an integer and &gt;= 1&quot;
+        self.k = k
+        self.init = init
+        self.center_points_ = None
+        self.distance = distance
+
+    def _distance(self, X1, X2):
+        if self.distance == &#39;l1&#39;:
+            return np.sum(np.abs(X1 - X2), axis=1)
+        elif self.distance == &#39;l2&#39;:
+            return np.sum((X1 - X2) ** 2, axis=1)
+
+    # 选k个点作为初始点
+    def _random_init_point(self, X):
+        if self.init == &quot;k-means&quot;:
+            self.center_points_ = X[np.random.permutation(X.shape[0])[:self.k]]
+        elif self.init == &quot;k-means++&quot;:
+            n_sample, n_feature = X.shape
+            self.center_points_ = np.empty((self.k, n_feature))
+            self.center_points_[0, :] = np.array(X[np.random.randint(0, n_feature), :])
+            # 选取剩余的k-1个点
+            for init_point_i in range(1, self.k):
+                prop = np.empty(n_sample)
+                # 计算每个点到最近的中心点的距离
+                for i in range(n_sample):
+                    D2 = np.min(self._distance(self.center_points_[:init_point_i, :], X[i, :]))
+                    prop[i] = D2
+                prop = prop / sum(prop)     # 计算概率
+                # 不太清楚为什么大多数实现要用随机抽取的方式选下一个中心点
+                # 因此我直接取最远的那个点作为中心点
+                # next_center_index = np.random.choice(n_sample, p=prop)
+                next_center_index = np.argmax(prop)
+                self.center_points_[init_point_i, :] = X[next_center_index, :]
+
+    # 获取X数据集中的中心点
+    def _get_center(self, X):
+        return np.sum(X, axis=0) / X.shape[0]
+
+    # 根据旧的中心点进行聚类, 更新新的中心点
+    def _clustering(self, X):
+        # 根据旧的中心点进行分类
+        y = self.predict(X)
+        new_center_points = np.empty(self.center_points_.shape)
+        for i in range(self.k):
+            if np.sum(y == i) != 0:
+                new_center_points[i, :] = self._get_center(X[y == i, :])
+        return new_center_points
+
+    def fit(self, X, y=None, n_iters=int(1e9), epsilon=1e-7):
+        self._random_init_point(X)
+        dist_change = 1  # 初始化随便选, 只要比epsilon大即可
+        for _ in range(n_iters):
+            if dist_change &lt; epsilon:
+                return
+            new_center_points = self._clustering(X)
+            dist_change = np.sum(self._distance(self.center_points_, new_center_points))
+            # 更新中心点
+            self.center_points_ = new_center_points
+
+    # 根据中心点把X分为k类, 0, 1, 2, ... k-1类
+    def predict(self, X):
+        # k列, 第j行第i列代表: 第j个元素距离第i个中心点的距离
+        dist = np.zeros((X.shape[0], self.k))
+        for i in range(0, self.k):
+            dist[:, i] = self._distance(X, self.center_points_[i])
+        return np.argmin(dist, axis=1)</code></pre>
+<blockquote>
+<p>不太理解为什么大多数实现要用概率随机抽取的方式选下一个中心点, 因此我直接取最远的那个点(也就是概率最大的点)作为中心点</p>
+<p>因为即使是用概率随机抽取, 但是依然有可能抽到的点”不好”, 即离已有的中心点太近</p>
+</blockquote>
 
             </div>
             <hr>
@@ -246,7 +405,7 @@ int global;</code></pre>
                   <span>
                 <i class="iconfont icon-inbox"></i>
                     
-                      <a class="hover-with-bg" href="/Blog/categories/学习笔记/">学习笔记</a>
+                      <a class="hover-with-bg" href="/Blog/categories/人工智能/">人工智能</a>
                       &nbsp;
                     
                   </span>&nbsp;&nbsp;
@@ -255,9 +414,9 @@ int global;</code></pre>
                   <span>
                 <i class="iconfont icon-tag"></i>
                     
-                      <a class="hover-with-bg" href="/Blog/tags/Linux/">Linux</a>
+                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
                     
-                      <a class="hover-with-bg" href="/Blog/tags/操作系统/">操作系统</a>
+                      <a class="hover-with-bg" href="/Blog/tags/机器学习/">机器学习</a>
                     
                   </span>
                 
@@ -270,18 +429,12 @@ int global;</code></pre>
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/Blog/2019/08/13/BST/">
-                        <i class="fa fa-chevron-left"></i>
-                        <span class="hidden-mobile">二分搜索树 Binary Search Tree</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/Blog/2019/07/13/what-is-printf-scanf/">
-                        <span class="hidden-mobile">printf 和 scanf 的本质及流的重定向</span>
+                      <a href="/Blog/2020/05/17/machine-learning-11/">
+                        <span class="hidden-mobile">python3入门机器学习(11)-集成学习和随机森林</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="fa fa-chevron-right"></i>
                       </a>
@@ -460,7 +613,7 @@ int global;</code></pre>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "内存管理&nbsp;",
+        "非监督机器学习算法KMeans&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
