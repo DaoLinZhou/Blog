@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    6.7k 字
+                    7.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      27 分钟
+                      28 分钟
                   </span>
                 
 
@@ -1142,6 +1142,35 @@
 <h3 id="线性回归的假设检验"><a href="#线性回归的假设检验" class="headerlink" title="线性回归的假设检验"></a>线性回归的假设检验</h3><p><img src="/Blog/intro/reg_hypo_1.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_2.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_3.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_4.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_5.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_6.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_7.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_8.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_9.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_10.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_11.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_12.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_13.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_14.PNG" srcset="/Blog/img/loading.gif" alt><br><img src="/Blog/intro/reg_hypo_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<br>
+
+<h1 id="Stat270"><a href="#Stat270" class="headerlink" title="Stat270"></a>Stat270</h1><h2 id="集合论"><a href="#集合论" class="headerlink" title="集合论"></a>集合论</h2><h3 id="conditional-probability"><a href="#conditional-probability" class="headerlink" title="conditional probability"></a>conditional probability</h3><p>$$<br>P(A|B)=\frac {P(A\bigcap B)} {P(B)}, P(B)&gt;0<br>$$</p>
+<p>P(A|B)指的是在B为真的情况下, 事件A发生的概率</p>
+<br>
+
+<h3 id="Law-of-Total-Probability"><a href="#Law-of-Total-Probability" class="headerlink" title="Law of Total Probability"></a>Law of Total Probability</h3><p>if events B<sub>1</sub>, B<sub>2</sub>,…B<sub>k</sub> form a <strong>partition</strong> of S<br>$$<br>\bigcup_{i=1}^KB_i=S\ \ and \ \ \bigcap_{i=1}^KB_i=\empty<br>$$<br>Then<br>$$<br>P(A)=P(\bigcup_{i=1}^K(AB_i)) = \sum_{i=1}^KP(AB_i) = \sum_{i=1}^KP(A|B_i)P(B_i)<br>$$<br><img src="/Blog/intro/ltp.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Randomized-Response"><a href="#Randomized-Response" class="headerlink" title="Randomized Response"></a>Randomized Response</h3><p>扔2次硬币, 如果第二次正面朝上, 则回答第一次是否是正面朝上(Yes/No), 如果是背面回答一个敏感的问题. 计算这个问题的概率</p>
+<p><img src="/Blog/intro/random_response.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>P(Y)=P(Y|H_2)P(H_2) +P(Y|T_2)P(T_2)<br>$$</p>
+<p>$$<br>= \frac 12(\frac 12)+p*(\frac 12)\ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \  <br>$$</p>
+<p>so<br>$$<br>p=2[P(Y)-\frac 14]<br>$$<br><br></p>
+<h3 id="Bayes’s-Theorem"><a href="#Bayes’s-Theorem" class="headerlink" title="Bayes’s Theorem"></a>Bayes’s Theorem</h3><p>if events B<sub>1</sub>, B<sub>2</sub>,…B<sub>k</sub> form a <strong>partition</strong> of S<br>$$<br>\bigcup_{i=1}^KB_i=S\ \ and \ \ \bigcap_{i=1}^KB_i=\empty<br>$$<br>Then:<br>$$<br>P(B_i|A)=\frac {P(AB_i)} {P(A)}<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  =\frac {P(A|B_i)P(B_i)}{\sum_{j=1}^K P(A|B_j)P(B_j)}<br>$$</p>
+<br>
+
+<p>例子:</p>
+<p>有3个门, 其中一个门的后面有汽车, 玩家选一扇门, 之后主持人会从另外两扇门中把没有车的那一扇门打开, 此时玩家有一次换门的机会, 问换还是不换?</p>
+<p>假设:</p>
+<ul>
+<li>C<sub>1</sub>代表事件: 车在第一扇门后面</li>
+<li>C<sub>2</sub>代表事件: 车在第二扇门后面</li>
+<li>C<sub>3</sub>代表事件: 车在第三扇门后面</li>
+</ul>
+<p>假设玩家选择第一扇门, 同时假设车不在第二扇门的后面</p>
+<p>计算如果主持人打开第二扇门(D<sub>2</sub>), 车在第三扇门后(C<sub>3</sub>)的概率</p>
+<p><img src="/Blog/intro/openthedoor.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>还有一种思路: bobo提供的, 就是如果第一次没选中, 换门则必定能得到车. 而第一次没选中的概率是2/3</p>
 <br>
 
 

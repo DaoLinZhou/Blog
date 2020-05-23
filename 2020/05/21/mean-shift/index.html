@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    713 字
+                    939 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      4 分钟
                   </span>
                 
 
@@ -184,7 +184,7 @@
 <br>
 
 <p><img src="/Blog/intro/mean_shift_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>对于某一个中心点x, 它的漂移的方向就是:<br>$$<br>M_h = \frac 1 n \sum_{x_i \in S_n} (x_i-x)<br>$$<br>也就是圆中所有点减去x后的均值, S<sub>n</sub>代表到x的距离小于h, 也就是说<br>$$<br>S_h(x)={y:(y-x_i)^T(y-x_i) &lt; h^2}<br>$$<br>每次新的点就被更新为:<br>$$<br>x:=x+M_h<br>$$</p>
+<p>对于某一个中心点x, 它的漂移的方向就是:<br>$$<br>M_h = \frac 1 n \sum_{x_i \in S_n} (x_i-x)<br>$$<br>也就是圆中所有点减去x后的均值, S<sub>n</sub>代表到x的距离小于h, 也就是说<br>$$<br>S_h(x)= {\ y:(y-x_i)^T(y-x_i) &lt; h^2 }<br>$$<br>每次新的点就被更新为:<br>$$<br>x:=x+M_h<br>$$</p>
 <p>思想:</p>
 <ol>
 <li>随便挑一个没有访问过的点作为起始点(初始时所有点都没有被访问)</li>
@@ -253,6 +253,42 @@
 <p>但是如果有outlier, 同时epsilon和bandwidth没选好的话, 效果就会较差</p>
 <p><img src="/Blog/intro/mean_shift_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
+
+<pre><code class="python">from sklearn.cluster import estimate_bandwidth, MeanShift
+
+if __name__ == &#39;__main__&#39;:
+
+    centers = [[3, 3], [-4, -5], [-1, 2.5], [2, -2]]
+    X, _ = datasets.make_blobs(n_samples=1000, centers=centers, cluster_std=0.8)
+    outlier = np.array([[6, -6], [6, -5], [2, -6], [-4, -6], [4, -2],
+                        [-7, 4], [-6.5, 6]])
+    X = np.vstack([X, outlier])
+
+    # 通过数据计算bandwidth
+    bandwidth = estimate_bandwidth(X, n_samples=100)
+
+    # scikit-learn的mean-shift
+    mean_shift_clf = MeanShift(bandwidth=bandwidth)
+    mean_shift_clf.fit(X)
+    plot_decision_boundary(mean_shift_clf, axis=[-8, 6.5, -8, 6.5])
+    plt.scatter(X[:, 0], X[:, 1])
+    plt.scatter(mean_shift_clf.cluster_centers_[:, 0], mean_shift_clf.cluster_centers_[:, 1], color=&quot;red&quot;)
+    plt.show()
+
+    # 我自己写的mean-shift, 防止重名, 改名为MyMeanShift
+    mean_shift_clf = MyMeanShift(bandwidth=bandwidth)
+    mean_shift_clf.fit(X)
+    plot_decision_boundary(mean_shift_clf, axis=[-8, 6.5, -8, 6.5])
+    plt.scatter(X[:, 0], X[:, 1])
+    plt.scatter(mean_shift_clf.centers[:, 0], mean_shift_clf.centers[:, 1], color=&quot;red&quot;)
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/mean_shift_c_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/mean_shift_c_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>自己实现的和scikit实现的效果是一样的. 只不过没有使用一些加速的方法</p>
+<p>MeanShifit算法远不止于此, 还可以<strong>动态计算bandwidth</strong>, 或者加入<strong>核函数计算漂移向量</strong>, 以后有兴趣仔细探究. </p>
+<br>
+
+
 
 <blockquote>
 <p>但是如果思考一下, 如果根据距离来判断力的大小, 距离越远, 力越小, 对圆的偏移的影响也越小, 这样的话, 是否可以将圆的半径设为无穷大?</p>
