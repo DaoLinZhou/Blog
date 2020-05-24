@@ -1274,7 +1274,7 @@ class Ridge:
             &quot;the size of X_train must be equal to the size of y_train&quot;
 
         # demean
-        X_means = np.mean(X_train, axis=1)
+        X_means = np.mean(X_train, axis=0)
         X = X_train - X_means
         y_mean = np.mean(y_train)
         y = y_train - y_mean
