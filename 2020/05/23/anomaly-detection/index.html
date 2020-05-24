@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>均值漂移法 Mean Shift - Daolin&#39;s Repository</title>
+  <title>异常检测 Anomaly Detection - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -108,7 +108,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/Blog/intro/sola.jpg') no-repeat center center;
+         style="background: url('/Blog/intro/sola_1.PNG') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -121,7 +121,7 @@
               
                 <p class="mt-3 post-meta">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                  Thursday, May 21st 2020, 3:14 pm
+                  Saturday, May 23rd 2020, 3:54 pm
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1k 字
+                    671 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      4 分钟
+                      2 分钟
                   </span>
                 
 
@@ -166,142 +166,85 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <p>Mean shift算法</p>
-<a id="more"></a>
-
-<h1 id="Mean-Shift算法"><a href="#Mean-Shift算法" class="headerlink" title="Mean Shift算法"></a>Mean Shift算法</h1><p><img src="/Blog/intro/mean-shift.gif" srcset="/Blog/img/loading.gif" alt></p>
-<p>均值漂移算法.</p>
-<p>优点: 不需要告诉它有几个类别</p>
+              <h1 id="异常检测-Anomaly-Detection"><a href="#异常检测-Anomaly-Detection" class="headerlink" title="异常检测 Anomaly Detection"></a>异常检测 Anomaly Detection</h1><p>异常检测就是发现<strong>离群点</strong>, 有时也被称为偏差检测</p>
+<p><img src="/Blog/intro/an_det.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就是寻找出偏离集群的点</p>
 <br>
 
-<p>简单来说就是让中心点向<strong>更加密集</strong>的方向前进</p>
-<p><img src="/Blog/intro/mean_shift_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>例如此图中, 右下方的数据点更密集, 因此向这个方向移动</p>
-<blockquote>
-<p>也可以理解为每个数据点都在用力拉扯圆心, 最后向合力的方向前进</p>
-</blockquote>
-<p>因此很显然的一个超参数就是<strong>圆的半径</strong></p>
+<p>既可以单独作为一个分类方法使用, 也可以作为其他算法的辅助使用(过滤outlier)</p>
 <br>
 
-<p><img src="/Blog/intro/mean_shift_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>对于某一个中心点x, 它的漂移的方向就是:<br>$$<br>M_h = \frac 1 n \sum_{x_i \in S_n} (x_i-x)<br>$$<br>也就是圆中所有点减去x后的均值, S<sub>n</sub>代表到x的距离小于h, 也就是说<br>$$<br>S_h(x)= {\ y:(y-x_i)^T(y-x_i) &lt; h^2 }<br>$$<br>每次新的点就被更新为:<br>$$<br>x:=x+M_h<br>$$</p>
-<p>思想:</p>
-<ol>
-<li>随便挑一个没有访问过的点作为起始点(初始时所有点都没有被访问)</li>
-<li>使用mean-shift思想进行移动, 直到收敛, 把途经的圆圈内的所有点都标记为<strong>已访问</strong></li>
-<li>如果收敛的点与已有的某个中心点过近, 则合并为一个中心点, 反之作为一个独立的中心点</li>
-<li>重复1, 2, 3直到所有点都被访问过</li>
-<li>得到所有的中心点</li>
-</ol>
-<pre><code class="python">class MeanShift:
-    def __init__(self, bandwidth):
-        self.bandwidth = bandwidth
-        self.centers_ = []
-        self.centers = None
-        self.epsilon = bandwidth/10
-
-    # 在X中寻找point为中心, 半径为bandwidth内的数据点
-    def neighbors_indexes(self, point, X):    
-        return np.sum((X - point)**2, axis=1).reshape(-1) &lt;= (self.bandwidth**2)
-
-    # 计算移动的方向
-    def shift_vector(self, center, points):
-        return np.sum(points - center, axis=0) / points.shape[0]
-
-    # 查看邻近是否有中心点
-    def find_same_center(self, center):
-        for i, point in enumerate(self.centers_):
-            if np.linalg.norm(center-point) &lt;= self.epsilon:
-                return i
-        return -1
-
-    # 对一个点进行均值漂移
-    def _mean_shift_single(self, point, X):
-        y = np.zeros(X.shape[0])
-        shift_dis = 1    # 初始值随便, 只要比收敛值大即可
-        while shift_dis &gt; 1e-8:
-            # 找临近的所有点的坐标
-            indexes = self.neighbors_indexes(point, X)
-            y[indexes] = 1  # 更新类别
-            neighbors = X[indexes]  # 获取邻近节点
-            # 接着移动
-            shift = self.shift_vector(point, neighbors)
-            shift_dis = shift.dot(shift)
-            point = point + shift
-        return point, y
-
-    def fit(self, X):
-        n_samples, n_features = X.shape
-        visited = np.zeros(X.shape[0])
-
-        while np.sum(visited == 0):     # 当还有没被访问过的节点时
-            freq = visited == 0
-            # 随机选一个没被访问过的点
-            index = np.random.choice(n_samples, p=freq/np.sum(freq))
-            # 对随机选取的没访问过的点进行均值漂移, 飘了飘了[滑稽]
-            center, labels = self._mean_shift_single(X[index], X)
-            # 把途经的点标记为已访问
-            visited += labels
-            # 检查中心点是否已存在
-            center_ind = self.find_same_center(center)
-            if center_ind == -1:
-                self.centers_.append(center)
-        # 对中心点进行一次封装
-        self.centers = np.array(self.centers_)
-
-    def predict(self, X):
-        n_centers = self.centers.shape[0]
-        dist = np.zeros((X.shape[0], n_centers))
-        for i in range(0, n_centers):
-            dist[:, i] = np.sum((X - self.centers[i])**2, axis=1)
-        return np.argmin(dist, axis=1)</code></pre>
-<p><img src="/Blog/intro/mean_shift_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>但是如果有outlier, 同时epsilon和bandwidth没选好的话, 效果就会较差</p>
-<p><img src="/Blog/intro/mean_shift_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>异常检测有非常多的方法, 这里介绍一个比较常用的基于<strong>正态分布模型</strong>的方法</p>
+<h2 id="从一维数据看起"><a href="#从一维数据看起" class="headerlink" title="从一维数据看起"></a>从一维数据看起</h2><p>假设有一组一维数据<br>$$<br>{ x^{(1)},x^{(2)},\cdots,x^{(m)} }<br>$$<br>映射到数据轴上就是</p>
+<p><img src="/Blog/intro/an_det_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>左右两边的数据密度比较稀疏, 中间的数据密度比较集中. </p>
+<p>通常服从正态分布</p>
+<p><img src="/Blog/intro/Normal_distribution_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>也就是用正态分布作为<strong>概率密度函数</strong></p>
 <br>
 
-<pre><code class="python">from sklearn.cluster import estimate_bandwidth, MeanShift
+<p>概率密度函数是一个描述<strong>随机变量</strong>在某个确定的取值点附近的可能性函数</p>
+<p><img src="/Blog/intro/p_m_f.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>p(x1, x2)就是指的x1 到 x2 部分的阴影面积.<br>$$<br>P(x_1, x_2)=\int_{x_1}^{x_2} p(x) dx<br>$$<br>如果(x1, x2) = (-inf, inf), 那么整个阴影面积就是1</p>
+<br>
+
+<p>正态分布的p(x)为<br>$$<br>p(x) = \frac 1 {\sqrt{2\pi}\sigma}e^{-\frac {(x-\mu)^2}{2\sigma^2}}<br>$$<br><img src="/Blog/intro/Normal_distribution_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>将数据点转化为标准正态分布之后, 就可以设立一个阈值ε</p>
+<p>将数据点代入式子中求p(x), 如果p(x) &lt; ε, 就说明这个点是异常点.</p>
+<p><img src="/Blog/intro/p_m_f_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="当数据高于一维"><a href="#当数据高于一维" class="headerlink" title="当数据高于一维"></a>当数据高于一维</h2><p>通常我们处理的数据都是多维度的, 此时应该怎么做?</p>
+<p><img src="/Blog/intro/p_m_f_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就对每一个维度计算它的概率密度<br>$$<br>p(x^{(i)})= \frac 1 {\sqrt{2\pi}\sigma}e^{-\frac {(x^{(i)}-\mu)^2}{2\sigma^2}}<br>$$<br>μ和σ是当前维度 i 的均值和标准差</p>
+<br>
+
+<p><img src="/Blog/intro/p_m_f_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>整体的概率密度就是各个维度的概率密度的乘积<br>$$<br>p(x)=\prod_{j=1}^n p(x_j;\mu_j, \sigma_j)<br>$$</p>
+<p>$$<br>\prod 代表乘积,\ \prod_{i=1}^n a_i = a_1a_2\cdots a_n<br>$$</p>
+<br>
+
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.preprocessing import StandardScaler
+
+# 计算X对应正态分布的y值
+def normal_distribution(X):
+    return np.exp(-X**2 / 2) / np.sqrt(2 * np.pi)
+
+# 计算概率密度函数
+def p(X):
+    p = 1
+    for i in range(X.shape[1]):
+        p *= normal_distribution(X[:, i])
+    return p
+
+# epsilon 默认取3sigma法则对应的y值
+def anomaly_detection(X, epsilon=0.0044):
+    # 归一化, 使得数据服从z分布
+    new_X = StandardScaler().fit(X).transform(X)
+    return p(new_X) &lt;= epsilon
+
 
 if __name__ == &#39;__main__&#39;:
-    # 准备数据
     centers = [[3, 3], [-4, -5], [-1, 2.5], [2, -2]]
     X, _ = datasets.make_blobs(n_samples=1000, centers=centers, cluster_std=0.8)
     outlier = np.array([[6, -6], [6, -5], [2, -6], [-4, -6], [4, -2],
                         [-7, 4], [-6.5, 6]])
     X = np.vstack([X, outlier])
 
-    # 通过数据计算bandwidth
-    bandwidth = estimate_bandwidth(X, n_samples=100)
+    anomaly_data = X[anomaly_detection(X, 0.007), :]
 
-    # scikit-learn的mean-shift
-    mean_shift_clf = MeanShift(bandwidth=bandwidth)
-    mean_shift_clf.fit(X)
-    # 画图
-    plot_decision_boundary(mean_shift_clf, axis=[-8, 6.5, -8, 6.5])
     plt.scatter(X[:, 0], X[:, 1])
-    plt.scatter(mean_shift_clf.cluster_centers_[:, 0], mean_shift_clf.cluster_centers_[:, 1], color=&quot;red&quot;)
-    plt.show()
-
-    # 我自己写的mean-shift, 防止重名, 改名为MyMeanShift
-    mean_shift_clf = MyMeanShift(bandwidth=bandwidth)
-    mean_shift_clf.fit(X)
-    # 画图
-    plot_decision_boundary(mean_shift_clf, axis=[-8, 6.5, -8, 6.5])
-    plt.scatter(X[:, 0], X[:, 1])
-    plt.scatter(mean_shift_clf.centers[:, 0], mean_shift_clf.centers[:, 1], color=&quot;red&quot;)
+    plt.scatter(anomaly_data[:, 0], anomaly_data[:, 1], color=&quot;red&quot;)
     plt.show()</code></pre>
-<p><img src="/Blog/intro/mean_shift_c_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p><img src="/Blog/intro/mean_shift_c_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>自己实现的和scikit实现的效果是一样的. 只不过没有使用一些加速的方法</p>
-<p>MeanShifit算法远不止于此, 还可以<strong>动态计算bandwidth</strong>, 或者加入<strong>核函数计算漂移向量</strong>, 以后有兴趣仔细探究. </p>
+<p><img src="/Blog/intro/p_m_f_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这就是使用<strong>高斯分布模型</strong>得到的异常点(红色)</p>
 <br>
 
-
-
-<blockquote>
-<p>但是如果思考一下, 如果根据距离来判断力的大小, 距离越远, 力越小, 对圆的偏移的影响也越小, 这样的话, 是否可以将圆的半径设为无穷大?</p>
-<p>就是说每次计算合力的时候都通过所有的样本点进行计算</p>
-</blockquote>
+<p>其实对单一簇群的效果更好</p>
+<p><img src="/Blog/intro/p_m_f_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -335,18 +278,12 @@ if __name__ == &#39;__main__&#39;:
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/Blog/2020/05/23/anomaly-detection/">
-                        <i class="fa fa-chevron-left"></i>
-                        <span class="hidden-mobile">异常检测 Anomaly Detection</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/Blog/2020/05/20/k-means/">
-                        <span class="hidden-mobile">非监督机器学习算法KMeans</span>
+                      <a href="/Blog/2020/05/21/mean-shift/">
+                        <span class="hidden-mobile">均值漂移法 Mean Shift</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="fa fa-chevron-right"></i>
                       </a>
@@ -525,7 +462,7 @@ if __name__ == &#39;__main__&#39;:
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "均值漂移法 Mean Shift&nbsp;",
+        "异常检测 Anomaly Detection&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
