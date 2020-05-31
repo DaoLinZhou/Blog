@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      12 分钟
+                      13 分钟
                   </span>
                 
 
@@ -303,9 +303,9 @@ $$
 <p>整理一下思路:</p>
 <p>对于每一层来说, 要求三个梯度</p>
 <ol>
-<li>bias的梯度</li>
-<li>weight的梯度</li>
-<li>节点a的梯度(作为当前层的梯度)</li>
+<li>通过前一层的梯度求bias的梯度</li>
+<li>通过bias的梯度求weight的梯度</li>
+<li>通过bias的梯度求节点a的梯度 (作为当前层的梯度为下一层做准备)</li>
 </ol>
 <p>后两个的梯度依赖与bias的梯度, 所以应该先求出bias的梯度</p>
 <blockquote>
@@ -434,25 +434,21 @@ if __name__ == &#39;__main__&#39;:
 <br>
 
 <h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>说到底多层感知器的作用就是加速. 因为逻辑回归有升维这个过程, 尤其是升维过高, 数据的特征就越来越多, 训练的时间也就越长.</p>
-<p>而多层感知器的输入是数据原本的特征, 不需要升维. 且每一层所做的事情就是矩阵的乘法. 所以每一层的时间复杂度都是线性的.</p>
-<br>
-
+<p>而多层感知器的输入是数据原本的特征, 不需要升维就能解决非线性问题. 且每一层所做的事情就是矩阵的乘法. 所以每一层的时间复杂度都是线性的.</p>
+<p><br><br></p>
 <p>和其他的机器学习算法一样. 假设有一个函数g(x), 数据是通过这个函数进行分类, 而多层感知器整体可以看作一个函数f(x), 通过梯度下降/反向传播, 让f(x)逼近g(x)</p>
 <p>然而值得思考的是, 人们的思考方式是否针对如同一个函数一样, 输入固定, 输出就固定?</p>
-<br>
-
+<p><br><br></p>
 <p>多层感知器还有一个特点: 它的输出可以是多个特征的.</p>
 <p>机器学习中, 分类问题的输出是类别(一个数字), 回归问题的输出也是一个具体的数.</p>
 <p>但是多层感知器的输出却可以有多个特征. 这样有没有可能达到: 输入样本, 输出新的样本, 新的样本再作为输入…</p>
-<br>
-
+<p><br><br></p>
 <p>还有另一个思考, tanh是把数据映射到(-1, 1)之间, 为什么预测时使用0.5, 而不是0作为阈值? </p>
 <p>我是这么认为的: 逻辑回归中sigmoid是映射到(0, 1)之间, 可以表示概率. 但实际上并不是表示概率. 而是在说<strong>通过sigmoid这样的函数得到的结果, 可以用0.5这根线进行划分</strong> 因为逻辑回归所做的事情就是: 看能否用0.5划分-&gt; 不能的的话就进行梯度下降, 重复这个过程.</p>
 <p>而这个思想是一样的, tanh得到的结果不表示概率, 而是说通过训练使得使用这种操作得到的结果可以通过0.5这条线进行最好的划分.</p>
 <p>0.5是哪来的? 因为输入数据的label都是0和1, 所以分界点在0.5.</p>
-<br>
-
-<p>还有一个思考: 使用sigmoid方法进行训练得到的决策边界是线性的. 而使用tanh分界得到的是弯曲的. 其中的差别是什么?</p>
+<p><br><br></p>
+<p>使用sigmoid方法进行训练得到的决策边界是线性的. 而使用tanh分界得到的是弯曲的. 其中的差别是什么?</p>
 <p>一种说法是因为tanh是无偏的, 它的对称点在0这个位置. 而sigmoid的对称点在0.5这个位置?</p>
 
             </div>
@@ -489,6 +485,12 @@ if __name__ == &#39;__main__&#39;:
                   <div class="post-prev col-6">
                     
                     
+                      <a href="/Blog/2020/05/31/calculus/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">微积分</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </div>
                   <div class="post-next col-6">
                     
@@ -513,7 +515,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -540,7 +542,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -549,7 +551,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
