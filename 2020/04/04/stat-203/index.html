@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    7.3k 字
+                    8.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      29 分钟
+                      33 分钟
                   </span>
                 
 
@@ -1184,6 +1184,144 @@
 <li>吸烟和肺炎是否无关</li>
 </ol>
 <p>P(A)=12% 吸烟<br>$$<br>P(B)=P(A\cap B)+P(\overline A \cap B)=0.8%+0.2%=1%<br>$$<br><br><br>$$<br>P(A)P(B)=12%*1%=0.12%\ne P(A\cap B) = 0.8%<br>$$<br>所以根据定义, 吸烟和肺炎相关. 或者用另一个定义<br>$$<br>P(B|A)=\frac {P(AB)} {P(A)}=\frac {0.008}{0.12}=0.067 \ne 0.001=P(B)<br>$$</p>
+<br>
+
+<h2 id="Conditional-probability"><a href="#Conditional-probability" class="headerlink" title="Conditional probability"></a>Conditional probability</h2><p>Let A be the event that someone tests positive for the disease.</p>
+<p>Let B be the event that someone actually has the disease.</p>
+<p>Then:</p>
+<p><strong>Detection rate : P(A|B)</strong></p>
+<p><strong>False-positive rate : P(A|B’)</strong></p>
+<p><strong>False-negative rate: P(A’|B)</strong></p>
+<p><strong>Positive predictive value : P(B|A)</strong></p>
+<p><strong>Negative predictive value: P(B’|A’)</strong></p>
+<p><img src="/Blog/intro/condition_prob.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="PMF"><a href="#PMF" class="headerlink" title="PMF"></a>PMF</h2><p>probably mass function, 有时候也称为Probably distribution function(不过二者有区别, pmf只能表示离散变量的分布, pdf却可以表示离散和连续变量的分布)</p>
+<br>
+
+<p>常用的表达方式P(X=x) 或 f<sub>X</sub>(x)</p>
+<br>
+
+<p>pmf是一个普通的函数, 没有任何随机</p>
+<p><img src="/Blog/intro/pmf_270.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>有时pmf有closed forms, 例如<br>$$<br>P(X=x)= {5 \choose x}0.5^{0.5}, x=0,1,…5<br>$$<br><br></p>
+<p>pmf的性质<br>$$<br>f_X(x)\ge 0, \forall x<br>$$</p>
+<p>$$<br>\sum_x f_X(x)=1<br>$$</p>
+<p>如果要证明一个函数是pmf, 就是要证明它满足上面两条性质</p>
+<p><img src="/Blog/intro/pmf_270_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>A probability is the probability of an event</p>
+<p>DO write statement such as </p>
+<ul>
+<li>P(E) (where E is an event)</li>
+<li>P(X=x) (where x is a realization of the random variable X)</li>
+</ul>
+<br>
+
+<p>Do Not write statements such as</p>
+<ul>
+<li>P(X) (where X is a random variable)</li>
+<li>P(x) (where x is a realization of the rv X)</li>
+</ul>
+<br>
+
+<h2 id="Geometric-Distribution-几何分布"><a href="#Geometric-Distribution-几何分布" class="headerlink" title="Geometric Distribution (几何分布)"></a>Geometric Distribution (几何分布)</h2><p>几何分布（Geometric distribution）是离散型概率分布。其中一种定义为：在n次伯努利试验中，试验k次才得到第一次成功的机率。</p>
+<p>let X be the number of failures that occur before the first success.</p>
+<p>P(X = 0) = p</p>
+<p>P(X = 1) = p(1-p)</p>
+<p>P(X = 2) = p(1-p)<sup>2</sup></p>
+<p>P(X = x) = p(1-p)<sup>x</sup>, x = 0, 1, 2…</p>
+<p>X is called a geometric(p) random variable</p>
+<pre><code class="R">x&lt;-0:10
+barplot(dgeom(x, 0.2), names.arg=x)</code></pre>
+<p><img src="/Blog/intro/geometric_dis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>证明几何分布是pmf</p>
+<ol>
+<li>首先几何分布中的每一项都大于0</li>
+<li>证明所有项之和为1</li>
+</ol>
+<p>$$<br>\sum_{x=0}^\infin p_X(x)=\sum_{x=0}^\infin (1-p)^xp<br>$$</p>
+<p>$$<br>=p+p(1-p)+p(1-p)^2…p(1-p)^{\infin}<br>$$</p>
+<p>$$<br>=p(\frac {1}{1-(1-p)})=1<br>$$</p>
+<blockquote>
+<p>$$<br>a+ar+ar^2+\cdots=\sum_{k=0}^\infin ar^k=\frac a{1-r}, for\ |r|&lt;1<br>$$</p>
+<p>in our case we have a=p, and r=1-p</p>
+</blockquote>
+<p>它是一个pmf</p>
+<br>
+
+<h2 id="Poisson-Distribution-泊松分布"><a href="#Poisson-Distribution-泊松分布" class="headerlink" title="Poisson Distribution(泊松分布)"></a>Poisson Distribution(泊松分布)</h2><p><a href="http://www.ruanyifeng.com/blog/2015/06/poisson-distribution.html" target="_blank" rel="noopener">阮一峰-泊松分布</a></p>
+<p>泊松分布(Poisson distribution) 的概率密度函数(pmf)为<br>$$<br>f_X(x)=\frac {e^{-\lambda}{\lambda^x}} {x!}, for\  \lambda&gt;0\ and\ x=0,1,2…<br>$$<br>lambda is called the <strong>mean parameter</strong></p>
+<p>often used to describe unconstrained count data</p>
+<br>
+
+<p>让X是20分钟投篮进球的数量</p>
+<p>通常20分钟我能进12个球</p>
+<p>One probability model that <strong>might</strong> be appropriate for X is the Poisson(12) distribution</p>
+<p>注意: No upper bound on the number of baskets I score!
+$$<br>P(X=10)=\frac {e^{-12}12^{10}}{10!}=0.105<br>$$<br>Poisson(12) pmf:</p>
+<p><img src="/Blog/intro/possion_dis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="R">x&lt;-0:30
+barplot(dpois(x, 12), names.arg=x)</code></pre>
+<br>
+
+<p>证明: Possion分布是pmf</p>
+<ol>
+<li>各项都大于0</li>
+<li>证明所有项之和为1</li>
+</ol>
+<p><img src="/Blog/intro/possion_dis_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>泊松分布的期望值:</p>
+<p><img src="/Blog/intro/possion_dis_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>同样根据泰勒展开, 最后的两项抵消, 只剩下lambda.</p>
+<p>所以泊松分布的期望值是lambda</p>
+<br>
+
+<br>
+
+<h2 id="cumulative-distribution-function-累计分布函数"><a href="#cumulative-distribution-function-累计分布函数" class="headerlink" title="cumulative distribution function(累计分布函数)"></a>cumulative distribution function(累计分布函数)</h2><p>简称cdf, 定义如下</p>
+<p><img src="/Blog/intro/cdf.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>pdf(x) 指的是 X=x的概率, cdf是X&lt;=x的概率</p>
+<p><img src="/Blog/intro/distribution_function_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>左图就是pdf, 右图时cdf(但我不喜欢上图的名称, 累计分布函数这个名称更直观)</p>
+<br>
+
+<p>因此当x趋近于无穷时, cdf(x)就等于所有pdf(x)的和, 也就是1</p>
+<p><img src="/Blog/intro/cdf_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因为pdf(x)的每一项都大于0, 所以cdf不会下降</p>
+<br>
+
+<p>R语言中的函数</p>
+<table>
+<thead>
+<tr>
+<th>pdf</th>
+<th>cdf</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dbinom</td>
+<td>pbinom</td>
+</tr>
+<tr>
+<td>dgeom</td>
+<td>pgeom</td>
+</tr>
+<tr>
+<td>dpois</td>
+<td>ppois</td>
+</tr>
+</tbody></table>
+<br>
+
 
             </div>
             <hr>
@@ -1239,7 +1377,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1266,7 +1404,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1275,7 +1413,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
