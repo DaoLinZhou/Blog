@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    330 字
+                    579 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      1 分钟
+                      3 分钟
                   </span>
                 
 
@@ -168,10 +168,10 @@
             <div class="markdown-body">
               <h1 id="Math-251学习笔记"><a href="#Math-251学习笔记" class="headerlink" title="Math 251学习笔记"></a>Math 251学习笔记</h1><p><img src="/Blog/intro/cal.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>一条线在三维空间中的表示方法:</p>
-<p>vector equation:<br>$$<br>\vec r = \vec r_0 + t\vec v,\ t\in \R<br>$$<br>parametric equation:<br>$$<br>x=x_0+at,\ \ y=y_0+bt,\ \ z=z_0+ct, \ \ t\in\R<br>$$<br>symmetric equation:<br>$$<br>t=\frac {x-x_0} a=\frac {y-y_0}b=\frac{z-z_0}c<br>$$<br><br></p>
+<p>vector equation:<br>$$<br>\vec r = \vec r_0 + t\vec v,\ t\in R<br>$$<br>parametric equation:<br>$$<br>x=x_0+at,\ \ y=y_0+bt,\ \ z=z_0+ct, \ \ t\in R<br>$$<br>symmetric equation:<br>$$<br>t=\frac {x-x_0} a=\frac {y-y_0}b=\frac{z-z_0}c<br>$$<br><br></p>
 <br>
 
-<p>三维空间中的线可以表示为<br>$$<br>\vec r = \vec r_0 + t\vec v,\ t\in \R<br>$$<br>因此可以把它看作是一个对于t的函数</p>
+<p>三维空间中的线可以表示为<br>$$<br>\vec r = \vec r_0 + t\vec v,\ t\in R<br>$$<br>因此可以把它看作是一个对于t的函数</p>
 <p>vector-value function (vector function):<br>$$<br>r(t) = &lt;f(t),\ g(t),\ h(t)&gt; = f(t)i+g(t)j+h(t)z<br>$$<br>f(t), g(t), h(t)是real-value function, 叫做 <strong>component function (or coordinate function) of r(t)</strong></p>
 <br>
 
@@ -188,7 +188,9 @@
 <hr>
 
 <p><strong>Derivative:</strong></p>
-<p>The vector function <strong>r(t) is differentiable at t=a</strong> if the following limit exists:<br>$$<br>\frac {dr} {dt}|<em>{t=a}=r’(a)=\lim</em>{\triangle t-&gt;0} \frac {r(a+\triangle t) - r(a)}{\triangle t}<br>$$<br>同时我们也可以证明:<br>$$<br>\frac {dr}{dt} = r’(t)=&lt;f’(t),g’(t),h’(t)&gt;=f’(t)i+g’(t)j+h’(t)k<br>$$<br><img src="/Blog/intro/cal_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>The vector function <strong>r(t) is differentiable at t=a</strong> if the following limit exists:<br>$$<br>\frac {dr} {dt}|<em>{t=a}=r’(a)=\lim</em>{\triangle t-&gt;0} \frac {r(a+\triangle t) - r(a)}{\triangle t}<br>$$</p>
+<p>同时我们也可以证明:</p>
+<p>$$<br>\frac {dr}{dt} = r’(t)=&lt;f’(t),g’(t),h’(t)&gt;=f’(t)i+g’(t)j+h’(t)k<br>$$<br><img src="/Blog/intro/cal_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <hr>
@@ -206,7 +208,30 @@
 
 <p>Fundamental Theorem of calculus</p>
 <p><img src="/Blog/intro/cal_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<br>
+
+<h2 id="Vector-Functions"><a href="#Vector-Functions" class="headerlink" title="Vector Functions"></a>Vector Functions</h2><h3 id="Arc-Length"><a href="#Arc-Length" class="headerlink" title="Arc Length"></a>Arc Length</h3><p>如果一条线在三维空间中表示为<br>$$<br>r(t) = &lt;f(t),\ g(t),\ h(t)&gt;<br>$$<br>Arc Length就是曲线的长度</p>
+<p>也就是在每一个点的导的模的和<br>$$<br>L=\int_a^b||r’(t)||dt=\int_a^b \sqrt {f’(t)^2+g’(t)^2+h’(t)^2} dt<br>$$<br><img src="/Blog/intro/arc_len.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>同理也可以拓展到高维空间中<br>$$<br>L=\int_a^b||r’(t)||dt<br>$$</p>
+</blockquote>
+<br>
+
+<h3 id="Arc-Length-Function"><a href="#Arc-Length-Function" class="headerlink" title="Arc Length Function"></a>Arc Length Function</h3><p>我们定义arc length function s为<br>$$<br>s(t)=\int_a^b||r’(t)||dt=\int_a^b \sqrt {f’(t)^2+g’(t)^2+h’(t)^2} dt<br>$$<br>因此s(t)是 r(a) 到 r(b) 之间curve的长度</p>
+<p>如果两面同时求导<br>$$<br>\frac {ds}{dt}=|r’(t)|<br>$$<br><img src="/Blog/intro/arc_len_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>It is often useful to <strong>parametrize a curve with respect to arc length</strong>, because arc length arises naturally from the shape of the curve and dose <strong>not depend on a particular coordinate system.</strong></p>
+<p>If a curve r(t) is already given in terms of a parameter t and s(t) is the arc length function. then we can solve t as a function of s. t = t(s). then r = r(t) = r(t(s)). </p>
+<p>Thus, if s=3, r(t(3)) is the position vector of the point 3 units of length along the curve from its starting point.</p>
+</blockquote>
+<p><img src="/Blog/intro/arc_len_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Curvature"><a href="#Curvature" class="headerlink" title="Curvature"></a>Curvature</h3>
             </div>
             <hr>
             <div>
@@ -261,7 +286,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -288,7 +313,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -297,7 +322,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    11.8k 字
+                    12k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      44 分钟
+                      45 分钟
                   </span>
                 
 
@@ -256,7 +256,19 @@
 <br>
 
 <p>回忆解析几何, 点到直线的距离</p>
-<p>(x<sub>0</sub>, y<sub>0</sub>) 到 Ax+By+C=0 的距离为:<br>$$<br>\frac {|Ax_0+By_0+C|} {\sqrt{A^2+B^2}}<br>$$<br>如果拓展到n维</p>
+<p>(x<sub>0</sub>, y<sub>0</sub>) 到 Ax+By+C=0 的距离为:<br>$$<br>\frac {|Ax_0+By_0+C|} {\sqrt{A^2+B^2}}<br>$$</p>
+<blockquote>
+<p>证明这个公式:</p>
+<p>假设有一个平面(超平面) ax+by+cz+d=0, 求(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>) 到这个超平面的距离</p>
+<p>也就是求这个点到平面的垂线的距离.</p>
+<p>而这个平面的 norm 为 n=(a, b, c) [General Equation](<a href="https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/#General">https://daolinzhou.github.io/Blog/2020/03/06/play-with-linear-algebra-4/#General</a> equation).</p>
+<p>因此也就是寻找这个平面上任意一点到(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>)的向量对norm向量做scaler projection的结果(正交投影的长度)</p>
+<p>假设平面上一点为(x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>), 则Ax<sub>1</sub>+By<sub>1</sub>+Cz<sub>1</sub>+d=0</p>
+<p>这一点到(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>) 的向量就是 b = (x<sub>1</sub>-x<sub>0</sub>, y<sub>1</sub>- y<sub>0</sub>, z<sub>1</sub>-z<sub>0</sub>)</p>
+<p><img src="/Blog/intro/proof_dis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>之后分子加上d再减去d, 因此结果就是<br>$$<br>\frac {|ax_0+by_0+cz_0+d|} {\sqrt{a^2+b^2+c^2}}<br>$$</p>
+</blockquote>
+<p>如果拓展到n维</p>
 <p><img src="/Blog/intro/svm_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>向量x<sub>b</sub> 其实是在x的第0个元素的位置添加一个1, 这是因为θ向量中, 有一个θ<sub>0</sub></p>
 <p>将它转化为 w<sup>T</sup>x+b=0 的形式, 相当于将θ<sub>0</sub>x<sub>0</sub>这一项拿出来当作截距. 这个截距就用b来表示</p>
@@ -1035,7 +1047,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1062,7 +1074,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1071,7 +1083,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.3k 字
+                    4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      13 分钟
+                      16 分钟
                   </span>
                 
 
@@ -450,6 +450,107 @@ if __name__ == &#39;__main__&#39;:
 <p><br><br></p>
 <p>使用sigmoid方法进行训练得到的决策边界是线性的. 而使用tanh分界得到的是弯曲的. 其中的差别是什么?</p>
 <p>一种说法是因为tanh是无偏的, 它的对称点在0这个位置. 而sigmoid的对称点在0.5这个位置?</p>
+<br>
+
+<blockquote>
+<p>如果不用激活函数，每一层输出都是上层输入的线性函数，无论神经网络有多少层，输出都是输入的线性组合，这种情况就是最原始的感知机(Perceptron)</p>
+<p>如果使用的话，激活函数给神经元引入了非线性因素，使得神经网络可以任意逼近任何非线性函数，这样神经网络就可以应用到众多的非线性模型中</p>
+</blockquote>
+<br>
+
+<hr>
+
+<br>
+
+<h2 id="基于小批量梯度下降实现的代码"><a href="#基于小批量梯度下降实现的代码" class="headerlink" title="基于小批量梯度下降实现的代码"></a>基于小批量梯度下降实现的代码</h2><pre><code class="python">import numpy as np
+
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+
+def dsigmoid(y):
+    return y * (1 - y)
+
+
+def tanh(x):
+    return np.tanh(x)
+
+
+def dtanh(y):
+    return 1.0 - y ** 2
+
+
+class MLPClassifier:
+    def __init__(self, layers, activation=&#39;tanh&#39;, epochs=20, batch_size=1, learning_rate=0.01):
+        # 第一层为输入层, 层数应等于样本特征数
+        # 最后一层为输出层
+        # 再算上中间层, 所以len(layers)最小为3
+        self.epochs = epochs
+        self.eta = learning_rate
+        self.batch_size = batch_size
+
+        self.layers = [np.zeros((layers[0], batch_size))]
+        self.weights = []
+        self.biases = []
+        for i in range(len(layers) - 1):
+            weight = np.random.random((layers[i + 1], layers[i]))
+            layer = np.ones((layers[i + 1], batch_size))
+            bias = np.random.random((layers[i + 1], 1))
+            self.weights.append(weight)
+            self.layers.append(layer)
+            self.biases.append(bias)
+
+        if activation == &#39;tanh&#39;:
+            self.activation = tanh
+            self.dactivation = dtanh
+        elif activation == &#39;sigmoid&#39;:
+            self.activation = sigmoid
+            self.dactivation = dsigmoid
+
+    def fit(self, X, y):
+        # 如果y有多个维度的话, y的每一列为一个真实的标签
+        if y.ndim == 2:
+            assert y.shape[1] == X.shape[0], &quot;each column of y is a label of a row in X&quot;
+        for _ in range(self.epochs):
+            indexes = np.random.permutation(X.shape[0])
+            for i in range(X.shape[0] // self.batch_size):
+                start_index = i * self.batch_size
+                end_index = start_index + self.batch_size
+                self.forward(X[indexes[start_index:end_index]])
+                self.backward(y[indexes[start_index:end_index]])
+        return self
+
+    def predict(self, X):
+        return np.where(self.predict_prob(X) &gt;= 0.5, 1, 0)
+
+    def predict_prob(self, X):
+        # 优化了predict函数, 进行向量化处理
+        self.forward(X)
+        y = self.layers[-1].copy()
+        return y
+
+    def forward(self, inputs):
+        self.layers[0] = inputs.T
+        for i in range(len(self.weights)):
+            self.layers[i + 1] = self.activation(self.weights[i].dot(self.layers[i]) + self.biases[i])
+
+    def backward(self, y):
+        # y 是真实的标签值
+        y_predict = self.layers[-1]
+        pre_gradient_neurons = y - y_predict
+        # 从最后一层到第一层进行遍历, 第0层是输入层, 不在遍历范围内
+        for i in range(len(self.layers) - 1, 0, -1):
+            # 对每一个样本计算bias, weight, neurons的梯度, 再求均值做为最后的梯度
+            gradient_bias_matrix = pre_gradient_neurons * self.dactivation(self.layers[i])
+            gradient_weight = gradient_bias_matrix.dot(self.layers[i - 1].T) / self.batch_size
+            pre_gradient_neurons = np.sum(gradient_bias_matrix.T.dot(self.weights[i - 1]), axis=0) \
+                .reshape(-1, 1) / self.batch_size
+            # 此时weight和neurons的梯度依赖与bias的梯度矩阵, 而不是平均梯度, 所以最后求bias的平均梯度
+            gradient_bias = np.mean(gradient_bias_matrix, axis=1).reshape(-1, 1)
+
+            self.weights[i - 1] += self.eta * gradient_weight
+            self.biases[i - 1] += self.eta * gradient_bias</code></pre>
 
             </div>
             <hr>
@@ -515,7 +616,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -542,7 +643,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -551,7 +652,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
