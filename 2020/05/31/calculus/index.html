@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.4k 字
+                    1.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      7 分钟
+                      8 分钟
                   </span>
                 
 
@@ -294,7 +294,33 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <br>
 
+<h3 id="Motion-in-Space-Velocity-and-Acceleration"><a href="#Motion-in-Space-Velocity-and-Acceleration" class="headerlink" title="Motion in Space: Velocity and Acceleration"></a>Motion in Space: Velocity and Acceleration</h3><p>如果一个粒子在空间中移动. 它的position vector at time t is r(t)</p>
+<p>那么:</p>
+<p>velocity:<br>$$<br>v(t)=r’(t)<br>$$<br>speed:<br>$$<br>|v(t)|=|r’(t)|<br>$$<br>acceleration<br>$$<br>a(t)=v’(t)=r’’(t)<br>$$<br><br></p>
+<p>根据牛顿第二定律</p>
+<p>a force F(t) acts on an object of mass m producing an acceleration a(t), then<br>$$<br>F(t)=m\cdot a(t)<br>$$<br><br></p>
+<br>
 
+<h3 id="Tangential-and-Normal-Components-of-Acceleration"><a href="#Tangential-and-Normal-Components-of-Acceleration" class="headerlink" title="Tangential and Normal Components of Acceleration"></a>Tangential and Normal Components of Acceleration</h3><p><img src="/Blog/intro/tandncom.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/tandncom_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/tandncom_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/tandncom_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>because N=T’/|T’|, so<br>$$<br>T’=|T’|N=kvN<br>$$<br>so<br>$$<br>a=v’T+kv^2N<br>$$</p>
+<p>$$<br>a=a_TT+a_NN<br>$$</p>
+<p>因此<br>$$<br>a_T=v’<br>$$</p>
+<p>$$<br>a_N=kv^2<br>$$</p>
+<blockquote>
+<p>由于</p>
+<p><img src="/Blog/intro/tandncom_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所以<br>$$<br>a_T=v’=\frac{\v\cdot a}{v}=\frac {r’(t)\cdot r’’(t)}{|r’(t)|}<br>$$</p>
+</blockquote>
+<br>
+
+<p>也可以利用投影</p>
+<p>by scaler projection<br>$$<br>a_T=a\cdot T=\frac {r’(t)\cdot r’’(t)}{|r’(t)|}<br>$$<br><br><br>$$<br>a_N=kv^2=\frac {r’(t)\times r’’(t)}{|r’(t)|^3}|r’(t)|^2=\frac {r’(t)\times r’’(t)}{|r’(t)|}<br>$$<br><br></p>
+<br>
 
 
             </div>
@@ -351,7 +377,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -378,7 +404,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -387,7 +413,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
