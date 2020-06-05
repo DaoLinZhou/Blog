@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    579 字
+                    1.4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      7 分钟
                   </span>
                 
 
@@ -210,6 +210,9 @@
 <p><img src="/Blog/intro/cal_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<p>证明: r’(t) 与 r(t) 正交</p>
+<p><img src="/Blog/intro/org_dir.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/org_dir_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h2 id="Vector-Functions"><a href="#Vector-Functions" class="headerlink" title="Vector Functions"></a>Vector Functions</h2><h3 id="Arc-Length"><a href="#Arc-Length" class="headerlink" title="Arc Length"></a>Arc Length</h3><p>如果一条线在三维空间中表示为<br>$$<br>r(t) = &lt;f(t),\ g(t),\ h(t)&gt;<br>$$<br>Arc Length就是曲线的长度</p>
@@ -231,7 +234,69 @@
 
 <br>
 
-<h3 id="Curvature"><a href="#Curvature" class="headerlink" title="Curvature"></a>Curvature</h3>
+<h3 id="Curvature"><a href="#Curvature" class="headerlink" title="Curvature"></a>Curvature</h3><p>A parametrization r(t) is called <strong>smooth</strong> on interval I if r’ is <strong>continuous</strong> and <strong>r’(t) != 0</strong> on I</p>
+<p>如果C是一个smooth curve 定义by vector function r, unit tangent vector T(t) is given by:<br>$$<br>T(t)=\frac {r’(t)}{|r’(t)|}<br>$$<br>就是曲线每一点的切线的单位向量. </p>
+<p><img src="/Blog/intro/curvature.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>curvature of C at a given point is measure of how quickly the curve changes direction at that point. Specifically we define it to be the magnitude of the rate of change of the unit tangent vector with respect to arc length.</p>
+<p>(We use arc length so that the curvature will be independent of the parametrization.) Because the unit tangent vector has constant length, only changes in direction contribute to the rate of change of T.</p>
+<blockquote>
+<p>The <strong>curvature</strong> of a curve is<br>$$<br>k=| \frac {dT} {ds}|<br>$$<br>T is the unit tangent vector.</p>
+<p>就是切线随着曲线长度的变化速率. dT是切线的变化, ds是曲线长度的变化.</p>
+</blockquote>
+<p>$$<br>k=| \frac {dT} {ds}|=|\frac {dT/dt}{ds/dt}|<br>$$</p>
+<p>而 ds/dt = r’(t), (在Arc Length Function下的结论)</p>
+<p>所以<br>$$<br>k(t) = \frac {|T’(t)|}{|r’(t)|}<br>$$</p>
+<blockquote>
+<p>证明: 半径为a的圆的curvature为1/a<br>$$<br>r(t)=&lt;a\cos(t), a\sin(t)&gt;<br>$$</p>
+<p>$$<br>r’(t)=&lt;-a\sin(t),a\cos(t)&gt;<br>$$</p>
+<p>$$<br>T(t)=\frac {r’(t)}{|r’(t)|} =&lt;-\sin(t),\cos(t)&gt;<br>$$</p>
+<p>$$<br>T’(t) = &lt;-\cos(t),-\sin(t)&gt;<br>$$</p>
+<p>$$<br>k(t) = \frac {|T’(t)|}{|r’(t)|}=\frac {1}{a}<br>$$</p>
+<p>半径越小的圆的curvature越大.</p>
+<p>而一条直线的曲率为0, 因为tangent vector(T(t))为常数, 所以它的导就是0, k(t)就为0</p>
+</blockquote>
+<br>
+
+<p>the curvature of the curve given by the vector function r is<br>$$<br>k(t)=\frac {|r’(t) \times r’’(t)|}{|r’(t)|^3}<br>$$</p>
+<blockquote>
+<p>证明:</p>
+<p>由于T=r’/|r’| 同时 |r’|=ds/dt 所以<br>$$<br>r’=|r’|T=\frac {ds}{dt}T<br>$$<br>两边同时求导<br>$$<br>r’’=\frac {d^2s}{dt^2}T+\frac {ds}{dt}T’<br>$$<br>由于T x T = 0<br>$$<br>r’\times r’’=\frac {ds}{dt}T\times \frac {ds}{dt}T’ = (\frac {ds}{dt})^2 (T\times T’)<br>$$<br>由于|T(t)|=1 for all t, and T and T’ are  orthogonal<br>$$<br>|r’\times r’’|=(\frac {ds}{dt})^2 |T\times T’|=(\frac {ds}{dt})^2 |T||T’|=(\frac {ds}{dt})^2 |T’|<br>$$<br>因此:<br>$$<br>|T’|=\frac {|r’\times r’’|}{(ds/dt)^2}=\frac {|r’\times r’’|}{|r’|^2}<br>$$</p>
+<p>$$<br>k=\frac {|T’|}{|r’|}=\frac {|r’\times r’’|}{|r’|^3}<br>$$</p>
+</blockquote>
+<br>
+
+<br>
+
+<h3 id="The-Normal-and-Binormal-Vectors"><a href="#The-Normal-and-Binormal-Vectors" class="headerlink" title="The Normal and Binormal Vectors"></a>The Normal and Binormal Vectors</h3><p>在一个平滑的曲线r(t)上的一点. 有许多向量都与unit tangent vector T(t)正交</p>
+<p>我们选择T’(t)的单位向量, 因为T(t)与T’(t)正交</p>
+<p>因此我们定义, at any point where k!=0, we can define the <strong>principal unit normal vector N(t) [or simply unit normal]</strong> as<br>$$<br>N(t)=\frac{T’(t)}{|T’(t)|}<br>$$<br>我们认为unit normal vector指出了 curve 在每个点变化的方向</p>
+<br>
+$$
+B(t)=T(t)\times N(t)
+$$
+B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向量, 因为T和N都是单位向量
+
+<p><img src="/Blog/intro/normal_binormal_vec.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/normal_binormal_vec_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<blockquote>
+<p>对于curve C来说, 在点P能求出T, N 和 B</p>
+<p>由N和B组成的平面叫做normal plane, 它与T正交</p>
+<p>由T和N组成的平面叫 osculating plane, It is the plane that comes closest to containing the part of the curve near P. (For a plane curve, the osculating plane is simply the plane that contains the curve.)</p>
+<br>
+
+<p>The circle that lies in the osculating plane of C at P, has the same tangent as C at P. lies on the concave side of C(toward which N points), and has radius p = 1/k (the reciprocal of the curvature) is called the osculating circle(or the circle of curvature) of C at P. It is the circle that best describes how C behaves near P; it shares the same tangent normal and curvature at P.</p>
+</blockquote>
+<br>
+
+<br>
+
+
+
+
             </div>
             <hr>
             <div>
@@ -286,7 +351,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -313,7 +378,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -322,7 +387,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
