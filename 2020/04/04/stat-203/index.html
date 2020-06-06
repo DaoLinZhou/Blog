@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.1k 字
+                    8.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      33 分钟
+                      34 分钟
                   </span>
                 
 
@@ -1322,6 +1322,56 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 </tbody></table>
 <br>
 
+<br>
+
+<h2 id="泊松过程-Poisson-Processes"><a href="#泊松过程-Poisson-Processes" class="headerlink" title="泊松过程 (Poisson Processes)"></a>泊松过程 (Poisson Processes)</h2><p>Possion distributed rv has pmf<br>$$<br>f_X(x)=\frac {e^{-\lambda}{\lambda^x}} {x!}<br>$$<br>for lambda &gt; 0 and x=0, 1, 2…</p>
+<ul>
+<li>lambda is called the <strong>mean parameter</strong></li>
+<li>Often used to describe unconstrained count data(<strong>no maximum</strong>)</li>
+</ul>
+<br>
+
+<p>Consider a type of event that recurs randomly over time</p>
+<p>考虑一种周期性随机发生的事件</p>
+<p>例如: 天气变冷, 手机系统更新…</p>
+<p>Poisson distribution can sometimes be used to describe the <strong>number of events</strong> occurring <strong>in a given time interval</strong></p>
+<p>泊松分布能用于描述<strong>给定时间范围</strong>内<strong>事件发生的次数</strong></p>
+<br>
+
+<p>例子:</p>
+<p>孩子们每分钟哭喊一次</p>
+<p>让X<sub>(t1, t2)</sub>表示在(t1, t2)时间范围内, 小孩哭喊的次数</p>
+<p><img src="/Blog/intro/poisson_int.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<blockquote>
+<p>非常重要:</p>
+<p><img src="/Blog/intro/poisson_int_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<p>Under these assumptions X<sub>(t1, t2)</sub> is Poisson (λ(t2-t1)) distributed</p>
+<p>λ is the <strong>arrival rate</strong> of events</p>
+<p>We say that X<sub>(t1, t2)</sub> follows a <strong>Poisson process</strong></p>
+<br>
+
+<h3 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h3><p>proof that X<sub>(0,t)</sub>~Possion(λt)</p>
+<p><img src="/Blog/intro/poisson_int_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>so:</p>
+<p><img src="/Blog/intro/poisson_int_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/poisson_int_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Example: </p>
+<p>Find the probability that I hear at least 20 screams between 6:00 and 6:30 am</p>
+<ul>
+<li>λ = 1 (rate is 1 <strong>scream per min</strong>)</li>
+<li>Δt = 30 min</li>
+</ul>
+<p><img src="/Blog/intro/poisson_int_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Example:</p>
+<p>Find the probability that I hear 5 screams between 6 and 6:05 am and at least 1 scream between 6:05 and 6:10am</p>
+<p><img src="/Blog/intro/poisson_int_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -1377,7 +1427,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1404,7 +1454,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1413,7 +1463,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
