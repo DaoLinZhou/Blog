@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.3k 字
+                    8.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      34 分钟
+                      36 分钟
                   </span>
                 
 
@@ -1178,12 +1178,14 @@
 <br>
 
 <p>例子:</p>
-<p>12% 的人吸烟, 0.8%的吸烟人有肺炎, 0.2%的无吸烟人有肺炎</p>
+<p>12% 的人吸烟, 0.8%的人既吸烟又有肺炎, 0.2%的人不吸烟却有肺炎</p>
 <ol>
 <li>求得肺炎的概率</li>
 <li>吸烟和肺炎是否无关</li>
 </ol>
-<p>P(A)=12% 吸烟<br>$$<br>P(B)=P(A\cap B)+P(\overline A \cap B)=0.8%+0.2%=1%<br>$$<br><br><br>$$<br>P(A)P(B)=12%*1%=0.12%\ne P(A\cap B) = 0.8%<br>$$<br>所以根据定义, 吸烟和肺炎相关. 或者用另一个定义<br>$$<br>P(B|A)=\frac {P(AB)} {P(A)}=\frac {0.008}{0.12}=0.067 \ne 0.001=P(B)<br>$$</p>
+<p>P(A)=12% 吸烟, P(B) 有肺炎</p>
+<p><img src="/Blog/intro/smoker_prob.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所以根据定义, 吸烟和肺炎相关. 或者用另一个定义<br>$$<br>P(B|A)=\frac {P(AB)} {P(A)}=\frac {0.008}{0.12}=0.067 \ne 0.001=P(B)<br>$$</p>
 <br>
 
 <h2 id="Conditional-probability"><a href="#Conditional-probability" class="headerlink" title="Conditional probability"></a>Conditional probability</h2><p>Let A be the event that someone tests positive for the disease.</p>
@@ -1257,7 +1259,11 @@ barplot(dgeom(x, 0.2), names.arg=x)</code></pre>
 <br>
 
 <h2 id="Poisson-Distribution-泊松分布"><a href="#Poisson-Distribution-泊松分布" class="headerlink" title="Poisson Distribution(泊松分布)"></a>Poisson Distribution(泊松分布)</h2><p><a href="http://www.ruanyifeng.com/blog/2015/06/poisson-distribution.html" target="_blank" rel="noopener">阮一峰-泊松分布</a></p>
-<p>泊松分布(Poisson distribution) 的概率密度函数(pmf)为<br>$$<br>f_X(x)=\frac {e^{-\lambda}{\lambda^x}} {x!}, for\  \lambda&gt;0\ and\ x=0,1,2…<br>$$<br>lambda is called the <strong>mean parameter</strong></p>
+<p>泊松分布(Poisson distribution) 的概率密度函数(pmf)为<br>$$<br>f_X(x)=\frac {e^{-\lambda}{\lambda^x}} {x!}, for\  \lambda&gt;0\ and\ x=0,1,2…<br>$$</p>
+<blockquote>
+<p>通常<strong>单位时间</strong>内事件发生<strong>λ次</strong>, P(X=x)求的是事件在<strong>单位时间</strong>发生<strong>x次的概率</strong></p>
+</blockquote>
+<p>lambda is called the <strong>mean parameter</strong></p>
 <p>often used to describe unconstrained count data</p>
 <br>
 
@@ -1329,6 +1335,10 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <li>lambda is called the <strong>mean parameter</strong></li>
 <li>Often used to describe unconstrained count data(<strong>no maximum</strong>)</li>
 </ul>
+<blockquote>
+<p>$$<br>p(x,t)=\frac {e^{-\lambda t}{(\lambda t)^x}} {x!}<br>$$</p>
+<p>单位时间内事件通常发生λ次, p(x, t)求的是t个单位时间内, 发生x次的概率</p>
+</blockquote>
 <br>
 
 <p>Consider a type of event that recurs randomly over time</p>
@@ -1372,6 +1382,45 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <p>Example:</p>
 <p>Find the probability that I hear 5 screams between 6 and 6:05 am and at least 1 scream between 6:05 and 6:10am</p>
 <p><img src="/Blog/intro/poisson_int_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h2><p><a href="http://www.ruanyifeng.com/blog/2015/06/poisson-distribution.html" target="_blank" rel="noopener">阮一峰-泊松分布</a> 这里也讲了指数分布的概念, 而且推导的很细致</p>
+<p>X has an <strong>exponential distribution</strong> with <strong>rate parameter</strong> λ &gt; 0 if, for x &gt; 0<br>$$<br>F_X(x)=P(X\le x)=1-e^{-\lambda x}<br>$$</p>
+<p>$$<br>=1-p(0,t)<br>$$</p>
+<p>usually use notation: X~exp(λ)</p>
+<br>
+
+<p>Example:</p>
+<p>每开车2km就会撞死1个动物</p>
+<p>问开4km的车撞死动物的概率是多少?</p>
+<ul>
+<li>λ=1, 单位时间就是2km(虽然不是时间, 但可以替换理解)</li>
+<li>开车4km就是走了两个单位时间. t=2</li>
+</ul>
+<p>P(X&lt;=4) = F<sub>X</sub>(4) = 1-e<sup>-1*2</sup> = 0.865, 或者用R语言</p>
+<pre><code class="R">pexp(1, 2)</code></pre>
+<br>
+
+<p>Example:</p>
+<p>问从5km开到10km才撞死动物的概率是多少?</p>
+<p>首先0-5km没有事件发生 所以概率为 e<sup>-2.5</sup></p>
+<p>5km-10km事件发生, 所以概率为1-e<sup>-2.5</sup></p>
+<p>两者independent, 所以结果就是二者相乘<br>$$<br>e^{-2.5}*(1-e^{-2.5})=0.075<br>$$</p>
+<blockquote>
+<p>另一种解法:<br>$$<br>P(2.5&lt;X\le 5)=P(X\le5)-P(\le 2.5)<br>$$</p>
+<p>$$<br>=(1-e^{-5})-(1-e^{-2.5})=0.075<br>$$</p>
+</blockquote>
+<h3 id="Memoryless-property"><a href="#Memoryless-property" class="headerlink" title="Memoryless property"></a>Memoryless property</h3><p><img src="/Blog/intro/poisson_int_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>指数分布是唯一一个适用Memoryless property的连续型分布</p>
+</blockquote>
+<p>example:</p>
+<p>如果我们开车10km, 看见3个死去的动物. 问接下来至少走1km后才看到死去动物的概率</p>
+<p>A = 开车10 km 看见3个死去的动物</p>
+<p>B = 开车1km没看见尸体</p>
+<p>P(A+B|A) = P(B) = e<sup>-0.5</sup></p>
 
             </div>
             <hr>
@@ -1427,7 +1476,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1454,7 +1503,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1463,7 +1512,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
