@@ -108,7 +108,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/Blog/intro/eye.jpg') no-repeat center center;
+         style="background: url('/Blog/intro/science_gate_time.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.7k 字
+                    9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      36 分钟
+                      38 分钟
                   </span>
                 
 
@@ -1421,11 +1421,72 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <p>A = 开车10 km 看见3个死去的动物</p>
 <p>B = 开车1km没看见尸体</p>
 <p>P(A+B|A) = P(B) = e<sup>-0.5</sup></p>
+<br>
+
+<br>
+
+<h2 id="Probability-Density-Function-PDF"><a href="#Probability-Density-Function-PDF" class="headerlink" title="Probability Density Function(PDF)"></a>Probability Density Function(PDF)</h2><p><strong>Probability Density Function(PDF)</strong> 或者 <strong>density</strong> 和pmf类似, 只不过是作用在连续型变量上</p>
+<p>The pdf, f<sub>X</sub>(x) of a rv X is a function such that for all a &lt; b,<br>$$<br>P(a\le X\le b)=\int_a^bf_X(x)dx<br>$$<br>如果cdf可导, 则pdf是cdf的导数</p>
+<br>
+
+<h3 id="properties-of-pdfs"><a href="#properties-of-pdfs" class="headerlink" title="properties of pdfs:"></a>properties of pdfs:</h3><p><img src="/Blog/intro/pdf_prop.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>和pmf不同的是, <strong>densities are not probability</strong></p>
+<p>We can have f<sub>X</sub>(x) &gt; 1 for some value of x.</p>
+<br>
+
+<p><img src="/Blog/intro/pdf_prop_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Exponential-pdf"><a href="#Exponential-pdf" class="headerlink" title="Exponential pdf"></a>Exponential pdf</h3><p>If X has an <strong>exponential distribution</strong> with rate λ &gt; 0, then the cdf of X is</p>
+<p><img src="/Blog/intro/pdf_prop_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>In this case the cdf is continuous so the pdf is<br>$$<br>f_X(x)=\frac d {dx}F_X(x)=\lambda e^{-\lambda x},x\ge 0<br>$$<br><br></p>
+<p><img src="/Blog/intro/pdf_prop_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这看起来有点矛盾:</p>
+<p>假设我的身高为x, 同时身高的函数是连续的. P(X=x)=0.</p>
+<p>这是因为 P(A) = 0 does <strong>not</strong> imply that the event A never happens.</p>
+<br>
+
+<br>
+
+<h2 id="Uniform-Distribution"><a href="#Uniform-Distribution" class="headerlink" title="Uniform Distribution"></a>Uniform Distribution</h2><p>A rv X has <strong>uniform(a, b)</strong> distribution if its pdf is</p>
+<p><img src="/Blog/intro/pdf_prop_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="standard-uniform"><a href="#standard-uniform" class="headerlink" title="standard uniform"></a>standard uniform</h3><p>Uniform(0, 1) (standard uniform)</p>
+<p><img src="/Blog/intro/standard_uniform.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example</p>
+<p><img src="/Blog/intro/standard_uniform_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Gamma-Distribution"><a href="#Gamma-Distribution" class="headerlink" title="Gamma Distribution"></a>Gamma Distribution</h2><p>A rv X has the <strong>gamma(α, β)</strong> distribution if its pdf is<br>$$<br>f_X(x)=\frac {\beta^\alpha x^{\alpha-1}e^{-\beta x}}{Γ(\alpha)}<br>$$<br>for x, α,  β &gt; 0</p>
+<p>α is called the <strong>shape</strong> parameter and β is called the <strong>scale</strong> parameter</p>
+<p>Γ() is gamma function.</p>
+<p><img src="/Blog/intro/gamma_dis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example</p>
+<p><img src="/Blog/intro/gamma_dis_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/gamma_dis_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Special-Case-of-the-Gamma-Distribution"><a href="#Special-Case-of-the-Gamma-Distribution" class="headerlink" title="Special Case of the Gamma Distribution"></a>Special Case of the Gamma Distribution</h3><p><img src="/Blog/intro/gamma_dis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
 
             </div>
             <hr>
             <div>
               <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/学习笔记/">学习笔记</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
                 
                 
                   <span>
