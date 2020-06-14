@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    9k 字
+                    9.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      38 分钟
+                      42 分钟
                   </span>
                 
 
@@ -1387,7 +1387,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <br>
 
 <h2 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h2><p><a href="http://www.ruanyifeng.com/blog/2015/06/poisson-distribution.html" target="_blank" rel="noopener">阮一峰-泊松分布</a> 这里也讲了指数分布的概念, 而且推导的很细致</p>
-<p>X has an <strong>exponential distribution</strong> with <strong>rate parameter</strong> λ &gt; 0 if, for x &gt; 0<br>$$<br>F_X(x)=P(X\le x)=1-e^{-\lambda x}<br>$$</p>
+<p>X has an <strong>exponential distribution</strong> with <strong>rate parameter</strong> λ &gt; 0 if, for x &gt; 0: cdf is<br>$$<br>F_X(x)=P(X\le x)=1-e^{-\lambda x}<br>$$</p>
 <p>$$<br>=1-p(0,t)<br>$$</p>
 <p>usually use notation: X~exp(λ)</p>
 <br>
@@ -1472,6 +1472,130 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <br>
 
 <h3 id="Special-Case-of-the-Gamma-Distribution"><a href="#Special-Case-of-the-Gamma-Distribution" class="headerlink" title="Special Case of the Gamma Distribution"></a>Special Case of the Gamma Distribution</h3><p><img src="/Blog/intro/gamma_dis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="连续型随机变量的期望值和方差"><a href="#连续型随机变量的期望值和方差" class="headerlink" title="连续型随机变量的期望值和方差"></a>连续型随机变量的期望值和方差</h2><h3 id="期望值-1"><a href="#期望值-1" class="headerlink" title="期望值"></a>期望值</h3><p>和离散型随机变量的期望值一样, 连续型随机变量的期望值也决定了它的中心(centrality)</p>
+<p>对于一个pdf为f<sub>X</sub>(x)的连续型随机变量X, 它的期望值为<br>$$<br>E[X]=\int_\inf^\inf xf_X(x)dx<br>$$<br>类似地, for a function of X, g(x),<br>$$<br>E[g(x)]=\int_\inf^\inf g(x)f_X(x)dx<br>$$<br><br></p>
+<h3 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h3><p>对于一个pdf为f<sub>X</sub>(x)的连续型随机变量X, 它的方差为<br>$$<br>Var[X]=\int_\inf^\inf (x-E[X])^2f_X(x)dx<br>$$</p>
+<p>$$<br>=E[X^2]-(E[X])^2<br>$$</p>
+<p>Standard deviation of X is the square root of variance</p>
+<br>
+
+<p>Cauchy distribution的期望值<br>$$<br>f_X(x)=\frac 1 {\pi(1+x^2)}<br>$$<br><img src="/Blog/intro/cdis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>实际上这个分布没有期望值</p>
+<br>
+
+<br>
+
+<h2 id="Quantiles-and-Percentiles"><a href="#Quantiles-and-Percentiles" class="headerlink" title="Quantiles and Percentiles"></a>Quantiles and Percentiles</h2><p>We have seen <strong>sample</strong> percentiles/quantiles</p>
+<p>We can also define <strong>population</strong> percentiles/quantiles</p>
+<br>
+
+<p>Let <em>p</em> be any number between 0 and 100</p>
+<p>If X is a rv with cdf F<sub>X</sub>(x) then the <strong>pth quanantile</strong> is defined as<br>$$<br>\eta_p=F_X^{-1}(p/100)<br>$$</p>
+<table>
+<thead>
+<tr>
+<th>25 th percentile</th>
+<th>F<sub>X</sub><sup>-1</sup>(0.25)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>50 th percentile</td>
+<td>F<sub>X</sub><sup>-1</sup>(0.50)</td>
+</tr>
+<tr>
+<td>75 th percentile</td>
+<td>F<sub>X</sub><sup>-1</sup>(0.75)</td>
+</tr>
+</tbody></table>
+<br>
+
+<p>例如求 Exponential(0.05)的期望, 50th, 95th percentile</p>
+<p><img src="/Blog/intro/expon_per.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="联合概率分布-Joint-Discrete-Distributions"><a href="#联合概率分布-Joint-Discrete-Distributions" class="headerlink" title="联合概率分布 Joint Discrete Distributions"></a>联合概率分布 Joint Discrete Distributions</h2><h3 id="Joint-pmf"><a href="#Joint-pmf" class="headerlink" title="Joint pmf"></a>Joint pmf</h3><p>有两个随机变量 X and Y, the <strong>joint pmf</strong> of X and Y is<br>$$<br>f_{XY}(x, y)=P(X=x,Y=y)<br>$$<br>The joint distribution of 2 rv’s is called <strong>bivariate distribution</strong></p>
+<blockquote>
+<p>Definition extends to any number of rv’s</p>
+<p>eg. if Z is a third discrete rv, the joint pmf of X,Y,Z is<br>$$<br>f_{XYZ}(x, y,z)=P(X=x,Y=y,Z=z)<br>$$</p>
+</blockquote>
+<br>
+
+<p>Joint pmfs 的性质</p>
+<p><img src="/Blog/intro/joint_pmf.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Multinomial-Distribution"><a href="#Multinomial-Distribution" class="headerlink" title="Multinomial Distribution"></a>Multinomial Distribution</h3><p><img src="/Blog/intro/multinomial_dis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>有一组数据, 数据可以分为K个类别, θ<sub>k</sub>代表第k个类别被选中的概率<br>$$<br>\sum_{k=1}^K\theta_k=1<br>$$<br>我们从中随机选n个元素</p>
+<p>让每个类别被选中的元素个数为X<sub>k</sub>, k=1,2…K</p>
+<p>那么X<sub>k</sub>服从 <strong>multinomial distribution</strong></p>
+<br>
+
+<p><img src="/Blog/intro/multinomial_dis_1.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>\frac {n!}{x_1!\cdots x_K!}<br>$$<br>代表从第1组中选x1个元素, 第二组选x2个元素…总共有多少中可能性.</p>
+<blockquote>
+<p>证明:</p>
+<p>从n个数据分为k组的可能为:<br>$$<br>{n \choose x_1} {n-x_1 \choose x_2}\cdots{n-x_1-x_2\cdots x_k\choose x_k}<br>$$</p>
+<p>$$<br>=\frac {n!}{x_1!(n-x_1)!}\cdot \frac {(n-x_1)!}{x_2!(n-x_1-x_2)!}\cdots \frac {(n-x_1-x_2\cdots x_k)!}{x_k!(n-n)!}<br>$$</p>
+<p>$$<br>=\frac {n!}{x_1!\cdots x_K!}<br>$$</p>
+</blockquote>
+<p>再乘以每一组的概率得到的就是pmf</p>
+<br>
+
+<br>
+
+<p>example:</p>
+<p>班级有225个学生, 55个CS专业, 103个Stat专业, 67个其余专业.</p>
+<p>选10个学生回答问题, <strong>with replacement</strong>(为了保持类别的概率不变, 不然如果选择一个学生后就不再选他, 那么概率就变动了)</p>
+<p>让X1, X2, X3分别为CS, Stat, Other 专业被选择的的学生个数</p>
+<p><img src="/Blog/intro/multinomial_dis_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Joint-cdfs"><a href="#Joint-cdfs" class="headerlink" title="Joint cdfs"></a>Joint cdfs</h3><p>两个随机变量 X, Y的 joint cdf 为<br>$$<br>F_{XY}(x,y)=P(X\le x,Y\le y)<br>$$<br>对更多变量也是一样的<br>$$<br>F_{XYZ}(x,y,z)=P(X\le x,Y\le y,Z\le z)<br>$$<br><br></p>
+<p>joint cdfs 的性质</p>
+<p><img src="/Blog/intro/multinomial_dis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p>掷两次骰子</p>
+<p>joint pmf 为:<br>$$<br>f_{X1,X_2}(x_1,x_2)=\frac 1{36}, x_1,x_2=1,…6<br>$$<br><img src="/Blog/intro/multinomial_dis_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h1 id="边缘分布函数-Marginal-pmfs"><a href="#边缘分布函数-Marginal-pmfs" class="headerlink" title="边缘分布函数 Marginal pmfs"></a>边缘分布函数 Marginal pmfs</h1><p>如果我们有一个有m个随机变量的joint pmf, 但是我们希望得到其中d个随机变量的joint pmf</p>
+<p>If we sum the pmf over the range of m-d of the rv’s, we will obtain the joint pmf of the remaining d rv’s</p>
+<br>
+
+<p>example:</p>
+<p>IPS Prenatal Genetic Screening for Down Syndrome</p>
+<p><img src="/Blog/intro/multinomial_dis_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>通过joint cdf 计算 Marginal cdf</p>
+<p><img src="/Blog/intro/multinomial_dis_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>例子:</p>
+<p>扔三次硬币, X为正面朝上的次数, Y为一次游戏的收入</p>
+<ul>
+<li>如果第一次正面朝上发生在第一次抛硬币的情况下, 赢1元</li>
+<li>如果第一次正面朝上发生在第二次抛硬币的情况下, 赢2元</li>
+<li>如果第一次正面朝上发生在第三次抛硬币的情况下, 赢3元</li>
+<li>如果没有正面朝上, 输1元</li>
+</ul>
+<p><img src="/Blog/intro/multinomial_dis_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/multinomial_dis_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>marginal <strong>pmf</strong> of X:</p>
+<p><img src="/Blog/intro/multinomial_dis_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>marginal cdf of Y:</p>
+<p><img src="/Blog/intro/multinomial_dis_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 
