@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.5k 字
+                    1.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      8 分钟
+                      10 分钟
                   </span>
                 
 
@@ -321,6 +321,47 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 <p>by scaler projection<br>$$<br>a_T=a\cdot T=\frac {r’(t)\cdot r’’(t)}{|r’(t)|}<br>$$<br><br><br>$$<br>a_N=kv^2=\frac {r’(t)\times r’’(t)}{|r’(t)|^3}|r’(t)|^2=\frac {r’(t)\times r’’(t)}{|r’(t)|}<br>$$<br><br></p>
 <br>
 
+<h2 id="偏导-Partial-Derivatives"><a href="#偏导-Partial-Derivatives" class="headerlink" title="偏导 Partial Derivatives"></a>偏导 Partial Derivatives</h2><p>有的时候一个函数的结果是由多个变量决定的 eg: f(x,y)</p>
+<blockquote>
+<p>定义:</p>
+<p>A <strong>function</strong> <em>f</em> <strong>of two variables</strong> is a rule that assigns to each ordered pair of real numbers (x, y) in a set D a unique real number denoted by f(x,y). The set D is the <strong>domain</strong> of <em>f</em> and its <strong>range</strong> is the set of values that <em>f</em> takes on, that is {<em>f</em>(x,y) |(x, y) ∈ D}</p>
+</blockquote>
+<p>我们通常写作z=<em>f</em>(x, y), x和y是independent variables. z是dependent variable</p>
+<p><img src="/Blog/intro/pari_d.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Graph"><a href="#Graph" class="headerlink" title="Graph"></a>Graph</h3><p>另一种思考函数的方式是通过graph</p>
+<blockquote>
+<p>If <em>f</em> is a function of two variables with domain D, then the graph of <em>f</em> is the set of all points (x, y, z) in R3 such that z = f(x,y) and (x, y) is in D</p>
+</blockquote>
+<p><img src="/Blog/intro/pari_d_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Level-Curves"><a href="#Level-Curves" class="headerlink" title="Level Curves"></a>Level Curves</h3><blockquote>
+<p>定义:</p>
+<p>The <strong>level curves</strong> of a function <em>f</em> of two variables are the curves with equation <em>f</em>(x,y)=k, where k is a constant (in the range of <em>f</em>)</p>
+</blockquote>
+<p><img src="/Blog/intro/pari_d_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="极限和连续-limits-and-continuity"><a href="#极限和连续-limits-and-continuity" class="headerlink" title="极限和连续 limits and continuity"></a>极限和连续 limits and continuity</h3><p>通常我们写作:<br>$$<br>\lim_{(x,y)\rightarrow (a,b)} f(x,y)=L<br>$$<br><br></p>
+<p>考虑一个函数<br>$$<br>f(x,y)=\frac {\sin(x^2+y^2)}{x^2+y^2}<br>$$<br><img src="/Blog/intro/limits_2d.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此:<br>$$<br>\lim_{(x,y)\rightarrow (0,0)} f(x,y)=1<br>$$</p>
+<blockquote>
+<p>另一种方法是 让A=x^2+y^2 这样就是sin(A)/A. 使用洛必达法则就得到1.</p>
+</blockquote>
+<br>
+
+<p>但是再考虑另外一个函数:<br>$$<br>g(x,y)=\frac {x^2-y^2}{x^2+y^2}<br>$$<br><img src="/Blog/intro/limits_2d_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当(x,y)趋近与(0,0)时不存在极限.</p>
+<br>
+
+<blockquote>
+<p>定义:</p>
+<p><img src="/Blog/intro/limits_2d_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
 
             </div>
             <hr>
