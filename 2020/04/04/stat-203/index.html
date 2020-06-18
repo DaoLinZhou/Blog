@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    9.9k 字
+                    10k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      42 分钟
+                      43 分钟
                   </span>
                 
 
@@ -1519,7 +1519,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 
 <br>
 
-<h2 id="联合概率分布-Joint-Discrete-Distributions"><a href="#联合概率分布-Joint-Discrete-Distributions" class="headerlink" title="联合概率分布 Joint Discrete Distributions"></a>联合概率分布 Joint Discrete Distributions</h2><h3 id="Joint-pmf"><a href="#Joint-pmf" class="headerlink" title="Joint pmf"></a>Joint pmf</h3><p>有两个随机变量 X and Y, the <strong>joint pmf</strong> of X and Y is<br>$$<br>f_{XY}(x, y)=P(X=x,Y=y)<br>$$<br>The joint distribution of 2 rv’s is called <strong>bivariate distribution</strong></p>
+<h2 id="联合离散分布-Joint-Discrete-Distributions"><a href="#联合离散分布-Joint-Discrete-Distributions" class="headerlink" title="联合离散分布 Joint Discrete Distributions"></a>联合离散分布 Joint Discrete Distributions</h2><h3 id="Joint-pmf"><a href="#Joint-pmf" class="headerlink" title="Joint pmf"></a>Joint pmf</h3><p>有两个随机变量 X and Y, the <strong>joint pmf</strong> of X and Y is<br>$$<br>f_{XY}(x, y)=P(X=x,Y=y)<br>$$<br>The joint distribution of 2 rv’s is called <strong>bivariate distribution</strong></p>
 <blockquote>
 <p>Definition extends to any number of rv’s</p>
 <p>eg. if Z is a third discrete rv, the joint pmf of X,Y,Z is<br>$$<br>f_{XYZ}(x, y,z)=P(X=x,Y=y,Z=z)<br>$$</p>
@@ -1569,7 +1569,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 
 <br>
 
-<h1 id="边缘分布函数-Marginal-pmfs"><a href="#边缘分布函数-Marginal-pmfs" class="headerlink" title="边缘分布函数 Marginal pmfs"></a>边缘分布函数 Marginal pmfs</h1><p>如果我们有一个有m个随机变量的joint pmf, 但是我们希望得到其中d个随机变量的joint pmf</p>
+<h2 id="边缘分布函数-Marginal-pmfs"><a href="#边缘分布函数-Marginal-pmfs" class="headerlink" title="边缘分布函数 Marginal pmfs"></a>边缘分布函数 Marginal pmfs</h2><p>如果我们有一个有m个随机变量的joint pmf, 但是我们希望得到其中d个随机变量的joint pmf</p>
 <p>If we sum the pmf over the range of m-d of the rv’s, we will obtain the joint pmf of the remaining d rv’s</p>
 <br>
 
@@ -1598,6 +1598,40 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <p><img src="/Blog/intro/multinomial_dis_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<br>
+
+<h2 id="联合连续分布-Joint-Continuous-Distribution"><a href="#联合连续分布-Joint-Continuous-Distribution" class="headerlink" title="联合连续分布 Joint Continuous Distribution"></a>联合连续分布 Joint Continuous Distribution</h2><p>对于两个连续型随机变量X, Y. <strong>joint cdf</strong> of X and Y is defined as:<br>$$<br>F_{XY}(x,y)=P(X\le x,Y\le y)<br>$$</p>
+<blockquote>
+<p>Definition extends to any numbers of rv’s<br>$$<br>F_{XYZ}(x,y,z)=P(X\le x,Y\le y,Z\le z)<br>$$</p>
+</blockquote>
+<br>
+
+<p>Joint cdf的性质</p>
+<p><img src="/Blog/intro/multinomial_dis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/joint_cdf_c.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/joint_cdf_c_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Joint-pdfs-for-Continuous-rv"><a href="#Joint-pdfs-for-Continuous-rv" class="headerlink" title="Joint pdfs for Continuous rv"></a>Joint pdfs for Continuous rv</h3><p>两个连续型随机变量X,Y, the <strong>joint pdf</strong> of X and Y is a function f<sub>XY</sub>(x,y), satisfying:<br>$$<br>P((X,Y)\in A)=\int\int_Af_{XY}(x,y)dx\ dy<br>$$<br>for all sets A in R2</p>
+<br>
+
+<p>If the joint cdf is differentiable, then the joint pdf is the derivative of the joint cdf</p>
+<br>
+
+<h4 id="properties-of-Joint-pdfs"><a href="#properties-of-Joint-pdfs" class="headerlink" title="properties of Joint pdfs"></a>properties of Joint pdfs</h4><p><img src="/Blog/intro/joint_cdf_c_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="计算Joint-pdf-from-Joint-cdf"><a href="#计算Joint-pdf-from-Joint-cdf" class="headerlink" title="计算Joint pdf from Joint cdf"></a>计算Joint pdf from Joint cdf</h3><p><img src="/Blog/intro/joint_cdf_c_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="计算Joint-cdf-from-Joint-pdf"><a href="#计算Joint-cdf-from-Joint-pdf" class="headerlink" title="计算Joint cdf from Joint pdf"></a>计算Joint cdf from Joint pdf</h3><p><img src="/Blog/intro/joint_cdf_c_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Marginal-pdfs"><a href="#Marginal-pdfs" class="headerlink" title="Marginal pdfs"></a>Marginal pdfs</h2><p><img src="/Blog/intro/joint_cdf_c_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/joint_cdf_c_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/joint_cdf_c_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
