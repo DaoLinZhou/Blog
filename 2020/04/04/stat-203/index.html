@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10k 字
+                    10.1k 字
                   </span>
                 
 
@@ -1632,6 +1632,87 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <h2 id="Marginal-pdfs"><a href="#Marginal-pdfs" class="headerlink" title="Marginal pdfs"></a>Marginal pdfs</h2><p><img src="/Blog/intro/joint_cdf_c_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/joint_cdf_c_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/joint_cdf_c_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Conditional-Distributions"><a href="#Conditional-Distributions" class="headerlink" title="Conditional Distributions"></a>Conditional Distributions</h2><h3 id="Conditional-pdf"><a href="#Conditional-pdf" class="headerlink" title="Conditional pdf:"></a>Conditional pdf:</h3><p>如果我们观察到一个随机变量的值, Y=y, 那么第二个随机变量X的conditional pmf/pdf为:<br>$$<br>f_{X|Y}(x|y)=\frac {f_{XY}(x,y)}{f_Y(y)}<br>$$<br>assume f<sub>Y</sub>(y) &gt; 0</p>
+<blockquote>
+<p>f<sub>XY</sub>(x,y) is pmf if X and Y are discrete and pdfs if X and Y are continuous</p>
+</blockquote>
+<p>定义可以拓展到有更多随机变量的情况</p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/conditional_dis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p> <img src="/Blog/intro/conditional_dis_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/conditional_dis_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Conditional-cdf"><a href="#Conditional-cdf" class="headerlink" title="Conditional cdf"></a>Conditional cdf</h3><p><img src="/Blog/intro/conditional_dis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Extension-of-the-Law-of-Total-Probability"><a href="#Extension-of-the-Law-of-Total-Probability" class="headerlink" title="Extension of the Law of Total Probability"></a>Extension of the Law of Total Probability</h3><p>pmfs:</p>
+<p><img src="/Blog/intro/conditional_dis_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>pdfs:</p>
+<p><img src="/Blog/intro/conditional_dis_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Waiting for a Bus at Rush Hour</p>
+<p><img src="/Blog/intro/conditional_dis_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/conditional_dis_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Covariance"><a href="#Covariance" class="headerlink" title="Covariance"></a>Covariance</h2><p><img src="/Blog/intro/Covariance_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/Covariance_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Independence"><a href="#Independence" class="headerlink" title="Independence"></a>Independence</h2><p>定义:</p>
+<p><img src="/Blog/intro/Covariance_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/Covariance_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/Covariance_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Covariance-and-Independence"><a href="#Covariance-and-Independence" class="headerlink" title="Covariance and Independence"></a>Covariance and Independence</h3><p>如果X, Y independent, 则Cov(X,Y)=0</p>
+<p><img src="/Blog/intro/Covariance_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Bivariate-Normal-Density"><a href="#Bivariate-Normal-Density" class="headerlink" title="Bivariate Normal Density"></a>Bivariate Normal Density</h2><p><img src="/Blog/intro/Covariance_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example problems:</p>
+<p><img src="/Blog/intro/Covariance_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Covariance_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
