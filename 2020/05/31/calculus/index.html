@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2k 字
+                    2.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      10 分钟
+                      11 分钟
                   </span>
                 
 
@@ -442,7 +442,34 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 </blockquote>
 <br>
 
-<h4 id="Partial-Differential-Equation"><a href="#Partial-Differential-Equation" class="headerlink" title="Partial Differential Equation"></a>Partial Differential Equation</h4>
+<h4 id="Partial-Differential-Equation"><a href="#Partial-Differential-Equation" class="headerlink" title="Partial Differential Equation"></a>Partial Differential Equation</h4><p>partial differential equation在物理学中有重要应用</p>
+<hr>
+
+<p>$$<br>\frac {\part^2u}{\part x^2} + \frac {\part^2u}{\part y^2}=0<br>$$</p>
+<p>这个式子叫做 <strong>Laplace’s equation</strong>(拉普拉斯方程). Solutions of this equation are called <strong>harmonic functions</strong>.  they play a role in problems of heat conduction, fluid flow, and electric potential.</p>
+<p><img src="/Blog/intro/partialderivative_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<hr>
+
+<p>$$<br>\frac {\part^2u}{\part t^2}=a^2\frac {\part^2u}{\part x^2}<br>$$</p>
+<p>这个式子叫做wave equation</p>
+<p>描述了波的运动: 海浪，声波，光波或沿振动弦传播的波</p>
+<p>例如如果 u(x,t) 表示振动的小提琴琴弦在 某个时间 t , 一端到弦的距离x, 的位移, 那么 u(x,t)就满足wave equation. Here constant <strong>a</strong> depends on the density of the string and on the tension in the string.</p>
+<p><img src="/Blog/intro/partialderivative_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/partialderivative_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<hr>
+
+<p>涉及三个变量的函数的偏微分方程在科学和工程中也非常重要。 三维拉普拉斯方程为<br>$$<br>\frac {\part^2u}{\part x^2} + \frac {\part^2u}{\part y^2}+\frac {\part^2u}{\part z^2}=0<br>$$<br><br></p>
+<br>
+
+
             </div>
             <hr>
             <div>
@@ -497,7 +524,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -524,7 +551,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -533,7 +560,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

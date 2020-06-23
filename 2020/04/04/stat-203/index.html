@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.1k 字
+                    10.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      43 分钟
+                      44 分钟
                   </span>
                 
 
@@ -1713,6 +1713,50 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <p><img src="/Blog/intro/Covariance_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/Covariance_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/Covariance_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Expectation-and-variance-of-sums-of-random-variables"><a href="#Expectation-and-variance-of-sums-of-random-variables" class="headerlink" title="Expectation and variance of sums of random variables"></a>Expectation and variance of sums of random variables</h2><h3 id="Expectation"><a href="#Expectation" class="headerlink" title="Expectation"></a>Expectation</h3><p>E[X+Y] = E[X] + E[Y]</p>
+<p>if a<sub>i</sub> are constants,<br>$$<br>E\ [a_0+\sum_ia_iX_i]=a_0+\sum_ia_iE[X_i]<br>$$<br><br></p>
+<p>example:</p>
+<ul>
+<li>Let X1 be the mark on midterm 1</li>
+<li>Let X2 be the mark on midterm 1</li>
+<li>Let Y be the mark on the final</li>
+</ul>
+<p>overall mark is<br>$$<br>M=0.25X_1+0.25X_2+0.5Y<br>$$<br>Then<br>$$<br>E[M]=0.25E[X_1]+0.25E[X_2]+0.5E[Y]<br>$$<br>The expectation doesn’t depends on the whether X1, X2, Y are independent.</p>
+<br>
+
+<p>proof:</p>
+<p><img src="/Blog/intro/expect_2v.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Variance-of-sums-Independence-case"><a href="#Variance-of-sums-Independence-case" class="headerlink" title="Variance of sums - Independence case"></a>Variance of sums - Independence case</h3><p>If X and Y are independent<br>$$<br>Var[X+Y]=Var[X]+Var[Y]<br>$$<br><img src="/Blog/intro/expect_2v_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Variance-of-sums-dependence-case"><a href="#Variance-of-sums-dependence-case" class="headerlink" title="Variance of sums - dependence case"></a>Variance of sums - dependence case</h3><p>$$<br>Var[X+Y]=Var[X]+Var[Y]+2Cov[X,Y]<br>$$</p>
+<p><img src="/Blog/intro/expect_2v_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>proof:</p>
+<p><img src="/Blog/intro/expect_2v_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/expect_2v_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/expect_2v_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/expect_2v_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/expect_2v_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/expect_2v_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>注意 r = cor(Y1, Y2) / ( sd<sub>Y1</sub> * sd<sub>Y2</sub> )</p>
 
             </div>
             <hr>
@@ -1776,7 +1820,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1803,7 +1847,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1812,7 +1856,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
