@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.2k 字
+                    2.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      14 分钟
                   </span>
                 
 
@@ -469,6 +469,38 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 <p>涉及三个变量的函数的偏微分方程在科学和工程中也非常重要。 三维拉普拉斯方程为<br>$$<br>\frac {\part^2u}{\part x^2} + \frac {\part^2u}{\part y^2}+\frac {\part^2u}{\part z^2}=0<br>$$<br><br></p>
 <br>
 
+<h4 id="Tangent-Planes-and-Linear-Approximations"><a href="#Tangent-Planes-and-Linear-Approximations" class="headerlink" title="Tangent Planes and Linear Approximations"></a>Tangent Planes and Linear Approximations</h4><h5 id="Tangent-Planes"><a href="#Tangent-Planes" class="headerlink" title="Tangent Planes"></a>Tangent Planes</h5><p>假设S has equation z=f(x,y), f has continuous first partial derivatives. P(x0, y0, z0) 是S上的一点.</p>
+<p>C1, C2 be the curves obtained by intersecting the vertical planes y=y0, and x=x0 with the surace S. Then the point lies on both C1 and C2. </p>
+<p>Let T1 and T2 be the tangent lines to the curves C1, C2.at point p. then the <strong>tangent plane</strong> to the surface S at the point P is defined to be the plane that contains both tangent lines T1 and T2.</p>
+<p> <img src="/Blog/intro/tangentPlane.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>任何过P(x0,y0,z0) 的 plane has equation of the form<br>$$<br>A(x-x_0)+B(y-y_0)+C(z-z_0)=0<br>$$<br>By dividing this equation by C and letting a = -A/C and b = -B/C, we can write<br>$$<br>z-z_0=a(x-x_0)+b(y-y_0)<br>$$<br>if represents the tangent plane at P, then its intersection with the plane y=y<sub>0</sub> must be the tangent line T1. Setting y=y<sub>0</sub> in this equation<br>$$<br>z-z_0=a(x-x_0), where\ y=y_0<br>$$<br>we recognize this as the equation of a line with slop <strong>a</strong></p>
+<p>但是我们直到slope of tangent T<sub>1</sub> is <em>f</em><sub>x</sub>(x0, y0), f对x求偏导. 所以 a =  <em>f</em><sub>x</sub>(x0, y0)</p>
+<p>同理 putting x = x0 we get<br>$$<br>z-z_0=b(y-y_0), where \ x=x_0<br>$$<br>which represent the tangent line T2, so b = <em>f</em><sub>y</sub>(x0, y0)</p>
+<br>
+
+<blockquote>
+<p>suppose <em>f</em> has continuous partial derivative. An equation of the tangent plane to the surface z = f(x, y) at the point P(x0, y0, z0) is<br>$$<br>z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)<br>$$<br><br></p>
+<hr>
+
+<br>
+
+<p>Note the similarity between the equation of a tangent plane and the equation of a tangent line:<br>$$<br>y-y_0=f’(x_0)(x-x_0)<br>$$</p>
+</blockquote>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/tangentPlane_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>tangent plane of function <em>f</em>(x,y) = 2x<sup>2</sup>+y<sup>2</sup> at the point (1,1,3) is z=4x+2y-3<br>$$<br>L(x,y)=4x+2y-3<br>$$<br>is a good approximation to f(x, y) when (x, y) is near (1,1). The function L is called the <strong>linearization</strong> of <em>f</em> at (1,1)and the approximation<br>$$<br>f(x,y)\approx 4x+2y-3<br>$$<br>is called the <strong>linear approximation</strong> or <strong>tangent plane approximation</strong> of <em>f</em> at (1,1) </p>
+<br>
+
+<p>for instance the point (1.1, 0.95) the linear approximation gives<br>$$<br>f(1.1, 0.95)\approx 4(1.1)+2(0.95)-3=3.3<br>$$<br>which quite close to the true value of f(1.1, 0.95) = 3.3225</p>
+<br>
+
+<p>in general, we know that an equation of the tangent plane to the graph of a function <em>f</em> of two variables at the point (a, b, f(a, b)) is<br>$$<br>z = f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)<br>$$<br><img src="/Blog/intro/tangentPlane_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -499,6 +531,12 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2020/06/23/AVL/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">平衡二叉树与AVL树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">

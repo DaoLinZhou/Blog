@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.3k 字
+                    10.4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      44 分钟
+                      45 分钟
                   </span>
                 
 
@@ -1155,7 +1155,7 @@
 <p><img src="/Blog/intro/random_response.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>P(Y)=P(Y|H_2)P(H_2) +P(Y|T_2)P(T_2)<br>$$</p>
 <p>$$<br>= \frac 12(\frac 12)+p*(\frac 12)\ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \  <br>$$</p>
 <p>so<br>$$<br>p=2[P(Y)-\frac 14]<br>$$<br><br></p>
-<h3 id="Bayes’s-Theorem"><a href="#Bayes’s-Theorem" class="headerlink" title="Bayes’s Theorem"></a>Bayes’s Theorem</h3><p>if events B<sub>1</sub>, B<sub>2</sub>,…B<sub>k</sub> form a <strong>partition</strong> of S<br>$$<br>\bigcup_{i=1}^KB_i=S\ \ and \ \ \bigcap_{i=1}^KB_i=\empty<br>$$<br>Then:<br>$$<br>P(B_i|A)=\frac {P(AB_i)} {P(A)}<br>$$</p>
+<h3 id="Bayes’s-Theorem-贝叶斯定理"><a href="#Bayes’s-Theorem-贝叶斯定理" class="headerlink" title="Bayes’s Theorem(贝叶斯定理)"></a>Bayes’s Theorem(贝叶斯定理)</h3><p>if events B<sub>1</sub>, B<sub>2</sub>,…B<sub>k</sub> form a <strong>partition</strong> of S<br>$$<br>\bigcup_{i=1}^KB_i=S\ \ and \ \ \bigcap_{i=1}^KB_i=\empty<br>$$<br>Then:<br>$$<br>P(B_i|A)=\frac {P(AB_i)} {P(A)}<br>$$</p>
 <p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  =\frac {P(A|B_i)P(B_i)}{\sum_{j=1}^K P(A|B_j)P(B_j)}<br>$$</p>
 <br>
 
@@ -1757,6 +1757,53 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <p><img src="/Blog/intro/expect_2v_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/expect_2v_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>注意 r = cor(Y1, Y2) / ( sd<sub>Y1</sub> * sd<sub>Y2</sub> )</p>
+<br>
+
+<br>
+
+<h2 id="Central-Limit-Theorem"><a href="#Central-Limit-Theorem" class="headerlink" title="Central Limit Theorem"></a>Central Limit Theorem</h2><p>Expectation Variance and Distribution</p>
+<h3 id="Averages-of-iid-Random-Variables"><a href="#Averages-of-iid-Random-Variables" class="headerlink" title="Averages of iid Random Variables"></a>Averages of iid Random Variables</h3><p>随机变量是iid(independent, identically and distributed) if they are independent, each with the same distribution.</p>
+<p>The <strong>average</strong> of a collection of iid rv’s is commonly of interest(利益) in statistical contexts</p>
+<br>
+
+<p><img src="/Blog/intro/clt_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>Linear combinations of normally distributed rv’s are normally distributed.</p>
+</blockquote>
+<p>如果Y1,…Yn 是iid, 并且服从N(μ, σ<sup>2</sup>), 则Y_bar ~ N(μ, σ<sup>2</sup>/n)</p>
+<br>
+
+<p>Example:</p>
+<p><img src="/Blog/intro/iid_clt.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="CLT"><a href="#CLT" class="headerlink" title="CLT"></a>CLT</h3><p><img src="/Blog/intro/iid_clt_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>example:</p>
+<p><img src="/Blog/intro/iid_clt_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/iid_clt_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/iid_clt_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/clt_ex_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/clt_ex_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/clt_ex_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/clt_ex_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/clt_ex_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/clt_ex_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/clt_ex_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
