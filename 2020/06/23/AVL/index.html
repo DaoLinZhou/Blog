@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3k 字
+                    3.1k 字
                   </span>
                 
 
@@ -541,6 +541,7 @@ private:
                 count--;
                 retNode = leftNode;
             } else {
+                // 寻找大于node的最小值最为前驱
                 Node *successor = new Node(minimum(node-&gt;right));
                 successor-&gt;right = remove(node-&gt;right, successor-&gt;key);
                 successor-&gt;left = node-&gt;left;
