@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.9k 字
+                    3.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      15 分钟
+                      17 分钟
                   </span>
                 
 
@@ -539,6 +539,51 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <p>example:</p>
 <p><img src="/Blog/intro/calculus_pd_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Chain-Rule"><a href="#Chain-Rule" class="headerlink" title="Chain Rule"></a>Chain Rule</h4><h5 id="Chain-Rule-case1"><a href="#Chain-Rule-case1" class="headerlink" title="Chain Rule (case1)"></a>Chain Rule (case1)</h5><p>当只有单一变量的时候的的chain rule<br>$$<br>\frac {dy}{dt}=\frac {dy}{dx}\frac {dx}{dt}<br>$$<br>当有多个变量时, z = <em>f</em>(x, y), x = g(t) and y=h(t)<br>$$<br>\frac {dz}{dt}=\frac {\partial f}{\partial x}\frac {dx}{dt}+\frac {\partial f}{\partial y}\frac {dy}{dt}<br>$$</p>
+<blockquote>
+<p><img src="/Blog/intro/2chain_rule.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<br>
+
+<p>一个类似的定义是:<br>$$<br>dz=\frac{\partial z}{\partial x}dx+\frac{\partial z}{\partial y}dy<br>$$<br><br></p>
+<p>example:</p>
+<p>z = x/y, where x = f(t), y = g(t), 求dz/dt</p>
+<p>解法1:</p>
+<p>把x,y替换为t, 求z’<br>$$<br>z=\frac {f(t)}{g(t)}<br>$$</p>
+<p>$$<br>z’=\frac {f’(t)g(t)-f(t)g’(t)}{g(t)^2}<br>$$</p>
+<br>
+
+<p>解法2:<br>$$<br>\frac {dz}{dt}=\frac {\partial f}{\partial x}\frac {dx}{dt}+\frac {\partial f}{\partial y}\frac {dy}{dt}<br>$$</p>
+<p>$$<br>z’=\frac 1yf’(t)+(-1)\frac x{y^2}g’(t)<br>$$</p>
+<p>$$<br>=\frac {f’(t)y-xg’(t)}{y^2}<br>$$</p>
+<p>把x,y替换为f(x), g(x)<br>$$<br>=\frac {f’(t)g(t)-f(t)g’(t)}{g(t)^2}<br>$$<br><br></p>
+<h5 id="Chain-Rule-case2"><a href="#Chain-Rule-case2" class="headerlink" title="Chain Rule (case2)"></a>Chain Rule (case2)</h5><p><img src="/Blog/intro/2chain_rule_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>example:</p>
+<p><img src="/Blog/intro/2chain_rule_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h5 id="Chain-Rule-General-Version"><a href="#Chain-Rule-General-Version" class="headerlink" title="Chain Rule(General Version)"></a>Chain Rule(General Version)</h5><p><img src="/Blog/intro/2chain_rule_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/2chain_rule_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Implicit-Differentiation"><a href="#Implicit-Differentiation" class="headerlink" title="Implicit Differentiation"></a>Implicit Differentiation</h3><p>假设F(x,y)=0, y是x的一个函数 y = f(x), 所以F(x, f(x))=0 for all x in the domain of f. If F is differentiable.<br>$$<br>\frac {\partial F}{\partial x}\frac{dx}{dx}+\frac {\partial F}{\partial y}\frac{dy}{dx}=0<br>$$<br><img src="/Blog/intro/2chain_rule_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/2chain_rule_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果F(x,y,z) z=f(x,y) for all (x, y) in the domain of f<br>$$<br>\frac {\partial F}{\partial x}\frac{\partial x}{\partial x}+\frac {\partial F}{\partial y}\frac{\partial y}{\partial x}+\frac {\partial F}{\partial z}\frac{\partial z}{\partial x}=0<br>$$<br>由于<br>$$<br>\frac \partial {\partial x}(x)=1,\ \ \frac \partial {\partial x}(y)=0<br>$$<br>所以<br>$$<br>\frac {\partial F}{\partial x}+\frac {\partial F}{\partial z}\frac{\partial z}{\partial x}=0<br>$$<br><img src="/Blog/intro/2chain_rule_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/2chain_rule_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
 
             </div>
             <hr>
