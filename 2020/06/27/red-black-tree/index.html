@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.6k 字
+                    5.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      16 分钟
+                      21 分钟
                   </span>
                 
 
@@ -454,10 +454,10 @@
 <p>也就是确保 node.left 和 node.left.left 中有一个是红色(不可能全为红色, 这是红黑树的性质), 当递归到 node.left 时才能保证 <strong>当前节点以及当前节点的左孩子中有一个为红色</strong>.</p>
 <br>
 
-<p>那么怎么确保 node.left 和 node.left.left 不全为黑色? 换句话说, 当node.left和node.left.left为黑色时, 怎么变换才能使得他们不全为黑色?</p>
-<p>当node的右孩子是2节点时(左孩子一定是2节点, 因为我们假设 node.left和node.left.left 全为黑色) 和Case2一样</p>
+<p>那么怎么确保 node.left 和 node.left.left 不全为黑色? 换句话说, 当 node.left 和 node.left.left 为黑色时, 怎么变换才能使得他们不全为黑色?</p>
+<p>当node的右孩子是2节点时(左孩子一定是2节点, 因为我们假设 node.left 和 node.left.left 全为黑色) 和Case2一样</p>
 <p><img src="/Blog/intro/rb_remove_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>当node的右孩子是3节点时 (node.right.left.color == RED), 和Case3 是一样的</p>
+<p>当node的右孩子是3节点时 (node.right.left 为红色), 和Case3 是一样的</p>
 <p><img src="/Blog/intro/rb_remove_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <pre><code class="c++">void removeMin(){
     if (root) root-&gt;color = RED;
@@ -467,7 +467,7 @@
 
 Node* balance(Node* node){
     // 是否需要左旋转
-    if(isRed(node-&gt;right) &amp;&amp; !isRed(node-&gt;left))
+    if(isRed(node-&gt;right))
         node = leftRotate(node);
     // 是否需要右旋转
     if(isRed(node-&gt;left) &amp;&amp; isRed(node-&gt;left-&gt;left))
@@ -546,7 +546,150 @@ Node* removeMax(Node* node){
 
 <br>
 
+<h3 id="删除任意节点"><a href="#删除任意节点" class="headerlink" title="删除任意节点"></a>删除任意节点</h3><p>和删除最大值或删除最小值一样.</p>
+<p>如果删除的节点在左子树, 我们就要保证 node.left 和 node.left.left 中有一个为红色</p>
+<p>如果删除的节点在右子树, 在当前节点临时转为右倾之后, 我们就要保证 node.right 和 node.right.left 中有一个为红色</p>
+<p>保持上面两条性质, 我们就可以保证删除的<strong>叶子节点</strong>为<strong>红色</strong>节点.</p>
+<br>
 
+<p>共有方法</p>
+<pre><code class="c++">void remove(Key key){
+    if (root &amp;&amp; !isRed(root-&gt;left) &amp;&amp; !isRed(root-&gt;right))
+        root-&gt;color = RED;
+    if(contain(key))
+        root = remove(root, key);
+    if (root)
+        root-&gt;color = BLACK;
+}</code></pre>
+<p>版本1: 逻辑清晰版本</p>
+<pre><code class="c++">Node* remove(Node* node, Key key){
+
+    if(node-&gt;key &gt; key) {    // 如果在左子树, 参考removeMin
+
+        if(!isRed(node-&gt;left) &amp;&amp; !isRed(node-&gt;left-&gt;left))
+            node = moveRedLeft(node);
+        node-&gt;left = remove(node-&gt;left, key);
+
+    } 
+
+    else if(node-&gt;key &lt; key) {    // 如果在右子树, 参考removeMax
+
+        if (isRed(node-&gt;left))    // 临时转为右倾
+            node = rightRotate(node);
+        if (!isRed(node-&gt;right) &amp;&amp; !isRed(node-&gt;right-&gt;left))
+            node = moveRedRight(node);
+        node-&gt;right = remove(node-&gt;right, key);
+
+    } 
+
+    else {    // 如果当前节点就是要删除的节点
+
+        // 直接删除
+        if(node-&gt;left == nullptr){ // node 是叶子节点, 且 node 一定为红色
+            delete node;
+            count --;
+            return nullptr;
+        }
+
+        // 不是叶子节点, 说明要找到 predecessor 或 successor 来替换当前节点
+        // 也就是说要用 removeMax 或 removeMin, 因此依然要保持上面的两条性质.
+        // 如果是找 predecessor(小于它的最大值), 则是要在左子树中查找
+        // 因此要确保 node-&gt;left 和 node-&gt;left-&gt;left 有一个为红色
+        // 反之如果要用 successor 来替换的话则要确保 node-&gt;right 和 node-&gt;right-&gt;left 有一个为红色
+        if(!isRed(node-&gt;left) &amp;&amp; !isRed(node-&gt;left-&gt;left))
+            node = moveRedLeft(node);
+
+        if(node-&gt;key == key) {           // moveRedLeft之后node可能改变了, 所以要再判断一下
+            Node *predecessor = maximum(node-&gt;left);
+            node-&gt;value = predecessor-&gt;value;
+            node-&gt;key = predecessor-&gt;key;
+            node-&gt;left = removeMax(node-&gt;left);
+        }else{
+            node-&gt;left = remove(node-&gt;left, key); // moveRedLeft 会把node挤到左子树, 所以在左子树继续寻找
+        }
+
+    }
+    return balance(node);
+}</code></pre>
+<p>虽然上面的操作繁琐了一点, 但是步骤清晰, 各个情况区分明显. 在熟悉这个思路之后就可以有一些骚操作.</p>
+<p>很明显, 上面这套代码小于的操作可以和等于的操作融合. (都有 moveRedLeft 和 remove(node-&gt;left, key) )</p>
+<br>
+
+<p>版本2: 版本1的精简</p>
+<pre><code class="c++">Node* remove(Node* node, Key key){
+    if(node-&gt;key &lt; key) {
+        if (isRed(node-&gt;left))
+            node = rightRotate(node);
+        if (!isRed(node-&gt;right) &amp;&amp; !isRed(node-&gt;right-&gt;left))
+            node = moveRedRight(node);
+        node-&gt;right = remove(node-&gt;right, key);
+    } else {    // 首先必须确定contains(key)
+        // 其实如果为叶子节点, 则它一定是我们要删除的node, 因为我们确定contains(key)
+        // 所以我觉得node-&gt;key == key这个判断是没有意义的
+        if(node-&gt;key == key &amp;&amp; node-&gt;left == nullptr){
+            delete node;
+            count --;
+            return nullptr;
+        }
+        // 如果不是叶子节点则一定要维护这个性质
+        if(!isRed(node-&gt;left) &amp;&amp; !isRed(node-&gt;left-&gt;left))
+            node = moveRedLeft(node);
+        if(node-&gt;key == key) { // 找到了, 则用predecessor代替
+            Node *predecessor = maximum(node-&gt;left);
+            node-&gt;value = predecessor-&gt;value;
+            node-&gt;key = predecessor-&gt;key;
+            node-&gt;left = removeMax(node-&gt;left);
+        }else{  // 没找到则继续向下查找
+            node-&gt;left = remove(node-&gt;left, key);
+        }
+    }
+    return balance(node);
+}</code></pre>
+<br>
+
+<p>版本3: successor和removeMin的使用</p>
+<pre><code class="c++">Node* remove(Node* node, Key key){
+    if(node-&gt;key &gt; key) {
+        if(!isRed(node-&gt;left) &amp;&amp; !isRed(node-&gt;left-&gt;left))
+            node = moveRedLeft(node);
+        node-&gt;left = remove(node-&gt;left, key);
+    } else {
+        // 当前节点临时转为右倾
+        if (isRed(node-&gt;left))
+            node = rightRotate(node);
+        if (node-&gt;key == key &amp;&amp; (node-&gt;right == nullptr)) {
+            delete node;
+            count--;
+            return nullptr;
+        }
+        if (!isRed(node-&gt;right) &amp;&amp; !isRed(node-&gt;right-&gt;left))
+            node = moveRedRight(node);
+        if (node-&gt;key == key) {
+            Node *successor = minimum(node-&gt;right);
+            node-&gt;value = successor-&gt;value;
+            node-&gt;key = successor-&gt;key;
+            node-&gt;right = removeMin(node-&gt;right);
+        } else{
+            node-&gt;right = remove(node-&gt;right, key);
+        }
+    }
+    return balance(node);
+}</code></pre>
+<br>
+
+<p>那么那种方法性能更优?</p>
+<p>对于左倾红黑树来说, successor和 removeMin 的方式性能最优. 因为在左倾红黑树中 removeMin 比 removeMax 性能更优</p>
+<p>也就是说版本3性能最优</p>
+<br>
+
+<br>
+
+<p><a href="https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/redbalcktree/LLRB.h" target="_blank" rel="noopener">代码实现</a></p>
+<h2 id="左倾红黑树总结"><a href="#左倾红黑树总结" class="headerlink" title="左倾红黑树总结"></a>左倾红黑树总结</h2><p><img src="/Blog/intro/red-balck_tree_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>以这种方式表示的红黑树叫做左倾红黑树, 因为3节点是向左倾斜的</p>
+<p>不过这不是唯一的实现方式. 也可以有右倾的方式</p>
+<p>而红黑树的实现不唯一</p>
+<br>
 
 
 
@@ -560,10 +703,8 @@ Node* removeMax(Node* node){
 <p>红黑树牺牲了平衡性(2logn的高度) 但<strong>统计性能更优</strong>(综合增删改查所有的操作)</p>
 <br>
 
-<p><img src="/Blog/intro/red-balck_tree_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>以这种方式表示的红黑树叫做左倾红黑树, 因为3节点是向左倾斜的</p>
-<p>不过这不是唯一的实现方式. 也可以有右倾的方式</p>
-<p>而且红黑树的实现不唯一, 例如: 算法导论中红黑树的实现</p>
+
+
 <br>
 
 <blockquote>
@@ -572,7 +713,7 @@ Node* removeMax(Node* node){
 </blockquote>
 <blockquote>
 <p>可能很多同学看面经，会看到关于红黑树的这样一条性质：对于红黑树，任何不平衡都会在三次旋转内解决。</p>
-<p>但是我们的红黑树并没有这个性质</p>
+<p>但是我们的左倾红黑树并没有这个性质</p>
 <p>在这里，关键在于，上面的红黑树（包括《算法4》所介绍的红黑树），是一种特殊的红黑树——左倾红黑树。但是红黑树本身并不需要“左倾”性质。也就是说，左倾红黑树一定是红黑树；但是红黑树不一定全是左倾红黑树。换句话说，我们的代码为了维护“左倾”这个性质，做了额外的事情，消耗了性能，使得我们的实现，没有“任何不平衡都可以在三次旋转内解决”这么好的性能优势。</p>
 <p>换句话说，以下的两种形状，是满足红黑树的性质的！（其中B代表黑节点；R代表红节点）：</p>
 <p>   B<br> /   \          
@@ -642,7 +783,7 @@ B     R</p>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -669,7 +810,7 @@ B     R</p>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -678,7 +819,7 @@ B     R</p>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
