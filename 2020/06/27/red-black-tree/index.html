@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.7k 字
+                    7.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      21 分钟
+                      28 分钟
                   </span>
                 
 
@@ -684,26 +684,308 @@ Node* removeMax(Node* node){
 
 <br>
 
-<p><a href="https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/redbalcktree/LLRB.h" target="_blank" rel="noopener">代码实现</a></p>
+<h2 id="左倾红黑树整体实现"><a href="#左倾红黑树整体实现" class="headerlink" title="左倾红黑树整体实现"></a>左倾红黑树整体实现</h2><p><a href="https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/redbalcktree/LLRB.h" target="_blank" rel="noopener">代码实现</a></p>
 <h2 id="左倾红黑树总结"><a href="#左倾红黑树总结" class="headerlink" title="左倾红黑树总结"></a>左倾红黑树总结</h2><p><img src="/Blog/intro/red-balck_tree_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>以这种方式表示的红黑树叫做左倾红黑树, 因为3节点是向左倾斜的</p>
 <p>不过这不是唯一的实现方式. 也可以有右倾的方式</p>
 <p>而红黑树的实现不唯一</p>
 <br>
 
+<br>
 
+<h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><p>左倾红黑树是一种特殊的红黑树, 然而红黑树却不一定需要左倾</p>
+<p>也就是说, 一个黑色节点, 它的左右孩子都可以是红色的.</p>
+<br>
 
+<h2 id="红黑树的插入"><a href="#红黑树的插入" class="headerlink" title="红黑树的插入"></a>红黑树的插入</h2><p>由于红黑树不倾斜, 所以在左子树插入和在右子树插入操作的思路都是一样的. 或者说相反的, 因此只以一种举例. </p>
+<p>什么时候进行这个修复操作?</p>
+<ol>
+<li>当当前节点是根节点时</li>
+<li>当父亲节点是黑色节点</li>
+</ol>
+<p>这是因为:</p>
+<p>当前节点为红色节点, 且<strong>当前节点代表的子树是黑平衡</strong>的. </p>
+<p>如果父亲节点也为红色就要向上修复. </p>
+<p>当修复到根节点时停止(没有父亲节点了). 此时根节点是黑色平衡, 在把根节点染黑, 依然是黑平衡.</p>
+<br>
 
+<blockquote>
+<p><strong>以下红黑树的旋转操作将只进行旋转, 而不改变颜色</strong></p>
+<p>同时因为节点有parent这个属性, 旋转不用返回新的根节点了</p>
+</blockquote>
+<h3 id="如果插入节点的父亲节点是一个左孩子"><a href="#如果插入节点的父亲节点是一个左孩子" class="headerlink" title="如果插入节点的父亲节点是一个左孩子"></a>如果插入节点的父亲节点是一个左孩子</h3><p><strong>情况1: 插入节点的叔叔节点(父亲的兄弟节点)是红色.</strong></p>
+<p><img src="/Blog/intro/rb_insert.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时只要反转一下颜色, 即可继续向上修复</p>
+<p>x是当前节点, 要反转 父亲节点, 叔叔节点, 以及父亲节点的父亲节点 的颜色.</p>
+<blockquote>
+<p>为什么我们确信一定有祖父节点? 当一个节点只有父亲节点却没有祖父节点, 说明它的父亲节点是根节点. 根节点一定为黑色. </p>
+<p>而当父亲节点是黑色时我们停止修复. 这是因为没有双红冲突.</p>
+</blockquote>
+<br>
 
+<p><strong>情况2: 叔叔节点不为红色.</strong></p>
+<p>如果x是右孩子, 则把它变为左孩子进行处理</p>
+<p><img src="/Blog/intro/rb_insert_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果是左孩子, 则</p>
+<p><img src="/Blog/intro/rb_insert_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到这么操作之后x的父亲节点就已经是黑色了, 说明修复完成, 直接可以退出循环.</p>
+<br>
 
+<p>如果插入节点的父亲是一个右孩子, 操作是相反的. 但结构是一样的.</p>
+<pre><code class="c++">template&lt;typename Key, typename Value&gt;
+bool RedBlackTree&lt;Key, Value&gt;::insert(Key key, Value value) {
+    if(search(key)){
+        return false;
+    }
+    count ++;
+    Node* x = new Node(key, value);
+    root = insert(root, x); // BST insert
 
+    // 修复
+    while(x != root &amp;&amp; isRed(x-&gt;parent)){
+        // 如果插入节点的父亲节点是左孩子
+        if(x-&gt;parent == x-&gt;parent-&gt;parent-&gt;left){
+            Node* y = sibling(x-&gt;parent);
+            if(isRed(y)){    // 情况1
+                x-&gt;parent-&gt;parent-&gt;isBlack = false;
+                x-&gt;parent-&gt;isBlack = true;
+                y-&gt;isBlack = true;
+                x = x-&gt;parent-&gt;parent;
+            } else {        // 情况2
+                if(x == x-&gt;parent-&gt;right){    // 把 x 旋转为左孩子
+                    x = x-&gt;parent;
+                    leftRotate(x);
+                }
+                x-&gt;parent-&gt;parent-&gt;isBlack = !x-&gt;parent-&gt;parent-&gt;isBlack;
+                x-&gt;parent-&gt;isBlack = !x-&gt;parent-&gt;isBlack;
+                rightRotate(x-&gt;parent-&gt;parent);
+            }
+        } else {    // 如果插入节点的父亲节点是右孩子, 正好与上面相反
+            Node* y = sibling(x-&gt;parent);
+            if(isRed(y)){
+                x-&gt;parent-&gt;parent-&gt;isBlack = false;
+                x-&gt;parent-&gt;isBlack = true;
+                y-&gt;isBlack = true;
+
+                x = x-&gt;parent-&gt;parent;
+            } else {
+                if (x == x-&gt;parent-&gt;left){
+                    x = x-&gt;parent;
+                    rightRotate(x);
+                }
+                x-&gt;parent-&gt;parent-&gt;isBlack = !x-&gt;parent-&gt;parent-&gt;isBlack;
+                x-&gt;parent-&gt;isBlack = !x-&gt;parent-&gt;isBlack;
+                leftRotate(x-&gt;parent-&gt;parent);
+            }
+        }
+    }
+
+    root-&gt;isBlack = true;
+    return true;
+}</code></pre>
+<br>
+
+<br>
+
+<h2 id="红黑树的删除"><a href="#红黑树的删除" class="headerlink" title="红黑树的删除"></a>红黑树的删除</h2><p>对任意一个节点的删除都可以转化为对某棵子树的最大值或最小值的删除.</p>
+<br>
+
+<p><strong>有两个孩子</strong></p>
+<p>如果要删除的节点的左右孩子都不为空, 则找到前驱或后继, 将前驱或后继的值覆盖当前节点的值(节点颜色不应改变). 之后删除前驱或后继</p>
+<p>因此情况就转化为删除一个<strong>最多只有一个孩子的节点</strong></p>
+<br>
+
+<p><strong>如果有1个孩子</strong></p>
+<p>如果有1个孩子, 那么这个孩子一定为红色, 不然当前子树不满足黑平衡.</p>
+<p>此时只要一次旋转, 把当前节点旋转为叶子节点即可.</p>
+<p><img src="/Blog/intro/rb_tree_remove.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><strong>如果一个孩子都没有</strong></p>
+<p>此时情况就变为删除一个左右都为空的节点.</p>
+<p>如果这个节点为<span style="color:red;">红色</span>, 直接删除即可. 不影响红黑树的性质</p>
+<br>
+
+<p>问题就是如何删除一个黑色的叶子节点 (黑色的左右为空的节点).</p>
+<p>或者说, 如何在删除这个节点后保持红黑树的性质.</p>
+<br>
+
+<br>
+
+<h3 id="fixup操作"><a href="#fixup操作" class="headerlink" title="fixup操作"></a>fixup操作</h3><p>我们要对 x 进行 fixup 操作, 因为 x 的层数比 x 的兄弟节点 y 少 1 层.</p>
+<p>同样红黑树的操作是对称的, 所以假设x是一个左孩子, 而x是右孩子的情况于此类似.</p>
+<br>
+
+<ol>
+<li>如果 y 是红色:</li>
+</ol>
+<p><img src="/Blog/intro/rb_tree_remove_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个操作没有修复x的层数. 但是它使得 new y 变成了黑色节点.</p>
+<br>
+
+<ol start="2">
+<li>如果y是黑色, 且左右节点为黑:</li>
+</ol>
+<p><img src="/Blog/intro/rb_tree_remove_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>node的颜色我们不清楚, 可能为红也可能为黑.</p>
+<br>
+
+<p>如果node为红色. 则说明删除之前node的黑高度为 h+2, 因为y的黑高度为 h+2.</p>
+<p>那么此时就可以退出循环, 停止修复, 把node染黑即可. 此时node的黑高度不变, 且左右子树黑平衡.</p>
+<br>
+
+<p>如果node为黑色. 说明node在删除一个节点后, 比删除前少了一层(比它的兄弟节点少了一层), x = node, 继续循环向上修复</p>
+<br>
+
+<ol start="3">
+<li>如果y的左节点为红色(右节点的颜色无所谓)</li>
+</ol>
+<p><img src="/Blog/intro/rb_tree_remove_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>fix完毕, 之间退出循环</p>
+<ol start="4">
+<li>如果y的右节点为红色</li>
+</ol>
+<p>则直接依然按照上面的步骤从 step1 开始即可.</p>
+<br>
+
+<br>
+
+<blockquote>
+<p>fix之前 x 的黑高度比x的兄弟节点的黑高度 少1层.</p>
+<p>fix之后 x 的黑高度等于x的兄弟节点的黑高度.</p>
+<p>这就是fix的作用.</p>
+</blockquote>
+<p>然而什么时候调用fix?</p>
+<p><img src="/Blog/intro/rb_tree_remove_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果delete之后调用fixup. 的确x的黑高度为0, y的黑高度为1. 然而我们此时却不能fixup(x). 因为x为null, 无法通过x找到x的父亲节点.</p>
+<p>此时应该是我们假设已经delete x了(依然保留x来寻找x的父亲节点), fixup(x), 再delete x</p>
+<pre><code class="c++">template&lt;typename Key, typename Value&gt;
+bool RedBlackTree&lt;Key, Value&gt;::remove(Key key) {
+    Node* z = find(root, key);
+    if(z == nullptr){
+        return false;
+    }
+    count --;
+
+    // find the real node to remove
+    Node* toRemove;
+    if(z-&gt;left == nullptr || z-&gt;right == nullptr){
+        toRemove = z;
+    } else {
+        toRemove = maximum(z-&gt;left);
+    }
+
+    if(toRemove-&gt;left == nullptr &amp;&amp; toRemove-&gt;right == nullptr) {
+        if(toRemove == root){    // 左右为空且要删除节点为根节点
+            delete toRemove;
+            root = nullptr;
+            return true;
+        }
+        // assume it is deleted
+        if(toRemove-&gt;isBlack){    // 如果为红就直接删除, 不用fixup
+            fixup(toRemove);
+        }
+
+    } else {
+        // since toRemove has only one child, that child must be red, color it black
+        // rotate toRemove node to the leaf, now toRemove is a red node
+        if (toRemove-&gt;left != nullptr) {
+            rightRotate(toRemove);
+        } else {
+            leftRotate(toRemove);
+        }
+        toRemove-&gt;parent-&gt;isBlack = true;
+    }
+
+    // copy value
+    if (toRemove != z) {
+        z-&gt;key = toRemove-&gt;key;
+        z-&gt;value = toRemove-&gt;value;
+    }
+
+    // detach and remove
+    Node* leaf = toRemove-&gt;parent;
+    if(leaf-&gt;left == toRemove){
+        leaf-&gt;left = nullptr;
+    } else {
+        leaf-&gt;right = nullptr;
+    }
+    delete toRemove;
+
+    return true;
+}
+
+// balance the black height of node and sibling(node)
+template&lt;typename Key, typename Value&gt;
+void RedBlackTree&lt;Key, Value&gt;::fixup(Node* node) {
+    while(node != root &amp;&amp; !isRed(node)){
+        if(node-&gt;parent-&gt;left == node){
+            Node* y = sibling(node);
+            if(isRed(y)){    // y为红, 则把y转黑
+                y-&gt;isBlack = true;
+                y-&gt;parent-&gt;isBlack = false;
+                leftRotate(y-&gt;parent);
+                y = node-&gt;parent-&gt;right;
+            }
+            if(!isRed(y-&gt;left) &amp;&amp; !isRed(y-&gt;right)){    // y的左右都为黑
+                y-&gt;isBlack = false;
+                node = node-&gt;parent;
+            } else {
+                if(isRed(y-&gt;left)){    // 如果y的左节点为红色
+                    y-&gt;left-&gt;isBlack = true;
+                    y-&gt;isBlack = false;
+                    rightRotate(y);
+                    y = y-&gt;parent;
+                }
+                // y的右节点为红色
+                y-&gt;isBlack = node-&gt;parent-&gt;isBlack;
+                node-&gt;parent-&gt;isBlack = true;
+                y-&gt;right-&gt;isBlack = true;
+                leftRotate(node-&gt;parent);
+                node = root;
+            }
+        } else {
+            Node* y = sibling(node);
+            if(isRed(y)){
+                y-&gt;isBlack = true;
+                y-&gt;parent-&gt;isBlack = false;
+                rightRotate(y-&gt;parent);
+                y = node-&gt;parent-&gt;left;
+            }
+            if(!isRed(y-&gt;left) &amp;&amp; !isRed(y-&gt;right)){
+                y-&gt;isBlack = false;
+                node = node-&gt;parent;
+            } else {
+                if(isRed(y-&gt;right)){
+                    y-&gt;right-&gt;isBlack = true;
+                    y-&gt;isBlack = false;
+                    leftRotate(y);
+                    y = y-&gt;parent;
+                }
+                y-&gt;isBlack = node-&gt;parent-&gt;isBlack;
+                node-&gt;parent-&gt;isBlack = true;
+                y-&gt;left-&gt;isBlack = true;
+                rightRotate(node-&gt;parent);
+                node = root;
+            }
+        }
+    }
+    if(node){
+        node-&gt;isBlack = true;
+    }
+}</code></pre>
+<br>
+
+<h2 id="红黑树整体实现"><a href="#红黑树整体实现" class="headerlink" title="红黑树整体实现"></a>红黑树整体实现</h2><p><a href="https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/redbalcktree/RedBlackTree.h" target="_blank" rel="noopener">代码参考</a></p>
 <h1 id="红黑树性能总结"><a href="#红黑树性能总结" class="headerlink" title="红黑树性能总结:"></a>红黑树性能总结:</h1><p>对于完全随机的数据, 普通的二分搜索树很好用</p>
 <p>缺点: 极端情况退化成链表 (或者高度不平衡)</p>
 <p>对于查询较多的使用情况, AVL 很好用</p>
 <p>红黑树牺牲了平衡性(2logn的高度) 但<strong>统计性能更优</strong>(综合增删改查所有的操作)</p>
+<blockquote>
+<p>我的电脑上, 数据规模500000左右时, 红黑树的运行时间时AVL的2/3.</p>
+<p>但可能也是有二者都不是以最优的方式实现的缘故.</p>
+</blockquote>
 <br>
-
-
 
 <br>
 
@@ -711,21 +993,6 @@ Node* removeMax(Node* node){
 <p>另一个统计性能优秀的树结构: Splay Tree(伸展树)</p>
 <p>局部性原理: 刚被访问的内容下次高概率被再次访问</p>
 </blockquote>
-<blockquote>
-<p>可能很多同学看面经，会看到关于红黑树的这样一条性质：对于红黑树，任何不平衡都会在三次旋转内解决。</p>
-<p>但是我们的左倾红黑树并没有这个性质</p>
-<p>在这里，关键在于，上面的红黑树（包括《算法4》所介绍的红黑树），是一种特殊的红黑树——左倾红黑树。但是红黑树本身并不需要“左倾”性质。也就是说，左倾红黑树一定是红黑树；但是红黑树不一定全是左倾红黑树。换句话说，我们的代码为了维护“左倾”这个性质，做了额外的事情，消耗了性能，使得我们的实现，没有“任何不平衡都可以在三次旋转内解决”这么好的性能优势。</p>
-<p>换句话说，以下的两种形状，是满足红黑树的性质的！（其中B代表黑节点；R代表红节点）：</p>
-<p>   B<br> /   \          
-B     R</p>
-<p>   B<br> /   <br>R     R<br>但是，由于在我们的实现中，以上两种情况并不满足“左倾”的性质，我们就需要额外的操作，将这两种情况转换成“左倾”的样子。这也就是我在课程中说的，红黑树有更优的实现。当我们放宽限制，让红黑树也可以包含上面两种样子的时候，我们需要的旋转调整将减少，并且有对于任何不平衡，三次旋转即可解决！</p>
-<p>我们可以仔细观察一下其中的第二种样子：</p>
-<p>   B<br> /   <br>R     R<br>根据红黑树和2-3树的关系，这其实意味着红黑树不仅仅是和2-3树等价的，还和2-4树等价（包含2-node，3-node，4-node）。但是，对于其中的4-node，我们只能用以上的样子表示，而不能使用以下两种形状：</p>
-<p>   B    B   </p>
-<p>   /      <br>  R        R<br> /          <br>R            R<br>这是因为以上两种形状，他们破坏了红黑树的性质4！</p>
-</blockquote>
-<br>
-
 <br>
 
 

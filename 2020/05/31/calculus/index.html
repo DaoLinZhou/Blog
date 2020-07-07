@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.2k 字
+                    3.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      17 分钟
+                      19 分钟
                   </span>
                 
 
@@ -582,6 +582,70 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <p>example:</p>
 <p><img src="/Blog/intro/2chain_rule_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Directional-Derivatives-方向导数-and-the-Gradient-Vector-梯度向量"><a href="#Directional-Derivatives-方向导数-and-the-Gradient-Vector-梯度向量" class="headerlink" title="Directional Derivatives(方向导数) and the Gradient Vector (梯度向量)"></a>Directional Derivatives(方向导数) and the Gradient Vector (梯度向量)</h3><p>如果z = <em>f</em>(x, y)那么偏导<em>f</em><sub>x</sub> 和 <em>f</em><sub>y</sub> 就为:</p>
+<p><img src="/Blog/intro/partialderivative.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>假设我们想知道z在(x0, y0) 在方向 u = &lt;a, b&gt; (u是方向向量, 模为1)的变化速度</p>
+<p><img src="/Blog/intro/direction_derivative.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>为了求D<sub>u</sub><em>f</em>(x0, y0), 考虑函数只有一个变量h<br>$$<br>g(h)=f(x_0+ha, y_0+hb)<br>$$<br>假设<br>$$<br>x(h)=x_0+ha,\ \ \ y(h)=y_0+hb<br>$$<br>那么:<br>$$<br>g’(x)=\frac d{dh}f(x(h),y(h)) = \frac {\partial f}{\partial x}\frac {dx}{dh} + \frac {\partial f}{\partial y}\frac {dy}{dh}<br>$$</p>
+<p>$$<br>=\frac {\partial f}{\partial x}a + \frac {\partial f}{\partial y}b=f_x(x(h),y(h))a+f_y(x(h),y(h))b<br>$$</p>
+<p><img src="/Blog/intro/direction_derivative_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h4><p>对梯度的定义为:</p>
+<p><img src="/Blog/intro/direction_derivative_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>因此方向导数就可以写作:<br>$$<br>D_uf(x,y)=\nabla f(x,y)\cdot \vec u<br>$$<br>u 是一个单位向量.</p>
+<br>
+
+<p>对于有多个变量的函数导数就是</p>
+<p><img src="/Blog/intro/direction_derivative_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/direction_derivative_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/direction_derivative_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>那么方向导数最大为多少?<br>$$<br>D_uf(x, y)=\nabla f(x, y)\cdot u = |\nabla f(x, y)|\cdot |u|\cdot \cos (\theta)<br>$$<br>由于u为方向向量, 模为1<br>$$<br>=|\nabla f(x, y)|\cdot \cos (\theta)<br>$$<br>而cos(θ)最大为1, 所以</p>
+<p>方向导数最大值就是梯度的模, 此时u的方向就是梯度的方向</p>
+<p><img src="/Blog/intro/direction_derivative_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Tangent-Planes-to-Level-Surfaces"><a href="#Tangent-Planes-to-Level-Surfaces" class="headerlink" title="Tangent Planes to Level Surfaces"></a>Tangent Planes to Level Surfaces</h3><p>如果一个三维空间的surface为 F(x, y, z) = k</p>
+<p>让P(x0, y0, z0) 是 surface 上的一点.</p>
+<p>曲线C为 r(t) = x(t) <strong>i</strong> + y(t) <strong>j</strong> + z(t) <strong>k</strong> = &lt;x(t), y(t), z(t)&gt; 在surface 上, 且当t = t0时过点 P</p>
+<p>那么, 也就是说曲线让任意一点都满足 F(x, y, z) = k, 所以<br>$$<br>F(x(t), y(t), z(t))=k<br>$$<br>两边同时对t求导<br>$$<br>\frac {\partial F} {\partial x}\frac {dx}{dt}+\frac {\partial F} {\partial y}\frac {dy}{dt}+\frac {\partial F} {\partial z}\frac {dz}{dt}=0<br>$$<br>由于<br>$$<br>\nabla F = &lt;F_x, F_y, F_z&gt;,\ \ \ \ r’(t)=&lt;x’(t), y’(t),z’(t)&gt;<br>$$<br>所以:<br>$$<br>\nabla F\cdot r’(t)=0<br>$$<br>当 t = t0时: r(t0) = &lt;x0, y0, z0&gt;<br>$$<br>\nabla F(x_0, y_0,z_0)\cdot r’(t_0)=0<br>$$<br>这就说明, 在点P的梯度向量, 与tangent vector正交, 如果梯度向量不为0, tangent plane的norm就为梯度向量.</p>
+<p><img src="/Blog/intro/direction_derivative_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/direction_derivative_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>surface S 在点P的 normal line 就是过点P同时与tangent plane正交的直线.</p>
+<p>也就是P+t (gradient)</p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/direction_derivative_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/direction_derivative_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 
