@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.4k 字
+                    10.5k 字
                   </span>
                 
 
@@ -644,6 +644,28 @@
 
 <h4 id="直观的理解"><a href="#直观的理解" class="headerlink" title="直观的理解"></a>直观的理解</h4><p><img src="/Blog/intro/power_of_a_test_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>如果μ=0置信区间是(-3.14, 3.14), 然而实际的μ为4, 那么-3.14到3.14这个范围的值不会拒绝H0(二类错误), 绿色的部分就是统计功效, 其实还有小于-3.14的那一部分, 但面积太少就忽略不计了</p>
+<br>
+
+<br>
+
+<h4 id="Power的计算公式"><a href="#Power的计算公式" class="headerlink" title="Power的计算公式"></a>Power的计算公式</h4><p>虽然上面的计算方式可行, 但是太过繁琐.</p>
+<p>Power的意义是: under H0 is false(Ha is true), the probability to reject H0.</p>
+<p><img src="/Blog/intro/power_calculate_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/power_calculate.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>双尾的证明过程</p>
+<p><img src="/Blog/intro/power_calculate_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>单尾的证明和这个类似. 双尾相当于两个α/2的单尾.</p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/power_calculate_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/power_calculate_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/power_calculate_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>为什么这里用qnorm(0.2), 因为我们算的是Z&gt;=c的面积有0.8的情况, 也就是Z&lt;c 的面积= 0.2的情况, 而qnorm(0.2) 就是计算Z&lt;c的面积=0.2时的c的值</p>
+</blockquote>
 <br>
 
 <br>

@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.7k 字
+                    3.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      19 分钟
+                      20 分钟
                   </span>
                 
 
@@ -627,6 +627,18 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <br>
 
+<p>假设有一个函数为: <em>f</em>(x,y) = k represent a <strong>level curve</strong> of <em>f</em>. </p>
+<p><img src="/Blog/intro/level_curve.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/level_curve_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么f(x(t), y(t)) = k<br>$$<br>\frac d{dt}f(x(t),y(t))=\frac d{dt}k=0<br>$$</p>
+<p>$$<br>f_x|\frac {dx}{dt}+f_y|\frac {dy}{dt}=&lt;f_x,f_y&gt;\cdot &lt;x’,y’&gt;<br>$$</p>
+<p>$$<br>\nabla f(x(t), y(t))\cdot \vec r’(t)=0<br>$$</p>
+<p>$$<br>\nabla f(x_0, y_0)\cdot \vec r’(t_0)=0<br>$$</p>
+<p><img src="/Blog/intro/level_curve_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
 <h3 id="Tangent-Planes-to-Level-Surfaces"><a href="#Tangent-Planes-to-Level-Surfaces" class="headerlink" title="Tangent Planes to Level Surfaces"></a>Tangent Planes to Level Surfaces</h3><p>如果一个三维空间的surface为 F(x, y, z) = k</p>
 <p>让P(x0, y0, z0) 是 surface 上的一点.</p>
 <p>曲线C为 r(t) = x(t) <strong>i</strong> + y(t) <strong>j</strong> + z(t) <strong>k</strong> = &lt;x(t), y(t), z(t)&gt; 在surface 上, 且当t = t0时过点 P</p>
@@ -637,8 +649,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <p>surface S 在点P的 normal line 就是过点P同时与tangent plane正交的直线.</p>
 <p>也就是P+t (gradient)</p>
-<br>
-
+<p>或者写成symmetric form<br>$$<br>\frac {x-x_0}{F_x(x_0, y+0, z_0)}=\frac {y-y_0}{F_y(x_0, y+0, z_0)}=\frac {z-z_0}{F_z(x_0, y+0, z_0)}<br>$$<br><br></p>
 <p>example:</p>
 <p><img src="/Blog/intro/direction_derivative_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
@@ -648,6 +659,26 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 <p><img src="/Blog/intro/direction_derivative_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<br>
+
+<br>
+
+<h3 id="Maximum-and-Minimum-Values"><a href="#Maximum-and-Minimum-Values" class="headerlink" title="Maximum and Minimum Values"></a>Maximum and Minimum Values</h3><p><img src="/Blog/intro/level_curve_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>和二维空间中的导数一样</p>
+<p><img src="/Blog/intro/level_curve_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当偏导数都为0, 说明是局部最大值或局部最小值</p>
+<p><img src="/Blog/intro/level_curve_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/level_curve_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/level_curve_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/level_curve_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/level_curve_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
