@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.9k 字
+                    4.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      20 分钟
+                      22 分钟
                   </span>
                 
 
@@ -421,8 +421,6 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <p>example:</p>
 <p><img src="/Blog/intro/partialderivative_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>解法2:</p>
-<p><img src="/Blog/intro/partialderivative_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>对于有更多变量的function依然是成立的.</p>
@@ -679,6 +677,63 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 
 <p><img src="/Blog/intro/level_curve_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/level_curve_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Absolute-Maximum-and-Absolute-Minimum-Values"><a href="#Absolute-Maximum-and-Absolute-Minimum-Values" class="headerlink" title="Absolute Maximum and Absolute Minimum Values"></a>Absolute Maximum and Absolute Minimum Values</h3><p>在单一变量的函数中, 如果 <em>f</em> 在 闭区间[a, b] 连续, 则<em>f</em>有绝对最大值和绝对最小值</p>
+<p>当有两个变量的时候类似.</p>
+<p><img src="/Blog/intro/close_sets.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>Theorem:</p>
+<p><img src="/Blog/intro/close_sets_theorem.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/close_sets_theorem_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<p>example:</p>
+<p><img src="/Blog/intro/close_sets_theorem_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/close_sets_theorem_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/close_sets_theorem_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/close_sets_theorem_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Lagrange-Multipliers-拉格朗日乘子"><a href="#Lagrange-Multipliers-拉格朗日乘子" class="headerlink" title="Lagrange Multipliers 拉格朗日乘子"></a>Lagrange Multipliers 拉格朗日乘子</h3><p>基本的拉格朗日乘子法(又称为拉格朗日乘数法)，就是求函数 f(x1,x2,…) 在 g(x1,x2,…)=0 的约束条件下的极值的方法。其主要思想是引入一个新的参数 λ （即拉格朗日乘子），将约束条件函数与原函数联系到一起，使能配成与变量数量相等的等式方程，从而求出得到原函数极值的各个变量的解<br>$$<br>\nabla f(x_0, y_0, z_0)=\lambda \nabla g(x_0, y_0, z_0)<br>$$<br>再使用这个方法时, 我们要假设$\nabla g\ne0$</p>
+<br>
+
+<p>使用拉格朗日乘子计算最大值和最小值</p>
+<p><img src="/Blog/intro/Lagrange_multipliers.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/Lagrange_multipliers_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p>问用12m^2做的无盖盒子最大体积为多少.</p>
+<p>假设x为长, y为宽, z为高.</p>
+<p><img src="/Blog/intro/Lagrange_multipliers_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此x=y=2, z=1</p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/Lagrange_multipliers_3.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>2x=2x\lambda<br>$$</p>
+<p>$$<br>4y=2y\lambda<br>$$</p>
+<p>$$<br>x^2+y^2=1<br>$$</p>
+<p>通过第一个式子得到x=0或$\lambda=1$ 如果x=0, y= +-1, 如果$\lambda=1$ 则 y=0, x=+-1</p>
+<p>因此求出4个点.</p>
+<p><img src="/Blog/intro/Lagrange_multipliers_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所以最大值为2, 最小值为1.</p>
+<p><img src="/Blog/intro/Lagrange_multipliers_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/Lagrange_multipliers_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="两个约束"><a href="#两个约束" class="headerlink" title="两个约束"></a>两个约束</h3><p>上面的情况都是只有一个约束条件的情况. 然而如果我们有两个约束条件的话会如何?</p>
+<p>f(x,y,z) 有两个约束条件 g(x,y,z)=k 和 h(x,y,z)=c<br>$$<br>\nabla f(x_0, y_0,z_0)=\lambda \nabla g(x_0, y_0,z_0)+\mu \nabla h(x_0, y_0,z_0)<br>$$<br>可以列出5个等式</p>
+<p><img src="/Blog/intro/Lagrange_multipliers_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>同样, 这5个式子求出的最大值和最小值就是 f(x, y, z) 的最大值和最小值</p>
+<br>
+
 
             </div>
             <hr>
