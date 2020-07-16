@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>计数排序 Counting Sort - Daolin&#39;s Repository</title>
+  <title>计数排序 Counting Sort 基数排序 Redix sort - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    345 字
+                    580 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      1 分钟
+                      2 分钟
                   </span>
                 
 
@@ -179,9 +179,8 @@
 <p>这就是计数排序的大致思想.</p>
 <br>
 
-<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><pre><code class="c++">template &lt;typename T&gt;
-void countingSort(T arr[], int n, int min, int max){
-    T *aux = new T[(max-min+1)];
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><pre><code class="c++">void countingSort(int arr[], int n, int min, int max){
+    int *aux = new int[(max-min+1)];
     //初始化
     for(int i=0; i&lt;(max-min+1); i++)
         aux[i] = 0;
@@ -196,6 +195,33 @@ void countingSort(T arr[], int n, int min, int max){
 }</code></pre>
 <p><strong>一道有趣的题目, 在这道题中使用三路快排竟然更加巧妙</strong></p>
 <p><a href="https://www.imooc.com/article/16141" target="_blank" rel="noopener">https://www.imooc.com/article/16141</a></p>
+<br>
+
+<br>
+
+<h2 id="基数排序-Redix-sort"><a href="#基数排序-Redix-sort" class="headerlink" title="基数排序 Redix sort"></a>基数排序 Redix sort</h2><p>假设我们有一组数</p>
+<p>329, 557, 457, 226, 720, 657, 449, 355, 839, 510, 719, 845.</p>
+<p>要对他们进行排序</p>
+<br>
+
+<p>基数排序的思想就是针对每一位进行排序. </p>
+<p>第一轮, 针对个位数进行排序:</p>
+<p><img src="/Blog/intro/redix_sort.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>第二轮, 针对十位数排序, 当10位数相同时, 根据个位数的大小进行排序</p>
+<p>(实现思路: 根据第一轮排序的结果, 从前到后(从小到大)进行第二轮的排序, 这样个位数小的就会在上面)</p>
+<p><img src="/Blog/intro/redix_sort_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>同理, 第三轮排序是针对百位数的.</p>
+<p><img src="/Blog/intro/redix_sort_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>由于最高位就是百位, 所以这就排好序的. </p>
+<p>这个算法的时间复杂度为O(n*k), n为数据个数, 数据最大为k位.</p>
+<p>当n非常大, 而k非常小时, 是比O(nlogn)快的.</p>
+<p>但是空间复杂度非常高. O(n * k). 但是, 也有一些方法可以降低空间复杂度</p>
 
             </div>
             <hr>
@@ -417,7 +443,7 @@ void countingSort(T arr[], int n, int min, int max){
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "计数排序 Counting Sort&nbsp;",
+        "计数排序 Counting Sort 基数排序 Redix sort&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

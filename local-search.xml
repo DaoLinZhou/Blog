@@ -816,9 +816,9 @@
     
     <tags>
       
-      <tag>python3</tag>
-      
       <tag>数据库</tag>
+      
+      <tag>python3</tag>
       
       <tag>excel</tag>
       
@@ -1191,11 +1191,11 @@
   
   
   <entry>
-    <title>计数排序 Counting Sort</title>
+    <title>计数排序 Counting Sort 基数排序 Redix sort</title>
     <link href="/Blog/2019/07/05/Counting-Sort/"/>
     <url>/Blog/2019/07/05/Counting-Sort/</url>
     
-    <content type="html"><![CDATA[<p>非基于比较的排序算法, 快于任何比较排序算法</p><p>时间复杂度: Ο(n+k)</p><p>空间复杂度: O(k+k)</p><p><strong>这是一种牺牲空间换取时间的做法，而且当O(k)&gt;O(n*log(n))的时候其效率反而不如基于比较的排序</strong></p><a id="more"></a><h2 id="从一道练习题说起"><a href="#从一道练习题说起" class="headerlink" title="从一道练习题说起"></a>从一道练习题说起</h2><p>我的计算机老师在讲解数组之前, 出了一个刁难的小问题.</p><p><strong>不用数组的情况下, 随机生成100 个 [-3, 3] 之间的整数, 顺序地打印它们?</strong></p><p>我当时第一个想法就是申明7个变量, 分别对应[-3, 3]. 每当随机生成一个值, 就依次对比[-3, 3], 之后再对相应的变量进行自增.</p><p>假设 A 代表 -2, A 的值为 5, 就证明生成了 5 个 -2</p><p>这就是计数排序的大致思想.</p><br><h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><pre><code class="c++">template &lt;typename T&gt;void countingSort(T arr[], int n, int min, int max){    T *aux = new T[(max-min+1)];    //初始化    for(int i=0; i&lt;(max-min+1); i++)        aux[i] = 0;    //开始计数    for(int i=0; i&lt;n; i++)        aux[arr[i]-min]++;    //填充,i指向aux, index指向arr    for(int i=0, index=0; i&lt;(max-min+1); i++)        for(int j=0; j&lt;aux[i]; j++, index++)            arr[index] = i+min;    delete[](aux);}</code></pre><p><strong>一道有趣的题目, 在这道题中使用三路快排竟然更加巧妙</strong></p><p><a href="https://www.imooc.com/article/16141" target="_blank" rel="noopener">https://www.imooc.com/article/16141</a></p>]]></content>
+    <content type="html"><![CDATA[<p>非基于比较的排序算法, 快于任何比较排序算法</p><p>时间复杂度: Ο(n+k)</p><p>空间复杂度: O(k+k)</p><p><strong>这是一种牺牲空间换取时间的做法，而且当O(k)&gt;O(n*log(n))的时候其效率反而不如基于比较的排序</strong></p><a id="more"></a><h2 id="从一道练习题说起"><a href="#从一道练习题说起" class="headerlink" title="从一道练习题说起"></a>从一道练习题说起</h2><p>我的计算机老师在讲解数组之前, 出了一个刁难的小问题.</p><p><strong>不用数组的情况下, 随机生成100 个 [-3, 3] 之间的整数, 顺序地打印它们?</strong></p><p>我当时第一个想法就是申明7个变量, 分别对应[-3, 3]. 每当随机生成一个值, 就依次对比[-3, 3], 之后再对相应的变量进行自增.</p><p>假设 A 代表 -2, A 的值为 5, 就证明生成了 5 个 -2</p><p>这就是计数排序的大致思想.</p><br><h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><pre><code class="c++">void countingSort(int arr[], int n, int min, int max){    int *aux = new int[(max-min+1)];    //初始化    for(int i=0; i&lt;(max-min+1); i++)        aux[i] = 0;    //开始计数    for(int i=0; i&lt;n; i++)        aux[arr[i]-min]++;    //填充,i指向aux, index指向arr    for(int i=0, index=0; i&lt;(max-min+1); i++)        for(int j=0; j&lt;aux[i]; j++, index++)            arr[index] = i+min;    delete[](aux);}</code></pre><p><strong>一道有趣的题目, 在这道题中使用三路快排竟然更加巧妙</strong></p><p><a href="https://www.imooc.com/article/16141" target="_blank" rel="noopener">https://www.imooc.com/article/16141</a></p><br><br><h2 id="基数排序-Redix-sort"><a href="#基数排序-Redix-sort" class="headerlink" title="基数排序 Redix sort"></a>基数排序 Redix sort</h2><p>假设我们有一组数</p><p>329, 557, 457, 226, 720, 657, 449, 355, 839, 510, 719, 845.</p><p>要对他们进行排序</p><br><p>基数排序的思想就是针对每一位进行排序. </p><p>第一轮, 针对个位数进行排序:</p><p><img src="/Blog/intro/redix_sort.PNG" srcset="/Blog/img/loading.gif" alt></p><br><p>第二轮, 针对十位数排序, 当10位数相同时, 根据个位数的大小进行排序</p><p>(实现思路: 根据第一轮排序的结果, 从前到后(从小到大)进行第二轮的排序, 这样个位数小的就会在上面)</p><p><img src="/Blog/intro/redix_sort_1.PNG" srcset="/Blog/img/loading.gif" alt></p><br><p>同理, 第三轮排序是针对百位数的.</p><p><img src="/Blog/intro/redix_sort_2.PNG" srcset="/Blog/img/loading.gif" alt></p><br><p>由于最高位就是百位, 所以这就排好序的. </p><p>这个算法的时间复杂度为O(n*k), n为数据个数, 数据最大为k位.</p><p>当n非常大, 而k非常小时, 是比O(nlogn)快的.</p><p>但是空间复杂度非常高. O(n * k). 但是, 也有一些方法可以降低空间复杂度</p>]]></content>
     
     
     <categories>
