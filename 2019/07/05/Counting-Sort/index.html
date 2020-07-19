@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    580 字
+                    659 字
                   </span>
                 
 
@@ -199,7 +199,7 @@
 
 <br>
 
-<h2 id="基数排序-Redix-sort"><a href="#基数排序-Redix-sort" class="headerlink" title="基数排序 Redix sort"></a>基数排序 Redix sort</h2><p>假设我们有一组数</p>
+<h2 id="基数排序-Radix-sort"><a href="#基数排序-Radix-sort" class="headerlink" title="基数排序 Radix sort"></a>基数排序 Radix sort</h2><p>假设我们有一组数</p>
 <p>329, 557, 457, 226, 720, 657, 449, 355, 839, 510, 719, 845.</p>
 <p>要对他们进行排序</p>
 <br>
@@ -222,6 +222,30 @@
 <p>这个算法的时间复杂度为O(n*k), n为数据个数, 数据最大为k位.</p>
 <p>当n非常大, 而k非常小时, 是比O(nlogn)快的.</p>
 <p>但是空间复杂度非常高. O(n * k). 但是, 也有一些方法可以降低空间复杂度</p>
+<br>
+
+<p>example:</p>
+<p>使用radix sort 对<strong>等长</strong>的string进行排序</p>
+<pre><code class="c++">void radixsort(vector&lt;string&gt;&amp; vec, int len){
+
+    vector&lt;vector&lt;string&gt;&gt; record(26);
+
+    for(int i = len-1; i &gt;= 0; i--){
+        for(string&amp; s : vec){
+            record[s[i]-&#39;a&#39;].push_back(s);
+        }
+
+        // copy back
+        int j = 0;
+        for(vector&lt;string&gt;&amp; v : record){
+            for(string&amp; s : v){
+                vec[j] = s;
+                j++;
+            }
+            v.clear();
+        }
+    }
+}</code></pre>
 
             </div>
             <hr>

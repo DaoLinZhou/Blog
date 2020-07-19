@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.5k 字
+                    10.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      45 分钟
+                      47 分钟
                   </span>
                 
 
@@ -559,6 +559,50 @@
 <p><img src="/Blog/intro/clt_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/clt_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/clt_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Wald-CI-AC-interval-二项分布的置信区间"><a href="#Wald-CI-AC-interval-二项分布的置信区间" class="headerlink" title="Wald CI, AC-interval(二项分布的置信区间)"></a>Wald CI, AC-interval(二项分布的置信区间)</h3><p>Proportion, Probability, Prevalence在这里说的都是一个东西</p>
+<p>求区间的方式:<br>$$<br>(\bar X - z^<em>\frac \sigma {\sqrt n}, \bar X + z^</em>\frac \sigma {\sqrt n})<br>$$<br>然而在二项分布中我们是不知道$\sigma$的, 因为二项分布中var(X) = p(1-p). 知道总体方差就相当于知道总体均值.</p>
+<p>因此我们的信息只有样本均值($\hat p=\bar X$)和样本方差.</p>
+<p><img src="/Blog/intro/waldci.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此我们使用Wald CI.</p>
+<p><img src="/Blog/intro/waldci_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Wald-CI的缺点"><a href="#Wald-CI的缺点" class="headerlink" title="Wald CI的缺点:"></a>Wald CI的缺点:</h4><p><img src="/Blog/intro/waldci_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/waldci_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/waldci_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/waldci_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>一个简单的解决方法就是添加假数据 (fake data).</p>
+<p>我们添加4个数据, 2个成功的数据2个失败的数据. 这样得到的区间(A-C interval)比Wald interval更好</p>
+<p>example:</p>
+<p>原本n=1000, p = 3/1000</p>
+<p>添加4个数据后, $\widetilde n = 1004, \widetilde p = 5/1004$</p>
+<p>此时根据$\widetilde n, \widetilde p$计算的区间更准确</p>
+<br>
+
+<p>为什么添加4个数据? 这取决于alpha.</p>
+<h4 id="general-Agresti-Coull-interval"><a href="#general-Agresti-Coull-interval" class="headerlink" title="general Agresti-Coull interval"></a>general Agresti-Coull interval</h4><p><img src="/Blog/intro/waldci_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>example:</p>
+<p>原本n=1000, p = 3/1000</p>
+<p><img src="/Blog/intro/waldci_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>r code</p>
+<pre><code class="R">########## BRCA Example
+
+#Install binGroup package once using install.packages(&quot;binGroup&quot;)
+library(binGroup)
+
+#Define sample size and number of successes in the sample (real, not fake!):
+n=1000
+nsuccesses=3
+
+#95% Wald CI for p -- not recommended!
+binWald(n,nsuccesses,conf.level=0.95) 
+
+#99% Agresti-Coull CI for p:
+binAC(n,nsuccesses,conf.level=0.99) </code></pre>
 <br>
 
 <br>
