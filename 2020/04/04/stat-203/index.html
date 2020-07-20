@@ -562,7 +562,9 @@
 <br>
 
 <h3 id="Wald-CI-AC-interval-二项分布的置信区间"><a href="#Wald-CI-AC-interval-二项分布的置信区间" class="headerlink" title="Wald CI, AC-interval(二项分布的置信区间)"></a>Wald CI, AC-interval(二项分布的置信区间)</h3><p>Proportion, Probability, Prevalence在这里说的都是一个东西</p>
-<p>求区间的方式:<br>$$<br>(\bar X - z^<em>\frac \sigma {\sqrt n}, \bar X + z^</em>\frac \sigma {\sqrt n})<br>$$<br>然而在二项分布中我们是不知道$\sigma$的, 因为二项分布中var(X) = p(1-p). 知道总体方差就相当于知道总体均值.</p>
+<p>求区间的方式:</p>
+<p>$$<br>(\bar X - z^ * \frac \sigma {\sqrt n}, \bar X + z^ * \frac \sigma {\sqrt n})<br>$$</p>
+<p>然而在二项分布中我们是不知道$\sigma$的, 因为二项分布中var(X) = p(1-p). 知道总体方差就相当于知道总体均值.</p>
 <p>因此我们的信息只有样本均值($\hat p=\bar X$)和样本方差.</p>
 <p><img src="/Blog/intro/waldci.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>因此我们使用Wald CI.</p>
