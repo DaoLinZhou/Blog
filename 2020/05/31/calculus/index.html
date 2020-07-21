@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.4k 字
+                    4.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      22 分钟
+                      23 分钟
                   </span>
                 
 
@@ -763,6 +763,9 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 <p><img src="/Blog/intro/integral_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/integral_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/integral_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>有趣的是, 如果f(x, y) = g(x)h(y)<br>$$<br>\int_a^b\int_c^d f(x,y)\ dy\ dx = \int_a^b\int_c^d g(x)h(y)\ dy\ dx<br>$$<br>由于先对y求积分, 把x当作常量, g(x)就是一个常量<br>$$<br>\int_a^b\int_c^d g(x)h(y)\ dy\ dx=\int_a^b g(x) \int_c^d h(y)\ dy\ dx<br>$$<br>而 $\int_c^d h(y)\ dy$ 也是一个常量, 可以把它提取出来:<br>$$<br>\int_a^b g(x) \int_c^d h(y)\ dy\ dx=\int_a^b g(x) \ dx\int_c^d h(y)\ dy<br>$$<br>因此:<br>$$<br>\int_a^b\int_c^d g(x)h(y)\ dy\ dx = \int_a^b g(x) \ dx\int_c^d h(y)\ dy<br>$$</p>
 
             </div>
             <hr>
