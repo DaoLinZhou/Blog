@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -166,6 +166,75 @@
           <i class="iconfont icon-riqi2"></i>&nbsp;2019-06-23&nbsp;&nbsp;
         
         
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/Blog/2020/07/29/A-star/" target="_self">
+          <img src="/Blog/intro/" srcset="/Blog/img/loading.gif" alt="A-star 寻路算法"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/Blog/2020/07/29/A-star/">
+        <p class="h4 index-header">A-star 寻路算法</p>
+      </a>
+
+      <a href="/Blog/2020/07/29/A-star/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+A* 寻路算法A*算法和Dijkstra 算法非常相似. 不过A-star 算法中每个点的权重(F)不单单是路径的长度(G), 还要加上这个点到目的地的预计长度(H)
+F = G + H
+
+
+假设从绿色的格子走到红色的格子.
+
+
+
+首先要引入一些概念
+
+OpenList: 用来存储可以到达的格子
+CloseList: 用来存储已经到达的格子
+F = G + H 
+
+G 是 从起点走到当前格子的成本. H是当前格子到目标格子的估计距离, 通常使用直线距离(不考虑障碍物)
+
+
+第一步: 把起点放入OpenList
+OpenList: Node(1, 2)
+CloseList:
+
+
+第二步: 找</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-29&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/Blog/categories/算法与数据结构/">算法与数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/Blog/tags/图论算法/">图论算法</a>&nbsp;
+          
         
       </div>
     </div>
@@ -2202,9 +2271,9 @@ way</div>
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
-          
             <a href="/Blog/tags/图论算法/">图论算法</a>&nbsp;
+          
+            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
           
         
       </div>
@@ -2341,9 +2410,9 @@ private:
         
           <i class="iconfont icon-tag"></i>
           
-            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
-          
             <a href="/Blog/tags/图论算法/">图论算法</a>&nbsp;
+          
+            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
           
         
       </div>
@@ -3343,7 +3412,7 @@ TCP报文格式...</div>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -3352,7 +3421,7 @@ TCP报文格式...</div>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

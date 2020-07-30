@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.9k 字
+                    11k 字
                   </span>
                 
 
@@ -571,6 +571,9 @@
 <p><img src="/Blog/intro/waldci_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<p><img src="/Blog/intro/2wdci.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
 <h4 id="Wald-CI的缺点"><a href="#Wald-CI的缺点" class="headerlink" title="Wald CI的缺点:"></a>Wald CI的缺点:</h4><p><img src="/Blog/intro/waldci_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/waldci_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/waldci_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -605,6 +608,12 @@ binWald(n,nsuccesses,conf.level=0.95)
 
 #99% Agresti-Coull CI for p:
 binAC(n,nsuccesses,conf.level=0.99) </code></pre>
+<br>
+
+<p>对于2-sample 也是一样</p>
+<p><img src="/Blog/intro/2acci.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设我们要添加4个fake data.</p>
+<p>np 和 nv 就各要+2. </p>
 <br>
 
 <br>
@@ -718,6 +727,20 @@ binAC(n,nsuccesses,conf.level=0.99) </code></pre>
 
 <h4 id="二项分布的power"><a href="#二项分布的power" class="headerlink" title="二项分布的power"></a>二项分布的power</h4><p>二项分布的CI是不准确的. 因此求二项分布power的方法也有所不同.</p>
 <p><img src="/Blog/intro/b_power.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="2-sample-paired-t-test-power"><a href="#2-sample-paired-t-test-power" class="headerlink" title="2-sample paired t test power"></a>2-sample paired t test power</h4><p><img src="/Blog/intro/paired_t_power.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>注意此时两个变量是dependent, 所以variance的计算要注意:<br>$$<br>\sigma_D^2 = Var[Y_{iA}-Y_{i_B}] \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =Var[Y_{iA}]+Var[Y_{i_B}]-Cov[Y_{iA},Y_{i_B}]<br>$$</p>
+<br>
+
+<h4 id="2-sample-independent-t-test-power-方差相等"><a href="#2-sample-independent-t-test-power-方差相等" class="headerlink" title="2-sample independent t test power(方差相等)"></a>2-sample independent t test power(方差相等)</h4><p><img src="/Blog/intro/paired_t_power_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/paired_t_power_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/paired_t_power_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <br>
@@ -1955,7 +1978,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1982,7 +2005,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1991,7 +2014,7 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
