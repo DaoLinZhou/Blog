@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -175,8 +175,141 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/Blog/2020/07/31/bloom-filter/" target="_self">
+          <img src="/Blog/intro/bloom_filter.PNG" srcset="/Blog/img/loading.gif" alt="布隆过滤器"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/Blog/2020/07/31/bloom-filter/">
+        <p class="h4 index-header">布隆过滤器</p>
+      </a>
+
+      <a href="/Blog/2020/07/31/bloom-filter/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+布隆过滤器如何判断一个元素是否存在?
+通常可以使用哈希表. (HashSet HashMap) 将元素作为key去查找.
+虽然时间复杂度为O(1)但空间利用率不高, 需要占用较多的内存资源
+
+
+
+例如需要编写一个网络爬虫爬取10亿个网站, 为了避免爬取重负的网站, 就要判断某个网站是否爬过.
+
+
+
+布隆过滤器是一个空间效率高的概率型数据结构, 可以用来判断: 一个元素一定不存在或者可能存在
+
+
+优点: 空间效率和查询时间都远远超过一般算法
+缺点: 有一定误判率, 删除困难
+
+
+常见应用:
+网页黑名单系统, 垃圾邮件过滤系统, 爬虫的网址判重系统, 解决缓存穿透
+
+
+思想假设布隆过滤器由20</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/Blog/categories/算法与数据结构/">算法与数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/Blog/2020/07/30/expression-tree/" target="_self">
+          <img src="/Blog/intro/avl_1.PNG" srcset="/Blog/img/loading.gif" alt="表达式树"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/Blog/2020/07/30/expression-tree/">
+        <p class="h4 index-header">表达式树</p>
+      </a>
+
+      <a href="/Blog/2020/07/30/expression-tree/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+四则运算的表达式可分为三种:
+
+前缀表达式(prefix expression), 又称波兰表达式
+中缀表达式(infix expression)
+后缀表达式(postfix expression), 又称逆波兰表达式
+
+
+
+
+如果把表达式的操作数作为叶子节点. 运算符作为父节点
+那么这些节点可以组成一颗二叉树:
+例如: A / B + C * D - E
+
+
+
+而对这颗树进行前序遍历, 得到的就是前缀表达式
+对这颗树进行中序遍历, 得到的就是中缀表达式
+对这颗树进行后序遍历, 得到的就是后缀表达式
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-07-30&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/Blog/categories/算法与数据结构/">算法与数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/Blog/2020/07/29/A-star/" target="_self">
-          <img src="/Blog/intro/" srcset="/Blog/img/loading.gif" alt="A-star 寻路算法"
+          <img src="/Blog/intro/a-star_1.PNG" srcset="/Blog/img/loading.gif" alt="A-star 寻路算法"
                class="index-img img-fluid rounded index-thumbnails">
         </a>
       </div>
@@ -3412,7 +3545,7 @@ TCP报文格式...</div>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -3421,7 +3554,7 @@ TCP报文格式...</div>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

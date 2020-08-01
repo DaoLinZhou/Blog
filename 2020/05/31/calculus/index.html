@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.9k 字
+                    5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      25 分钟
+                      26 分钟
                   </span>
                 
 
@@ -884,6 +884,23 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 <p>Type2 和 Type3</p>
 <p><img src="/Blog/intro/3_int_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><br><br></p>
+<h2 id="圆柱坐标系"><a href="#圆柱坐标系" class="headerlink" title="圆柱坐标系"></a>圆柱坐标系</h2><p>圆柱坐标系和Polar coordinate很类似:</p>
+<p>它是由3部分的信息组成</p>
+<p><img src="/Blog/intro/cylindrical_coord.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>x=r\cos\theta, \ y=r\sin\theta, \ z=z<br>$$<br>如何把直角坐标系转化为圆柱坐标系:<br>$$<br>r^2=x^2+y^2 \ \ \ \ \tan\theta=\frac yx \ \ \ \ z=z<br>$$<br><br><br>$$<br>E={(x,y,z)|(x,y)\in D, u_1(x,y)\le z \le u_2(x,y) }<br>$$</p>
+<p>$$<br>D={(r,\theta)| \alpha\le \theta\le\beta,h_1(\theta)\le r \le h_2(\theta)}<br>$$</p>
+<p>$$<br>\int \int\int_E f(x,y,z)dV=\int\int_D[\int_{u_1(x,y)}^{u_2(x,y)}f(x,y,z)dz]dA<br>$$</p>
+<p><img src="/Blog/intro/cylindrical_coord_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cylindrical_coord_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/cylindrical_coord_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cylindrical_coord_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/cylindrical_coord_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cylindrical_coord_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -945,7 +962,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -972,7 +989,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -981,7 +998,7 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

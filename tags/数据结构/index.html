@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>标签 - 数据结构 - Daolin&#39;s Repository</title>
+  <title>Tags - 数据结构 - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -138,12 +138,24 @@
                 
 
 <div class="list-group">
-<!--  <p class="h4">共计 10 篇文章</p>-->
+<!--  <p class="h4">10 posts in total.</p>-->
   <hr>
   
     
       
       <p class="h5">2020</p>
+    
+    <a href="/Blog/2020/07/31/bloom-filter/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">布隆过滤器</span>
+      <span style="float: right;">07-31</span>
+    </a>
+  
+    
+    <a href="/Blog/2020/07/30/expression-tree/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">表达式树</span>
+      <span style="float: right;">07-30</span>
+    </a>
+  
     
     <a href="/Blog/2020/07/23/Huffman-Tree/" class="list-group-item list-group-item-action">
       <span class="archive-post-title">哈夫曼树 Haffman Tree</span>
@@ -195,18 +207,6 @@
       <span style="float: right;">08-25</span>
     </a>
   
-    
-    <a href="/Blog/2019/08/20/Unweighted-graph-basics/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">图论(一)-无权图基础</span>
-      <span style="float: right;">08-20</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/08/15/UnionFind/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">并查集 UnionFind</span>
-      <span style="float: right;">08-15</span>
-    </a>
-  
 </div>
 
   <nav aria-label="index posts navigation">
@@ -243,7 +243,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -252,7 +252,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -323,7 +323,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "标签 - 数据结构&nbsp;",
+        "Tag - 数据结构&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

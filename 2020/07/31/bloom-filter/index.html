@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>布隆过滤器 - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/longyin.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Friday, July 31st 2020, 4:37 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    994 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      4 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><p>如何判断一个元素是否存在?</p>
+<p>通常可以使用哈希表. (HashSet HashMap) 将元素作为key去查找.</p>
+<p>虽然时间复杂度为O(1)但空间利用率不高, 需要占用较多的内存资源</p>
+<br>
+
+<blockquote>
+<p>例如需要编写一个网络爬虫爬取10亿个网站, 为了避免爬取重负的网站, 就要判断某个网站是否爬过.</p>
+</blockquote>
+<br>
+
+<p>布隆过滤器是一个空间效率高的<strong>概率型数据结构</strong>, 可以用来判断: 一个元素一定不存在或者<strong>可能</strong>存在</p>
+<br>
+
+<p>优点: 空间效率和查询时间都远远超过一般算法</p>
+<p>缺点: 有一定误判率, 删除困难</p>
+<br>
+
+<p>常见应用:</p>
+<p>网页黑名单系统, 垃圾邮件过滤系统, 爬虫的网址判重系统, 解决缓存穿透</p>
+<br>
+
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>假设布隆过滤器由20位二进制, 3个哈希函数组成, 每个元素经过哈希函数处理都能生成一个索引位置.</p>
+<br>
+
+<p>假设添加一个元素A</p>
+<p><img src="/Blog/intro/bloom_filter.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就根据3个哈希函数计算出索引, 把对应位置设置为1</p>
+<br>
+
+<p>假设添加一个元素B</p>
+<p><img src="/Blog/intro/bloom_filter_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>同样把对应的3个索引设置为1</p>
+<br>
+
+<p>查询一个元素是否存在 :</p>
+<ul>
+<li>如果有一个hash函数生成的索引位置的值不为1, 就代表元素不存在(100%正确)</li>
+<li>如果每一个hash函数生成的索引位置的值都为1, 就代表存在(存在一定误判率)</li>
+</ul>
+<br>
+
+<p>添加, 查询的时间复杂度都是O(k) k是哈希函数个数, 空间复杂度是O(m), m是二进制位的个数</p>
+<br>
+
+<h2 id="误判率"><a href="#误判率" class="headerlink" title="误判率"></a>误判率</h2><p>布隆过滤器会误判, 因此判断误判率是非常重要的.</p>
+<p>误判率p受到3个因素影响: 二进制的位数m, 哈希函数的个数k, 数据规模n<br>$$<br>p=(1-e^{-\frac {k(n+0.5)}{m-1}})^k<br>$$<br>而我们可以忽略常数, 因为布隆过滤器通常用于数据规模大n的地方, m因此也会很大, 因此0.5和-1两个常数可以忽略不计.<br>$$<br>p=(1-e^{-\frac {kn}{m}})^k<br>$$</p>
+<blockquote>
+<p>$$<br>1-e^{-\frac {kn}{m}}<br>$$</p>
+<p>明显是几何分布, 代表每一个哈希函数发生哈希冲突的概率</p>
+<p>k个哈希函数, 只有当k个哈希函数都误判时, 结果才会误判, 所以才会取k次幂</p>
+</blockquote>
+<br>
+
+<p>已知误判率p, 数据规模n, 求二进制的个数m, 哈希函数的个数k<br>$$<br>m=-\frac {n\ln p}{(\ln2)^2}<br>$$</p>
+<p>$$<br>k=\frac mn\ln2<br>$$</p>
+<br>
+$$
+k=\frac {-\frac {n\ln p}{(\ln2)^2}}{n}\ln2
+$$
+
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ =-\frac {\ln p}{\ln 2} = -\log_2p<br>$$</p>
+<pre><code class="c++">#ifndef ALGORITHM_BLOOMFILTER_H
+#define ALGORITHM_BLOOMFILTER_H
+
+#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+
+using std::log;
+
+template&lt;typename T&gt;
+class BloomFilter{
+private:
+    /**
+     * 二进制向量的长度(一共有多少个二进制位)
+     */
+    int bitSize;
+
+    /**
+     * 二进制向量, 一个 long long 是 64 位
+     */
+    long long* bits;
+
+    /**
+     * 哈希函数的个数
+     */
+    int hashFuncNum;
+
+public:
+    /**
+     * @param n 数据规模
+     * @param p 误判率, 取值范围 (0, 1)
+     */
+    BloomFilter(int n, double p){
+        assert(n &gt; 0 &amp;&amp; p &gt; 0 &amp;&amp; p &lt; 1);
+        double ln2 = log(2);
+        // 求出二进制向量长度
+        bitSize = -(n * log(p)) / (ln2 * ln2);
+        // 求出哈希函数的个数
+        hashFuncNum = bitSize * ln2 / n;
+        // bit数组的长度
+        int longSize = (sizeof(long long)*8);
+        bits = new long long[(bitSize+longSize-1) / longSize];
+    }
+
+    void put(T value){
+        int hash1 = hash&lt;T&gt;()(value);
+        int hash2 = hash1 &gt;&gt; 16;
+
+        for(int i = 0; i &lt; hashFuncNum; i++){
+            // 每次根据 hash1 和 hash2 计算出一个不同的hash
+            int combinedHash = hash1 + (i * hash2);
+            if(combinedHash &lt; 0){
+                combinedHash = ~combinedHash; // 位取反, 去负号
+            }
+            int index = combinedHash % bitSize;
+            setBit(combinedHash % bitSize);
+        }
+    }
+
+    bool contains(T value){
+        int hash1 = hash&lt;T&gt;()(value);
+        int hash2 = hash1 &gt;&gt; 16;
+
+        for(int i = 0; i &lt; hashFuncNum; i++){
+            // 每次根据 hash1 和 hash2 计算出一个不同的hash
+            int combinedHash = hash1 + (i * hash2);
+            if(combinedHash &lt; 0){
+                combinedHash = ~combinedHash; // 位取反, 去负号
+            }
+            int index = combinedHash % bitSize;
+            if(!get(index)) return false;
+        }
+        return true;
+    }
+
+private:
+    void setBit(int index){
+        long long value = 1 &lt;&lt; (index % 64);
+        bits[index/64] |= value;
+    }
+
+    bool get(int index){
+        long long value = 1 &lt;&lt; (index % 64);
+        return bits[index/64] &amp; value;
+    }
+
+};
+
+#endif //ALGORITHM_BLOOMFILTER_H</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/算法与数据结构/">算法与数据结构</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/数据结构/">数据结构</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/07/30/expression-tree/">
+                        <span class="hidden-mobile">表达式树</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "布隆过滤器&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
