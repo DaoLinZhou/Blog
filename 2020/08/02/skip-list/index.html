@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>Archives - Daolin&#39;s Repository</title>
+  <title>跳跃表 - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -40,7 +40,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -108,7 +108,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/Blog/img/default.png') no-repeat center center;
+         style="background: url('/Blog/intro/roaming.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -117,6 +117,33 @@
               
             </span>
 
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Sunday, August 2nd 2020, 8:17 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    543 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      1 分钟
+                  </span>
+                
+
+                
+              </p>
             
           </div>
 
@@ -128,103 +155,139 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">72 posts in total.</p>
-  <hr>
-  
-    
       
-      <p class="h5">2019</p>
-    
-    <a href="/Blog/2019/06/30/cpp入门学习/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">C++入门学习</span>
-      <span style="float: right;">06-30</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/29/database-structure/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">数据库架构</span>
-      <span style="float: right;">06-29</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/28/HTTP-and-HTTPS/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">HTTP 和 HTTPS</span>
-      <span style="float: right;">06-28</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/27/Quick-Sort/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">快速排序</span>
-      <span style="float: right;">06-27</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/25/HTTP-basic/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">HTTP 基础</span>
-      <span style="float: right;">06-25</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/25/Merge-Sort/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">归并排序的两种经典实现</span>
-      <span style="float: right;">06-25</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/24/Tcp-sliding-window/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">TCP的滑动窗口</span>
-      <span style="float: right;">06-24</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/23/UDP基础/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">UDP基础</span>
-      <span style="float: right;">06-23</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/23/学习资料/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">学习资料自收集 (置顶文章)</span>
-      <span style="float: right;">06-23</span>
-    </a>
-  
-    
-    <a href="/Blog/2019/06/22/Insert-Sort/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">插入排序 Insert Sort 和 希尔排序 Shell Sort</span>
-      <span style="float: right;">06-22</span>
-    </a>
-  
-</div>
 
-  <nav aria-label="index posts navigation">
-    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/Blog/archives/2019/06/page/2/">2</a><a class="extend next" rel="next" href="/Blog/archives/2019/06/page/2/"><i class="fas fa-angle-double-right"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
-      ele.href += '#board';
-    }
-  </script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
 
+<h1 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h1><p>skip list 是对链表的扩展</p>
+<p>普通的有序链表的增删改查的时间复杂度都是O(n)</p>
+<p>而跳跃表的增删改查的时间复杂度都是O(logn)</p>
+<blockquote>
+<p>跳跃表设计的初衷是为了取代平衡树(例如红黑树)</p>
+<p>跳跃表在 Redis 和 LevelDB 中都有应用</p>
+</blockquote>
+<br>
 
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这是一个普通的有序链表</p>
+<p><img src="/Blog/intro/skip-list.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果我们进行查找, 需要由左到右对每个节点进行访问. 然而我们知道这个链表是有序的. 那么我们是否可以让它可以跳过一些元素?</p>
+<p><img src="/Blog/intro/skip-list_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>先从上面的链表找, 直到找到的元素大于寻找到元素, 就降低一层继续查找.</p>
+<p><img src="/Blog/intro/skip-list_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>绿色线就是寻找路线</p>
+<br>
 
-              </div>
+<p>更进一步:</p>
+<p><img src="/Blog/intro/skip-list_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="跳跃表的搜索"><a href="#跳跃表的搜索" class="headerlink" title="跳跃表的搜索"></a>跳跃表的搜索</h2><p><img src="/Blog/intro/skip-list_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>正如上面所述:</p>
+<ol>
+<li>从顶层链表的的首元素开始, 从左往右搜索, 直到找到一个大于等于目标的元素, 或者空节点.</li>
+<li>如果元素等于目标元素, 则表明被找到了.</li>
+<li>如果该元素大于目标元素或着已经到达链表尾部, 则退回到当前层的前一个元素, 转入下一层继续搜索</li>
+</ol>
+<br>
+
+<br>
+
+<h2 id="跳跃表的添加"><a href="#跳跃表的添加" class="headerlink" title="跳跃表的添加"></a>跳跃表的添加</h2><p>跳跃表添加元素的层数是随机的 (服从几何分布)</p>
+<p>1/2 的概率新添加的元素的层数为1, 1/4的概率层数为2, 1/8的概率层数为3…</p>
+<br>
+
+<p>从 0, 1 中随机选一个数, 如果为1, 则添加一层, 如果为0则停止添加.</p>
+<p>假设有32个元素. 理想情况下:</p>
+<p>第一层有32个元素. 每个元素层数至少为1</p>
+<p>第二层有16个元素, 1/2的概率层数不为1, 就是说二层及以上层数的元素为16</p>
+<p>第三层有8个元素, 3/4的概率层数小于3, 1/4的概率层数为3层即以上</p>
+<p>… …</p>
+<p>自然时间复杂度就是O(logn)</p>
+<br>
+
+<p>其实找到节点的位置就可以进行增删了.</p>
+<p>然而要注意: 添加元素或删除元素都有可能会导致层数的变化.</p>
+<br>
+
+<p><a href="https://github.com/DaoLinZhou/CppCommonLibrary/blob/master/skiplist/SkipList.h" target="_blank" rel="noopener">代码实现</a></p>
+
             </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/算法与数据结构/">算法与数据结构</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/数据结构/">数据结构</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/07/31/bloom-filter/">
+                        <span class="hidden-mobile">布隆过滤器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
           </div>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
   </main>
 
@@ -289,6 +352,59 @@
 
 
 
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
 
 
   <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
@@ -320,7 +436,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "没什么好看的&nbsp;",
+        "跳跃表&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

@@ -175,6 +175,80 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/Blog/2020/08/02/skip-list/" target="_self">
+          <img src="/Blog/intro/avl_1.PNG" srcset="/Blog/img/loading.gif" alt="跳跃表"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/Blog/2020/08/02/skip-list/">
+        <p class="h4 index-header">跳跃表</p>
+      </a>
+
+      <a href="/Blog/2020/08/02/skip-list/">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+
+跳跃表skip list 是对链表的扩展
+普通的有序链表的增删改查的时间复杂度都是O(n)
+而跳跃表的增删改查的时间复杂度都是O(logn)
+
+跳跃表设计的初衷是为了取代平衡树(例如红黑树)
+跳跃表在 Redis 和 LevelDB 中都有应用
+
+
+
+思路这是一个普通的有序链表
+
+如果我们进行查找, 需要由左到右对每个节点进行访问. 然而我们知道这个链表是有序的. 那么我们是否可以让它可以跳过一些元素?
+
+先从上面的链表找, 直到找到的元素大于寻找到元素, 就降低一层继续查找.
+
+绿色线就是寻找路线
+
+
+更进一步:
+
+
+
+
+
+跳跃表的搜索
+正如上面所述:
+
+从顶层链表的的首元素开始, 从左</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-08-02&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/Blog/categories/算法与数据结构/">算法与数据结构</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/Blog/tags/数据结构/">数据结构</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/Blog/2020/07/31/bloom-filter/" target="_self">
           <img src="/Blog/intro/bloom_filter.PNG" srcset="/Blog/img/loading.gif" alt="布隆过滤器"
                class="index-img img-fluid rounded index-thumbnails">

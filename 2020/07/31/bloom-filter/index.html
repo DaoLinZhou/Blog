@@ -216,7 +216,7 @@
 <p>误判率p受到3个因素影响: 二进制的位数m, 哈希函数的个数k, 数据规模n<br>$$<br>p=(1-e^{-\frac {k(n+0.5)}{m-1}})^k<br>$$<br>而我们可以忽略常数, 因为布隆过滤器通常用于数据规模大n的地方, m因此也会很大, 因此0.5和-1两个常数可以忽略不计.<br>$$<br>p=(1-e^{-\frac {kn}{m}})^k<br>$$</p>
 <blockquote>
 <p>$$<br>1-e^{-\frac {kn}{m}}<br>$$</p>
-<p>明显是几何分布, 代表每一个哈希函数发生哈希冲突的概率</p>
+<p>明显是指数分布, 代表每一个哈希函数发生哈希冲突的概率</p>
 <p>k个哈希函数, 只有当k个哈希函数都误判时, 结果才会误判, 所以才会取k次幂</p>
 </blockquote>
 <br>
@@ -347,6 +347,12 @@ private:
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2020/08/02/skip-list/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">跳跃表</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">
