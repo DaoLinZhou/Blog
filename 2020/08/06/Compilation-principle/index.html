@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>编译原理 - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/Fate-Zero-Kiritsugu-Einzbern.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Thursday, August 6th 2020, 10:53 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    953 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<h1 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h1><br>
+
+<h2 id="计算机理论"><a href="#计算机理论" class="headerlink" title="计算机理论"></a>计算机理论</h2><p><strong>构成计算机需要哪些要素?</strong></p>
+<ul>
+<li>状态</li>
+<li>输入</li>
+<li>状态转换函数F (将输入和当前状态转换为下一个状态)</li>
+<li>输出</li>
+</ul>
+<br>
+
+<p><strong>什么是状态转换函数?</strong></p>
+<p>其实一个表格就可以, 将接收到的输入 I 变成新的状态 S </p>
+<p><img src="/Blog/intro/stat_change_func_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>或者</p>
+<p><img src="/Blog/intro/stat_change_func_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而如果状态转换表太大了怎么办?</p>
+<p>例如鼠标在1024 * 768的屏幕上有786432种位置, 因此对应了786432种状态. 如果用表格描述需要很大一片空间. 如何进行优化?</p>
+<p><strong>方案: 用程序描述状态转换表</strong></p>
+<br>
+
+<br>
+
+<h2 id="汇编指令入门"><a href="#汇编指令入门" class="headerlink" title="汇编指令入门"></a>汇编指令入门</h2><p>计算机通过指令指挥计算机工作.</p>
+<p>CPU被时钟驱动, 不断地读取PC指针指向的指令, 并增加PC指针, 从内存中读取指令并执行 (如此周而复始)</p>
+<p>不同的CPU架构使用不同指令. 目前使用最广泛的是RISC (Reduced instruction set computer, 精简指令集)</p>
+<p><img src="/Blog/intro/risc_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="MIPS-32指令示例"><a href="#MIPS-32指令示例" class="headerlink" title="MIPS-32指令示例"></a>MIPS-32指令示例</h3><p>跳转指令</p>
+<p><img src="/Blog/intro/risc_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<hr>
+
+<p>add操作</p>
+<p><img src="/Blog/intro/risc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>r 就代表寄存器 register</p>
+<p>s 代表 source</p>
+<p>t 代表 target</p>
+<p>d 代表 destination</p>
+<p>opcode = 0 在MIPS-32中是说要用ALU进行寄存器和寄存器之间的计算</p>
+<br>
+
+<p>opcode有6位, 所以有0-63种可能. 最多可以有64个指令</p>
+</blockquote>
+<hr>
+
+<p><img src="/Blog/intro/risc_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而32位risc指令集中, opcode是6位数字, 太过于抽象, 不好记忆, 因此通常采用助记符.</p>
+<p><img src="/Blog/intro/risc_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="寻址模式-Addressing-Model"><a href="#寻址模式-Addressing-Model" class="headerlink" title="寻址模式(Addressing Model)"></a>寻址模式(Addressing Model)</h2><p>寻址模式是指令集的一部分, 决定指令有几个操作符, 地址如何计算</p>
+<p>寻址模式不同指令集不同, 注意是通过寻址模式看到如何利用好二进制指令</p>
+<br>
+
+<h3 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a>寄存器寻址</h3><p><img src="/Blog/intro/addressing_model.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>把1号寄存器和2号寄存器相加存到10号寄存器中</p>
+<blockquote>
+<p>r1 或 r2 都是占5位的数字, 就是用n个位取寻址$2^n$个寄存器</p>
+<p>shamt 和 funct 会自动补全, 这样人就可以少记一些东西</p>
+</blockquote>
+<br>
+
+<h3 id="立即寻址"><a href="#立即寻址" class="headerlink" title="立即寻址"></a>立即寻址</h3><p>zero是一个特殊的寄存器, 它里面存的是0. 将zero和1000相加.</p>
+<p>直接把1000这个数字放进来, 叫做立即寻址.</p>
+<p><img src="/Blog/intro/addressing_model_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>寻址方式其实和指令有关, 当opcode代表add是一种解析方式. opcode代表addi是另一种解析方式</p>
+</blockquote>
+<br>
+
+<h3 id="偏移量寻址"><a href="#偏移量寻址" class="headerlink" title="偏移量寻址"></a>偏移量寻址</h3><p><img src="/Blog/intro/addressing_model_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>sp是一个寄存器(代表栈), 这个地址作为基地址偏移8 (+8) 存到目标寄存器r0中</p>
+<p>l 代表 load, w 代表 word, 就是说load一个4字节的东西</p>
+<br>
+
+<h3 id="PC相对寻址"><a href="#PC相对寻址" class="headerlink" title="PC相对寻址"></a>PC相对寻址</h3><p><img src="/Blog/intro/addressing_model_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当r3寄存器中和值和r9寄存器中的值相同时就跳到LABEL</p>
+<br>
+
+<h3 id="内存读写"><a href="#内存读写" class="headerlink" title="内存读写"></a>内存读写</h3><p>load / store 指令用来从内存中 读/写 入内存. 通常会有多个版本的实现, 助记符是:</p>
+<ul>
+<li>load类: lw, lb, lh</li>
+<li>store类: sw, sb, sh</li>
+</ul>
+<br>
+
+<h3 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h3><p><img src="/Blog/intro/addressing_model_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h2><p>十进制的 0.1 代表 $\frac 1 {10}$,  二进制里 0.1 代表 $\frac 12$, 0.01 代表 $\frac 14$</p>
+<p>因此 0.375 在二进制中的表示为 0.011 = $\frac 14 +\frac 18$</p>
+<br>
+
+<p>浮点数在计算机中也是以整数的形式存在. 就是读取方式不一样而已</p>
+<p>双精度64位浮点数在计算机中的表示</p>
+<p><img src="/Blog/intro/addressing_model_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>sign 就代表了正负</p>
+<p>exponent 就是式子中的e, 也就是说2的指数位可以在 $2^{11}-1023$ 和 $0-1023$ 浮动</p>
+<p>再来一个示例</p>
+<p><img src="/Blog/intro/addressing_model_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="比较运算"><a href="#比较运算" class="headerlink" title="比较运算"></a>比较运算</h2><p>比较运算比较两个值的大小, 例如:</p>
+<p>slt (set if less than)</p>
+<pre><code class="assembly">slt $d, $rs, $rt    # d = 1 如果 rs &lt; rt, d = 0 如果 rs &gt;= rt
+slti $d, $rs, 5    # d = 1 如果 rs &lt; 5, d = 0 如果 rs &gt;= 5</code></pre>
+<br>
+
+<br>
+
+<h2 id="条件跳转"><a href="#条件跳转" class="headerlink" title="条件跳转"></a>条件跳转</h2><p><img src="/Blog/intro/addressing_model_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>jal 有点像函数跳转, 把下一个指令存入寄存器中, 之后把PC指针指向LABEL去执行代码. 当函数执行完后可以再从寄存器中读取位置跳回来</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/编译原理/">编译原理</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/操作系统/">操作系统</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/编译原理/">编译原理</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/汇编/">汇编</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/08/02/skip-list/">
+                        <span class="hidden-mobile">跳跃表</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "编译原理&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.2k 字
+                    5.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      26 分钟
+                      29 分钟
                   </span>
                 
 
@@ -967,6 +967,161 @@ B(t)叫做binormal vector. 它与T 和N都正交, 同时它也是一个单位向
 </blockquote>
 <br>
 
+<p><img src="/Blog/intro/change_muti_int_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>例如将直角坐标系转为polar coordinate时:</p>
+<p><img src="/Blog/intro/change_muti_int_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/change_muti_int_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/change_muti_int_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/change_muti_int_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="三重积分的替换"><a href="#三重积分的替换" class="headerlink" title="三重积分的替换"></a>三重积分的替换</h3><p>三重积分是同理的</p>
+<p><img src="/Blog/intro/change_muti_int_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/change_muti_int_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如直角坐标系转球面坐标系:</p>
+<p><img src="/Blog/intro/change_muti_int_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Vector-Fields"><a href="#Vector-Fields" class="headerlink" title="Vector Fields"></a>Vector Fields</h2><p><img src="/Blog/intro/vector_field_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/vector_field_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/vector_field_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/vector_field_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Line-Integrals"><a href="#Line-Integrals" class="headerlink" title="Line Integrals"></a>Line Integrals</h2><p>假设考虑平面上的曲线C:<br>$$<br>x=x(t),\ \ y=y(t) \ \ , \ a\le t \le b<br>$$</p>
+<p>$$<br>r(t)=&lt;x(t),y(t)&gt;=x(t)i+y(t)j<br>$$</p>
+<p>假设C是smooth curve. (r’连续且不为0)</p>
+<p>我们可以让f在点$(x_i^<em>,y_i^</em>)$的值乘以长度$\Delta s_i$<br>$$<br>\sum_{i=1}^n f(x_i^<em>,y_i^</em>)\Delta s_i<br>$$<br><img src="/Blog/intro/line_int.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>我们定义 line integral of f along C<br>$$<br>\int_Cf(x,y)ds= \sum_{i=1}^n f(x_i^<em>,y_i^</em>)\Delta s_i<br>$$<br><br></p>
+<p>回顾:</p>
+<p>length of C is<br>$$<br>L=\int_a^b \sqrt{(\frac {dx}{dt})^2+(\frac {dy}{dt})^2}dt<br>$$<br>dx/dt 是在x轴的偏移, dy/dt是在y轴的偏移, 那么总体偏移的距离就是两点的欧拉距离. </p>
+<p>类似的可以使用这样的方式求line integral</p>
+<p><img src="/Blog/intro/line_int_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>相当于x, y平面的偏移乘以function在z轴的高度</p>
+<br>
+$$
+\frac {ds}{dt} = \sqrt{(\frac {dx}{dt})^2+(\frac {dy}{dt})^2}
+$$
+![](/Blog/intro/line_int_2.PNG)
+
+<br>
+
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>或者让x=x, y=$\sqrt {1-x^2}$</p>
+<p><img src="/Blog/intro/line_int_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用计算器硬算的结果也是$2\pi+2/3$</p>
+<br>
+
+<br>
+
+<p>如果曲线C是 piecewise-smooth curve.</p>
+<p>可可以分段求积分<br>$$<br>\int_C f(x,y)ds=\int_{C_1} f(x,y)ds+\int_{C_2} f(x,y)ds+\cdots+\int_{C_n} f(x,y)ds<br>$$<br><img src="/Blog/intro/line_int_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+$$
+\int_C f(x,y)dx = \int_a^b f(x(t),y(t))x'(t)dt
+$$
+
+<p>$$<br>\int_C f(x,y)dy = \int_a^b f(x(t),y(t))y’(t)dt<br>$$</p>
+<p><img src="/Blog/intro/line_int_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实我觉得part a让x=x, y=x+2更方便</p>
+<br>
+
+<p>integral是有方向性的, 如果反过来:<br>$$<br>\int_{-C_1}y^2dx+xdy=\frac 65<br>$$<br><img src="/Blog/intro/line_int_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/line_int_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Line-Integrals-in-Space"><a href="#Line-Integrals-in-Space" class="headerlink" title="Line Integrals in Space"></a>Line Integrals in Space</h3><p><img src="/Blog/intro/line_int_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>等同于<br>$$<br>\int_a^bf(r(t))\ |r’(t)|\ dt<br>$$<br>特殊情况, 当f(x,y,z) = 1时<br>$$<br>\int_Cds=\int_a^b|r’(t)|dt=L<br>$$<br>L 是 curve C 的长度</p>
+<p><img src="/Blog/intro/line_int_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Line-Integrals-of-Vector-Fields"><a href="#Line-Integrals-of-Vector-Fields" class="headerlink" title="Line Integrals of Vector Fields"></a>Line Integrals of Vector Fields</h3><p><img src="/Blog/intro/line_int_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>定义:</p>
+<p><img src="/Blog/intro/line_int_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>example:</p>
+<p><img src="/Blog/intro/line_int_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/line_int_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

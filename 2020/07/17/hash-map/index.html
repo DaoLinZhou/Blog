@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.1k 字
+                    2.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      8 分钟
+                      11 分钟
                   </span>
                 
 
@@ -372,17 +372,77 @@ for(int i = 0; i &lt; s.length(); i++)
 <p>再插入81, 假设81的hash值也为1. 此时位置1, 2都被占用了. 那么81就插入到位置3</p>
 <p><img src="/Blog/intro/open_adress_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>也就是遇到哈希冲突就+1.</p>
+<p>然而这会导致一大片区域连续占用, 效率会下降.(Primary Clustering)</p>
+<br>
+
 <br>
 
 <p>基于此也有各种各样的改进方法.</p>
 <p>例如<strong>平方探测</strong></p>
 <p>遇到哈希冲突 +1, +4, +9, +16</p>
 <p>平方探测也有一定规律性.</p>
+<p>因为平方探测的索引在一定范围内是重复的. (Secondary Clustering)</p>
+<p>假设hash函数是简单地对数组长度取模<br>$$<br>index = (key+i*i)%n
+$$</p>
+<p>$$<br>index = key% n+(i*i)%n
+$$</p>
+<p>i从1开始进行探测, 每次自增1<br>$$<br>index = key% n+(i<em>(i-n) + i</em>n)%n
+$$</p>
+<p>$$<br>index = key% n+(i<em>(i-n))%n+(i</em>n)%n
+$$</p>
+<p>由于<br>$$<br>(i<em>n) %n ==0<br>$$<br>所以<br>$$<br>index = key% n+(i</em>(i-n))%n
+$$<br>同理:<br>$$<br>index = key% n+(i-n)*(i-n)%n
+$$<br>也就是说, 如果对长度为23的数组进行平方探测, 那么</p>
+<p>当 i==1 时和 i==24 时探测的索引是一样的</p>
+<p>当 i==2 时和 i==25 时探测的索引是一样的</p>
+<p>1-23是一个循环.</p>
+<p>然而再仔细思考如果i==22. $i-n = -1$. $(-1)^2=1$</p>
+<p>所以当 i == 1 和 i == 22 时探测的索引是一样的.</p>
+<p> i == 2 和 i == 21 时探测的索引是一样的.</p>
+<p>什么时候重合?<br>$$<br>i^2=(i-n)^2<br>$$</p>
+<p>$$<br>i = \frac n2<br>$$</p>
+<p>也就是说 1-n/2才是一个循环, n/2+1 到 n 是反过来的一个循环.</p>
+<p>所以在进行平方探测时避免无限循环, 遍历的范围应该从1-n/2. 考虑到不进行平方探测就找到的情况, i应该从0到n/2</p>
+<pre><code class="c++">void HashTable::insert(int key)
+{
+    int index = hash(key);
+
+    for(int i = 0; i*2 &lt;= maxn; i++){
+        int newIndex = hash(index + i*i);
+        if (arr[newIndex] == key){    // 防止重复插入
+            return;
+        } else if(arr[newIndex] == -1){
+            arr[newIndex] = key;
+            n++;
+            return;
+        }
+    }
+}</code></pre>
 <br>
 
 <p>二次哈希法</p>
 <p>遇到哈希冲突时, 使用另外一个hash函数 +hash2(key)</p>
 <p>使用开放地址法, 这个数组空间是有可能被占满的</p>
+<br>
+
+<br>
+
+<h2 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h2><h3 id="负载因数-Load-factor"><a href="#负载因数-Load-factor" class="headerlink" title="负载因数 Load factor"></a>负载因数 Load factor</h3><p>$\alpha$ load factor 是用于分析hash表的效率的</p>
+<p>$\alpha$ = number of items / table size</p>
+<p>随着表被逐渐填满, $\alpha$ 逐渐增加. 哈希碰撞的概率也逐渐增加.</p>
+<blockquote>
+<p>即: 随着 $\alpha$ 增加 表的效率降低</p>
+<p>不成功的搜索需要花费更多比较次数</p>
+<p>选择表的大小时应该使得 $\alpha$ 不超过2/3</p>
+</blockquote>
+<p>线性查找: $\alpha=2/3$ 不成功的搜索需要比较 5 次, 成功的搜索需要比较2次</p>
+<p>平方探测:  $\alpha=2/3$ 不成功的搜索需要比较 3 次, 成功的搜索需要比较2次</p>
+<p>链地址法: 不成功的搜索需要 $\alpha$ 次比较, 成功的搜索需要$1+\alpha/2$ 次比较(<strong>这里的alpha是值linked list的平均长度</strong>) 很好理解, 因为链表的不成功搜索就是比较$\alpha$次 成功的比较平均是$\alpha/2$次.</p>
+<p>如果是使用红黑树实现连地址法的话比较次数还有不同.</p>
+<br>
+
+<p>如果$\alpha &lt; 1/2$ 开放地址法和链地址法的效率差不多.</p>
+<p>当alpha增加. 链地址法的效率会比开放地址法好. 但链地址法需要额外的空间存放next指针</p>
 <br>
 
 <br>
