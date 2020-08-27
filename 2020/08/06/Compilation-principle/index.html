@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>编译原理 - Daolin&#39;s Repository</title>
+  <title>MIPS 汇编 - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.2k 字
+                    2.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      15 分钟
+                      7 分钟
                   </span>
                 
 
@@ -168,7 +168,7 @@
             <div class="markdown-body">
               <a id="more"></a>
 
-<h1 id="计算机理论"><a href="#计算机理论" class="headerlink" title="计算机理论"></a>计算机理论</h1><br>
+<h1 id="MIPS-汇编"><a href="#MIPS-汇编" class="headerlink" title="MIPS 汇编"></a>MIPS 汇编</h1><br>
 
 <p><strong>构成计算机需要哪些要素?</strong></p>
 <ul>
@@ -466,258 +466,16 @@ END:</code></pre>
 <br>
 
 <br>
-
-<br>
-
-<h1 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h1><p>编译原理是研究<strong>翻译</strong>的科学, 把一种机器语言翻译成另一种机器语言</p>
-<ul>
-<li>例如: 高级语言 -&gt; 低级语言 -&gt; 机器语言(二进制)</li>
-<li>例如: 计算机语言 -&gt; 硬件设备</li>
-</ul>
-<p>让计算机理解更高级的语言并执行</p>
-<p>更甚一步: 让计算机理解人</p>
-<p>最终是为了给人提供更好的<strong>思考</strong>方式(抽象思维, 面向对象…)</p>
-<blockquote>
-<ul>
-<li>基于oop语言我们思考领域 – 万事万物</li>
-<li>基于FP(函数式编程)我们思考领域转化 – 规律</li>
-</ul>
-<p>计算机和人是相辅相成的关系</p>
-</blockquote>
-<br>
-
-<p><img src="/Blog/intro/compliation.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h2 id="编译原理的其他用途"><a href="#编译原理的其他用途" class="headerlink" title="编译原理的其他用途"></a>编译原理的其他用途</h2><ul>
-<li><p>专家领域 (<strong>prolog</strong>)</p>
-</li>
-<li><p>内置脚本 (<strong>Lua, javascript</strong>)</p>
-</li>
-<li><p>领域建模 (<strong>HTML, SQL, 业务语言</strong>)</p>
-</li>
-</ul>
-<br>
-
-<p><img src="/Blog/intro/compliation_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h2 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h2><h3 id="什么是编译器"><a href="#什么是编译器" class="headerlink" title="什么是编译器?"></a>什么是编译器?</h3><p><img src="/Blog/intro/compliation_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="什么是程序"><a href="#什么是程序" class="headerlink" title="什么是程序?"></a>什么是程序?</h3><p><img src="/Blog/intro/compliation_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="什么是解释器"><a href="#什么是解释器" class="headerlink" title="什么是解释器?"></a>什么是解释器?</h3><p><img src="/Blog/intro/compliation_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="混合编译器"><a href="#混合编译器" class="headerlink" title="混合编译器"></a>混合编译器</h3><p><img src="/Blog/intro/compliation_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>为什么要有中间代码?</p>
-<ol>
-<li>中间代码可以更容易地翻译成目标程序</li>
-<li>中间代码可以有很大的优化空间</li>
-</ol>
-<br>
-
-<h3 id="即时编译器-Just-in-time-compiler"><a href="#即时编译器-Just-in-time-compiler" class="headerlink" title="即时编译器(Just- in-time compiler)"></a>即时编译器(Just- in-time compiler)</h3><p>JIT, 一种<strong>提高效率的方法</strong>, 中间代码不是直接执行, 而是先被编译成机器码再执行.</p>
-<p>如果第二次还要执行同样代码段的时候就不用再编译了. </p>
-<p>例如: Java的一个类型的字节码第一次执行时被编译成了机器码, 第二次执行的时候不需要再编译</p>
-<br>
-
-<h3 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h3><p><img src="/Blog/intro/compliation_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="不同方式的优劣"><a href="#不同方式的优劣" class="headerlink" title="不同方式的优劣"></a>不同方式的优劣</h3><ul>
-<li>解释执行有性能问题, 但也<strong>异常灵活</strong>, 例如支持eval函数, 意味着程序可以动态修改</li>
-<li>直接交叉编译<strong>技术难度是其次</strong>, 跨平台问题会多; 一次编译很多包也有分发问题 — 产品问题</li>
-<li>虚拟化技术提供了更好的体验, 却没有提供更好的性能 (JIT完美解决了这一点)</li>
-</ul>
-<br>
-
-<br>
-
-<h2 id="编译的流程"><a href="#编译的流程" class="headerlink" title="编译的流程"></a>编译的流程</h2><p>关注度分离: 分析一个复杂事物的通用方法. 不断地拆解, 将它分离成一个个独立的, 具有内部联系和逻辑的一串事情</p>
-<br>
-
-<h3 id="词法分析-Lexer"><a href="#词法分析-Lexer" class="headerlink" title="词法分析 Lexer"></a>词法分析 Lexer</h3><p>词法分析是一个分词断句+判断词性的过程</p>
-<p><img src="/Blog/intro/compliation_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="语法分析-Parser"><a href="#语法分析-Parser" class="headerlink" title="语法分析 Parser"></a>语法分析 Parser</h3><p><img src="/Blog/intro/compliation_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h3><p><img src="/Blog/intro/compliation_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>如果一个表达式(expr) 可以推导出1+expr|1</p>
-<br>
-
-<p>例如:</p>
-<p><img src="/Blog/intro/compliation_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>1+1 可以拆分为 1+另一个expr. 这个expr就是1</p>
-<p>再例如:</p>
-<p><img src="/Blog/intro/compliation_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>1+1+1可以拆分为1+expr. 这个expr就是1+1. 之后这个expr再递归, 分解为1+expr. 最后这个expr就是1</p>
-<br>
-
-<p>而语法中不只有+号, 所以在作语法分析器(Parser)的时候会定义很多语法规则.</p>
-<br>
-
-<h3 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h3><p><img src="/Blog/intro/compliation_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>1乘以abc应该报错, 所以我们应该做语法检查.</p>
-<p>通过语义分析对抽象语法树进行语法检查非常重要</p>
-<br>
-
-<h3 id="翻译-中间代码"><a href="#翻译-中间代码" class="headerlink" title="翻译: 中间代码"></a>翻译: 中间代码</h3><p><img src="/Blog/intro/compliation_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>翻译成3地址代码, 每个表达式中有3个地址</p>
-<p>CPU一次只能执行一个加法或乘法, 不可能执行100个加法</p>
-<p>根据抽象语法树生成的中间代码(这里是三地址代码) 更加接近计算机的指令. 也可以对三地址代码进行存储, 传输和一些优化</p>
-<br>
-
-<h3 id="生成机器码"><a href="#生成机器码" class="headerlink" title="生成机器码"></a>生成机器码</h3><p><img src="/Blog/intro/compliation_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>机器不懂高级语言</p>
-<p>机器像卡片机一样, 不断读取下一条指令并执行</p>
-<br>
-
-<h3 id="运行时环境"><a href="#运行时环境" class="headerlink" title="运行时环境"></a>运行时环境</h3><ul>
-<li><p>有的编译器将代码编译成机器码, 按照操作系统的约定编译成一个应用, 运行成为操作系统的<strong>进程</strong></p>
-</li>
-<li><p>有的编译器将代码编译成中间代码(字节码, 三地址代码等) , 然后在操作系统中启动一个<strong>虚拟容器</strong> (进程) 来执行它们</p>
-</li>
-<li><p>JIT编译器一边执行中间代码, 一边编译它们</p>
-</li>
-</ul>
-<br>
-
-<h3 id="编译器处理的两大过程"><a href="#编译器处理的两大过程" class="headerlink" title="编译器处理的两大过程"></a>编译器处理的两大过程</h3><p>分析—-对源程序进行分析形成中间表示(<strong>抽象语法树, 符号表</strong>)</p>
-<ul>
-<li>词法分析</li>
-<li>语法分析</li>
-<li>语义分析</li>
-<li>翻译</li>
-</ul>
-<p>综合—-根据中间表示生成目标语言, 提供运行环境等</p>
-<ul>
-<li>中间语言</li>
-<li>代码优化</li>
-<li>机器码生成</li>
-<li>运行环境及其他</li>
-</ul>
-<br>
-
-<h3 id="编译器分层设计"><a href="#编译器分层设计" class="headerlink" title="编译器分层设计"></a>编译器分层设计</h3><p><img src="/Blog/intro/compliation_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>这种分层设计是现在最常见的软件架构, 然而这个设计其实很难</p>
-<ul>
-<li><p>难点1: 关注度分离, 每一层都有意义, 有产出, 可以独立使用</p>
-</li>
-<li><p>难点2: 层足够强大 —- 每一层, 都用<strong>优质的</strong>算法数据结构, 架构技巧解决大量共性问题</p>
-</li>
-</ul>
-<br>
-
-<br>
-
-<h2 id="实现一个词法分析器"><a href="#实现一个词法分析器" class="headerlink" title="实现一个词法分析器"></a>实现一个词法分析器</h2><p>目标: 给定程序语言(L) 以及所有L支持的词汇, 从中找出这些词汇并为他们标注词性</p>
-<br>
-
-<p>词法分析: 将字符流转成符号流. 输入:源代码(字符流) 输出:符号流</p>
-<p>词法分析过程类似<strong>词性标注</strong>, 每个符号是一个元组, 应该至少 </p>
-<p><img src="/Blog/intro/compliation_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<h3 id="符号-词法单元"><a href="#符号-词法单元" class="headerlink" title="符号 (词法单元)"></a>符号 (词法单元)</h3><p>词法分析器的结果是一个个符号,英文Token, 也叫<strong>词法单元</strong> </p>
-<p>数学上符号是一个<strong>元组</strong>, 例如整数123可以表示为(123, Integer)</p>
-<br>
-
-<p>而我们要实现的TinyScript中有这些符号类型:</p>
-<ul>
-<li>Keyword (关键字)</li>
-<li>Variable (变量)</li>
-<li>Operator (操作符)</li>
-<li>Bracket (括号)</li>
-<li>String (字符串)</li>
-<li>Float (浮点数)</li>
-<li>Boolean (布尔)</li>
-</ul>
-<br>
-
-<h3 id="流的-peek-和-putBack-操作"><a href="#流的-peek-和-putBack-操作" class="headerlink" title="流的 peek 和 putBack 操作"></a>流的 peek 和 putBack 操作</h3><p>这两个操作是编译器的辅助功能. 辅助功能设计是作为架构师必修的环节</p>
-<br>
-
-<h4 id="流-stream-是什么"><a href="#流-stream-是什么" class="headerlink" title="流(stream)是什么"></a>流(stream)是什么</h4><p>流: 随着<strong>时间推移</strong>逐渐产生的<strong>可用数据序列</strong></p>
-<p>流的使用者永远不知道流中有多少个数据</p>
-<p>类比: 流水线上需要处理一个个产品. 每个工人从流中拿起物件进行加工再放回去(流的处理节点)</p>
-<p>作用: 抽象出像流水线一样处理数据的标准过程</p>
- <br>
-
-<h4 id="流的标准接口"><a href="#流的标准接口" class="headerlink" title="流的标准接口"></a>流的标准接口</h4><p>一般情况下, 流需要提供下一个数据的接口(next, hasNext 方法)</p>
-<p>next 方法读取到一个数据后, 这个数据就相当于<strong>流过去了</strong>, 无法重复读取</p>
-<p><img src="/Blog/intro/stream_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<br>
-
-<h2 id="词法的表示和词语的提取"><a href="#词法的表示和词语的提取" class="headerlink" title="词法的表示和词语的提取"></a>词法的表示和词语的提取</h2><h3 id="词法-amp-语法"><a href="#词法-amp-语法" class="headerlink" title="词法&amp;语法"></a>词法&amp;语法</h3><p><strong>词法</strong>就是构词的方法(有哪些词性, 有哪些字母, 有哪些词语), <strong>语法</strong>是造句的方法</p>
-<p>编译器制作过程中我们通常用<strong>正则表达式</strong>来表述词法; 然后用<strong>状态机</strong>来实现正则表达式</p>
-<br>
-
-<h3 id="串和语言"><a href="#串和语言" class="headerlink" title="串和语言"></a>串和语言</h3><ul>
-<li>字母表(alphabet): 语言L允许的所有字符串(如: ansii, utf8)</li>
-<li>串(String) 是语言L字母表中字母的一个有穷序列(例如: “apple”) ; 通常用希腊字母 $\epsilon$ 代表空串</li>
-</ul>
-<p>不可能所有的串都是语言支持的, 因此我们通常用一些约束规则来描述串, 其中就有<strong>正则表达式</strong></p>
-<blockquote>
-<p>正则表达式是用来描述形式语言的.</p>
-<p>形式语言: 哪怕不知道语言的上下文, 依然可以描述这个语言</p>
-</blockquote>
-<br>
-
-<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>用于正则语言 (一种形式语言) 的词法; 用一串字符串来描述正则语言L接受哪些词语, 而不需要理解这些词语</p>
-<p>正则语言可以被<strong>确定, 有限状态的自动机</strong>理解</p>
-<p><img src="/Blog/intro/re_example.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<br>
-
-<p><strong>确定, 有限状态的自动机</strong></p>
-<p>现在有一个问题: 如何区别关键词和变量名</p>
-<p>关键词和变量名都是以字母或下划线开头</p>
-<p><img src="/Blog/intro/re_example_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<blockquote>
-<p>来了一个输入, 判断第一个字符是否是下划线或字母, 如果是则从状态0变为状态1.</p>
-<p>在判断下一个字符是否为下划线, 字母或数字, 如果是则转为状态2. 直到字符不在范围中, 判断是否在字典中.</p>
-<p>什么叫确定有穷状态自动机? </p>
-<p>确定: 从任何一个状态到另一个的状态是确定的. 从0到1只能是匹配到下划线或字母</p>
-<p>有穷: 状态0, 状态1, 状态2. 状态的个数是有限的</p>
-</blockquote>
-<br>
-
-<blockquote>
-<p>为什么要写一个正则引擎去匹配? 而不是使用内置的正则引擎?</p>
-<ol>
-<li>因为字符是流, 所以没有办法一次把所有代码都读到内存中.</li>
-<li>即使不是流, 也不可能把整个源代码进行不停地匹配</li>
-</ol>
-</blockquote>
-
             </div>
             <hr>
             <div>
               <p>
                 
-                  <span>
-                <i class="iconfont icon-inbox"></i>
-                    
-                      <a class="hover-with-bg" href="/Blog/categories/编译原理/">编译原理</a>
-                      &nbsp;
-                    
-                  </span>&nbsp;&nbsp;
-                
                 
                   <span>
                 <i class="iconfont icon-tag"></i>
                     
-                      <a class="hover-with-bg" href="/Blog/tags/操作系统/">操作系统</a>
-                    
                       <a class="hover-with-bg" href="/Blog/tags/汇编/">汇编</a>
-                    
-                      <a class="hover-with-bg" href="/Blog/tags/编译原理/">编译原理</a>
                     
                   </span>
                 
@@ -729,6 +487,12 @@ END:</code></pre>
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2020/08/27/graph-theory/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">图论</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">
@@ -754,7 +518,7 @@ END:</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -781,7 +545,7 @@ END:</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -790,7 +554,7 @@ END:</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -914,7 +678,7 @@ END:</code></pre>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "编译原理&nbsp;",
+        "MIPS 汇编&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
