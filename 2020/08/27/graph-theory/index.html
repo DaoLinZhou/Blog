@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.7k 字
+                    4.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      9 分钟
+                      14 分钟
                   </span>
                 
 
@@ -444,6 +444,125 @@
 <blockquote>
 <p>算法就是维护变量的语义, 一旦清晰变量的语义, 就可以通过这些语义组织出我们想要的逻辑</p>
 </blockquote>
+<br>
+
+<br>
+
+<h2 id="哈密尔顿回路和哈密尔顿路径"><a href="#哈密尔顿回路和哈密尔顿路径" class="headerlink" title="哈密尔顿回路和哈密尔顿路径"></a>哈密尔顿回路和哈密尔顿路径</h2><p>图论领域, 回路和路径两个概念是分开的</p>
+<p>路径的起始点和终止点不一样, 而回路的起始点和终止点一样</p>
+<br>
+
+<h3 id="哈密尔顿回路"><a href="#哈密尔顿回路" class="headerlink" title="哈密尔顿回路"></a>哈密尔顿回路</h3><p>在一张图中, 从一个点出发, 沿着边行走, <strong>经过每个顶点恰好一次, 之后再回到出发点</strong></p>
+<p><img src="/Blog/intro/graph/hamilton.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这张图就有哈密尔顿回路.</p>
+<br>
+
+<p><img src="/Blog/intro/graph/hamilton_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这张图就没有哈密尔顿回路</p>
+<br>
+
+<p><img src="/Blog/intro/graph/hamilton_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果我们把正12面体建模</p>
+<p><img src="/Blog/intro/graph/hamilton_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>右边的平面图和左边的立体图是<strong>同构</strong>的</p>
+<p>这个图是由哈密尔顿回路的.</p>
+<br>
+
+<p>对于这类问题, 数学上目前找不到充分必要条件.</p>
+<br>
+
+<p>这个问题也很像一个计算机领域一个非常著名的问题: 旅行推销员问题 (Travelling Salesman Problem, <strong>TSP</strong>)</p>
+<p>旅行推销员问题是指: 给定一系列城市和每个城市间的距离, 求解访问每一座城市一次并回到起始城市的最短路径</p>
+<p>这是一个带权图, 完全图</p>
+<br>
+
+<br>
+
+<h3 id="求解哈密尔顿回路"><a href="#求解哈密尔顿回路" class="headerlink" title="求解哈密尔顿回路"></a>求解哈密尔顿回路</h3><p>我们没有非常好的数学性质来解决这个问题. 所以解决这个问题的方法就非常暴力了. 换句话说就是遍历所有的可能性</p>
+<p><img src="/Blog/intro/graph/hamilton_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="实现求解哈密尔顿回路"><a href="#实现求解哈密尔顿回路" class="headerlink" title="实现求解哈密尔顿回路"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/HamiltonLoop.java" target="_blank" rel="noopener">实现求解哈密尔顿回路</a></h3><br>
+
+<br>
+
+<h3 id="哈密尔顿路径"><a href="#哈密尔顿路径" class="headerlink" title="哈密尔顿路径"></a>哈密尔顿路径</h3><p>对于哈密尔顿路径来说, 起始点很重要.</p>
+<p><img src="/Blog/intro/graph/hamilton_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如这张图, 如果起始点为0的话则有哈密尔顿路径, 起始点为1的话没有哈密尔顿路径.</p>
+<p>因此我们需要指定起始点, 但给定起始点是否有哈密尔顿路径</p>
+<h3 id="实现求解哈密尔顿路径"><a href="#实现求解哈密尔顿路径" class="headerlink" title="实现求解哈密尔顿路径"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/HamiltonPath.java" target="_blank" rel="noopener">实现求解哈密尔顿路径</a></h3><br>
+
+<br>
+
+<h2 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h2><p>其实之前也介绍过状态压缩</p>
+<p>把二维坐标用一个数字表示就是状态压缩的一个例子</p>
+<p>两个桶的水量用一个两位数表示</p>
+<br>
+
+<p>而求哈密尔顿路径也可以使用状态压缩.</p>
+<p>visited数组可以使用一个数来表示, visited数组用来记录每一个顶点是否被遍历过</p>
+<p>假设图有4个顶点的话.</p>
+<p><img src="/Blog/intro/graph/stat_comp.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们可以把它想象成是一个二进制数 </p>
+<p><img src="/Blog/intro/graph/stat_comp_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就像在<a href="https://daolinzhou.github.io/Blog/2020/07/31/bloom-filter/">布隆过滤器</a>中做的一样. 不过由于求哈密尔顿路径是指数级的复杂度. 所以图的节点个数不能太多, 因此使用 int 或 long 就够用了, 这样最多可以存储32/64个节点的访问状态. </p>
+<br>
+
+<br>
+
+<h2 id="记忆化搜索"><a href="#记忆化搜索" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h2><p>对 visited 进行状态压缩提升 的效率有限, 主要是为记忆化搜索, 它把visited的状态压缩成了一个int值.</p>
+<p><img src="/Blog/intro/graph/stat_comp_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>记忆化搜索的时间复杂度更低, 当有大量重复搜索时 使用记忆化搜索效率更高(通常在竞赛中数据做过手脚, 使得有大量重复)</p>
+<p>如果没有大量重复, 使用回溯法的效率会更好</p>
+<br>
+
+<br>
+
+<h2 id="欧拉回路和欧拉路径"><a href="#欧拉回路和欧拉路径" class="headerlink" title="欧拉回路和欧拉路径"></a>欧拉回路和欧拉路径</h2><p>回忆: 哈密尔顿回路</p>
+<p>从一个点出发, 沿着边走, <strong>经过每个顶点恰好一次</strong>, 之后再回到出发点</p>
+<br>
+
+<p>欧拉回路: </p>
+<p>从一个点出发, 沿着边走, <strong>经过每个边恰好一次</strong>, 之后在回到出发点</p>
+<p><img src="/Blog/intro/graph/euler_loop.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>欧拉回路遍历所有的边, 而每一个边都是被顶点相连接的, 所以对于欧拉回路来说肯定遍历了所有的顶点. 这是否意味着对于一个图来说, 如果有欧拉回路就一定有哈密尔顿回路?</p>
+<p>不是的, 虽然肯定遍历所有点, 但无法保证经过所有点恰好一次</p>
+<p><img src="/Blog/intro/graph/euler_loop_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/graph/euler_loop_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>很长时间没有人能解决这个问题, 欧拉解决问题的思路: 证明这个问题没有解</p>
+<p>其实这张图的边是非常少的, 使用计算机回溯求解就可以算出来.</p>
+<br>
+
+<h3 id="欧拉回路存在的性质"><a href="#欧拉回路存在的性质" class="headerlink" title="欧拉回路存在的性质"></a>欧拉回路存在的性质</h3><p><img src="/Blog/intro/graph/euler_loop_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>由于我们寻找的是一个回路, 所以对这张图的每一个点来说, 肯定要进这个点一次, 然后再出这个点一次. </p>
+<p>这一进一出就相当于耗费了两条边</p>
+<p>由于欧拉回路每条边只能访问一次, 沿着一条边进一个点, 再沿着一条边出一个点后, 这两条边就不能再走了</p>
+<br>
+
+<p>对于欧拉回路来说, 我们期望每条边都走一遍, 然后回到原点, 所以每个点都必须有进有出</p>
+<p>因此, <strong>每一个点相邻边数 (即每个点的度) 必须是偶数</strong></p>
+<p><img src="/Blog/intro/graph/euler_loop_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这张图中4个点的度都是奇数, 所以就不可能存在欧拉回路</p>
+<br>
+
+<p>换句话说, 欧拉找到的性质是这样的</p>
+<p>对于<strong>无向联通图</strong>, <strong>每个点的度是偶数 &lt;==&gt; 图存在欧拉回路</strong></p>
+<br>
+
+<p>之前只证明了backword: 图存在欧拉回路 =&gt; 每个点的度是偶数</p>
+<p>接下来证明forward: 每个点的度是偶数 =&gt; 图存在欧拉回路</p>
+<br>
+
+<p><img src="/Blog/intro/graph/euler_loop_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这张图来说, 所有的顶点的度都是偶数</p>
+<p>首先从任意一点出发, 随便找一个环. 由于图是联通的, 同时每个点的度都是偶数, 所以肯定能找到一个环</p>
+<p>如果这个环是原图, 则已经找到了欧拉回路.</p>
+<p>否则, 剩下的边一定和我们找到的环相连, 且所有顶点的度依然是偶数, 即依然存在环</p>
+<p>而两个相连的环一定可以组成一个新环.</p>
+<p>(当遍历到新环时, 先走新环, 之后会回到这个点, 在走旧环)</p>
+<p>直到得到所有边构成的环</p>
+<br>
+
 
             </div>
             <hr>
@@ -499,7 +618,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -526,7 +645,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -535,7 +654,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
