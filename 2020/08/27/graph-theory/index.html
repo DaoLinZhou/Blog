@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.1k 字
+                    5.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      14 分钟
+                      18 分钟
                   </span>
                 
 
@@ -561,6 +561,91 @@
 <p>而两个相连的环一定可以组成一个新环.</p>
 <p>(当遍历到新环时, 先走新环, 之后会回到这个点, 在走旧环)</p>
 <p>直到得到所有边构成的环</p>
+<br>
+
+<br>
+
+<h3 id="寻找欧拉回路的三个算法"><a href="#寻找欧拉回路的三个算法" class="headerlink" title="寻找欧拉回路的三个算法"></a>寻找欧拉回路的三个算法</h3><p><img src="/Blog/intro/graph/euler_loop_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>以这张图为例</p>
+<h4 id="回溯法"><a href="#回溯法" class="headerlink" title="回溯法"></a>回溯法</h4><p>方法1就是用回溯法和哈密尔顿回路使用的回溯法本质是一样的, 时间复杂度时指数级的</p>
+<br>
+
+<h4 id="Fleury-算法"><a href="#Fleury-算法" class="headerlink" title="Fleury 算法"></a>Fleury 算法</h4><p>方法2是多项式级别的复杂度.</p>
+<p>Fleury算法某种程度上讲是一种贪心算法</p>
+<p><img src="/Blog/intro/graph/euler_loop_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设先走A-B这条边, A-B这条边就无法再次使用了, 此时我们把A-B这条边删去</p>
+<p><img src="/Blog/intro/graph/euler_loop_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时如果是回溯法会尝试走B-C. 然而实际上不能走B-C这条边.</p>
+<p>Fleury算法想办法避免了这个回溯的过程. Fleury算法说 B-C 这条边是一个<strong>桥</strong></p>
+<p>如果把B-C删掉的话, 此时整张图就分割成了两部分</p>
+<p>所以此时Fleury算法说我们不能走这个桥</p>
+<br>
+
+<blockquote>
+<p>Fleury算法说, 如果有多条边可以选的话, 不走桥, 随便选一条其他路就可以了</p>
+<p>这也是说 Fleury 算法有贪心性质的原因</p>
+</blockquote>
+<p>尽管如此, 对于Fleury算法来说, 用这个原则在每个顶点上选择路为什么能找到欧拉回路是需要证明的</p>
+<blockquote>
+<p>这里不做证明, 毕竟这个算法的性能不是最优的. 了解即可</p>
+<p>这也是贪心算法的难点. 思考”怎么贪”是容易的, 但是证明”这么贪”是正确的很难</p>
+<p>只有满足”贪心选择性质”的问题才能使用贪心算法解决</p>
+</blockquote>
+<br>
+
+<p>因此 Fleury 就要对每一个邻边判断一下桥. 而且寻找桥的过程是不能预处理的.</p>
+<p>因为每走过一条边就要删除这条边. 图是在时刻变化的.</p>
+<p>每次走过一条边, 对于新的图判断有没有桥. 遍历所有的点是 $O(V+E)$ 级别的. 判断图有没有桥是 $O(V+E)$ 级别的. 因此这个算法的时间复杂度是$O((V+E)^2)$ 级别的</p>
+<p>由于寻找欧拉回路是在一个联通图上完成的. 所以时间复杂度可以简写为$O(E^2)$</p>
+<br>
+
+<br>
+
+<h4 id="Hierholzer-算法"><a href="#Hierholzer-算法" class="headerlink" title="Hierholzer 算法"></a>Hierholzer 算法</h4><p>这个算法和之前证明为什么每一个顶点的度是偶数就存在欧拉回路的<strong>构造性证明</strong>方式是完全一样的.</p>
+<br>
+
+<p><img src="/Blog/intro/graph/euler_loop_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>具体来讲, 从A出发, 随便走即可, 最终肯定走出一个环. 假设走A-B-C-A. 之后删除掉这些边</p>
+<p><img src="/Blog/intro/graph/euler_loop_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时剩下的边一定形成环, 并且和之前找到的环有一个公共点</p>
+<p>由于有这个公共点, 我们只需要把剩下的环找到, 和原先的环形成一个大的环</p>
+<p>这个算法的时间复杂度是 $O(V+E)$ 级别的. 不过由于是在联通图中, 我们说它是 $O(E)$ 级别也是没有问题的</p>
+<br>
+
+<p><br><img src="/Blog/intro/graph/euler_loop_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Hierholzer的实现需要使用两个栈 (其实一个栈就够了)</p>
+<p>curPath: 当前已经走的路径</p>
+<p>loop: 存在当前图中找到的欧拉回路</p>
+<p><img src="/Blog/intro/graph/euler_loop_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>先找到一个环, 此时已经无路可走了, 就把 curPath 中的节点挪到 loop 这个栈中</p>
+<p>在挪的过程中, 如果我们发现某个点还能拓展去找其他的环, 我们再去走那个环</p>
+<p><img src="/Blog/intro/graph/euler_loop_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而B这个顶点有其他的邻边, 所以从B这个顶点出发还可以再找到环, B-D-E-B又是一个环</p>
+<p><img src="/Blog/intro/graph/euler_loop_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时B不能再走到任何位置了.</p>
+<p><img src="/Blog/intro/graph/euler_loop_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时curPath空了, 说明所有的点都遍历完了</p>
+<p>每个边走了一次, 回退一次, 所以算法的复杂度时 O(E) 级别的</p>
+<br>
+
+<h4 id="实现Hierholzer算法"><a href="#实现Hierholzer算法" class="headerlink" title="实现Hierholzer算法"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/EulerLoop.java" target="_blank" rel="noopener">实现Hierholzer算法</a></h4><br>
+
+<h3 id="欧拉路径"><a href="#欧拉路径" class="headerlink" title="欧拉路径"></a>欧拉路径</h3><p>从一个点出发, 沿着边行走, 经过每个边恰好一次, 之后来到结束点, 结束点和起始点可以不一样.</p>
+<br>
+
+<p>欧拉回路的求法是先找出一个环. 换句话说就是先找到一个起始点和终止点相同的路径.</p>
+<p>而欧拉路径也可以用同样的思想, 先找到起始点到终止点的一条路径. 逆推每个点, 如果这个点还有其余相邻的边, 则说明这个点是某个环的一部分. </p>
+<p>而找到起始点到终止点的一条路径的代码其实和在欧拉路径找环的代码完全一致. 因为从起始点出发, 只有到达终止点才会导致没有相邻边可以访问(因为终止点的度为奇数). 只不过起始点不能从0开始.</p>
+<br>
+
+<p>怎么判断起始点和终止点. 起始点和终止点的度肯定为奇数, 其余的点则为偶数. 因为起始点只出不进, 终止点只进不出</p>
+<blockquote>
+<p> 欧拉路径存在的性质:</p>
+<p>对于无向联通图, <strong>除了两个点</strong>每个点的度是偶数 &lt;==&gt; 图存在欧拉路径</p>
+</blockquote>
+<p><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/EulerPath.java" target="_blank" rel="noopener">求欧拉路径</a></p>
+<br>
+
 <br>
 
 
