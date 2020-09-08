@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.8k 字
+                    2.9k 字
                   </span>
                 
 
@@ -214,6 +214,12 @@
 </ol>
 <p>那么这个节点的相邻边中最小的边就属于最小生成树</p>
 <p><img src="/Blog/intro/using-cut-pro.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>其实切分定理可以这样理解:</p>
+<p>对于给定的连通图, 一定有一个最小生成树连接所有的点.</p>
+<p>现在这个最小生成树的大部分都已经完成了. 切分把图分成了两个部分. 这两个部分现在已经有各自的”最小生成树”. 还差一条边把这两部分连接起来形成最后的最小生成树.</p>
+<p>自然要选择最短的横切边使得权值最小.</p>
+</blockquote>
 <br>
 
 <h1 id="Lazy-Prim-算法"><a href="#Lazy-Prim-算法" class="headerlink" title="Lazy Prim 算法"></a>Lazy Prim 算法</h1><p>选取一个节点, 通过切分定理不断扩散. </p>
@@ -416,7 +422,7 @@ public:
 <br>
 
 <h1 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h1><p>思想 : 如果每次都选择所有边中最小的一条边, 这条边是否就属于最小生成树呢? </p>
-<p>答案是yes, 因为我们总能找到一个切分, 使得这条边是横切边中最小的边</p>
+<p>答案是yes, *<em>因为我们总能找到一个切分, 使得这条边是横切边中最小的边 *</em>, 相当于不断反着使用切分定理</p>
 <p>我们可以不断的找这些最短边, 只要这些最短边不构成环</p>
 <p><img src="/Blog/intro/kruakal.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>难点就是变成如何判断新加一条边会产生环?</p>
