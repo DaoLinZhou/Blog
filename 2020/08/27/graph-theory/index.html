@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.4k 字
+                    7.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      18 分钟
+                      24 分钟
                   </span>
                 
 
@@ -650,7 +650,189 @@
 
 <br>
 
+<h2 id="有向图"><a href="#有向图" class="headerlink" title="有向图"></a>有向图</h2><p>有向图就是每一个边都带有方向的图</p>
+<p><img src="/Blog/intro/graph/direct_graph.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时可以从0走到1, 但不能从1走到0</p>
+<p><img src="/Blog/intro/graph/direct_graph_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
+<h3 id="有向图的环检测"><a href="#有向图的环检测" class="headerlink" title="有向图的环检测"></a>有向图的环检测</h3><p>有向图中, “环”这个概念是由非常重要的概念的</p>
+<p><img src="/Blog/intro/graph/direct_graph.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>和无向图的环检测类似, 依然是如果找到一个之前点之前访问过, 就说明有环. 不过有一点不一样. 因为在有向图中, 遍历过不代表形成环</p>
+<p>例如上图 0-1-2-4, 之后退回成 0-1尝试走3, 那么2-4就不在当前路径上, 所以要添加一个标记, 表示在当前路径上</p>
+<p>环是回到一个当前路径上的点, 而不仅仅是一个已经遍历过的点.</p>
+<br>
+
+<p>橙色圈代表在当前路径上</p>
+<p><img src="/Blog/intro/graph/direct_graph_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>回退到1</p>
+<p><img src="/Blog/intro/graph/direct_graph_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/graph/direct_graph_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时所有点都访问过, 且没找到同一路径上点, 所以整张图没有环</p>
+<br>
+
+<p>假设3-0之间有一条边.</p>
+<p><img src="/Blog/intro/graph/direct_graph_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么此时通过3就能回到0, 而0是一个被标记了的点, 所以图中有环</p>
+<h4 id="实现有向图环检测"><a href="#实现有向图环检测" class="headerlink" title="实现有向图环检测"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/dfs/DirectedCycleDetection.java" target="_blank" rel="noopener">实现有向图环检测</a></h4><br>
+
+<h3 id="为什么有向图环检测非常重要"><a href="#为什么有向图环检测非常重要" class="headerlink" title="为什么有向图环检测非常重要?"></a>为什么有向图环检测非常重要?</h3><p>因为在很多应用中, 我们要确保有向图无环</p>
+<p>例如: 程序模块的引用.</p>
+<p>编程中一个很重要的问题就是: <strong>循环引用</strong></p>
+<p>从编译器的角度, 要想检测到有循环引用其实本质就是做有向图换检测</p>
+<br>
+
+<p><strong>有向无环图</strong>是非常有意义的, 通常我们为它起一个名字(DAG: Directed Acyclic Graph)</p>
+<br>
+
+<br>
+
+<h3 id="有向图的度"><a href="#有向图的度" class="headerlink" title="有向图的度"></a>有向图的度</h3><p>有向图的度和无向图的度不太一样</p>
+<p>无向图中, 一个顶点的度是这个点相邻的边数</p>
+<p><img src="/Blog/intro/graph/direct_graph_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这个图, 顶点1的度是3</p>
+<br>
+
+<p>而对于有向图中, 边是包含有方向的</p>
+<p><img src="/Blog/intro/graph/direct_graph.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所以看和1相邻的边, 虽然还是有3条, 但是这3条边方向各部相同.</p>
+<p>有两条边是从1出去的边. 有一条边是进入1的边. 这两种边是截然不同的</p>
+<p>因此在有向图中, 更为细分的, 把度分为 <strong>入度(indegree)</strong> 和 <strong>出度(outdegree)</strong></p>
+<p>所谓<strong>入度</strong>, 就是进入顶点的边</p>
+<p>所谓<strong>出度</strong>, 就是从顶点出去的边</p>
+<br>
+
+<p><img src="/Blog/intro/graph/direct_graph.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于这个图来说</p>
+<table>
+<thead>
+<tr>
+<th>顶点</th>
+<th>入度(indegree)</th>
+<th>出度(outdegree)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<br>
+
+<p>欧拉回路依赖与每个顶点的度, 而有向图中, 入度和出度都没有了, 那么我们怎么求解欧拉回路?</p>
+<br>
+
+<br>
+
+<h3 id="有向图求解欧拉回路"><a href="#有向图求解欧拉回路" class="headerlink" title="有向图求解欧拉回路"></a>有向图求解欧拉回路</h3><p>无向图存在欧拉回路的充分必要条件: 每个点的度数为偶数</p>
+<p>这是因为对于每个顶点一进一出, 必定是2的倍数</p>
+<p>所以有向图的欧拉回路的充分必要条件: <strong>每个点的入度等于出度</strong></p>
+<br>
+
+<p>如果一个图有欧拉回路, 在求解欧拉回路的过程中, 那么当一个点的出度为0, 说明找到一个环, 无法继续向下走 (在无向图中是度为0代表找到一个环)</p>
+<h4 id="求有向图欧拉回路"><a href="#求有向图欧拉回路" class="headerlink" title="求有向图欧拉回路"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/DirectedEulerLoop.java" target="_blank" rel="noopener">求有向图欧拉回路</a></h4><br>
+
+<h3 id="有向图的欧拉路径"><a href="#有向图的欧拉路径" class="headerlink" title="有向图的欧拉路径"></a>有向图的欧拉路径</h3><p>无向图存在欧拉路径的充分必要条件: 处理两个点的度为奇数, 其余每个点的度数为偶数</p>
+<br>
+
+<p>有向图存在欧拉路径的充分必要条件:</p>
+<p>除了两个点, 其余每个点的入度等于出度. 这两个点, 一个入度比出度大一(终止点); 一个出度比入度大一(起始点)</p>
+<h4 id="求有向图欧拉路径"><a href="#求有向图欧拉路径" class="headerlink" title="求有向图欧拉路径"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/DirectedEulerPath.java" target="_blank" rel="noopener">求有向图欧拉路径</a></h4><br>
+
+<br>
+
+<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p>拓扑排序是只存在于有向图中的算法</p>
+<p><img src="/Blog/intro/graph/direct_graph.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们可以把这张图想象成一个一个的任务.</p>
+<p>要完成任务1, 就要先完成任务0, 要完成任务2, 要先完成任务1, 3. 要完成任务4, 就要先完成任务2.</p>
+<p>因此我们就要找到一个顺序去完成任务. 这就是拓扑排序</p>
+<br>
+
+<p><img src="/Blog/intro/graph/direct_graph_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先要找到入度为0的点, 入度为0的点必须先进行访问</p>
+<p>之后删除这个顶点(以及这个顶点相连接的边), 同时更新顶点的度.</p>
+<br>
+
+<p><img src="/Blog/intro/graph/direct_graph_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>现在这幅图中, 还没有被排序的顶点中入度为0的点是1. 所以接下来对顶点1进行访问</p>
+<p><img src="/Blog/intro/graph/direct_graph_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>之后再找没有排序的顶点中入度为0的点, 访问顶点3.</p>
+<p><img src="/Blog/intro/graph/direct_graph_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>之后同理, 最终得到结果</p>
+<p><img src="/Blog/intro/graph/direct_graph_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>0-1-3-2-4 就是这张图的拓扑排序的结果</p>
+<br>
+
+<p>拓扑排序在真正实现时并不需要删除点, 只要假象删除掉了即可</p>
+<br>
+
+<p>拓扑排序的结果不唯一, 例如同时有3个顶点的入度为0时, 此时先访问那个时无所谓的.</p>
+<p>然而拓扑排序也有可能是无解的. </p>
+<p><img src="/Blog/intro/graph/direct_graph_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如上图, 图中没有任何一个点的入度为0 (图中有环)</p>
+<p>因此, 拓扑排序有一个附加作用: 可以用于<strong>有向图的环检测</strong></p>
+<p>如果拓扑排序完后, 还有点没有访问, 就说明图中有环</p>
+<br>
+
+<p>只有有向无环图 DAG 才可以进行拓扑排序</p>
+<h3 id="拓扑排序实现"><a href="#拓扑排序实现" class="headerlink" title="拓扑排序实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/topo/TopoSort.java" target="_blank" rel="noopener">拓扑排序实现</a></h3><p>这个算法是最常规的拓扑排序算法.</p>
+<br>
+
+<h3 id="拓扑排序的另一个算法"><a href="#拓扑排序的另一个算法" class="headerlink" title="拓扑排序的另一个算法"></a>拓扑排序的另一个算法</h3><p>这个算法有局限, 不实用. 然而了解这个算法的思路有助于理解<strong>有向图的强联通分量.</strong></p>
+<br>
+
+<p><strong>深度优先后序遍历</strong></p>
+<p>对于一个节点, 首先遍历完其所有相邻节点之后, 再遍历它自身</p>
+<p><img src="/Blog/intro/graph/direct_graph.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这张图, 深度优先后序遍历的结果是 4-2-3-1-0 (无论再顶点1时访问2还是访问3, 结果都不变)</p>
+<p>而这张图的拓扑排序结果是 0-1-3-2-4, 正好是深度优先后序遍历的逆序</p>
+<p>这个逆序的关系并不是偶然</p>
+<p>这就是求解拓扑排序的另外一个算法.</p>
+<br>
+
+<p>一个图的深度优先后序遍历的逆序就是拓扑排序的结果</p>
+<br>
+
+<h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>关键点是: 对于一个节点, <strong>首先遍历完其所有相邻节点之后</strong>, 再遍历它自身</p>
+<p><strong>所以一个节点的后序节点一定出现在这个节点的前面</strong></p>
+<br>
+
+<p>例如对于1来说, 节点2, 3, 4一定出现在1的前面, 只有遍历完234, 才会遍历1. </p>
+<p>同理对于节点2, 节点4一定出现在它前面.</p>
+<p>对于节点3, 节点2, 4一定出现在它前面</p>
+<p>而对这个序列求逆的话. <strong>就说明对于一个节点, 它的前置节点一定出现在它的前面</strong></p>
+<br>
+
+<p>然而这个算法有个坑. <strong>这个算法无法做环检测</strong>. 即使有环, 依然可以对它进行深度优先遍历. 依然可以求逆序.</p>
+<p>因此要想使用这个算法就要保证图是一个DAG (有向无环图)</p>
+<h3 id="第二种拓扑排序实现"><a href="#第二种拓扑排序实现" class="headerlink" title="第二种拓扑排序实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/topo/TopoSort2.java" target="_blank" rel="noopener">第二种拓扑排序实现</a></h3>
             </div>
             <hr>
             <div>
@@ -680,6 +862,12 @@
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2020/09/08/Computing-System/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">计算机底层</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">

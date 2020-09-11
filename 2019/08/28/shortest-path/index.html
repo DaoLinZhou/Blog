@@ -204,7 +204,7 @@
 <blockquote>
 <p>dijkstra 的思想，就是 bfs！因为没有权值，bfs 用一个普通队列就够了；但有了权，为了处理权，dijkstra 就需要一个优先队列了。在此基础上，bfs 和 dijksta 近乎是一套逻辑</p>
 </blockquote>
-<h3 id="Dijkstra实现"><a href="#Dijkstra实现" class="headerlink" title="Dijkstra实现"></a>Dijkstra实现</h3><p><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/Dijkstra.java" target="_blank" rel="noopener">java实现</a></p>
+<h3 id="Dijkstra实现"><a href="#Dijkstra实现" class="headerlink" title="Dijkstra实现"></a>Dijkstra实现</h3><p><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/weighted/Dijkstra.java" target="_blank" rel="noopener">java实现</a></p>
 <pre><code class="c++">#ifndef ALGORITHM_DIJKSTRA_H
 #define ALGORITHM_DIJKSTRA_H
 
@@ -346,7 +346,7 @@ public:
 <p>这个算法不需要优先队列</p>
 <br>
 
-<h3 id="Bellman-Ford-算法的实现"><a href="#Bellman-Ford-算法的实现" class="headerlink" title="Bellman-Ford 算法的实现"></a>Bellman-Ford 算法的实现</h3><p><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/BellmanFord.java" target="_blank" rel="noopener">java实现</a></p>
+<h3 id="Bellman-Ford-算法的实现"><a href="#Bellman-Ford-算法的实现" class="headerlink" title="Bellman-Ford 算法的实现"></a>Bellman-Ford 算法的实现</h3><p><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/weighted/BellmanFord.java" target="_blank" rel="noopener">java实现</a></p>
 <pre><code class="c++">#ifndef ALGORITHM_BELLMANFORD_H
 #define ALGORITHM_BELLMANFORD_H
 
@@ -535,7 +535,7 @@ public:
 <p>而对于一个没有负权环的图来说, 自己到自己的最短距离一定是0</p>
 <p>然而如果有负权环的话, 自己到自己的距离是小于0的. $dis[v][v] &lt; 0$</p>
 <p>所以只要看一下二维数组dis的主对角线上的值, 如果有小于0的, 就说明有负权环</p>
-<h2 id="Floyed实现"><a href="#Floyed实现" class="headerlink" title="Floyed实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/Floyed.java" target="_blank" rel="noopener">Floyed实现</a></h2><br>
+<h2 id="Floyed实现"><a href="#Floyed实现" class="headerlink" title="Floyed实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/weighted/Floyed.java" target="_blank" rel="noopener">Floyed实现</a></h2><br>
 
 <br>
 
