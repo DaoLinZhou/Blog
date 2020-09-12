@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>图像学 - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/red_Kodori.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Saturday, September 12th 2020, 12:51 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    747 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      3 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<h1 id="图像学"><a href="#图像学" class="headerlink" title="图像学"></a>图像学</h1><br>
+
+<p><img src="/Blog/intro/com_graphic/g.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="基本构成"><a href="#基本构成" class="headerlink" title="基本构成"></a>基本构成</h2><h3 id="Elements-of-image-formation"><a href="#Elements-of-image-formation" class="headerlink" title="Elements of image formation"></a>Elements of image formation</h3><ul>
+<li>Object<ul>
+<li>Exists independent of image formation and viewer - defined in its onw <strong>object space</strong></li>
+<li>Formed by geometric primitives, (e.g. triangles)</li>
+</ul>
+</li>
+<li>Viewer<ul>
+<li>Forms the image of the object via a <strong>projection</strong></li>
+<li>Image is produced in 2D</li>
+<li>Objects transformed from object to <strong>image space</strong></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="光与颜色"><a href="#光与颜色" class="headerlink" title="光与颜色"></a>光与颜色</h3><p>如果没有光, 那么就看不到任何东西</p>
+<p>人们是如何看见东西的?</p>
+<ol>
+<li>光照到物体上, <strong>反射</strong>到人眼 (Light reflected)</li>
+<li>光直接从光源<strong>传播</strong>到人眼 (Light transmitted)</li>
+</ol>
+<br>
+
+<p>什么是反射的颜色?</p>
+<p>光与物体都有颜色.</p>
+<p>当光找到一个有颜色的物体, 一些颜色被反射(reflected), 一些颜色被吸收(absorbed)</p>
+<br>
+
+<p>计算机中使用RGB来描述一个颜色</p>
+<p><img src="/Blog/intro/com_graphic/g_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Ray-tracing"><a href="#Ray-tracing" class="headerlink" title="Ray tracing"></a>Ray tracing</h2><p><img src="/Blog/intro/com_graphic/g_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Directly derived from the <strong>synthetic camera</strong> model</p>
+<ul>
+<li>Follow rays of light from light sources</li>
+<li>Determine which rays enter the lens of the camera through image window</li>
+<li>Compute color of projection</li>
+</ul>
+<p>简而言之就是模拟现实中光的反射, 判断哪些光进入摄像头, 之后计算颜色</p>
+<p>然而这个方法并不好. 毕竟能进入摄像头的光线只有一部分, 然而我们却要计算所有的光线. 做了很多无用功.</p>
+<br>
+
+<p>所以一个很自然的想法就是将上面的步骤反过来</p>
+<p>Cast one ray per pixel from the eye and shoot it into the scene.</p>
+<blockquote>
+<p>不是从光源发射一道ray到眼睛, 而是从眼睛发射一道ray到光源</p>
+</blockquote>
+<p>假设从眼睛中发射出一道光线, 照到物体上. 经过反射直到达到光源, 我们就能看到物体的颜色.</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/g_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>A point on an object may be illuminated(照亮) by</p>
+<ul>
+<li>Light source directly - through <strong>shadow ray</strong></li>
+<li>Light reflected off an object - through <strong>reflected ray</strong></li>
+<li>Light transmitted through a transparent object through <strong>refracted ray</strong></li>
+</ul>
+<br>
+
+<h3 id="Ray-tracing-算法"><a href="#Ray-tracing-算法" class="headerlink" title="Ray tracing 算法"></a>Ray tracing 算法</h3><pre><code class="python">for each pixel on screen:
+
+    determine ray from eye through pixel
+
+    if ray shoots into infinity:
+        return a background color
+
+    if ray shoots into light source:
+        return light color appropiately
+
+    # most expensive step
+    find closest intersection of ray with an object
+    cast off **shadow ray** (toward light sources)
+
+    if shadow ray hits a light source:
+        compute light contribution(1) according to some illumination model
+
+    cast reflected(2) and refracted ray(3), **recursively** to calculate pixel color contributions
+
+    return pixel color as a sum of (1)-(3) after some absorption</code></pre>
+<br>
+
+<h3 id="Ray-tracing-的好处与坏处"><a href="#Ray-tracing-的好处与坏处" class="headerlink" title="Ray tracing 的好处与坏处"></a>Ray tracing 的好处与坏处</h3><p>好处:</p>
+<ul>
+<li>近乎遵循物理光流</li>
+<li>看起来更真实. can model light-object interactions and <strong>inter-surface reflections and refractions</strong></li>
+</ul>
+<p>坏处:</p>
+<ul>
+<li>Expensive, 耗费高, 光的合成以及反射的递归都消耗性能</li>
+<li>Inadequate for modeling <strong>non-reflective</strong> (dull-looking) objects</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="z-buffer"><a href="#z-buffer" class="headerlink" title="z-buffer"></a>z-buffer</h2><ul>
+<li>在 image space 中工作, 和 ray tracing 相似</li>
+<li><strong>Per-polygon</strong> operations vs. per-pixel for ray tracing</li>
+<li>Simple and often accelerated with hardware (<strong>fase</strong>)</li>
+<li>Works regardless of the order in which the polygons are processed — no need to sort them back to front</li>
+<li>A <strong>visibility algorithm</strong> and not designed to compute colors</li>
+</ul>
+<br>
+
+<h3 id="z-buffer-算法"><a href="#z-buffer-算法" class="headerlink" title="z-buffer 算法"></a>z-buffer 算法</h3><pre><code class="python">for each polygon in the scene
+    project its vertices onto viewing(image) plane
+    for each pixel inside the polygon formed on viewing plane
+        determine point on polygon corresponding to this pixel get **depth value** for this pixel (distance from point to plane)
+        if depth value &lt; stored depth value for the pixel
+            compute pixel color based on some illumination model
+            update pixel color in frame buffer
+            update depth value in **depth buffer** (z-buffer)
+        end if</code></pre>
+<p>简单来说就是前面的物体会遮挡住后面的物体, 所以计算每个物体的距离, 来判断一个点展示什么颜色.</p>
+<br>
+
+<br>
+
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/图像学/">图像学</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/图像学/">图像学</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/WebGl/">WebGl</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/javascript/">javascript</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2020/09/08/Computing-System/">
+                        <span class="hidden-mobile">计算机底层</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "图像学&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
