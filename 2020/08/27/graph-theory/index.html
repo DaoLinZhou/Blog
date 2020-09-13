@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    7.1k 字
+                    8.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      24 分钟
+                      30 分钟
                   </span>
                 
 
@@ -760,6 +760,9 @@
 <p>除了两个点, 其余每个点的入度等于出度. 这两个点, 一个入度比出度大一(终止点); 一个出度比入度大一(起始点)</p>
 <h4 id="求有向图欧拉路径"><a href="#求有向图欧拉路径" class="headerlink" title="求有向图欧拉路径"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/path/DirectedEulerPath.java" target="_blank" rel="noopener">求有向图欧拉路径</a></h4><br>
 
+<p>哈密尔顿回路和哈密尔顿路径在无向图中用的是穷举法. 这点在有向图中也是一样的. 所以原本哈密尔顿回路的算法不需要做任何改变就可以作用在有向图中</p>
+<br>
+
 <br>
 
 <h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p>拓扑排序是只存在于有向图中的算法</p>
@@ -805,7 +808,8 @@
 <h3 id="拓扑排序实现"><a href="#拓扑排序实现" class="headerlink" title="拓扑排序实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/topo/TopoSort.java" target="_blank" rel="noopener">拓扑排序实现</a></h3><p>这个算法是最常规的拓扑排序算法.</p>
 <br>
 
-<h3 id="拓扑排序的另一个算法"><a href="#拓扑排序的另一个算法" class="headerlink" title="拓扑排序的另一个算法"></a>拓扑排序的另一个算法</h3><p>这个算法有局限, 不实用. 然而了解这个算法的思路有助于理解<strong>有向图的强联通分量.</strong></p>
+<h3 id="拓扑排序的另一个算法"><a href="#拓扑排序的另一个算法" class="headerlink" title="拓扑排序的另一个算法"></a>拓扑排序的另一个算法</h3><p>O(V+E)</p>
+<p>这个算法有局限, 不实用. 然而了解这个算法的思路有助于理解<strong>有向图的强联通分量.</strong></p>
 <br>
 
 <p><strong>深度优先后序遍历</strong></p>
@@ -832,7 +836,126 @@
 
 <p>然而这个算法有个坑. <strong>这个算法无法做环检测</strong>. 即使有环, 依然可以对它进行深度优先遍历. 依然可以求逆序.</p>
 <p>因此要想使用这个算法就要保证图是一个DAG (有向无环图)</p>
-<h3 id="第二种拓扑排序实现"><a href="#第二种拓扑排序实现" class="headerlink" title="第二种拓扑排序实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/topo/TopoSort2.java" target="_blank" rel="noopener">第二种拓扑排序实现</a></h3>
+<h3 id="第二种拓扑排序实现"><a href="#第二种拓扑排序实现" class="headerlink" title="第二种拓扑排序实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/topo/TopoSort2.java" target="_blank" rel="noopener">第二种拓扑排序实现</a></h3><br>
+
+<br>
+
+<h2 id="有向图的强联通分量"><a href="#有向图的强联通分量" class="headerlink" title="有向图的强联通分量"></a>有向图的强联通分量</h2><p><img src="/Blog/intro/graph/directed_cc.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图中, 从1可以到达4但是不能从4到达1.</p>
+<p>所以虽然看起来所有顶点都是连接的. 但是它不像无向图那样, 任意两点之间都互相可达.</p>
+<br>
+
+<h3 id="强联通分量"><a href="#强联通分量" class="headerlink" title="强联通分量"></a>强联通分量</h3><p><strong>强联通分量</strong>: 在一个强联通分量中, 任何两点都相互可达</p>
+<p><img src="/Blog/intro/graph/directed_cc.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>虽然这张图中好像是联通的. 但是由于它不能满足<strong>任意两点互相可达</strong>, 所以它不是强联通的.</p>
+<br>
+
+<p><img src="/Blog/intro/graph/directed_cc_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个有向图中, 其实有3个强联通分量. (上图已经用颜色区分)</p>
+<p>在每个强联通分量内部任何两点都相互可达</p>
+<br>
+
+<p><img src="/Blog/intro/graph/directed_cc_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这三个强联通分量内部的点是互相可达的. 但是区域于区域之间不是互相可达的</p>
+<p>从一个区域只能去另一个区域, 但是无法回来</p>
+<p>因此我们可以<strong>把每个强联通分量想象成一个点</strong></p>
+<p>强联通分量之间如果从一个强联通分量的点可以到达另外一个强联通分量的点的话, 就做一条边. 这样任意一个有向图都可以将其规约成一个新的有向图.</p>
+<p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个新的有向图是将所有强联通分量看作一个点</p>
+<blockquote>
+<p>这个新的有向图一定是一个DAG. 一定是一个有向无环图</p>
+<p>反证法: 假设如果有环</p>
+<p><img src="/Blog/intro/graph/directed_cc_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么这就意味着这些区域也是两两可达的, 而这些区域间的每个蓝色点又是互相可达的, 所以所有点可以通过这个环互相可达. 所以这些点应该属于一个强联通分量. 因此我们的图就是错的. 因为我们的图把所有的强联通分量都看作是一个顶点. 矛盾</p>
+</blockquote>
+<br>
+
+<p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>求解强联通分量, 就相当于求这A-B-C..强联通分量中都有哪些顶点</p>
+<br>
+
+<h4 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路:"></a>算法思路:</h4><p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们可以先对E这个点进行DFS遍历, 这个遍历过程中可以访问到的点一定都局限在E这个区域中.</p>
+<p>因为E这个区域到达不了其他区域.</p>
+<p>之后我们在对D这个区域进行DFS, 由于E已经被遍历过了, 所以D不会到E. 因此遍历过程中访问的点都局限在D中</p>
+<p>以此类推, 再遍历C, B, A区域中的点</p>
+<br>
+
+<p>我们是按照什么顺序进行遍历这些区域?</p>
+<p>是按照新的区域拓扑排序的逆序进行遍历的.</p>
+<p>由于这个新的图是DAG, 所以一定存在拓扑排序</p>
+<br>
+
+<p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而这个新的图是我们假想出来的, 有没有可能我们先找到E这个区域中的点. 用dfs遍历完, 再找到D区域中的点, 用dfs遍历… …</p>
+<br>
+
+<h4 id="Kosaraju算法"><a href="#Kosaraju算法" class="headerlink" title="Kosaraju算法"></a>Kosaraju算法</h4><p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>重新整理一下思路:</p>
+<p>我们希望找到一个<strong>访问节点的顺序</strong>, 使得我们先对E进行深度遍历, 再对D进行深度遍历… …</p>
+<p>而对D中一个节点进行DFS就相当于对整个联通分量D进行了遍历. 因此节点的访问顺序并不一定要让一个联通分量的节点聚集在一起</p>
+<br>
+
+<p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>举个例子:</p>
+<p>上图中E有1个节点, D有4个节点, C有2个节点, B有3个节点, A有一个节点</p>
+<p>一个可能的访问顺序:</p>
+<pre><code>E1 -&gt; D1 -&gt; C1 -&gt; D2 -&gt; B1 -&gt; A1 -&gt; C2 -&gt; D3 -&gt; D4 -&gt; B2 -&gt; B3</code></pre><p>这个顺序是我随便写的, </p>
+<p>假设我们先访问E1. 就对联通分量E进行了遍历. 所有E内的节点都访问过了.(只有一个E1)</p>
+<p>之后访问D1, 联通分量D内所有节点(D1 - D4) 就都被访问过了.</p>
+<p>同理访问C1, 联通分量C内所有节点(C1, C2) 也就被访问过了</p>
+<p>之后轮到D2, 然而我们之前在访问D1时, 就对D1-D4进行了遍历, 所以直接跳过D2即可</p>
+<p>之后访问B1, 联通分量B内所有的节点(B1-B3也都访问过了)</p>
+<p>… …</p>
+<br>
+
+<p>例子虽然是随便写的, 但它遵循一个规律. 在这个访问顺序中:</p>
+<p><strong>有一个</strong>E中的节点排在<strong>所有</strong>DCBA节点之前. 所以我们可以先遍历E在遍历其他联通分量</p>
+<p><strong>有一个</strong>D中的节点排在<strong>所有</strong>CBA节点之前. 所以我们可以在遍历CBA之前先遍历联通分量D</p>
+<p><strong>有一个</strong>C中的节点排在<strong>所有</strong>BA节点之前. 所以我们可以在遍历BA之前先遍历联通分量C</p>
+<br>
+
+<p>到这里就能知道我们到底想要一个怎样的访问顺序了. 问题是怎么得到这个访问顺序?</p>
+<p>是否可以对原图进行后序DFS得到这个访问顺序?</p>
+<p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果我们对原图进行DFS.</p>
+<p>A节点肯定排在最后, 之后是某一个B节点… …</p>
+<p>换句话说:</p>
+<p><strong>有一个</strong>A中的节点排在<strong>所有</strong>BCDE节点之后.</p>
+<p><strong>有一个</strong>B中的节点排在<strong>所有</strong>CDE节点之后.</p>
+<p><strong>有一个</strong>C中的节点排在<strong>所有</strong>DE节点之后.</p>
+<p><strong>有一个</strong>D中的节点排在<strong>所有</strong>E节点之后.</p>
+<p>如果取逆序的话就是:</p>
+<p><strong>有一个</strong>A中的节点排在<strong>所有</strong>BCDE节点之前.</p>
+<p><strong>有一个</strong>B中的节点排在<strong>所有</strong>CDE节点之前.</p>
+<p><strong>有一个</strong>C中的节点排在<strong>所有</strong>DE节点之前.</p>
+<p><strong>有一个</strong>D中的节点排在<strong>所有</strong>E节点之前.</p>
+<p>这和我们想要的结果就非常相似了.</p>
+<br>
+
+<p>我们想要的结果是</p>
+<p><strong>有一个</strong>E中的节点排在<strong>所有</strong>DCBA节点之前</p>
+<p><strong>有一个</strong>D中的节点排在<strong>所有</strong>CBA节点之前</p>
+<p><strong>有一个</strong>C中的节点排在<strong>所有</strong>BA节点之前</p>
+<p>… …</p>
+<p>很显然节点的顺序反了.</p>
+<p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果把联通分量当作节点, 进行拓扑排序的顺序是A-B-C-D-E</p>
+<p>这和我们用原图进行后序DFS再取逆序的结果的顺序是一样的, 有一个A节点排在BCDE之前, 有一个B节点排在CDE之前… …</p>
+<p>(这点其实也比较好理解, 假设后序深度遍历进入C, C中节点两两互通, 所以<strong>后序深度遍历</strong>一定会走出C, 走向D或E, 之后回溯C, 访问C中的某个节点)</p>
+<br>
+
+<p>所以一个自然的想法就是改变图, 使得新图的拓扑排序结果是 E-D-C-B-A.</p>
+<p>这个改变图的方法就是<strong>翻转这张图</strong>, 翻转这张图后再进行拓扑排序的结果就是对原图进行拓扑排序的逆序</p>
+<br>
+
+<p>因此: <strong>翻转这张图后, 后序遍历的逆是我们想要的访问节点的顺序</strong></p>
+<br>
+
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/dfs/SCC.java" target="_blank" rel="noopener">实现</a></h3><p><img src="/Blog/intro/graph/directed_cc_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
             </div>
             <hr>
             <div>
