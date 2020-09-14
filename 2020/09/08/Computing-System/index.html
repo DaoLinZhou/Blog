@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    436 字
+                    625 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      2 分钟
+                      3 分钟
                   </span>
                 
 
@@ -280,6 +280,40 @@
 <p>Endianness only applies to memory storage</p>
 <br>
 
+<br>
+
+<h3 id="C-内存分布"><a href="#C-内存分布" class="headerlink" title="C 内存分布"></a>C 内存分布</h3><p><img src="/Blog/intro/comp_sys/memory.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>程序的 <strong>address space</strong> 包含4个部分</p>
+<ul>
+<li>Stack: 栈, 存储 local variable, 向下增长</li>
+<li>Heap: 堆, c语言使用malloc函数, c++, java中new, 使用pointer进行访问, 会自动 resize, 向上增长</li>
+<li>Static Data: global and static variables. 不会增长</li>
+<li>Code: loaded when program starts, does not change</li>
+</ul>
+<br>
+
+<h4 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h4><p><img src="/Blog/intro/comp_sys/stack_frame.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每个stack frame都是一个连续的内存块, 包含 the local variables of a single procedure</p>
+<p>一个stack frame包含:</p>
+<ul>
+<li>Location of caller function</li>
+<li>Function arguments</li>
+<li>space for local variables</li>
+</ul>
+<p>Stack Pointer (SP) 告诉我们 lowest (current) stack frame 在哪.</p>
+<p>当函数调用结束, stack pointer会移回上一个位置. (但数据不会清除)</p>
+<br>
+
+<h4 id="Static-Data"><a href="#Static-Data" class="headerlink" title="Static Data"></a>Static Data</h4><p>String 和 global varibals 会存在这里,</p>
+<pre><code>char* str = &quot;h1&quot;;</code></pre><p>size does not change, but sometimes data can</p>
+<p>Notably string literals cannot</p>
+<br>
+
+<h4 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h4><p>copy of your code goes here</p>
+<p>C code becomes data too. </p>
+<p>Does not change.</p>
+<br>
+
 
             </div>
             <hr>
@@ -347,7 +381,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -374,7 +408,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -383,7 +417,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.9k 字
+                    9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      30 分钟
+                      31 分钟
                   </span>
                 
 
@@ -942,7 +942,7 @@
 <p><img src="/Blog/intro/graph/directed_cc_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>如果把联通分量当作节点, 进行拓扑排序的顺序是A-B-C-D-E</p>
 <p>这和我们用原图进行后序DFS再取逆序的结果的顺序是一样的, 有一个A节点排在BCDE之前, 有一个B节点排在CDE之前… …</p>
-<p>(这点其实也比较好理解, 假设后序深度遍历进入C, C中节点两两互通, 所以<strong>后序深度遍历</strong>一定会走出C, 走向D或E, 之后回溯C, 访问C中的某个节点)</p>
+<p>(这点其实也比较好理解, 假设后序深度遍历进入C, C中节点两两互通, 所以<strong>后序深度遍历</strong>一定会走出C, 走向D或E, 之后回溯C, 访问C中的某个节点, 具体是哪个节点, 当然看从哪个节点进入C, 这个节点一定最后访问, 因为是后序遍历)</p>
 <br>
 
 <p>所以一个自然的想法就是改变图, 使得新图的拓扑排序结果是 E-D-C-B-A.</p>
@@ -950,6 +950,7 @@
 <br>
 
 <p>因此: <strong>翻转这张图后, 后序遍历的逆是我们想要的访问节点的顺序</strong></p>
+<p>得到访问的顺序后, 就按照这个顺序对<strong>原图</strong>进行DFS即可</p>
 <br>
 
 <h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/dfs/SCC.java" target="_blank" rel="noopener">实现</a></h3><p><img src="/Blog/intro/graph/directed_cc_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -1016,7 +1017,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1043,7 +1044,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1052,7 +1053,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
