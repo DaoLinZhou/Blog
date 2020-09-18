@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -358,7 +358,7 @@ imgGray_d2 = np.array(imgGray_d*, dtype=&#39;int&#39;) / 5 # 让每一个double�
 <br>
 
 <p>电脑显示颜色的方式:</p>
-<p><img src="/Blog/intro/com_graphic/colors.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/colors.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h3 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h3><p>RGB是最常用的颜色显示方式, 有3个通道(R, G, B)</p>
@@ -405,11 +405,11 @@ img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</code></pre>
 <br>
 
 <p>自然我们希望在 alpha=0 的时候显示第二张图, alpha=1 的时候显示第一张图.</p>
-<p>假设第一张图为 $f_0(x)$, 第二张图为$f_1(x)$, 结果图为$g(x)$, x代表像素的位置<br>$$<br>g(x) = \alpha f_0(x) + (1-\alpha) f_1(x)<br>$$<br>当 alpha == 0 时显示$f_1$, 当 alpha==1 时显示$f_0$</p>
+<p>假设第一张图为 $f_0(x)$, 第二张图为$f_1(x)$, 结果图为$g(x)$, x代表像素的位置<br>$$<br>g(x) = \alpha f_0(x) + (1-\alpha) f_1(x)<br>$$<br>当 alpha == 0 时$g(x) = f_1(x)$, 当 alpha==1 时$g(x)=f_0(x)$</p>
 <p>一种从bgr转为bgra的方法 (opencv默认用bgr而不是rgb)</p>
 <pre><code class="python">img_bgra = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
 img_alpha = np.random.rand(height, width) &gt; 0.5
-img_bgra[:, :, 3] = img_alpha</code></pre>
+img_bgra[:, :, 3] = img_alpha    # 修改第4个channel</code></pre>
 <br>
 
 <br>
@@ -473,7 +473,7 @@ img_bgra[:, :, 3] = img_alpha</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -500,7 +500,7 @@ img_bgra[:, :, 3] = img_alpha</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -509,7 +509,7 @@ img_bgra[:, :, 3] = img_alpha</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
