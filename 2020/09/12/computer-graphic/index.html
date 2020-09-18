@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.7k 字
+                    2.4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      7 分钟
+                      10 分钟
                   </span>
                 
 
@@ -414,7 +414,66 @@ img_bgra[:, :, 3] = img_alpha    # 修改第4个channel</code></pre>
 
 <br>
 
-<h2 id="图像过滤-Image-Filtering"><a href="#图像过滤-Image-Filtering" class="headerlink" title="图像过滤 Image Filtering"></a>图像过滤 Image Filtering</h2>
+<h2 id="图像过滤-Image-Filtering"><a href="#图像过滤-Image-Filtering" class="headerlink" title="图像过滤 Image Filtering"></a>图像过滤 Image Filtering</h2><p>kernel也可以看作时filter</p>
+<h3 id="box-kernel"><a href="#box-kernel" class="headerlink" title="box kernel"></a>box kernel</h3><p>box kernel 也叫做 box filter, 因为如果我们 plot 这个kernel, 它看起来像box.</p>
+<p>可以参考box blur</p>
+<pre><code class="python">import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+if __name__ == &#39;__main__&#39;:
+    a = np.zeros(10)
+    a[3:6] = 1
+    print(a)
+
+    kernel = [1, 1, 1]
+    afilt = a.copy()    # 记录使用核之后的图的样子
+    # 使用核
+    for i in range(1, 9):
+        afilt[i] = sum(a[i-1:i+2] * kernel)
+    print(afilt)
+
+    plt.plot(range(0, 10), a, color=&#39;blue&#39;)
+    plt.plot(range(0, 10), afilt, color=&#39;red&#39;)
+    plt.show()</code></pre>
+<p>output:</p>
+<pre><code>[0. 0. 0. 1. 1. 1. 0. 0. 0. 0.]
+[0. 0. 1. 2. 3. 2. 1. 0. 0. 0.]</code></pre><p><img src="/Blog/intro/com_graphic/box_kernel.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>新的数组 afilt[i] 位置的元素, 是原本 a[i-1], a[i], a[i+1] 这三个位置的和</p>
+<p>换句话说, afilt 第i个位置的<strong>信息</strong>, 33%来自于a[i-1], 33%来自于a[i],33%来自于a[i+1]</p>
+<br>
+
+<p>然而原本 a 的最大值为1, 但与kernel运算后, afilt的最大值为3. 因为虽然 afilt[i] 只有 33% 来自与 a[i-1], 但是它包含了a[i-1]的所有信息.</p>
+<p>afilt[i]的信息肯定大于a[i-1], a[i], a[i+1]</p>
+<p>如果我们对图像进行这样的操作是非常不好的. 这会使得图形某一部分信息非常多, 某一部分信息非常少. 换句话说, 某些部分非常亮, 某些部分非常暗.</p>
+<br>
+
+<p>我们希望整个图的信息量不变</p>
+<p>所以我们要对kernel进行<strong>标准化</strong>, 使得kernel的sum为1</p>
+<pre><code class="python">kernel = np.array([1, 1, 1])
+kernel = kernel / sum(kernel)</code></pre>
+<p>把之前kernel的定义改为上面两句话.</p>
+<p>output:</p>
+<pre><code>[0. 0. 0.    1.    1. 1.    0.    0. 0. 0.]
+[0. 0. 0.333 0.666 1. 0.666 0.333 0. 0. 0.]</code></pre><p><img src="/Blog/intro/com_graphic/kernel_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>三者的比较(蓝色是原图, 红色是使用第一种kernel, 绿色是归一化后kernel)</p>
+<p><img src="/Blog/intro/com_graphic/kernel_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>假设这是一个图像, 那么使用这个归一化后的kernel在2-6这个区间就会变得平滑一些(模糊一些), 因为灰度是逐渐变化的而不是突然从0变为1.</p>
+<br>
+
+<h3 id="互相关-cross-correlation"><a href="#互相关-cross-correlation" class="headerlink" title="互相关 cross-correlation"></a>互相关 cross-correlation</h3><p>上面我们进行的步骤叫做cross-correlation<br>$$<br>G[i, j]=\sum_{u=-k}^k\sum_{v=-k}^kH[u, v]F[i+u, j+v]<br>$$<br>显然H是核, F是我们要处理的图形, G是得到的结果. 为了简化公式通常写作:<br>$$<br>G = H \otimes F<br>$$<br>上面的例子中k就是1, v 就是从 -1 到 1 进行变化 (由于只有一维所以u=0)</p>
+<p><img src="/Blog/intro/com_graphic/cross-correlation.gif" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="卷积-Convolution"><a href="#卷积-Convolution" class="headerlink" title="卷积 Convolution"></a>卷积 Convolution</h3><p>然而当我们讨论<strong>image filtering</strong>, 我们将使用一个类似的, 但又不同的operation: 卷积<br>$$<br>G[i, j]=\sum_{u=-k}^k\sum_{v=-k}^kH[u, v]F[i-u, j-v]<br>$$</p>
+<p>$$<br>\bigstar<br>$$</p>
+
             </div>
             <hr>
             <div>
