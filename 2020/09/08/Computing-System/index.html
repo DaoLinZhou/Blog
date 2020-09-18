@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    625 字
+                    1.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      8 分钟
                   </span>
                 
 
@@ -314,6 +314,187 @@
 <p>Does not change.</p>
 <br>
 
+<br>
+
+<h2 id="位运算-MASK"><a href="#位运算-MASK" class="headerlink" title="位运算, MASK"></a>位运算, MASK</h2><p><img src="/Blog/intro/comp_sys/poker.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设我们要使用一种方式来表示扑克.</p>
+<p>52张卡. 4个种类.</p>
+<p>我们期望这种表示方式能进行如下操作:</p>
+<ol>
+<li>比较两张卡上的数.</li>
+<li>判断他们是否在同一类别 (红桃, 黑桃,方片, 梅花)</li>
+</ol>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/comp_sys/bit_op.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code>~(A | B) = ~A &amp; ~B
+~(A &amp; B) = ~A | ~B</code></pre><br>
+
+<p>位运算符和逻辑算符不一样.</p>
+<p>对于逻辑运算符来说, 0代表False, 非零代表True</p>
+<p>逻辑运算符 &amp;&amp;, ||, ! 总是会返回0或1.</p>
+<pre><code>!0x41  -&gt; 0x00
+!0x00  -&gt; 0x01
+!!0x41 -&gt; 0x01
+0xCC &amp;&amp; 0x33 -&gt; 0x01
+0x00 &amp;&amp; 0x33 -&gt; 0x01</code></pre><br>
+
+<h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><p>使用独热码(One Hot encoding)</p>
+<p>回到问题中, 第一种方式就是使用独热码.</p>
+<p><img src="/Blog/intro/comp_sys/one_hot.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>一位代表一个卡片. 52位就可以代表52张卡</p>
+<p>缺点: </p>
+<ul>
+<li><p>难以比较大小和类别</p>
+</li>
+<li><p>需要大量bit位</p>
+</li>
+</ul>
+<br>
+
+<h3 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h3><p>让最后的13位代表值, 再用倒数14-17位代表种类</p>
+<p><img src="/Blog/intro/comp_sys/one_hot_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>相当于用两部分的独热码组成. 4位的独热码代表种类, 13位的独热码代表值</p>
+<p>这样既可以比较大小又可以比较类别.</p>
+<p>缺点是依然需要大量的bit来存储, 总共需要17位, 所以要申请32位的bits</p>
+<br>
+
+<h3 id="第三种方法"><a href="#第三种方法" class="headerlink" title="第三种方法"></a>第三种方法</h3><p>对第一种方法进行压缩.</p>
+<p>$2^6=64&gt;52$. 所以可以用6位代表所有卡牌</p>
+<p><img src="/Blog/intro/comp_sys/one_hot_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而它和第一种方法一样, 难以比较大小和类别</p>
+<br>
+
+<h3 id="第四种方法"><a href="#第四种方法" class="headerlink" title="第四种方法"></a>第四种方法</h3><p>对第二种方法进行压缩.</p>
+<p>2bit可以表示4种状态.</p>
+<p><img src="/Blog/intro/comp_sys/one_hot_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$2^4 = 16 &gt; 13$. 4位代表值</p>
+<p>依然使用6 bits, 使用 1byte 就可以存储(char)</p>
+<p><img src="/Blog/intro/comp_sys/one_hot_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="对比两张卡的种类是否一致"><a href="#对比两张卡的种类是否一致" class="headerlink" title="对比两张卡的种类是否一致"></a>对比两张卡的种类是否一致</h3><p>我们使用第四种方式进行存储, 因为这种方式最好.</p>
+<p>假设我们有两张卡, 如何设计一个函数isSameSuit判断两张卡的种类是否一致?</p>
+<pre><code class="c">#define SUIT_MASK 0x30
+
+int isSameSuit(char card1, char card2){
+    return (card1 &amp; SUIT_MASK) == (card2 &amp; SUIT_MASK);
+}</code></pre>
+<p>我们定义SUIT_MASK</p>
+<p><img src="/Blog/intro/comp_sys/mask.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>mask: a bit vector designed to achieve a desired behavior when used with a bitwise operator on another bit vector v.</p>
+<br>
+
+<p>如果我们让一个 number 位与(&amp;) mask. 我们就得到了mask中我们关心的位的状态.</p>
+<p>例如上面的例子中, 5, 6位代表的是卡片种类. 所以用 card &amp; mask, 就把5, 6位以外的值过<strong>滤掉</strong>了. 使得我们可以专注于比较5, 6两位.</p>
+<p><img src="/Blog/intro/comp_sys/mask_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>或者</p>
+<pre><code class="c">#define SUIT_MASK 0x30
+
+int isSameSuit(char card1, char card2){
+    return !((card1 &amp; SUIT_MASK) ^ (card2 &amp; SUIT_MASK));
+}</code></pre>
+<p>依然使用mask过滤其余信息. 不过判断等于时使用XOR. 如果<strong>两个值相等XOR的结果就是0, 反之非零</strong>. 对XOR的结果取反(自动转bool)就是我们希望的答案.</p>
+<br>
+
+<br>
+
+<h3 id="对比数值"><a href="#对比数值" class="headerlink" title="对比数值"></a>对比数值</h3><p>对于卡片我们还要比较他们的大小 greaterValue</p>
+<p>有了上面的经验, 这个函数就好写了</p>
+<pre><code class="c">#define VALUE_MASK 0x0f
+
+int greaterValue(char card1, char card2){
+    return ((unsigned int)(card1 &amp; VALUE_MASK) &gt; (unsigned int)(card2 &amp; VALUE_MASK));
+}</code></pre>
+<p>同样使用一个MASK. </p>
+<p><img src="/Blog/intro/comp_sys/mask_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Two’s-Complement-Arithmetic"><a href="#Two’s-Complement-Arithmetic" class="headerlink" title="Two’s Complement Arithmetic"></a>Two’s Complement Arithmetic</h2><p>加法操作同时作用于unsigned and two’s complement integers.</p>
+<ul>
+<li><strong>Simplifies hardware</strong>: only one algorithm for addition</li>
+<li><strong>Algorithm</strong>: simple addition, <strong>discard the highest carry bit</strong><ul>
+<li>Called modular addition: result is sum modulo $2^w$</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/two_comp.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="为什么这个东西起作用"><a href="#为什么这个东西起作用" class="headerlink" title="为什么这个东西起作用?"></a>为什么这个东西起作用?</h3><p>首先我们希望所有integer x</p>
+<p><img src="/Blog/intro/comp_sys/two_comp_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果我们让 x+~x会得到什么结果?</p>
+<p><img src="/Blog/intro/comp_sys/two_comp_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么如果用 x+~x + 1 得到的就是0.</p>
+<pre><code>x + (-x) = 0
+x + (~x) + 1 = 0</code></pre><p>因此 -x 就是 ~x+1</p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/two_comp_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="In-C-Signed-vs-Unsigned"><a href="#In-C-Signed-vs-Unsigned" class="headerlink" title="In C, Signed vs. Unsigned"></a>In C, Signed vs. Unsigned</h3><p><img src="/Blog/intro/comp_sys/casting.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以使用后缀U或u来表示unsigned</p>
+<pre><code>0U, 234322u</code></pre><br>
+
+<p>当signed 和unsigned比较时 <strong>signed value</strong> 会隐式转化成 <strong>unsigned value</strong></p>
+<pre><code>&lt;, &gt;, ==, &lt;=, &gt;=</code></pre><br>
+
+<h2 id="Sign-Extension"><a href="#Sign-Extension" class="headerlink" title="Sign Extension"></a>Sign Extension</h2><p>如果我们把一个signed integer转换成一个更大的数据类型?</p>
+<p>char -&gt; short -&gt; int -&gt; long</p>
+<p>4bits 转8bits的例子:</p>
+<p><img src="/Blog/intro/comp_sys/casting_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而如果是复数会怎么办?</p>
+<br>
+
+<p>这个过程被称为Sign Extension</p>
+<p><img src="/Blog/intro/comp_sys/casting_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设转化的类型比原来的大k个bits. 这k个bits会填充为signed integer的signed值.</p>
+<p><img src="/Blog/intro/comp_sys/casting_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Shift-位移运算"><a href="#Shift-位移运算" class="headerlink" title="Shift 位移运算"></a>Shift 位移运算</h2><p>位移运算 shift : x&lt;&lt;n</p>
+<p>Shifts by n&lt;0 or n&gt;=w (bit width of x) are <strong>undefined</strong></p>
+<p><img src="/Blog/intro/shift.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Arithmetic-Shift"><a href="#Arithmetic-Shift" class="headerlink" title="Arithmetic Shift"></a>Arithmetic Shift</h3><p>对于signed number来说</p>
+<p>左移补0, 右移补sign, sign是0就补0, 是1就补1.</p>
+<br>
+
+<h3 id="Logical-Shift"><a href="#Logical-Shift" class="headerlink" title="Logical Shift"></a>Logical Shift</h3><p>对于 unsigned number来说</p>
+<p>左移和右移都补0</p>
+<br>
+
+<blockquote>
+<p>C 语言中, &gt;&gt; 使用那种shift取决于编译器, 换句话说取决于x是unsigned还是signed</p>
+<p>java中 logical shift 是 &gt;&gt;&gt;, arithmetic shift 是 &gt;&gt;</p>
+</blockquote>
+<br>
+
+<p>假设我们对一个数进行位移</p>
+<pre><code>x = 25;    0001 1001 = 25
+x &lt;&lt; 2;    0110 0100 = 100
+x &lt;&lt; 3;    1100 1000 = -56</code></pre><p>左移一位相当于乘以2. 但可能会overflow</p>
+<br>
+
+<p>那么右移一位是否相当于除以2呢</p>
+<p>如果是符号位是0或者无符号位的话肯定是的.</p>
+<p>如果是有符号位呢?</p>
+<pre><code>x = -16;    1111 0000 = -16
+x &gt;&gt; 3;     1111 1110 = -2
+x &gt;&gt; 5;     1111 1111 = -1</code></pre><p>相当于 $\frac {-16} {2^3} = -2$</p>
+<p>-16 除以 2 的 n次方结果应该也是一个负数, 这也是为什么右移会补1.</p>
 
             </div>
             <hr>
@@ -381,7 +562,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -408,7 +589,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -417,7 +598,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

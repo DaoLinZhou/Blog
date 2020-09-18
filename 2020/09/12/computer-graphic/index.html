@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    747 字
+                    1.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      3 分钟
+                      7 分钟
                   </span>
                 
 
@@ -294,7 +294,127 @@
 
 <br>
 
+<br>
 
+<h1 id="计算机视觉"><a href="#计算机视觉" class="headerlink" title="计算机视觉"></a>计算机视觉</h1><h2 id="opencv-的一些简单的使用方法"><a href="#opencv-的一些简单的使用方法" class="headerlink" title="opencv 的一些简单的使用方法"></a>opencv 的一些简单的使用方法</h2><h3 id="读取视频-播放视频"><a href="#读取视频-播放视频" class="headerlink" title="读取视频, 播放视频"></a>读取视频, 播放视频</h3><pre><code class="python">def test_read_video():
+    # 读取视频文件
+    # video = cv2.VideoCapture(&quot;resources/bobo.mp4&quot;)
+    video = cv2.VideoCapture(0) # 将使用摄像头作为流
+
+    # video.set(3, 640)# 设置宽度640
+    # video.set(4, 480)# 设置高度
+    # video.set(10, 100)# 亮度
+
+    while True:
+        success, img = video.read()
+        cv2.imshow(&quot;video test&quot;, img)
+        # 如果输入q则退出
+        if cv2.waitKey(1) &amp; 0xFF == ord(&#39;q&#39;):
+            break</code></pre>
+<h3 id="读取图片-写入图片-resize-图片"><a href="#读取图片-写入图片-resize-图片" class="headerlink" title="读取图片, 写入图片, resize 图片"></a>读取图片, 写入图片, resize 图片</h3><pre><code class="python">img = cv2.imread(&quot;resources/street.jpg&quot;) 
+imgResize = cv2.resize(img, (300, 200)) # 宽300 高200
+cv2.imwrite(&quot;resources/resized_street.jpg&quot;, imgResize)</code></pre>
+<p>如果我们print(imgResize)</p>
+<p>我们将得到一个 200x300x3 的 numpy array</p>
+<p>显然200x300代表图的高和宽, 3代表3种颜色.</p>
+<p>opencv读取图片时, <strong>使用BGR方式读取</strong> 而不是RGB</p>
+<pre><code class="python">filter = np.zeros((200, 300, 2))
+imgB = imgResize[:, :, :]
+imgB[:, :, 1:3] = filter    # 把red green部分设为0 
+cv2.imshow(&quot;B&quot;, imgB)</code></pre>
+<br>
+
+<h3 id="裁剪图片"><a href="#裁剪图片" class="headerlink" title="裁剪图片"></a>裁剪图片</h3><p>既然我们直到img使用np.array存储, 自然就可以使用numpy的方式截取数组中的部分元素</p>
+<pre><code class="python">img = cv2.imread(&quot;resources/street.jpg&quot;)
+imgResize = cv2.resize(img, (300, 200))
+# 截取高和宽 (先截取高在截取宽)
+imgCropped = imgResize[0:100, 0:150]
+cv2.imshow(&quot;cropped&quot;, imgCropped)</code></pre>
+<br>
+
+<h3 id="im2double"><a href="#im2double" class="headerlink" title="im2double"></a>im2double</h3><p>matlab中有一个im2double函数. 它的作用是让读取的图片用double的形式存储. </p>
+<p>正常imread一个图片后每个像素最大值是255. 使用im2double就可以让它突破最大值.</p>
+<p>然而在opencv中没有这个函数. 因此我们可以自己实现一下.</p>
+<p>这个函数的本质是将矩阵进行<a href="https://daolinzhou.github.io/Blog/2020/04/20/machine-learning-2/#%E6%9C%80%E5%80%BC%E5%BD%92%E4%B8%80%E5%8C%96-normalization-normalize">最值归一化</a>, 将矩阵中的每个值转化为一个0-1之间的小数.</p>
+<p>所以我们可以这样实现</p>
+<pre><code class="python">def im2double(img: np.ndarray):
+    minN = np.min(img)
+    maxN = np.max(img)
+    out1 = (img - minN) / (maxN - minN)
+    return out</code></pre>
+<pre><code class="python">def im2double(img: np.ndarray):
+    out = cv2.normalize(img.astype(&#39;float&#39;), None, 0.0, 1.0, cv2.NORM_MINMAX)
+    return out</code></pre>
+<br>
+
+<br>
+
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><p>对于一张灰色的图片, 如果我们限制灰色的等级. 例如我们现在只有5种灰色</p>
+<p><img src="/Blog/intro/com_graphic/black.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>左边是原图, 右边是限制灰度的图.</p>
+<pre><code class="python">imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # 转化为灰色
+imgGray_d = im2double(imgGray)    # 用double表示
+imgGray_d2 = np.array(imgGray_d*, dtype=&#39;int&#39;) / 5 # 让每一个double只有5种可能. (乘以5, 转int, 再除以5)</code></pre>
+<br>
+
+<p>电脑显示颜色的方式:</p>
+<p><img src="/Blog/intro/com_graphic/colors.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h3><p>RGB是最常用的颜色显示方式, 有3个通道(R, G, B)</p>
+<p><img src="/Blog/intro/com_graphic/rgb.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Y-Cb-Cr"><a href="#Y-Cb-Cr" class="headerlink" title="Y Cb Cr"></a>Y Cb Cr</h3><p>这个方式会把大部分的信息存储到elimination channel(white channel)</p>
+<p>再把颜色信息存储到剩余两个channel中</p>
+<p><img src="/Blog/intro/com_graphic/ycbcr.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>早期电视就是使用这个方式, 一个黑白channel就存储大部分信息</p>
+<br>
+
+<h3 id="YUV"><a href="#YUV" class="headerlink" title="YUV"></a>YUV</h3><p>类似的还有YUV</p>
+<p>it is better to represent color as we see them</p>
+<p><img src="/Blog/intro/com_graphic/Barn-yuv.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="HSV"><a href="#HSV" class="headerlink" title="HSV"></a>HSV</h3><p>Hue channel 存储我们想要表达的颜色</p>
+<p>Saturation 表示 how “deep” that color is.</p>
+<p>value 表示亮度(brightness)</p>
+<p>如图所示, 当value非常小的时候(所有颜色都是黑色),  hue channel就失去了它的意义</p>
+<p><img src="/Blog/intro/com_graphic/hsv.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<pre><code class="python">img = cv2.imread(&quot;../resources/street.jpg&quot;)
+img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</code></pre>
+<br>
+
+<h3 id="LAB"><a href="#LAB" class="headerlink" title="LAB"></a>LAB</h3><p>lab的这个用途非常酷, 以后学 TODO<a href="https://www.mathworks.com/help/images/color-based-segmentation-using-the-l-a-b-color-space.html" target="_blank" rel="noopener">使用lab进行基于颜色的分割</a></p>
+<br>
+
+<h3 id="RGBA"><a href="#RGBA" class="headerlink" title="RGBA"></a>RGBA</h3><p>RGBA是由RGB拓展出来的, 在原本RGB三个channel之上又添加一个alpha channel 代表透明度</p>
+<p>不是所有格式都支持rbga, jpg只有3条channel, 但是png支持它</p>
+<br>
+
+<p>alpha == 0就代表透明, alpha == 1就代表不透明</p>
+<p>加入我们想把两张图片叠加起来.</p>
+<p>这是第一张图, 左边是图片, 右边是alpha层</p>
+<p><img src="/Blog/intro/com_graphic/rgba_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>第二张图</p>
+<p><img src="/Blog/intro/com_graphic/rgba_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>结果图</p>
+<p><img src="/Blog/intro/com_graphic/rgba_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>自然我们希望在 alpha=0 的时候显示第二张图, alpha=1 的时候显示第一张图.</p>
+<p>假设第一张图为 $f_0(x)$, 第二张图为$f_1(x)$, 结果图为$g(x)$, x代表像素的位置<br>$$<br>g(x) = \alpha f_0(x) + (1-\alpha) f_1(x)<br>$$<br>当 alpha == 0 时显示$f_1$, 当 alpha==1 时显示$f_0$</p>
+<p>一种从bgr转为bgra的方法 (opencv默认用bgr而不是rgb)</p>
+<pre><code class="python">img_bgra = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+img_alpha = np.random.rand(height, width) &gt; 0.5
+img_bgra[:, :, 3] = img_alpha</code></pre>
+<br>
+
+<br>
+
+<h2 id="图像过滤-Image-Filtering"><a href="#图像过滤-Image-Filtering" class="headerlink" title="图像过滤 Image Filtering"></a>图像过滤 Image Filtering</h2>
             </div>
             <hr>
             <div>
@@ -353,7 +473,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -380,7 +500,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -389,7 +509,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
