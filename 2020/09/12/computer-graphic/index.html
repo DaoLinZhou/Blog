@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.5k 字
+                    5.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      19 分钟
+                      25 分钟
                   </span>
                 
 
@@ -410,6 +410,34 @@ img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</code></pre>
 <pre><code class="python">img_bgra = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
 img_alpha = np.random.rand(height, width) &gt; 0.5
 img_bgra[:, :, 3] = img_alpha    # 修改第4个channel</code></pre>
+<br>
+
+<br>
+
+<br>
+
+<p>为了方便展示图片, 我实现了一个简易的imshow, 可以让图片并排并列, 成网格状摆放</p>
+<pre><code class="python">def imshow(name: str, imgs: list, path=None):
+    # 如果是0维升维
+    if isinstance(imgs, np.ndarray):
+        imgs = [imgs]
+    # 如果是一维, 则进行升维
+    if isinstance(imgs[0], np.ndarray):
+        imgs = [imgs]
+
+    height = len(imgs)
+    combin = []
+
+    for i in range(height):
+        # channel 数必须一致
+        combin.append(np.concatenate(imgs[i], axis=1))
+
+    result = np.concatenate(combin, axis=0)
+    if np.max(result) &lt;= 1:     # 如果在此之前用了im2double
+        result = result * 255
+    if path is not None:
+        cv2.imwrite(path, result)
+    cv2.imshow(name, result)</code></pre>
 <br>
 
 <br>
@@ -690,7 +718,7 @@ gauss_kernel = kernel_factor.dot(kernel_factor.reshape(1, -1))</code></pre>
     imshow(&quot;compare kernel&quot;, [[img, temp_img], [new_img_gauss_1, new_img_gauss_2]])</code></pre>
 <br>
 
-<p><img src="/Blog/intro/com_graphic//gauss_kernel_3.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gauss_kernel_3.jpg" srcset="/Blog/img/loading.gif" alt></p>
 <p>左上是原图, 右上是使用一维高斯核过滤得到的临时图</p>
 <p>左下是使用二维高斯核的结果, 右下是使用一维高斯核的结果</p>
 <p>可以看到, 左下和右下两张图是一样的.</p>
@@ -707,6 +735,147 @@ gauss_kernel = kernel_factor.dot(kernel_factor.reshape(1, -1))</code></pre>
 </li>
 </ul>
 <p>因此我觉得使用一维高斯核进行过滤才是opencv推荐的做法.</p>
+<br>
+
+<br>
+
+<h3 id="Shift-filter"><a href="#Shift-filter" class="headerlink" title="Shift filter"></a>Shift filter</h3><p>假设我们使用这样一个kernel, 41x41的kernel, 只有[2, 2]位置的元素为1, 其余元素为0, 那么此时对图片进行过滤会得到什么?</p>
+<p><img src="/Blog/intro/com_graphic/kernel_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/resized_street.jpg&quot;)
+
+    kernel = np.zeros((41, 41))
+    kernel[2, 2] = 1
+
+    img_kernel = cv2.filter2D(img, -1, kernel)
+
+    # 对两张图截取同一片区域
+    img_part_1 = img[100:500, 150:350, :]
+    img_part_2 = img_kernel[100:500, 150:350, :]
+
+    imshow(&quot;test kernel&quot;, [img_part_1, img_part_2])</code></pre>
+<p><img src="/Blog/intro/com_graphic/shift.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>左边是原图的截图, 右边是使用kernel后的截图</p>
+<p>很明显, 使用kernel后图片有了水平方向的右移. (虽然不同容易看出来, 但其实也有垂直方向的下移)</p>
+<p>因为我们的核是(41, 41), 只有[2, 2]是1. 举个例子, 如果我们计算(21, 21)位置的像素, 就会让[1:41, 1:41]这个区域和核进行卷积</p>
+<p>由于其余位置都是0, 所以我们应该得到的是 原图 (39, 39) 位置的元素</p>
+<p>然而<strong>filter2D</strong>实际上做的不是卷积, 而是correlation. 所以实际上得到的原图的位置(2, 2)的元素</p>
+<br>
+
+<p>新图中(20, 20)的元素是原图(2, 2)的元素, 同理(21, 21)的元素是原图(3, 3)的元素… …</p>
+<p>相当于对原图进行了一次平移, 向下平移18个pixel, 向右平移18个pixel.</p>
+<br>
+
+<br>
+
+<h3 id="Median-Filter"><a href="#Median-Filter" class="headerlink" title="Median Filter"></a>Median Filter</h3><p>Median Filter 运用中位数作为结果.</p>
+<p>这不是一个linear filter, 进行的操作不是线性操作</p>
+<p>opencv中用medianBlur函数</p>
+<pre><code class="python">img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+res = cv2.medianBlur(img, 7)
+imshow(&quot;median filter&quot;, [img, res])</code></pre>
+<p><img src="/Blog/intro/com_graphic/medianFilter.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到, 颜色集中的部分更清晰. 扑克牌上的红桃, 黑桃等</p>
+<br>
+
+<p>median filter的一个作用就是去除 salt and pepper noise (椒盐噪声)</p>
+<blockquote>
+<p>什么是椒盐噪声</p>
+<p><img src="/Blog/intro/com_graphic/sp_noise.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就是随机创建一些纯白或纯黑的像素点. 看起来像椒盐一样.</p>
+<p>改进了一下网上的代码</p>
+<pre><code class="python">def sp_noise(img, prob):
+    &#39;&#39;&#39;
+    添加椒盐噪声
+    prob:噪声比例
+    &#39;&#39;&#39;
+    output = img.copy()
+    prob /= 2   # 一半概率生成黑色
+    thres = 1 - prob  # 一半概率生成白色
+    for i in range(img.shape[0]):
+        for j in range(img.shape[1]):
+            rdn = np.random.random()
+            if rdn &lt; prob:
+                output[i][j] = 0
+            elif rdn &gt; thres:
+                output[i][j] = 255
+    return output</code></pre>
+</blockquote>
+<p>我们先创建一个noise image</p>
+<pre><code class="python">img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+noi_img = sp_noise(img, 0.1)
+cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
+<p><img src="/Blog/intro/com_graphic/sp_noise_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们要尝试对右边这张图进行降噪.</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+    noi_img = sp_noise(img, 0.1)
+
+    img_median = cv2.medianBlur(noi_img, 3)
+    imshow(&quot;sp&quot;, [img, noi_img, img_median])</code></pre>
+<p><img src="/Blog/intro/com_graphic/denoise.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最右边就是降噪后的图. </p>
+<p>这里使用了一个思想: <strong>中位数受极值影响的效果最小</strong>.</p>
+<p>而无论是纯黑还是纯白, 他们都是极值. 我们取中位数, 自然就是降噪.</p>
+<br>
+
+<br>
+
+<p>当我们对一个pixel进行filtering. 我们是根据它相邻的pixel进行计算的. 然而不是所有的像素都有相邻像素. 例如在边缘或角落的像素是没有某些相邻像素的.</p>
+<p><img src="/Blog/intro/com_graphic/cross-correlation.gif" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如上图就是通过填充0, 来代替相邻像素.</p>
+<br>
+
+<br>
+
+<h3 id="腐蚀和膨胀"><a href="#腐蚀和膨胀" class="headerlink" title="腐蚀和膨胀"></a>腐蚀和膨胀</h3><p>erode(腐蚀) 是寻找在neighborhood中的最小值作为填充</p>
+<p>dilate(膨胀) 做的是相反的操作, 寻找在neighborhood中的最大值作为填充</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+
+    # 将在5x5的区域内寻找最大或最小值
+    kernel = np.ones((5, 5))
+
+    erode_img = cv2.erode(img, kernel)
+    dilate_img = cv2.dilate(img, kernel)
+    imshow(&quot;erode and dilate&quot;, [img, erode_img, dilate_img], &quot;erode_and_dilate.jpg&quot;)</code></pre>
+<p> <img src="/Blog/intro/com_graphic/erode_and_dilate.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>分别是上面三张分别是: 原图, 腐蚀图, 膨胀图</p>
+<br>
+
+<h4 id="开运算闭运算"><a href="#开运算闭运算" class="headerlink" title="开运算闭运算"></a>开运算闭运算</h4><p>matlab中有两个函数 imopen, imclose, </p>
+<ul>
+<li>imopen 等同与 dilate(erode(img)), 先腐蚀在膨胀</li>
+<li>imclose 等同于 erode(dilate(img)), 先膨胀在腐蚀</li>
+</ul>
+<p>opencv中也有同样的操作</p>
+<pre><code class="python">def test():
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+
+    kernel = np.ones((5, 5))
+
+    # 自己实现开运算闭运算
+    erode_img = cv2.erode(img, kernel)
+    dilate_img = cv2.dilate(img, kernel)
+    ed = cv2.erode(dilate_img, kernel)
+    de = cv2.dilate(erode_img, kernel)
+    imshow(&quot;de-ed&quot;, [ed, de])
+
+    # 使用opencv提供的函数
+    close_img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    open_img = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+    imshow(&quot;close-open&quot;, [close_img, open_img])</code></pre>
+<p>两次打印的图是一样的</p>
+<p>为什么叫close操作? 因为它允许close the holes inside the image</p>
+<p>开运算属于形态学图像处理，先腐蚀后膨胀。作用：可以使边界平滑，消除细小的尖刺，断开窄小的连接,保持面积大小不变</p>
+<ul>
+<li><p>开运算数学上是先腐蚀后膨胀的结果，开运算的结果为完全删除了不能包含结构元素的对象区域，平滑了对象的轮廓，断开了狭窄的连接，去掉了细小的突出部分。</p>
+</li>
+<li><p>闭运算在数学上是先膨胀再腐蚀的结果，闭运算的结果也是会平滑对象的轮廓，但是与开运算不同的是，闭运算一般会将狭窄的缺口连接起来形成细长的弯口，并填充比结构元素小的洞。</p>
+</li>
+</ul>
 <br>
 
 <br>
