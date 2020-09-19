@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.4k 字
+                    4.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      10 分钟
+                      19 分钟
                   </span>
                 
 
@@ -471,8 +471,246 @@ kernel = kernel / sum(kernel)</code></pre>
 <p><img src="/Blog/intro/com_graphic/cross-correlation.gif" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
-<h3 id="卷积-Convolution"><a href="#卷积-Convolution" class="headerlink" title="卷积 Convolution"></a>卷积 Convolution</h3><p>然而当我们讨论<strong>image filtering</strong>, 我们将使用一个类似的, 但又不同的operation: 卷积<br>$$<br>G[i, j]=\sum_{u=-k}^k\sum_{v=-k}^kH[u, v]F[i-u, j-v]<br>$$</p>
-<p>$$<br>\bigstar<br>$$</p>
+<h3 id="卷积-Convolution"><a href="#卷积-Convolution" class="headerlink" title="卷积 Convolution"></a>卷积 Convolution</h3><p>然而当我们讨论<strong>image filtering</strong>, 我们将使用一个类似的, 但又不同的operation: 卷积<br>$$<br>G[i, j]=\sum_{u=-k}^k\sum_{v=-k}^kH[u, v]F[i-u, j-v]<br>$$<br>同样简写为<br>$$<br>G = H \star F<br>$$<br>其实这只是相当于反转kernel, 之后作cross-correlation</p>
+<p>然而, 在数学的意义上, we gain a lot from using <strong>convolution</strong> instead of cross-correlation.</p>
+<p>数学意义上更好操作</p>
+<p><img src="/Blog/intro/com_graphic/coverlution_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>卷积支持乘法交换律, 乘法结合律.</p>
+<p>这意味着如果我们向用两个filter对一张图进行过滤</p>
+<p>我们可以先convolve the filter, 再进行image filtering. 这样就节约很多计算. 这点correlation就做不到</p>
+<br>
+
+<p>Distributes over addition 说, 如果你想用filter过滤两个图片, 之后再将它们相加(通常在预处理, 计算机视觉中经常使用). 我们可以现将两张图相加在进行一次 filtering 就可以了</p>
+<br>
+
+<blockquote>
+<p>convolution in image-domain is equivalent to the multiplication in  frequency domain </p>
+<p>卷积的另一个重要操作后序会讲, 在特殊的domain(image domain)进行卷积 等价于 在 frequency domain </p>
+</blockquote>
+<br>
+
+<br>
+
+<h3 id="Linear-Shift-invariant-Filter"><a href="#Linear-Shift-invariant-Filter" class="headerlink" title="Linear Shift-invariant Filter"></a>Linear Shift-invariant Filter</h3><ul>
+<li>About modifying pixels based on <strong>neighborhood</strong>. Local methods simplest.(根据周围的像素计算出当前像素)</li>
+<li>Linear means linear combination of neighbors. Linear methods simplest.</li>
+<li>Shift-invariant means doing the same for each pixel. Same for all is simplest.</li>
+</ul>
+<blockquote>
+<p>也有很多Shift-variant filters. </p>
+</blockquote>
+<br>
+
+<p>L is a linear map/transform if<br>$$<br>L[\alpha l_1+\beta l_2]=\alpha L[l_1]+\beta L[l_2]<br>$$<br><a href="https://daolinzhou.github.io/Blog/2020/01/24/play-with-linear-algebra-3/#%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2">线性变换</a></p>
+<br>
+
+<br>
+
+<pre><code class="python"># 卷积
+def convolution(img, x, y, kernel):
+    max_h, max_w = img.shape
+    height, width = kernel.shape
+    width = (width - 1) // 2
+    height = (height - 1) // 2
+    res = 0
+    for i in range(-width, width + 1):
+        for j in range(-height, height + 1):
+            new_x, new_y = x - i, y - j
+            p = 0    # 如果超出边界, 默认为 0
+            # check range
+            if 0 &lt;= new_x &lt; max_w and 0 &lt;= new_y &lt; max_h:
+                p = img[new_y][new_x]
+            res += p * kernel[j + height][i + width]
+    return res
+
+
+# 只处理 img 是一层的情况
+def try_filter(img, kernel):
+    height, width = img.shape
+    res = img.copy()
+    for i in range(height):
+        for j in range(width):
+            res[i][j] = convolution(img, j, i, kernel)
+    return res
+
+
+if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/resized_street.jpg&quot;)
+    boxkern = np.ones((5, 5))
+    boxkern = boxkern / np.sum(boxkern)
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # 这一行是使用cv2的卷积操作
+    # new_img = cv2.filter2D(img_gray, -1, boxkern)
+    new_img = try_filter(img_gray, boxkern) # 使用自己写的卷积
+    cv2.imshow(&quot;box kernel&quot;, new_img)</code></pre>
+<p>既然知道了卷积的原理, 就可以尝试进行实现.</p>
+<p>但是这里没有用任何优化的方法. 仅仅是根据上面的卷积公式进行实现.</p>
+<blockquote>
+<p>注释代码是使用cv2的卷积, 这个操作更快. 但操作结果得到的效果图和我自己写的try_filter是一模一样的</p>
+<p>所以就不放filter2D的效果图了</p>
+<p>尝试实现只是作为兴趣, 看代码实现是否真的和理论一样</p>
+</blockquote>
+<p>效果图:</p>
+<p><img src="/Blog/intro/com_graphic/box_filter.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>自然左边就是原图, 右边是过滤后的图</p>
+<p>很明显图片是模糊的. 因为每一个pixel都和周围的pixel中和了一下. </p>
+<br>
+
+<br>
+
+<p>当然如果使用filter2D, 不将图片转为灰色也是可以的</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/resized_street.jpg&quot;)
+    boxkern = np.ones((5, 5))
+    boxkern = boxkern / np.sum(boxkern)
+    new_img = cv2.filter2D(img, -1, boxkern)
+    imshow(&quot;box kernel&quot;, new_img)</code></pre>
+<p><img src="/Blog/intro/com_graphic/box_filter_color.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="高斯核-gauss-kernel"><a href="#高斯核-gauss-kernel" class="headerlink" title="高斯核 gauss kernel"></a>高斯核 gauss kernel</h3><p>高斯核常用于降噪</p>
+<p>高斯核与高斯分布 (<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/">正态分布</a>) 密切相关. 举一个例子:</p>
+<pre><code>[[0.002 0.013 0.021 0.013 0.002]
+ [0.013 0.059 0.098 0.059 0.013]
+ [0.021 0.098 0.162 0.098 0.021]
+ [0.013 0.059 0.098 0.059 0.013]
+ [0.002 0.013 0.021 0.013 0.002]]</code></pre><p>这就是一个5x5的高斯核(方差为1).  可以看到, 越靠近中心(2, 2), 值就越高.</p>
+<p>距离中心越远, 值就越低.</p>
+<p>这个矩阵的每个维度都服从正态分布. 更一般的高斯核可视化地看一下</p>
+<p><img src="/Blog/intro/com_graphic/gauss_kernel.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>其实我认为可以将高斯核理解为一个服从正态分布的二维矩阵</p>
+</blockquote>
+<p>如果说box kernel是<strong>均衡</strong>地从周围的像素中提取信息中和. 那么高斯核就是有倾向性地中和.</p>
+<p>上面的矩阵和约为1. 同样每一个元素可以理解为”占比”</p>
+<br>
+
+<p>以上面的高斯核为例</p>
+<p>如果我们使用高斯核对图片过滤某一点. 新的图中这一点 16% 的信息来自于原图的这一点, 9%的信息分别来自上下左右四个相邻点. 依次递减</p>
+<p>这也是非常合理的. 因为一个点距离原点(我们要过滤的点)越远, 我们自然就认为它对原点影响越小. </p>
+<p>反之离得越近, 就说明影响越大. 自然占比就越高.</p>
+<blockquote>
+<p>box kernel 是无论多远, 占比都是一样的. 因为box kernel中每一个元素都是一样的. </p>
+</blockquote>
+<blockquote>
+<p>高斯核支持很多操作</p>
+<p><strong>可以用一个高斯核对另一个高斯核进行卷积, 得到一个新的高斯核</strong></p>
+</blockquote>
+<br>
+
+<h4 id="openCV中使用高斯核"><a href="#openCV中使用高斯核" class="headerlink" title="openCV中使用高斯核"></a>openCV中使用高斯核</h4><p>openCV中没有直接生成二维高斯核的函数, 但我们可以通过两个一维的高斯核相乘得到一个二维高斯核</p>
+<pre><code class="python">kernel_factor = cv2.getGaussianKernel(5, 1)
+gauss_kernel = kernel_factor.dot(kernel_factor.reshape(1, -1))</code></pre>
+<p>kernel_factor</p>
+<pre><code class="python">[[0.05448868]
+ [0.24420134]
+ [0.40261995]
+ [0.24420134]
+ [0.05448868]]</code></pre>
+<p>这个kernelfactor是一个5x1的高斯核, 同样里中心越近值就越高. 且所有元素的总和为1.</p>
+<p>gausskernel的第一行, 或者第一列的和对应kernelfactor中的第一位元素.(可以用线性代数证明)</p>
+<br>
+
+<h3 id="对比-box-kernel-和-gauss-kernel的效果"><a href="#对比-box-kernel-和-gauss-kernel的效果" class="headerlink" title="对比 box kernel 和 gauss kernel的效果"></a>对比 box kernel 和 gauss kernel的效果</h3><pre><code class="python">def test_kernels():
+    img = cv2.imread(&quot;../resources/resized_street.jpg&quot;)
+
+    # 定义高斯核
+    kernel_factor = cv2.getGaussianKernel(41, 8)
+    gauss_kernel = kernel_factor.dot(kernel_factor.reshape(1, -1))
+
+    # 定义box核
+    box_kernel = np.ones((41, 41))
+    box_kernel = box_kernel / np.sum(box_kernel)
+
+    # 使用核
+    new_img_gauss = cv2.filter2D(img, -1, gauss_kernel)
+    new_img_box = cv2.filter2D(img, -1, box_kernel)
+
+    # 这个函数是我自己写的, 让两张图并排打印
+    imshow(&quot;compare kernel&quot;, [new_img_box, new_img_gauss])</code></pre>
+<p>原图 </p>
+<p><img src="/Blog/intro/com_graphic/resized_street.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用kernel后的图 (左边用box kernel, 右边用 gauss kernel)</p>
+<p><img src="/Blog/intro/com_graphic/comparekernel.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>显然使用高斯核的 blur image(右图) 看起来更加自然</p>
+<br>
+
+<p>使用高斯核的时候要注意它的尺寸. 例如下图的高斯核, 它丢失了某些信息(四周没有收敛到0)</p>
+<p><img src="/Blog/intro/com_graphic/gauss_kernel_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>理想情况下, 我们希望高斯核能表达整个(或者大部分) 钟型shape. 下图就勉强可以.</p>
+<p><img src="/Blog/intro/com_graphic/gauss_kernel_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><strong>记得<a href="https://daolinzhou.github.io/Blog/2020/04/04/stat-203/#%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83%E7%9A%84%E7%89%B9%E5%BE%81">正态分布的 3 sigma 法则</a></strong>, 我们设置的size, 最好要和设置的sigma匹配</p>
+<br>
+
+<p>根据这个3 sigma法则, 调整sigma就可以调整整个图片的模糊程度</p>
+<p>如果我们希望更多的信息提取自身(以及周围, sigma就设置小一点, 图片更清晰) 反之把sigma设置大一些, 图片更模糊</p>
+<p><img src="/Blog/intro/com_graphic/change_sigma.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>这4张图都是使用51x51的高斯核, 只是改变他们的sigma值就得到了不同的模糊程度的图片</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">左上</th>
+<th align="center">右上</th>
+<th align="center">左下</th>
+<th align="center">右下</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">sigma值</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">4</td>
+</tr>
+</tbody></table>
+<br>
+
+<h3 id="separable-kernel"><a href="#separable-kernel" class="headerlink" title="separable kernel"></a>separable kernel</h3><p>有一些kernel叫做separable kernel. 高斯核就是其中之一</p>
+<p>这种kernel允许使用一个一维的kernel, 而不是二维kernel进行过滤.</p>
+<p>思想就是先让这个kernel沿着x轴进行过滤, 得到一个临时图, 再让kernel沿着临时图的y轴过滤. 得到的效果和使用2维kernel一样</p>
+<p>举个例子:</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/resized_street.jpg&quot;)
+
+    # 得到一个 一维的41个元素, 标准差维8的高斯核
+    kernel_factor = cv2.getGaussianKernel(41, 8)    
+    # 得到一个二维(41, 41), 标准差为8个高斯核
+    gauss_kernel = kernel_factor.dot(kernel_factor.reshape(1, -1))
+
+    # 使用二维高斯核过滤
+    new_img_gauss_1 = cv2.filter2D(img, -1, gauss_kernel)
+
+    # 使用一维高斯核沿轴分别过滤两次
+    temp_img = cv2.filter2D(img, -1, kernel_factor)
+    new_img_gauss_2 = cv2.filter2D(temp_img, -1, kernel_factor.reshape(1, -1))
+
+    imshow(&quot;compare kernel&quot;, [[img, temp_img], [new_img_gauss_1, new_img_gauss_2]])</code></pre>
+<br>
+
+<p><img src="/Blog/intro/com_graphic//gauss_kernel_3.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>左上是原图, 右上是使用一维高斯核过滤得到的临时图</p>
+<p>左下是使用二维高斯核的结果, 右下是使用一维高斯核的结果</p>
+<p>可以看到, 左下和右下两张图是一样的.</p>
+<br>
+
+<br>
+
+<p>而且使用一维核比使用二维核要快. (filter变得越大, 差距就越明显)</p>
+<p>卷积可以看作是向量的点乘. (把两个矩阵reshape成一维, 其中一个reverse, 之后点乘)</p>
+<ul>
+<li><p>那么使用 (5, 5) 的<strong>二维核</strong>对每个pixel进行的卷积的操作就是两个<strong>25维的向量</strong>进行点乘 (进行25次对应元素相乘再相加的操作)</p>
+</li>
+<li><p>而使用(1, 5)的<strong>一维核</strong>对每个pixel进行的卷积的操作是: 进行两次, 两个<strong>5维的向量</strong>点乘 (进行10次对应元素相乘再相加的操作)</p>
+</li>
+</ul>
+<p>因此我觉得使用一维高斯核进行过滤才是opencv推荐的做法.</p>
+<br>
+
+<br>
+
 
             </div>
             <hr>
