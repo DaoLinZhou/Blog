@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.8k 字
+                    7.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      25 分钟
+                      30 分钟
                   </span>
                 
 
@@ -427,16 +427,10 @@ img_bgra[:, :, 3] = img_alpha    # 修改第4个channel</code></pre>
 
     height = len(imgs)
     combin = []
-
     for i in range(height):
         # channel 数必须一致
         combin.append(np.concatenate(imgs[i], axis=1))
-
     result = np.concatenate(combin, axis=0)
-    if np.max(result) &lt;= 1:     # 如果在此之前用了im2double
-        result = result * 255
-    if path is not None:
-        cv2.imwrite(path, result)
     cv2.imshow(name, result)</code></pre>
 <br>
 
@@ -840,7 +834,7 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 
     erode_img = cv2.erode(img, kernel)
     dilate_img = cv2.dilate(img, kernel)
-    imshow(&quot;erode and dilate&quot;, [img, erode_img, dilate_img], &quot;erode_and_dilate.jpg&quot;)</code></pre>
+    imshow(&quot;erode and dilate&quot;, [img, erode_img, dilate_img])</code></pre>
 <p> <img src="/Blog/intro/com_graphic/erode_and_dilate.jpg" srcset="/Blog/img/loading.gif" alt></p>
 <p>分别是上面三张分别是: 原图, 腐蚀图, 膨胀图</p>
 <br>
@@ -880,6 +874,163 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 
 <br>
 
+<h2 id="边缘检测"><a href="#边缘检测" class="headerlink" title="边缘检测"></a>边缘检测</h2><h3 id="索伯算子-Sobel-operator"><a href="#索伯算子-Sobel-operator" class="headerlink" title="索伯算子 Sobel operator"></a>索伯算子 Sobel operator</h3><pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/diandian.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # 索伯算子
+    sob = np.array([[-1, 0, 1],
+                    [-2, 0, 2],
+                    [-1, 0, 1]])
+
+    gradx = cv2.filter2D(img, -1, sob)
+    grady = cv2.filter2D(img, -1, sob.T)
+
+    imshow(&quot;grad&quot;, [gradx, grady])</code></pre>
+<p>第一次用索伯算子检测的是x轴的边缘, 第二次用索伯算子的转置检测的是y轴的边缘.</p>
+<p><img src="/Blog/intro/com_graphic/diandian.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/sob.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>左边的图沿着x轴检测边(检测到竖向的边), 右边的图沿y轴检测边(检测到水平的边)</p>
+<p>一个很显然的疑惑是: 为什么这个核能做到这个事情.</p>
+<blockquote>
+<p>我给出我个人的理解:</p>
+<p>这个核是沿中心”对称”的, 例如[-2, 0, 2]. 当进行filtering时, 如果两边的差距很小, 那么sum的结果就很小</p>
+<p>例如[3, 4, 3] * [-2, 0, 2] = -6+6 = 0, 此时这个点就不会被考虑是一条边.</p>
+<p>而当两边差距较大时, [2, 5, 10] * [-2, 0, 2] = 16, 计算的值就越大, 就会被考率作为一条边</p>
+<p>而竖直方向是 不作判断的(都是0), 因此如果向进行竖直的边缘检测, 需要将这个矩阵转置一下. 这样就不考虑水平方向的边了</p>
+<p>同理, 可以检测处于对角线上的边</p>
+</blockquote>
+<br>
+
+<br>
+
+<p>Sobel算子既可以检测x轴上的梯度, 也可以检测y轴上的梯度.</p>
+<p>然而通常我们是不关注边是哪个轴的. 我们只关注是否是一条边</p>
+<p>我们可以把 gradient of image 想象成是一个向量, 有两个元素分别代表x方向的gradient, y方向的gradient</p>
+<p>通过计算它的模来看梯度的大小</p>
+<p><img src="/Blog/intro/com_graphic/grad.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/diandian.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # 索伯算子
+    sob = np.array([[-1, 0, 1],
+                    [-2, 0, 2],
+                    [-1, 0, 1]])
+
+    gradx = np.abs(cv2.filter2D(img, -1, sob))
+    grady = np.abs(cv2.filter2D(img, -1, sob.T))
+    gradx = im2double(gradx)
+    grady = im2double(grady)
+    grad = np.sqrt(gradx ** 2 + grady ** 2)    # 如果不转double会溢出
+
+    imshow(&quot;grad&quot;, [[img, grad], [gradx, grady]])</code></pre>
+<p><img src="/Blog/intro/com_graphic/compare_grad.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>对应如下:</p>
+<table>
+<thead>
+<tr>
+<th align="center">原图</th>
+<th align="center">x-y轴检测图</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">x轴检测图</td>
+<td align="center">y轴检测图</td>
+</tr>
+</tbody></table>
+<p><img src="/Blog/intro/com_graphic/soble.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而我们依然可以看到一些细小的噪音</p>
+<p><img src="/Blog/intro/com_graphic/grad_noise.png" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时, 我们就可以用高斯核进行降噪</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/diandian.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    gausk = cv2.getGaussianKernel(5, 1)
+    tmp = cv2.filter2D(img, -1, gausk)
+    smoothed = cv2.filter2D(tmp, -1, gausk.T)
+
+    # 索伯算子
+    sob = np.array([[-1, 0, 1],
+                    [-2, 0, 2],
+                    [-1, 0, 1]])
+
+    # 求不使用高斯核的梯度
+    gradx = cv2.filter2D(img, -1, sob)
+    grady = cv2.filter2D(img, -1, sob.T)
+    # 因为filter2D后的结果是0-255, 这里一定要转换一下, 防止下一句溢出
+    gradx, grady = im2double(gradx), im2double(grady)
+    grad = np.sqrt(gradx ** 2 + grady ** 2)
+
+    # 求使用高斯核的梯度, 同理在filter2D后要转换一下
+    smoothed_grad = np.sqrt(im2double(cv2.filter2D(smoothed, -1, sob))**2 +
+                            im2double(cv2.filter2D(smoothed, -1, sob.T))**2)
+
+    # 剪裁
+    cropped_grad = grad[100:300, 300:450]
+    cropped_smoothed = smoothed_grad[100:300, 300:450]
+    imshow(&quot;compare&quot;, [cropped_grad, cropped_smoothed])</code></pre>
+<p><img src="/Blog/intro/com_graphic/de_grad_noise.png" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用高斯核先进行降噪, 再用检测边的效果是比较好的.</p>
+<br>
+
+<p>然而正如之前卷积所描述的. 我们可以先让两个kernel先进行filtering再对图形进行filtering.</p>
+<blockquote>
+<p>转载于 <a href="https://www.itdaan.com/tw/82bd90b53df938d528946299317b6bee" target="_blank" rel="noopener">https://www.itdaan.com/tw/82bd90b53df938d528946299317b6bee</a></p>
+<h3 id="MATLAB-filter2-和-conv2-函数说明"><a href="#MATLAB-filter2-和-conv2-函数说明" class="headerlink" title="MATLAB filter2 和 conv2 函数说明"></a>MATLAB filter2 和 conv2 函数说明</h3><p>　　在 MATLAB 中，filter2 函数实现二维数字滤波器．conv2 函数实现二维卷积．</p>
+<p>　　filter2(H, X, mode) 等价于 conv2(X, rot90(H,2), mode). 其中，H 表示有理传递函数的系数(Coefficients of rational transfer function)，即常说的滤波器核或卷积核．X 表示输入数据．mode 表示卷积或滤波所采用的模式，其决定了返回数据的长度，以及结果数据的不同部分．共有三种模式：’full’, ‘same’, ‘valid’</p>
+<p>　　注：MATLAB 中，B = rot90(A, k) 将数组 A 逆时针旋转 k*90 度，其中 k 为整数．</p>
+<h3 id="Python-中的等价函数"><a href="#Python-中的等价函数" class="headerlink" title="Python 中的等价函数"></a>Python 中的等价函数</h3><p>　　在 Python 中，MATLAB filter2 的等价函数是 scipy.signal.correlate2d；MATLAB conv2 的等价函数是 scipy.signal.convolve2d．</p>
+<p>　　具体来说，filter2(H, X, mode) 等价于 scipy.signal.correlate2d(X, H, mode)；conv2(X, H, mode) 等价于 scipy.signal.convolve2d(X, H, mode)．</p>
+<p>　　注意，filter2(MATLAB) 与 scipy.signal.correlate2d的输入参数 H, X 的顺序是不一致的．</p>
+<p>　　如果二维滤波或卷积结果采用常用的 ‘same’ 模式，还可以使用 Python 中的 cv2.filter2D (OpenCV模块), scipy.ndimage.correlate 和 scipy.ndimage.convolve 替代．对于二维滤波（’same’模式）的具体用法为</p>
+<p>　　cv2.filter2D(X, -1, H, borderType=cv2.BORDER_CONSTANT)<br>　　scipy.ndimage.correlate(X, H, mode=’constant’, cval=0.0)<br>　　scipy.ndimage.convolve(X, np.rot90(H,2), mode=’constant’, cval=0.0)</p>
+</blockquote>
+<blockquote>
+<p>转载于 <a href="https://blog.csdn.net/u010830004/article/details/78627031" target="_blank" rel="noopener">https://blog.csdn.net/u010830004/article/details/78627031</a></p>
+<p> matlab中的conv2是用于对二维数据进行卷积运算，有三个参数可供选择</p>
+<p>full模式(默认)</p>
+<p><img src="/Blog/intro/com_graphic/full.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>same模式</p>
+<p><img src="/Blog/intro/com_graphic/same.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>valid模式</p>
+<p><img src="/Blog/intro/com_graphic/valid.png" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/diandian.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    gausk = cv2.getGaussianKernel(5, 1)
+    gausk = gausk.dot(gausk.T)
+
+    # 索伯算子
+    sob = np.array([[-1, 0, 1],
+                    [-2, 0, 2],
+                    [-1, 0, 1]])
+
+    new_filter_1 = convolve2d(gausk, sob)
+    res_1 = cv2.filter2D(img, -1, new_filter_1)
+
+    new_filter_2 = convolve2d(gausk, sob.T)
+    res_2 = cv2.filter2D(img, -1, new_filter_2)
+
+    res = np.sqrt(im2double(res_1)**2 + im2double(res_2)**2)
+
+    imshow(&quot;filter&quot;, res)</code></pre>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/smooth_gradient.png" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而实际上在这个例子中是有点鸡肋的. 这是因为我们的索伯算子要运行两次, 分布最x轴和y轴, 之后取模. 而取模不是卷积运算.</p>
+<p>只有两张图都求出来后才进行取模</p>
 
             </div>
             <hr>
