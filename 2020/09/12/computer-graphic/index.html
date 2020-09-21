@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    7.8k 字
+                    9.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      34 分钟
+                      40 分钟
                   </span>
                 
 
@@ -991,6 +991,8 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <p>　　如果二维滤波或卷积结果采用常用的 ‘same’ 模式，还可以使用 Python 中的 cv2.filter2D (OpenCV模块), scipy.ndimage.correlate 和 scipy.ndimage.convolve 替代．对于二维滤波（’same’模式）的具体用法为</p>
 <p>　　cv2.filter2D(X, -1, H, borderType=cv2.BORDER_CONSTANT)<br>　　scipy.ndimage.correlate(X, H, mode=’constant’, cval=0.0)<br>　　scipy.ndimage.convolve(X, np.rot90(H,2), mode=’constant’, cval=0.0)</p>
 </blockquote>
+<br>
+
 <blockquote>
 <p>转载于 <a href="https://blog.csdn.net/u010830004/article/details/78627031" target="_blank" rel="noopener">https://blog.csdn.net/u010830004/article/details/78627031</a></p>
 <p> matlab中的conv2是用于对二维数据进行卷积运算，有三个参数可供选择</p>
@@ -1029,8 +1031,13 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <br>
 
 <p><img src="/Blog/intro/com_graphic/smooth_gradient.png" srcset="/Blog/img/loading.gif" alt></p>
-<p>然而实际上在这个例子中是有点鸡肋的. 这是因为我们的索伯算子要运行两次, 分布最x轴和y轴, 之后取模. 而取模不是卷积运算.</p>
-<p>只有两张图都求出来后才进行取模</p>
+<p>然而实际上在这个例子中是有点鸡肋的. 这是因为我们的索伯算子要运行两次, 分别对x轴和y轴, 之后取模. 而取模不是卷积运算.</p>
+<p>只有两张图都求出来后才进行求模</p>
+<br>
+
+<p>可视化一下高斯核和索伯算子的结果</p>
+<p>下面是一个50x50, sigma=5的高斯核和3x3的索伯算子的运算结果</p>
+<p><img src="/Blog/intro/com_graphic/gauss_sob.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h3 id="Canny-Edge-Detection"><a href="#Canny-Edge-Detection" class="headerlink" title="Canny Edge Detection"></a>Canny Edge Detection</h3><p>Canny 边缘检测有许多策略从一个gradient image中准确地连接edge pixel</p>
@@ -1056,9 +1063,85 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
     img = cv2.imread(&quot;../resources/cards.jpg&quot;)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+    # 100 和 200 分别是两个 threshold
     new_img = cv2.Canny(img, 100, 200)
     imshow(&quot;canny&quot;, [img, new_img])</code></pre><p><img src="/Blog/intro/com_graphic/canny_card.png" srcset="/Blog/img/loading.gif" alt></p>
-<h2 id="附加-尝试实现conv2"><a href="#附加-尝试实现conv2" class="headerlink" title="附加: 尝试实现conv2"></a>附加: 尝试实现conv2</h2><pre><code class="python"># 对一个点作为中心进行卷积
+<br>
+
+<br>
+
+<h3 id="拉普拉斯operator"><a href="#拉普拉斯operator" class="headerlink" title="拉普拉斯operator"></a>拉普拉斯operator</h3><p>使用拉普拉斯operator, filtering一次就可以得到所有gradient和对应的direction</p>
+<p><img src="/Blog/intro/com_graphic/lapop.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>拉普拉斯operator能检测 zero crossing 和 derivative of the image </p>
+<br>
+
+<p>如果只检测first derivative, 我们就需要检测derivative is high or not. 就像Canny Edge Detection 中做的那样. 之后还有做 Non Maximum Suppression(NMS 非极大值抑制算法) 去除模糊的edge</p>
+<p>但让我们关注于 zero crossing, 我们可以准确地找到边应该出现的地方</p>
+<p>这就是为什么要使用拉普拉斯operator</p>
+<br>
+
+<p>但是这也会产生很多noise edges, 甚至比使用 threshold 更 noise</p>
+<p>因为我们标记了second derivative中<strong>所有的zero crossing</strong> </p>
+<p>所以当<strong>直接</strong>使用拉普拉斯operator时, 即使是图片中微小的变化, 也会创造出一些edge information</p>
+<br>
+
+<p>所以和canny edge detection 一样, 我们先用gauss filtering一次, 之后再用拉普拉斯operator检测边</p>
+<p>这是我们又可以现用拉普拉斯先filtering高斯核, 得到一个新的filter, 在对image进行filtering 来加快速度.</p>
+<br>
+
+<p>首先先看一下直接使用拉普拉斯核的结果</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    lapkern = np.array([[0, -1, 0],
+                        [-1, 4, -1],
+                        [0, -1, 0]])
+    res = cv2.filter2D(img, -1, lapkern)
+    imshow(&quot;lap&quot;, [img, res])</code></pre>
+<p><img src="/Blog/intro/com_graphic/lap.png" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到它很很多噪音</p>
+<p><img src="/Blog/intro/com_graphic/lap_noise.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>在使用拉普拉斯核过滤高斯核之前, 先看一下它长什么样子</p>
+<pre><code class="python">lapkern = np.array([[0, -1, 0],
+                    [-1, 4, -1],
+                    [0, -1, 0]])</code></pre>
+<p>这是一个100x100, sigma=10的高斯核和拉普拉斯核进行卷积的结果</p>
+<p><img src="/Blog/intro/com_graphic/gauss-laplas.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这是5x5, sigma=1的高斯核和拉普拉斯核卷积的结果</p>
+<p><img src="/Blog/intro/com_graphic/gauss-laplas_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    lapkern = np.array([[0, -1, 0],
+                        [-1, 4, -1],
+                        [0, -1, 0]])
+    gauss = cv2.getGaussianKernel(5, 1)
+
+    kernel = convolve2d(lapkern, gauss)
+    kernel = convolve2d(kernel, gauss.T)
+
+    img_filtered = cv2.filter2D(img, -1, kernel)
+    # 由于太暗了, 所以放大5倍
+    imshow(&quot;gauss-lap&quot;, [img, 5*img_filtered])
+    imwrite(&quot;gauss-lap.png&quot;, [img, 5*img_filtered])</code></pre>
+<p><img src="/Blog/intro/com_graphic/gauss-lap.png" srcset="/Blog/img/loading.gif" alt></p>
+<p>和直接使用拉普拉斯相比效果好了很多</p>
+<p><img src="/Blog/intro/com_graphic/lap.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="拓展-尝试实现conv2"><a href="#拓展-尝试实现conv2" class="headerlink" title="拓展: 尝试实现conv2"></a>拓展: 尝试实现conv2</h2><pre><code class="python"># 对一个点作为中心进行卷积
 def convolution(img, x, y, kernel):
     max_h, max_w = img.shape
     height, width = kernel.shape
@@ -1124,6 +1207,144 @@ def conv2(img, kernel, mode=&quot;full&quot;):
         for j in range(0, res.shape[1]):
             res[i][j] = img_exp[i:i+k_y, j:j+k_x].reshape(1, -1).dot(kernel1d)
     return res</code></pre>
+<br>
+
+<h2 id="拓展-测试卷积"><a href="#拓展-测试卷积" class="headerlink" title="拓展: 测试卷积"></a>拓展: 测试卷积</h2><pre><code class="python">if __name__ == &#39;__main__&#39;:
+    lapkern = np.array([[0, -1, 0],
+                        [-1, 4, -1],
+                        [0, -1, 0]])
+    gauss = cv2.getGaussianKernel(5, 1)
+
+    test_kernel_2 = conv2(lapkern, gauss.dot(gauss.T))
+
+    # 3 使用一维高斯核两次
+    test_kernel_3 = convolve2d(lapkern, gauss)
+    test_kernel_3 = convolve2d(test_kernel_3, gauss.T)
+
+    # 4和2卷积的顺序颠倒. 
+    test_kernel_4 = conv2(gauss.dot(gauss.T), lapkern)
+
+    print(np.sum(np.abs(test_kernel_2 - test_kernel_3) &gt; 1e-7))    # output = 0
+    print(np.sum(np.abs(test_kernel_2 - test_kernel_4) &gt; 1e-7)) # output = 0</code></pre>
+<p>输出为0, 说明每个元素的差异在1e-7一下, 可以判断为相等.</p>
+<br>
+
+<h2 id="拓展-实现Canny-Edge-Detection"><a href="#拓展-实现Canny-Edge-Detection" class="headerlink" title="拓展: 实现Canny Edge Detection"></a>拓展: 实现Canny Edge Detection</h2><pre><code class="python">class CannyEdgeDetection:
+
+    def __init__(self, img: np.ndarray, threshold1, threshold2, gauss_size=5, gauss_std=1):
+        assert len(img.shape) == 2 or img.shape[2] == 1
+        assert threshold2 &gt;= threshold1, &quot;threshold2 should greater than threshold1&quot;
+
+        self.d = [[0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1]]
+        self.x, self.y = img.shape
+
+        if threshold2 &lt;= 1:
+            self.max = 1
+            self.min = 0
+        else:
+            self.max = 255
+            self.min = 0
+
+        img = img.astype(float)
+
+        # 高斯核和索伯核
+        sob = np.array([[-1, 0, 1],
+                        [-2, 0, 2],
+                        [-1, 0, 1]])
+        gauss_kernel = cv2.getGaussianKernel(gauss_size, gauss_std)
+
+        # 计算检测x轴方向上gradient的kernel
+        kernel_x = convolve2d(sob.T, gauss_kernel)
+        kernel_x = convolve2d(kernel_x, gauss_kernel.T)
+
+        # 计算检测y轴方向上gradient的kernel
+        kernel_y = convolve2d(sob, gauss_kernel)
+        kernel_y = convolve2d(kernel_y, gauss_kernel.T)
+
+        # 获取所有点的 x, y 方向的 gradient
+        gradient_x = cv2.filter2D(img, -1, kernel_x)
+        gradient_y = cv2.filter2D(img, -1, kernel_y)
+
+        # 计算近似 gradient, 和对应的方向
+        gradient = np.sqrt(gradient_x**2 + gradient_y**2)
+        direction = np.arctan(gradient_y / gradient_x)
+
+        &quot;&quot;&quot;
+        取整之后得到 [-2 ,2] 之间的一个整数数 代表 pi/4, 如果是2则代表左侧较亮, -2代表右侧较亮
+        所以要进行 +2 的偏移
+           左侧较亮
+        |     2   1 |                      | 3   2   1 |
+        |     p   0 |    --&gt;     左侧较亮   | 4   p   0 |    右侧较亮
+        |    -2  -1 |                      |           |
+           右侧较亮
+        &quot;&quot;&quot;
+        direction = (direction // (np.pi/4)).astype(int)
+        direction += 2
+
+        # NMS
+        res = self.nms(gradient, direction)
+
+        # 双阈值
+        res[threshold2 &lt;= res] = self.max
+        res[threshold1 &gt; res] = self.min
+
+        # 连接边
+        self.link_edges(res)
+
+        # 保存
+        self.edge_img = res
+
+    def get_result(self):
+        return self.edge_img
+
+    # 非极大值抑制, 返回抑制后的结果
+    def nms(self, gradient, direction):
+        res = np.zeros(gradient.shape)
+        for x in range(0, res.shape[0]):
+            for y in range(0, res.shape[1]):
+                i, j = self.d[direction[x, y]]
+                # 如果 x, y 小于梯度方向的两个像素的gradient, 则抑制
+                if (self.in_area(x+i, y+j) and self.is_less_than(gradient[x, y], gradient[x+i, y+j])) or\
+                        (self.in_area(x-i, y-j) and self.is_less_than(gradient[x, y], gradient[x-i, y-j])):
+                    res[x, y] = self.min
+                else:  # 保留为原有的梯度值
+                    res[x, y] = gradient[x, y]
+        return res
+
+    def link_edges(self, img):
+        for i in range(0, img.shape[0]):
+            for j in range(0, img.shape[1]):
+                if img[i, j] != self.min and img[i, j] != self.max:
+                    img[i, j] = self.max if self.next_to_edge(img, i, j) else self.min
+
+    def in_area(self, x, y):
+        return 0 &lt;= x &lt; self.x and 0 &lt;= y &lt; self.y
+
+    def next_to_edge(self, img: np.ndarray, x, y):
+        for i, j in self.d:
+            newx, newy = x + i, y + j
+            if self.in_area(newx, newy) and self.is_equals(img[newx, newy], self.max):
+                return True
+        return False
+
+    # return a == b
+    def is_equals(self, a, b):
+        return abs(a - b) &lt; 1e-7
+
+    # return a &lt; b
+    def is_less_than(self, a, b):
+        return (a - b) &lt; -1e-7
+
+
+if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    canny = CannyEdgeDetection(img, 0.15*255, 0.3*255)
+    edge_img = canny.get_result()
+    cv2.imshow(&quot;test&quot;, edge_img)
+    imwrite(&quot;canny_test.png&quot;, [img, edge_img])
+    cv2.waitKey(0)</code></pre>
+<p><img src="/Blog/intro/com_graphic/canny_test.png" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -1158,6 +1379,12 @@ def conv2(img, kernel, mode=&quot;full&quot;):
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2020/09/20/opencv-trap/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">opencv的一些坑</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">
