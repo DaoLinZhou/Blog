@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    9.1k 字
+                    9.2k 字
                   </span>
                 
 
@@ -1051,11 +1051,13 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <p><img src="/Blog/intro/com_graphic/canny_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>得到一个类似这样的图</p>
 <p><img src="/Blog/intro/com_graphic/canny_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先要进行NMS(非极大值抑制), 换句话说, 我们只关注local max的像素点(通过对比相邻的像素点判断local max), 其余点都被判定为<strong>不是边</strong>, 然而即使是local max也有不同</p>
+<p><img src="/Blog/intro/com_graphic/localmax.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>此时我们要设置两个阈值, 一个用来判断一个像素(local max)一定是一条边, 另一个用来判断一个像素可能是一条边</p>
 <p><img src="/Blog/intro/com_graphic/canny_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>此时得到了一个图, 标记着每一个像素点的属性(一定是一条边, 可能是一条边, 不是边)</p>
 <p><img src="/Blog/intro/com_graphic/canny_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>如果一个像素可能是一条边, 同时它周围有像素<strong>一定是边</strong>. 那么就把他们连接起来</p>
+<p>如果一个像素可能是一条边, 同时它周围有像素<strong>一定是边</strong>. 那么就把他们连接起来(把可能是边的点判定为边)</p>
 <p><img src="/Blog/intro/com_graphic/canny_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
@@ -1140,6 +1142,82 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <br>
 
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <h2 id="拓展-尝试实现conv2"><a href="#拓展-尝试实现conv2" class="headerlink" title="拓展: 尝试实现conv2"></a>拓展: 尝试实现conv2</h2><pre><code class="python"># 对一个点作为中心进行卷积
 def convolution(img, x, y, kernel):
