@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    9.2k 字
+                    10.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      40 分钟
+                      47 分钟
                   </span>
                 
 
@@ -1143,82 +1143,107 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br>
+
+<h2 id="Deep-Learning"><a href="#Deep-Learning" class="headerlink" title="Deep Learning"></a>Deep Learning</h2><p>计算机视觉(Computer Vision)的很多问题都可以转换成一个函数的定义:</p>
+<p>我们希望找到一个function, 输入一个图形, 返回我们需要的结果<br>$$<br>F(image) = result<br>$$<br>比如说:</p>
+<p>把一个图片传入function中, 返回是猫还是狗</p>
+<p>或者传入一个图像, 返回它的 alpha map</p>
+<br>
+
+<p>这是一个非常复杂的function, 它接收一个非常大的input(图形的大小). 将这么多的数据转化成一个更高层次的输出</p>
+<p>我们将创建一系列小的function, 而不是创建一个这么”大”的function</p>
+<p>$$<br>F(image) = f_1(f_2(f_3…(image)))<br>$$<br>我们希望这一系列小的function能计算出这个大F function的结果</p>
+<br>
+
+<p>这些小的函数都有哪些可能</p>
+<h3 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h3><p>首先肯定要有一些卷积核对图片进行过滤, 然而我们不应该手动指定核中的元素, 而应该交给神经网络自己生成</p>
+<p>如果我们有很多卷积核, 这就是<strong>卷积神经网络</strong>, 学习每个 kernel 的 weight.</p>
+<br>
+
+<p>Convolution 的操作和 Cross-Correlation 的操作非常相似</p>
+<p>如果kernel match image very well, 那么它就会给我们一个high response. 被称作Activation Map</p>
+<br>
+
+<h3 id="relu函数"><a href="#relu函数" class="headerlink" title="relu函数"></a>relu函数</h3><p>relu是非线性函数</p>
+<p><img src="/Blog/intro/com_graphic/relu.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$$<br>relu(x) = max(0, x)<br>$$<br>其实也相当于一个过滤器, 过滤掉小于0的值</p>
+<p>它认为小于0的值没有存储我们想要的一些信息. 而大于0的值存储了某些我们想要的信息</p>
+<br>
+
+<h3 id="Max-Pooling"><a href="#Max-Pooling" class="headerlink" title="Max Pooling"></a>Max Pooling</h3><p>池化的本质就是采样</p>
+<p>max pool 就是在一个范围内, 将最大值作为代表进行输出</p>
+<p><img src="/Blog/intro/com_graphic/max_pool.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Pooling 对于输入的 Feature Map，选择某种方式对其进行降维压缩，以加快运算速度</p>
+<br>
+
+<p>之后我们就会得到一个结果</p>
+<p><img src="/Blog/intro/com_graphic/deep_l1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Un-pooling"><a href="#Un-pooling" class="headerlink" title="Un-pooling"></a>Un-pooling</h3><p>un-pooling 做的事情和 pooling 相反, 将一个较小的image转化为较大的image</p>
+<br>
+
+<h3 id="Deconvolution"><a href="#Deconvolution" class="headerlink" title="Deconvolution"></a>Deconvolution</h3><p>Deconvolution is <strong>not</strong> the opposite of the convolution.</p>
+<p>它是卷积的一种, 可以让image变得大一点</p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/com_graphic/deep_l2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>得到的小的图像会肯定会丢失一些信息</p>
+<p>然而有一种技术可以解决这个问题, skip connections</p>
+<p><img src="/Blog/intro/com_graphic/skip_connections.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就是说每一层不仅接收前一层的输出, 还接收更前一层(多层)的某些输出</p>
+<p>数据跳过了很多layer, 所以叫skip connection.</p>
+<p>这个技术可以使得output生成的图像更具有细节</p>
+<br>
+
+<p>由于是监督学习, 可以对比和期望的不同. 来用梯度下降进行反向传播</p>
+<p>可以参考: <a href="https://daolinzhou.github.io/Blog/2020/05/30/MLP/">多层感知器MLP</a></p>
+<br>
+
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>通常我们没有特别多的数据, 然而我们可以通过处理图像得到新的图形</p>
+<p>例如: 如果我们期望的输出和图片的颜色无关, 那么我们可以将原图进行几次变色生成新的图, 而新的图的期望输出应该和原图一样. 这样机器经过一些训练之后就应该知道颜色与结果无关</p>
+<p>或者做一些旋转, 平移. 等等操作.</p>
+<br>
+
+<h3 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h3><p>思路就是与其只有一个network. 我们可以创造两个network.</p>
+<p>一个是generator, 一个是discriminator.</p>
+<p>generator 和普通的神经网络一样. 负责一个任务. 例如区分猫狗, 找到alpha map.</p>
+<p>discriminator 则是接收generator的output. 然后猜测这个结果是generator生成的还是一个我们期望的真实的结果图</p>
+<br>
+
+<br>
+
+<h2 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h2><p>傅里叶级数 的思想是将任何一个<strong>周期性函数</strong>, 用三角函数表达(sin cos)(逼近)</p>
+<p>具体内容日后在写, 先列出几个我学习的资源</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1A4411Y7vj" target="_blank" rel="noopener">李永乐的傅里叶变换的基础讲解</a></p>
+<ul>
+<li>注意 15.04 时, 说虚部表示相位的说法是错的, 而是幅角表示相位. 复数有两个表示方法, 一个是用虚部加实部, 一个是用长度和角度. 这里的角度才表示的是相位</li>
+</ul>
+<p><a href="https://zhuanlan.zhihu.com/p/41455378" target="_blank" rel="noopener">傅里叶级数推导</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/41875010" target="_blank" rel="noopener">傅里叶变换的推导</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/75521342" target="_blank" rel="noopener">离散傅里叶变换 (DFT)</a></p>
+<ul>
+<li>最后的矩阵乘法写反了</li>
+</ul>
+</blockquote>
+<br>
+
+<p>为什么用离散傅里叶变换?</p>
+<ol>
+<li><p>然而实际中我们通常得不到原函数 f(t), 而是只能得到一些样本.</p>
+</li>
+<li><p>即使有原函数, 计算机也不容易进行积分.</p>
+</li>
+</ol>
+<br>
+
+<p>离散傅里叶变换<br>$$<br>F(n)=\sum_{t=0}^Nf(t)e^{-i\frac {2\pi n}Nt}<br>$$</p>
+<p>离散傅里叶逆变换<br>$$<br>f(t)=\sum_{n=0}^N[\frac 1N\cdot F(n)\cdot e^{i\frac {2\pi n}N t}]<br>$$<br><br></p>
+<p>我把傅里叶变换的实现写在下面了</p>
 <h2 id="拓展-尝试实现conv2"><a href="#拓展-尝试实现conv2" class="headerlink" title="拓展: 尝试实现conv2"></a>拓展: 尝试实现conv2</h2><pre><code class="python"># 对一个点作为中心进行卷积
 def convolution(img, x, y, kernel):
     max_h, max_w = img.shape
@@ -1423,6 +1448,84 @@ if __name__ == &#39;__main__&#39;:
     imwrite(&quot;canny_test.png&quot;, [img, edge_img])
     cv2.waitKey(0)</code></pre>
 <p><img src="/Blog/intro/com_graphic/canny_test.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="拓展-实现傅里叶变换"><a href="#拓展-实现傅里叶变换" class="headerlink" title="拓展: 实现傅里叶变换"></a>拓展: 实现傅里叶变换</h2><pre><code class="python"># 离散傅里叶变换
+def fft(f):
+    N = f.shape[0]
+    t = np.arange(0, N)
+    res = np.array([f.dot(np.exp((-1j * 2 * np.pi * n * t)/N)) for n in range(0, N)])
+    return res
+
+
+# 离散傅里叶逆变换
+def ifft(F):
+    N = F.shape[0]
+    n = np.arange(0, N)
+    res = np.array([F.dot(np.exp(1j * 2 * np.pi * n * t/N))/N for t in range(0, N)])
+    return res
+
+
+# 二维离散傅里叶变换
+def fft2(x):
+    return fft(fft(x).T).T
+
+
+# 对比
+if __name__ == &#39;__main__&#39;:
+    x = np.arange(0, 5)
+    print(&quot;x = &quot;, x)
+
+    f = np.sin(x) + np.sin(2 * x) + np.sin(3 * x)
+    print(&quot;sin(x)+sin(2x)+sin(3x) = &quot;, f)
+
+    # 自己写的傅里叶变换
+    fft_res = fft(f)
+    print(&quot;fft_res = &quot;, fft_res)
+
+    ifft_res = ifft(fft_res)
+    print(&quot;ifft_res = &quot;, np.real(ifft_res))
+
+    # np 中的傅里叶变换
+    np_fft_res = np.fft.fft(f)
+    print(&quot;np_fft_res = &quot;, np_fft_res)
+
+    np_ifft_res = np.fft.ifft(np_fft_res)
+    print(&quot;np_ifft_res = &quot;, np_ifft_res)</code></pre>
+<p>实际效果是一致的(浮点误差不算)</p>
+<p>通常使用傅里叶变换时还配套使用 fftshift 把零频点移到频谱的中间</p>
+<pre><code class="python">def fftshift1(F:np.ndarray):
+    index = (F.shape[0] + 1) // 2
+    return np.concatenate([F[index:], F[:index]], axis=0)
+
+def ifftshift(F:np.ndarray):
+    index = F.shape[0] // 2
+    return np.concatenate([F[index:], F[:index]], axis=0)
+
+def fftshift(F:np.ndarray):
+    cf = F.copy()    # 因为要递归修改
+    if len(cf.shape) != 1:
+        for i in range(F.shape[0]):
+            cf[i] = fftshift(F[i])
+    index = (cf.shape[0] + 1) // 2
+    return np.concatenate([cf[index:], cf[:index]], axis=0)
+
+
+def ifftshift(F:np.ndarray):
+    cf = F.copy()
+    if len(cf.shape) != 1:
+        for i in range(F.shape[0]):
+            cf[i] = fftshift(F[i])
+    index = cf.shape[0] // 2
+    return np.concatenate([cf[index:], cf[:index]], axis=0)</code></pre>
+<br>
+
+<p>差不多是这个感觉, 当然频谱不长这样. 这里只是为了形象.</p>
+<p><img src="/Blog/intro/com_graphic/ifftshift.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因为可能会是多维的, 所以递归实现. </p>
+<p>为了方便理解, 我把一维的实现也放上去了, 理解一维是怎么运作的之后, 多维自然就理解了</p>
 
             </div>
             <hr>
@@ -1488,7 +1591,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1515,7 +1618,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1524,7 +1627,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

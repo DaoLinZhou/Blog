@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>离散数学-MACM101 - Daolin&#39;s Repository</title>
+  <title>离散数学-MACM - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.7k 字
+                    8.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      51 分钟
+                      52 分钟
                   </span>
                 
 
@@ -166,7 +166,7 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <h1 id="MACM101"><a href="#MACM101" class="headerlink" title="MACM101"></a>MACM101</h1><h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><pre><code>¬ ∀ ∃ ∈ ∉ ⊆ △ ∩</code></pre><h2 id="—Counting—"><a href="#—Counting—" class="headerlink" title="—Counting—"></a>—Counting—</h2><p><img src="/Blog/intro/counting.png" srcset="/Blog/img/loading.gif" alt></p>
+              <h1 id="MACM"><a href="#MACM" class="headerlink" title="MACM"></a>MACM</h1><h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><pre><code>¬ ∀ ∃ ∈ ∉ ⊆ △ ∩</code></pre><h2 id="—Counting—"><a href="#—Counting—" class="headerlink" title="—Counting—"></a>—Counting—</h2><p><img src="/Blog/intro/counting.png" srcset="/Blog/img/loading.gif" alt></p>
 <p><strong>Ex.1-1</strong></p>
 <p>Choose one group activity how many choice?</p>
 <p>4 + 2 = 6</p>
@@ -1576,6 +1576,16 @@ $$
 <p>如果一张图G=(V, E),  |V| = n, G有多少induced subgraph</p>
 <p>$2^n$</p>
 <p>n个点, 每个点选择在或不在</p>
+<p>&lt;br</p>
+<br>
+
+<h4 id="Isomorphic-Graphs-同构"><a href="#Isomorphic-Graphs-同构" class="headerlink" title="Isomorphic Graphs(同构)"></a>Isomorphic Graphs(同构)</h4><p>$G=(V_1, E_1), H=(V_2,E_2)$, G 和 H 是同构如果有一个 bijection (one to one and onto)$f:V_1 -&gt;V_2$ , such that<br>$$<br>{u,v} \in E_1 &lt;=&gt; {f(u), f(v)}\in E_2<br>$$<br>The function f is called an isomorphism.</p>
+<br>
+
+<p>如果两个图是同构, 他们必须有同样的性质</p>
+<p>同样的顶点数, 同样的边数, 同样的degree, 同样的cycle….</p>
+<p><img src="/Blog/intro/isomorphic.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>目前没有算法测试两场图是同构.</p>
 
             </div>
             <hr>
@@ -1637,7 +1647,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1664,7 +1674,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1673,7 +1683,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -1797,7 +1807,7 @@ $$
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "离散数学-MACM101&nbsp;",
+        "离散数学-MACM&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
