@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.8k 字
+                    13k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      47 分钟
+                      57 分钟
                   </span>
                 
 
@@ -1221,7 +1221,7 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <blockquote>
 <p><a href="https://www.bilibili.com/video/BV1A4411Y7vj" target="_blank" rel="noopener">李永乐的傅里叶变换的基础讲解</a></p>
 <ul>
-<li>注意 15.04 时, 说虚部表示相位的说法是错的, 而是幅角表示相位. 复数有两个表示方法, 一个是用虚部加实部, 一个是用长度和角度. 这里的角度才表示的是相位</li>
+<li>注意 15.04 时, 说虚部表示相位的说法是错的, 而是幅角表示相位. 复数有两个表示方法, 一个是用虚部加实部, 一个是用长度和角度. 这里的角度才表示的是相位, 长度才是频率</li>
 </ul>
 <p><a href="https://zhuanlan.zhihu.com/p/41455378" target="_blank" rel="noopener">傅里叶级数推导</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/41875010" target="_blank" rel="noopener">傅里叶变换的推导</a></p>
@@ -1229,6 +1229,16 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <ul>
 <li>最后的矩阵乘法写反了</li>
 </ul>
+<p><a href="https://www.bilibili.com/video/BV1pW411J7s8" target="_blank" rel="noopener">形象展示傅里叶变换</a></p>
+<p><a href="https://www.bilibili.com/video/BV1vt411N7Ti" target="_blank" rel="noopener">傅立叶级数</a></p>
+<ul>
+<li>15:54 解释了傅里叶变换后得到的那组复数是什么意义</li>
+<li>18:17 寻找傅里叶级数. 傅里叶变换</li>
+<li>21:19 求cn的一种方法, 或者说是进行傅里叶变换的一种方法</li>
+<li>21:41 应用傅里叶变换</li>
+<li>23:44 其他一些学习傅里叶变换的资源</li>
+</ul>
+<p><a href="https://www.bilibili.com/video/BV1G4411D7kZ" target="_blank" rel="noopener">欧拉公式 e^it 为什么代表圆周运动</a></p>
 </blockquote>
 <br>
 
@@ -1243,7 +1253,354 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 
 <p>离散傅里叶变换<br>$$<br>F(n)=\sum_{t=0}^Nf(t)e^{-i\frac {2\pi n}Nt}<br>$$</p>
 <p>离散傅里叶逆变换<br>$$<br>f(t)=\sum_{n=0}^N[\frac 1N\cdot F(n)\cdot e^{i\frac {2\pi n}N t}]<br>$$<br><br></p>
+<p><img src="/Blog/intro/com_graphic/fft_0.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>我把傅里叶变换的实现写在下面了</p>
+<br>
+
+<br>
+
+<h2 id="信号-Signals-与图片"><a href="#信号-Signals-与图片" class="headerlink" title="信号(Signals)与图片"></a>信号(Signals)与图片</h2><p>frequency domain 频谱</p>
+<p><img src="/Blog/intro/com_graphic/fft.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/fft_1.gif" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>2d傅里叶变换</p>
+<video id="video" controls preload="none" width="100%">
+<source id="mp4" src="/Blog/intro/com_graphic/2dfft.mp4" type="video/mp4">
+</video>
+
+<p>x轴和y轴一同工作形成这个图像</p>
+<p><img src="/Blog/intro/com_graphic/fft_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>分别读取两张图, 一个高频图, 一个低频图</p>
+<pre><code>if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/sfu3.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = im2double(img)
+
+    f = np.fft.fft2(img)
+    fou = np.fft.fftshift(np.abs(f))
+    fou = fou
+
+    img2 = cv2.imread(&quot;../resources/sfu4.jpg&quot;)
+    img2 = cv2.resize(img2, img.shape[::-1])
+    img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+    img2 = im2double(img2)
+
+    f2 = np.fft.fft2(img2)
+    fou2 = np.fft.fftshift(np.abs(f2))
+    fou2 = fou2
+
+    imwrite(&quot;sfu.png&quot;, [[img, fou],  [img2, fou2]])</code></pre><p><img src="/Blog/intro/com_graphic/sfu.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>上面的那张是高频图, 水波是图片中高频率的部分</p>
+<p>下面那张是低频图</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/fft_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>分别是原图, 频谱(振幅)图, 相位(偏移)图</p>
+<p>Phase image 对人来说难以理解. 但是 Amplitude image 不一样</p>
+<p>如果有很多edges. 就说明是 high frequency. </p>
+<p>如果只有平面, 或者constant color, 就说明是 low frequency</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/fft_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Convolution-Theorem"><a href="#Convolution-Theorem" class="headerlink" title="Convolution Theorem"></a>Convolution Theorem</h3><p>The Fourier transform of the convolution of two functions is the product of their Fourier transforms.</p>
+<p>对两个函数卷积的傅里叶变换等于先对两个函数进行傅里叶变换, 再相乘<br>$$<br>F[g\star h] = F[g]F[h]<br>$$<br>The inverse Fourier transform of the product of two Fourier transform is the convolution of the two inverse Fourier transform</p>
+<p>对两个函数的乘积进行傅里叶逆变换等于对两个函数分别进行傅里叶逆变换后再卷积<br>$$<br>F^{-1}[gh]=F^{-1}[g]\star F^{-1}[h]<br>$$<br><strong>Convolution</strong> in spatial domain is equivalent to <strong>Multiplication</strong> in frequency domain</p>
+<p><strong>Multiplication</strong>  in spatial domain is equivalent to <strong>Convolution</strong> in frequency domain</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/fft_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>再 spatial domain 对图像进行卷积意味着filtering(过滤).</p>
+<p>意味着我们可以对kernel和图像进行傅里叶变换, 再相乘, 逆变换. 我们依然可以得到filtering 的结果</p>
+<p>这也是我们如何区分各种类别的filter</p>
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    gaus = cv2.getGaussianKernel(10, 1)
+    gaus = gaus.dot(gaus.T)
+
+    box = np.ones((5, 5))
+    box = box / np.sum(box)
+
+    # 指定结果图的大小为(622, 622)
+    fft_gaus = np.fft.fftshift(np.abs(np.fft.fft2(gaus, (622, 622))))
+    fft_box = np.fft.fftshift(np.abs(np.fft.fft2(box, (622, 622))))
+
+    imshow(&quot;kernel&quot;, [fft_gaus*20, fft_box*20])
+    imwrite(&quot;fft_kernel.png&quot;, [fft_gaus*5, fft_box*5])</code></pre>
+<p><img src="/Blog/intro/com_graphic/fft_kernel.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>可以看到 gauss kernel 经过傅里叶变换后是另一个 gauss kernel. 而box filter经过傅里叶变换后是 sinc 函数</p>
+<p>这意味这当用高斯核进行filtering时, 只会保留 low frequency. 而使用box kernel进行filtering时, 则会依然保留一些 high frequency details</p>
+<br>
+
+<br>
+
+<p>测试卷积和傅里叶变换的关系. 由于输出的图片都是一样的, 所以</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    gaus = cv2.getGaussianKernel(10, 1)
+    gaus = gaus.dot(gaus.T)
+
+    # 傅里叶变换后再相乘
+    fft_gaus = np.fft.fft2(gaus, img.shape)
+    fft_img = np.fft.fft2(img)
+    res = np.real(np.fft.ifft2(fft_img * fft_gaus)).astype(np.uint8)
+
+    hf_gaus = cv2.filter2D(img, -1, gaus).astype(np.uint8)
+
+    imshow(&quot;img.png&quot;, [res, hf_gaus])</code></pre>
+<br>
+
+<p>这个叫做low pass filter. 我们也可以通过用一个不改变原图的kernel减去gauss filter得到high pass filter</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/fft_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    gaus = cv2.getGaussianKernel(11, 1)
+    gaus = gaus.dot(gaus.T)
+
+    onefilt = np.zeros(gaus.shape)
+    onefilt[5, 5] = 1
+
+    high_pass_filter = onefilt - gaus
+
+    # 傅里叶变换后再相乘
+    fft_low = np.fft.fft2(gaus, (622, 622))
+    fft_high = np.fft.fft2(high_pass_filter, (622, 622))
+
+    fft_low = np.fft.fftshift(np.abs(fft_low))
+    fft_high = np.fft.fftshift(np.abs(fft_high))
+
+    imwrite(&quot;img.png&quot;, [fft_high, fft_low])</code></pre>
+<p>当进行per pixel multiplication 时</p>
+<p>左边的 kernel 只会 pass high frequency component (high pass filter)</p>
+<p>右边的 kernel 只会 pass low frequency component (low pass filter)</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/fft_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;../resources/sfu3.jpg&quot;)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # low pass filter
+    gaus = cv2.getGaussianKernel(11, 1)
+    gaus = gaus.dot(gaus.T)
+
+    onefilt = np.zeros(gaus.shape)
+    onefilt[5, 5] = 1
+
+    high_pass_filter = onefilt - gaus
+
+    imwrite(&quot;img.png&quot;, [cv2.filter2D(img, -1, high_pass_filter)*5, cv2.filter2D(img, -1, gaus)])</code></pre>
+<blockquote>
+<p>high pass filter 有点 edge detection 的感觉了</p>
+</blockquote>
+<br>
+
+<br>
+
+<h3 id="Sampling-and-Aliasing"><a href="#Sampling-and-Aliasing" class="headerlink" title="Sampling and Aliasing"></a>Sampling and Aliasing</h3><p>下面分别是一个<strong>low frequency</strong> function在spatial domain 和Frequency domain的图</p>
+<p><img src="/Blog/intro/com_graphic/fft_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而当我们将function 转化为数字信号. 我们需要做sampling</p>
+<p>例如: 照相就是无限的光中做sampling. 函数(光)是连续的, 无限的. 然而相机只能pixel per pixel 显示. 所以只能做sampling</p>
+<br>
+
+<p>我们通过脉冲函数(Impulse function)进行Sampling process</p>
+<p>Impulse function 经过傅里叶变换后也是一个inpulse </p>
+<p><img src="/Blog/intro/com_graphic/fft_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<blockquote>
+<p>脉冲函数的[a,b]小区间的integral的值是1</p>
+<p><img src="/Blog/intro/com_graphic/fft_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<br>
+
+<p>将原img和脉冲函数相乘, 得到的就是sample img</p>
+<p>而在 Spatial domain 的乘法等同于在 Frequency domain 的卷积</p>
+<p><img src="/Blog/intro/com_graphic/fft_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>when we sample the signal, we are actually replicating it over and over again, in the frequency domain.</p>
+<br>
+
+<br>
+
+<p>然而当我们对high frequency image 进行 sample signals 就有麻烦了</p>
+<p><img src="/Blog/intro/com_graphic/fft_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们会损失很多细节, 同时frequency domain 表示会彼此碰撞(这就叫做aliasing)</p>
+<p><img src="/Blog/intro/com_graphic/fft_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>当我们尝试 sampling a signal with less number of samples than it’s requires. 就会发生aliasing</p>
+</blockquote>
+<br>
+
+<br>
+
+<p>一种解决变法是减小 spatial domain 中 impulse responses 之间的距离</p>
+<p>spatial domain 中 impulse response的距离如果为t的话, frequency domain中的距离就是 1/t. 通过减小spatial中的 t, 就可以增大frequency domain 中的 impulse response的距离, 使得在Frequency domain中更不容易重合</p>
+<p><img src="/Blog/intro/com_graphic/fft_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通过taking more samples, 就可以解决aliasing</p>
+<br>
+
+<h3 id="Anti-Aliasing"><a href="#Anti-Aliasing" class="headerlink" title="Anti-Aliasing"></a>Anti-Aliasing</h3><p>然而这不是一个完美的结果.</p>
+<p>more samples 意味着 more data, more file size</p>
+<p>如果想要一个small image, 我们希望通过某些方法去掉high frequency with low pass filter</p>
+<p><img src="/Blog/intro/com_graphic/fft_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这种方法叫做 anti-aliasing</p>
+<br>
+
+<p>Anti-aliasing 就是在sampling/re-sampling a signal之前用一个low pass filter</p>
+<p>Minimum sampling rate 叫做 Nyquist Sampling rate</p>
+<p>2 * maximum frequency that you have in the image</p>
+<p>这就叫做 Nyquist-Shannon Sampling Theorem</p>
+<br>
+
+<h3 id="Nyquist-Shannon-Sampling-Theorem"><a href="#Nyquist-Shannon-Sampling-Theorem" class="headerlink" title="Nyquist-Shannon Sampling Theorem"></a>Nyquist-Shannon Sampling Theorem</h3><p>如果我们sample点太少的话, 就容易出现下图的情况. </p>
+<p><img src="/Blog/intro/com_graphic/fft_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    high_img = cv2.cvtColor(cv2.imread(&quot;../resources/sfu3.jpg&quot;), cv2.COLOR_BGR2GRAY)
+    low_img = cv2.cvtColor(cv2.imread(&quot;../resources/sfu4.jpg&quot;), cv2.COLOR_BGR2GRAY)
+
+    high_sample = high_img[::4, ::4]
+    low_sample = low_img[::4, ::4]
+
+    fft_high = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(high_img)))).astype(np.uint8)*13
+    fft_high_sample = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(high_sample, high_img.shape)))).astype(np.uint8)*13
+#    imwrite(&quot;high_sample.png&quot;, [fft_high, fft_high_sample])
+
+    fft_low = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(low_img)))).astype(np.uint8) * 13
+    fft_low_sample = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(low_sample, low_img.shape)))).astype(np.uint8) * 13
+#    imwrite(&quot;low_sample.png&quot;, [fft_low, fft_low_sample])</code></pre>
+<br>
+
+<p>可以看到. 原本Frequency image 是有一个类似椭圆的光圈(左图), 而sampling之后则看不到了, 因为High Frequency Components corrupted each other</p>
+<p><img src="/Blog/intro/com_graphic/high_sample.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而 Low Frequency image 却看起来不错. 因为 aliasing还没有开始</p>
+<p><img src="/Blog/intro/com_graphic/low_sample.png" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而我们可以用高斯核来anti-alising</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    high_img = cv2.cvtColor(cv2.imread(&quot;../resources/sfu3.jpg&quot;), cv2.COLOR_BGR2GRAY)
+
+    # 直接sampling
+    high_sample = high_img[::2, ::2]
+    # 对 sample 进行 fft
+    fft_high = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(high_img)))).astype(np.uint8)*20
+    fft_high_sample = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(high_sample, high_img.shape)))).astype(np.uint8)*20
+
+    # 先 filtering 再 sampling 再 fft
+    # size = 2*ceil(2*sigma)+1
+    hf_filt = cv2.GaussianBlur(high_img, ksize=(7, 7), sigmaX=1.5, sigmaY=1.5)
+    hf_filt_sample = hf_filt[::2, ::2]
+    fft_hf_filt_sample = np.log(np.fft.ifftshift(np.abs(np.fft.fft2(hf_filt_sample, hf_filt.shape)))).astype(np.uint8)*20
+
+#    imwrite(&quot;hf_sample.png&quot;, [fft_high, fft_hf_filt_sample, fft_high_sample])</code></pre>
+<p><img src="/Blog/intro/com_graphic/hf_sample.png" srcset="/Blog/img/loading.gif" alt></p>
+<p>三张图分别是原图fft, 用low pass filter之后sampling 的 fft, 直接 sampling 的fft </p>
+<p>中间黑色的部分是整型溢出的结果, 他们其实应该是白色</p>
+<br>
+
+<p>这就是使用高斯核的anti-aliasing</p>
+<br>
+
+<br>
+
+<h2 id="神经网络的Anti-aliasing"><a href="#神经网络的Anti-aliasing" class="headerlink" title="神经网络的Anti-aliasing"></a>神经网络的Anti-aliasing</h2><p><a href="https://richzhang.github.io/antialiased-cnns/" target="_blank" rel="noopener">来自Richard’ paper</a></p>
+<p>这个技术实在是太酷了</p>
+<p>而在神经网络中, 进行pooling时也会downsizing / downsampling</p>
+<p>因此神经网络中也是需要Anti-aliasing的</p>
+<br>
+
+<p>这两张图可以正确分类</p>
+<p><img src="/Blog/intro/com_graphic/classify.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>但这两张图却不能</p>
+<p><img src="/Blog/intro/com_graphic/classify_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>而这两张图片的唯一不同就是第二张图是第一张图的一个平移</p>
+<ul>
+<li><strong>Convolutions</strong> are shift-equivariant</li>
+<li><strong>Pooling</strong> builds up shift-invariance</li>
+</ul>
+<p>这是因为 <strong>striding</strong> (跨步) ignores Nyquist sampling theorem and <strong>aliases</strong></p>
+<p>striding 可以在 Convolution layer 也可以在 Pooling layer</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/sampling.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>那么如何解决这个问题?</p>
+<p>解决方法就是在subsample之前进行一次blur</p>
+<p><img src="/Blog/intro/com_graphic/sampling_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<video id="video" controls preload="none" width="100%">
+<source id="mp4" src="/Blog/intro/com_graphic/aliasing.mp4" type="video/mp4">
+</video>
+
+<br>
+
+<p>为什么会出现这种情况?</p>
+<p><img src="/Blog/intro/com_graphic/max_pooling.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果我们没两个一组进行max_pooling</p>
+<br>
+
+<p>如果进行一个单位的偏移, 结果就会完全不一样</p>
+<p><img src="/Blog/intro/com_graphic/max_pooling_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/max_pooling_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<blockquote>
+<p>Max-pooling breaks shift-equivariance</p>
+</blockquote>
+<br>
+
+<p>这是因为 Max pooling 其实可以拆分为两个步骤</p>
+<p><img src="/Blog/intro/com_graphic/max_pooling_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<ol>
+<li>先对范围内像素取最大值</li>
+<li>subsampling</li>
+</ol>
+<p>正是subsampling这步操作使得shift equivariance失效的地方.</p>
+<br>
+
+<p>既然知道是什么引起的问题, 我们就可以对它进行改进</p>
+<p>在这两部操作中间添加一个blur操作</p>
+<p><img src="/Blog/intro/com_graphic/max_pooling_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/max_pooling_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>讲一个复合操作, 替换为一系列简单的操作, 从中找出问题所在. 这个思想很有趣</p>
+</blockquote>
+<br>
+
+<p>其他down sampling层的一些替换手段</p>
+<p>将原本的 striding 步长减小, 之后再blur pooling</p>
+<p><img src="/Blog/intro/com_graphic/max_pooling_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样就可以anti-alias any off-the-shelf network</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/max_pooling_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用这个技术之后, 自不变性(self-invariance) 和 准确率(accuracy) 都提高了</p>
 <h2 id="拓展-尝试实现conv2"><a href="#拓展-尝试实现conv2" class="headerlink" title="拓展: 尝试实现conv2"></a>拓展: 尝试实现conv2</h2><pre><code class="python"># 对一个点作为中心进行卷积
 def convolution(img, x, y, kernel):
     max_h, max_w = img.shape
