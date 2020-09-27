@@ -1292,7 +1292,7 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
     fou2 = np.fft.fftshift(np.abs(f2))
     fou2 = fou2
 
-    imwrite(&quot;sfu.png&quot;, [[img, fou],  [img2, fou2]])</code></pre><p><img src="/Blog/intro/com_graphic/sfu.PNG" srcset="/Blog/img/loading.gif" alt></p>
+    imwrite(&quot;sfu.png&quot;, [[img, fou],  [img2, fou2]])</code></pre><p><img src="/Blog/intro/com_graphic/sfu.png" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>上面的那张是高频图, 水波是图片中高频率的部分</p>
@@ -1336,7 +1336,7 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 
     imshow(&quot;kernel&quot;, [fft_gaus*20, fft_box*20])
     imwrite(&quot;fft_kernel.png&quot;, [fft_gaus*5, fft_box*5])</code></pre>
-<p><img src="/Blog/intro/com_graphic/fft_kernel.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/fft_kernel.png" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>可以看到 gauss kernel 经过傅里叶变换后是另一个 gauss kernel. 而box filter经过傅里叶变换后是 sinc 函数</p>
@@ -1366,7 +1366,7 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <p>这个叫做low pass filter. 我们也可以通过用一个不改变原图的kernel减去gauss filter得到high pass filter</p>
 <br>
 
-<p><img src="/Blog/intro/com_graphic/fft_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/fft_5.png" srcset="/Blog/img/loading.gif" alt></p>
 <pre><code class="python">if __name__ == &#39;__main__&#39;:
     gaus = cv2.getGaussianKernel(11, 1)
     gaus = gaus.dot(gaus.T)
@@ -1389,7 +1389,7 @@ cv.imshow(&quot;sp_noise&quot;, noi_img)</code></pre>
 <p>右边的 kernel 只会 pass low frequency component (low pass filter)</p>
 <br>
 
-<p><img src="/Blog/intro/com_graphic/fft_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/fft_6.png" srcset="/Blog/img/loading.gif" alt></p>
 <pre><code class="python">if __name__ == &#39;__main__&#39;:
     img = cv2.imread(&quot;../resources/sfu3.jpg&quot;)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
