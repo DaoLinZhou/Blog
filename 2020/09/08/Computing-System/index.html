@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.2k 字
+                    4.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      14 分钟
+                      19 分钟
                   </span>
                 
 
@@ -738,6 +738,184 @@ addi t1,x0 ,-22   # t1=0xFFFFFFEA
 sll s3,t0,t1      # s3=0xFFFC0000
 # same as slli s3,t0,10</code></pre>
 <p>shift只看最后5位, 因为最后5位表达0-31</p>
+<br>
+
+<br>
+
+<h2 id="Stored-Program-Concept"><a href="#Stored-Program-Concept" class="headerlink" title="Stored Program Concept"></a>Stored Program Concept</h2><p>我们如何表达一个指令?</p>
+<p>计算机只知道0和1, 汇编指令 “add x10, x11, x0” 这个字符串对于硬件来说是没有意义的</p>
+<br>
+
+<p>Big idea 是 <strong>指令是数据</strong></p>
+<p>程序像numbers一样可以被存储到内存中</p>
+<br>
+
+<p>RISCV 指令占用1 word = 4 bytes = 32 bits</p>
+<p>而指令类似add x10, x11, x0 就会被encode到这 32 bit number中</p>
+<p>首先会把32bits 分成一个个区域<strong>fields</strong></p>
+<br>
+
+<p>Every thing have a memory address</p>
+<p>PC指针: One register keeps address of instruction being executed: “Program Counter” (PC)</p>
+<ul>
+<li><p>Basically a pointer to memory</p>
+</li>
+<li><p>Intel calls it Instruction Pointer (IP)</p>
+</li>
+</ul>
+<br>
+
+<p>Programs are distributed in binary form</p>
+<p>Programs bound to specific instruction set </p>
+<br>
+
+<br>
+
+<h3 id="Instruction-Format"><a href="#Instruction-Format" class="headerlink" title="Instruction Format"></a>Instruction Format</h3><p>RISC-V 有6种指令格式</p>
+<p><img src="/Blog/intro/comp_sys/format.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="R-Format"><a href="#R-Format" class="headerlink" title="R-Format"></a>R-Format</h3><p><img src="/Blog/intro/comp_sys/r.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>opcode 解释了一部分这个operator干什么</p>
+<p>它同时也是用于区分R-format和其他Format</p>
+<p><img src="/Blog/intro/comp_sys/format_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>举个例子:</p>
+<p><img src="/Blog/intro/comp_sys/format_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>所有 R-Format 的 指令</p>
+<p><img src="/Blog/intro/comp_sys/format_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>Add 和 Sub 的func3 一样, SRL (logical right shift)和SRA(Arithmetic right shift)的func3一样. 需要用func7区分</p>
+</blockquote>
+<br>
+
+<br>
+
+<h3 id="I-Format"><a href="#I-Format" class="headerlink" title="I-Format"></a>I-Format</h3><p>5-bit field too small for most immediates. (常数)</p>
+<p>RISCV 只有一种指令格式(为了简单起见), 然而在这里我们不得不做出让步</p>
+<p>我们要为immediate设计一个新的格式</p>
+<p>如果一条指令包含immediate, 那么它最多使用2个寄存器, 一个source, 一个destination.</p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/format_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例子:</p>
+<p><img src="/Blog/intro/comp_sys/format_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>I-Format指令</p>
+<p><img src="/Blog/intro/comp_sys/format_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Load-指令也是I-Format"><a href="#Load-指令也是I-Format" class="headerlink" title="Load 指令也是I-Format"></a>Load 指令也是I-Format</h4><p><img src="/Blog/intro/comp_sys/format_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所有的load指令</p>
+<p><img src="/Blog/intro/comp_sys/format_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>没有Load unsigned word 是因为load word没有 sign extension 的必要, 然而load half word 和 load byte 都需要将数据放入word(寄存器)中, 需要sign/zero extension</p>
+<br>
+
+<h3 id="S-Format"><a href="#S-Format" class="headerlink" title="S-Format"></a>S-Format</h3><p>Store 需要两个寄存器, res1是base memory address. res2时要被存储的数据. 同时还要有一个immediate offset.</p>
+<p>store 不需要 rd, 目标寄存器, 而RISC-V为了让rs1, 和rs2保持在原来的位置, 所以它把immediate的low5位放到原本load指令的rd的位置</p>
+<p><img src="/Blog/intro/comp_sys/format_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>imm被拆成两部分, imm[4:0]占据了原本rd的位置</p>
+<p>res1和res2保持在原本的位置不动</p>
+<p>举个例子:</p>
+<p><img src="/Blog/intro/comp_sys/format_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+
+
+
+
+<h3 id="SB-Format"><a href="#SB-Format" class="headerlink" title="SB-Format"></a>SB-Format</h3><p>beq, bne, bge, blt</p>
+<p>需要指定一个跳转的地址</p>
+<p>同时需要有<strong>两个</strong>用于比较的寄存器</p>
+<blockquote>
+<p>回顾: 指令存储在内存中</p>
+<p>Largest Branch distance limited by size of code</p>
+<p>Address of current instruction stored in the program counter (PC)</p>
+</blockquote>
+<h4 id="PC-relative-Addressing"><a href="#PC-relative-Addressing" class="headerlink" title="PC-relative-Addressing"></a>PC-relative-Addressing</h4><p>PC 相对寻址: 使用 immediate field as a two’s complement offset to PC</p>
+<ul>
+<li>Branches generally change the PC by a small amount</li>
+<li>Can specify $\pm 2^{11}$ addresses from the PC</li>
+</ul>
+<br>
+
+<p>然而指令必须是word对齐的, 必须从4的倍数的地址读取指令, 所以我们完全可以用byte address, 这样就能更大范围寻址</p>
+<p>Why not use <strong>byte address</strong> offset from PC as the immediate?</p>
+<p>RISCV 用32bits addresses, and memory is byte-addressed</p>
+<p>Instructions are “<strong>word-aligned</strong>“: Address is always a multiple of 4(in byte)</p>
+<p>PC ALWAYS point to an instruction</p>
+<p><img src="/Blog/intro/comp_sys/format_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<ul>
+<li><p>Extensions to RISC-V base ISA support 16-bit compressed instructions and also variable-length instructions that are multiples of 16-bits in length</p>
+</li>
+<li><p>16-bit = half-word</p>
+</li>
+<li><p>To enable this, RISC-V scales the branch offset to be <strong>half-words</strong> even when there are no 16-bit instructions</p>
+</li>
+<li><p>Reduces branch reach by half and means that ½ of possible targets will be errors on RISC-V processors that only support 32-bit instructions (as used in this class)</p>
+</li>
+<li><p>RISC-V conditional branches can only reach ± 210 × 32-bit instructions either side of PC</p>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/format_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_30.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_31.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="U-Format"><a href="#U-Format" class="headerlink" title="U-Format"></a>U-Format</h3><p>如果我们处理的immediates是32-bit怎么办?</p>
+<p>I-type instructions only gives us 12 bits.</p>
+<p>因此我们需要新的指令结构来处理剩下的20bits</p>
+<p>This instruction should deal with:</p>
+<ul>
+<li>a destination register to put the 20 bits into</li>
+<li>the immediate of 20 bits</li>
+<li>the instruction opcode</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/format_32.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Load-Upper-Immediate-LUI"><a href="#Load-Upper-Immediate-LUI" class="headerlink" title="Load Upper Immediate(LUI)"></a>Load Upper Immediate(LUI)</h4><p><img src="/Blog/intro/comp_sys/format_33.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_34.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因为前20位会extend 1, 相当于-1</p>
+<p>因此此时我们要将它前20位</p>
+<p><img src="/Blog/intro/comp_sys/format_35.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="UJ-Format"><a href="#UJ-Format" class="headerlink" title="UJ-Format"></a>UJ-Format</h3><p>For branches, we assumed that we won’t want to branch too far, so we can specify a <strong>change</strong> in the PC (SB-Format)</p>
+<p>For general jumps(jal), we may jump to <strong>anywhere</strong> in code memory</p>
+<ul>
+<li>ideally, we would specify a 32-bit memory address to jump to</li>
+<li>Unfortunately, we have a 7-bit <strong>opcode</strong></li>
+<li>also, when linking we must write to an rd register</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/format_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>为什么 imm那么花哨? 是为了和别的指令对齐</p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/format_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/format_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p><img src="/Blog/intro/comp_sys/format_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
