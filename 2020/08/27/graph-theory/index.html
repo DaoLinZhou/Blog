@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    9k 字
+                    13.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      31 分钟
+                      47 分钟
                   </span>
                 
 
@@ -957,6 +957,352 @@
 <br>
 
 <br>
+
+<h2 id="网络流"><a href="#网络流" class="headerlink" title="网络流"></a>网络流</h2><h3 id="网络流模型和最大流问题"><a href="#网络流模型和最大流问题" class="headerlink" title="网络流模型和最大流问题"></a>网络流模型和最大流问题</h3><h4 id="什么是网络流模型"><a href="#什么是网络流模型" class="headerlink" title="什么是网络流模型?"></a>什么是网络流模型?</h4><p><img src="/Blog/intro/graph/net_stream.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图是一个有向图. 如果我们说一个<strong>有向图</strong>是网络流的话, 有一些限定.</p>
+<ul>
+<li>必须有一个源点 (入度为0)</li>
+<li>必须有一个汇点 (出度为0)</li>
+<li>边上有非负权值, 表示容量</li>
+</ul>
+<p>上图中 0 就是源点, 通常标记为 s . 5 就是汇点, 通常标记为 t</p>
+<br>
+
+<p>网络流的边的权值和最短路径边的权值不一样. 最短路径的边的权值是距离, 所以我们求最短距离</p>
+<p>而网络流模型边的权值代表容量. 这个有向图我们可以想象成一个水管通路的模型.</p>
+<p>源点 s 可以看作水龙头, 水会通过边留到其他点. 每条边可以看作是一条管道. 边的权值就代表容量, 说明每条边最大承载水流量</p>
+<p>所有的水会汇入汇点 t.</p>
+<br>
+
+<p>然而实际我们关心的是<strong>流量</strong>, <strong>容量</strong>只是表示了一个上限, 流量要满足这个限制. 因此实际我们表示网络流是这样表示的</p>
+<p><img src="/Blog/intro/graph/net_stream_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>前面蓝色的数代表流量, 后面的数代表容量. 初始时, 流量都为0, 而容量是固定的.</p>
+<br>
+
+<p>如果从源点到汇点, 走 0-1-2-5 这条路径, 只运输一单位的货物. 此时在这条路径中每条边的流量就要+1</p>
+<p><img src="/Blog/intro/graph/net_stream_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果再走 0-1-3-2-5 这条路径, 每条边的流量再+1</p>
+<p><img src="/Blog/intro/graph/net_stream_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时 3-2 这条边流量为1, 容量为1, 这条边就不能承载更多了流量了. 如果我们再想发一批货物的话, 再这个网络流中就不能走 3-2 这条边了.</p>
+<br>
+
+<p><img src="/Blog/intro/graph/net_stream_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>很明显网络流有一些限制</p>
+<ol>
+<li>容量限制, 每条边的流量值必须小于等于流量值</li>
+<li>平衡限制, 除了原点和汇点, 对于每一个点, 流入量等于流出量 </li>
+</ol>
+<p>因此从源点流出的流量一定最终等于汇入汇点的流量</p>
+<br>
+
+<h4 id="什么是最大流问题"><a href="#什么是最大流问题" class="headerlink" title="什么是最大流问题?"></a>什么是最大流问题?</h4><p>最大流问题就是在这个网络流模型中, 最大流量是多少</p>
+<p>就是说在满足这些限制的条件下, 我们从源点最多能发出多少流量, 既满足容量限制, 又满足平衡限制, 最终汇聚到汇点</p>
+<br>
+
+<br>
+
+<h3 id="Ford-Fulkerson思想"><a href="#Ford-Fulkerson思想" class="headerlink" title="Ford-Fulkerson思想"></a>Ford-Fulkerson思想</h3><p>这不是一个算法, 这是一个思想. Ford-Fulkerson 本身是一个算法框架, 基于这个算法框架我们可以有不同的实现.</p>
+<p> 以这个规模更小的图为例</p>
+<p><img src="/Blog/intro/graph/net_stream_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果我们要求解最大流量, 那么当我们找到一条路径之后, 这条路径可以承载的<strong>最大流量</strong>应该是把这条路径中<strong>最小容量的边填满</strong></p>
+<p><img src="/Blog/intro/graph/net_stream_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于路径 0-2-3, 最小容量=最大流量=2, 我们将这条路径填满</p>
+<p><img src="/Blog/intro/graph/net_stream_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>同理也可以把 0-1-3 这条路径填满</p>
+<p><img src="/Blog/intro/graph/net_stream_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果此时还有从0到3的路径. 那么肯定不能走 0-2 了. 0-2 这条边已经满了, 只能走0-1这条边.</p>
+<p>来到1之后不能从1直接走到3.</p>
+<p>这是因为1-3这条边的容量也已经满了, 所以只能走1-2这条边, 在从2走到3.</p>
+<p>0-1-2-3这条路径最多还可以再容纳1的流量</p>
+<p><img src="/Blog/intro/graph/net_stream_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而路径也不是随便找的. 例如我们如果先找 0-1-2-3 这条路径.</p>
+<p><img src="/Blog/intro/graph/net_stream_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就无法继续向下找了. 也就是说这么走只能处理3个单位的流量. 显然这不是这张图的最大流量</p>
+<br>
+
+<p><img src="/Blog/intro/graph/net_stream_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>既然3这个流量不是最大流量, 那么就是说我们还能找到其他的方式添加流量.</p>
+<p>依然从0出发, 0-2这条路径容量为2, 流量为0, 还能容纳2的流量. 那么我们就从0走到2</p>
+<p><img src="/Blog/intro/graph/net_stream_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>但是对于这2单位的流量从2走到3的流量满了. 但是1-2这条边向2这条边流入3单位的流量</p>
+<p>现在从 0-2 流入2单位流量, 不满足平衡限制. 因此我们可以尝试让1-2这条边少流入2单位流量</p>
+<p> 这其实相当于从2节点逆流回1节点2单位流量</p>
+<p><img src="/Blog/intro/graph/net_stream_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>从1节点流入2节点3单位流量再从2节点流回1节点2单位流量 <strong>等同于</strong> 1节点流入2节点1单位流量</p>
+<p>虽然从2到1没有边, 但由于从1-2有流量, 那么从0走到2多于的这部分流量可以和从1-2这部分流量抵消</p>
+<p>而1-3还能容纳2单位流量, 我们就走这条边</p>
+<p><img src="/Blog/intro/graph/net_stream_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时走这样一条路径就从源点到汇点多输入了2单位流量.</p>
+<br>
+
+<p>这就是Ford-Fulkerson思想, 依然是想从原点出发找一条路径, 只要这条路径可以容纳新的流量, 那么我们就向整个网络流中注入新的流量</p>
+<p>只不过整个过程中我们<strong>不能只看容量</strong>, 如果在一条边中存在流量, 那么就意味着新的流量可以和已经有的流量进行抵消.</p>
+<p>我们称2-1这条边为反向边 1-2这条边称为正向边, 反向边的容量=正向边的流量.</p>
+<p><img src="/Blog/intro/graph/net_stream_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>实际上在整个网络流模型中找新的路径尝试添加新的流量实在左边这张图上工作的.</p>
+<p>这个图通常被称为<strong>残量图(Residual Graph)</strong></p>
+<p><strong>如果原图的 v-w 容量为c 流量为f. 那么残量图中的v-w的权值为c-f, w-v的权值为f</strong></p>
+<p><img src="/Blog/intro/graph/net_stream_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个路径就叫增广路径</p>
+<br>
+
+<p>Ford-Fulkerson 思想就是从原始的图出发创建出这样一个残量图. 在残量图中不断地找增广路径. 直到没有增广路径为止.</p>
+<br>
+
+<p>Ford-Fulkerson就是说在残量图中找增广路径, 但具体怎么找增广路径它没说, 使用不同方式找增广路径, 时间复杂度也不同.</p>
+<br>
+
+<br>
+
+<h3 id="Edmonds-Karp算法"><a href="#Edmonds-Karp算法" class="headerlink" title="Edmonds-Karp算法"></a>Edmonds-Karp算法</h3><p>初始时先求出残量图</p>
+<p><img src="/Blog/intro/graph/net_stream_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而 Edmonds-Karp 就是使用 BFS 寻找增广路径</p>
+<p>因为我们随便找到一条增广路径即可, 问题就是在残量图中从源点到汇点的路径. 本质是一个寻找路径的问题, 只不过权值为0的边不能走而已. </p>
+<p>循环使用BFS寻找增广路径, 更新残量图, 直到找不到新的增广路径</p>
+<br>
+
+<p>算法流程</p>
+<ol>
+<li>通过网络流模型图构建残量图</li>
+<li>在残量图中找增广路径</li>
+<li>获取路径中的最大流量(最小容量)</li>
+<li>更新残量图的流量, 更新最大流</li>
+<li>重复2-4直到找不到新的增广路径</li>
+</ol>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/netflow/MaxFlow.java" target="_blank" rel="noopener">算法实现</a></h4><br>
+
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>Ford-Fulkerson思想: $O(maxflow \cdot E)$ </p>
+<p>每寻找一个增广路径, 至少流量+1. 最坏情况下, 要找maxflow个路径. 每一次要扫描一变所有边和点. O(V+E), 而连通图中V是E的低阶项, 所以省略V</p>
+<p>Edmods-Karp算法: $O(V \cdot E^2)$</p>
+<p>这个算法复杂度的分析较难.</p>
+<br>
+
+<p>Edmods-Karp算法 通常比 Ford-Fulkerson思想 性能高, 因为maxflow通常取决于每条边的权值. 而图的规模可能很小. 大部分情况下$maxflow &gt; V\cdot E$</p>
+<br>
+
+<br>
+
+<h3 id="最大流算法建模"><a href="#最大流算法建模" class="headerlink" title="最大流算法建模"></a>最大流算法建模</h3><p>最大流算法可以解决很多问题, 这里介绍一个最经典的问题.</p>
+<p>假设现在有棒球比赛. 5个队伍进行比赛, 比赛的某一时刻的比分如下</p>
+<p><img src="/Blog/intro/graph/net_stream_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>底特律队胜49场, 负86场, 且还要进行27场比赛, 底特律要和纽约队进行3场比赛, 和baltimore队进行4场比赛. 问底特律队有没有机会得冠?</p>
+<p>理想情况下底特律队剩余的27场比赛全都赢, 也就是底特律队拿下76场胜利. 而其余的队伍的胜利都小于76场. 这样底特律队才能赢.</p>
+<br>
+
+<p>如何用最大流解决这个问题?</p>
+<p>我们假设最好的情况, 底特律队的剩余27场都赢了.</p>
+<p>而0-3这4个队伍的其余比赛都输了.</p>
+<p>然而0-3这4个队伍互相之间还有27场比赛, 就意味着要<strong>分配</strong>27次胜利给这4个队伍.</p>
+<p>我们把每组可能的比赛情况当作一个节点.</p>
+<p><img src="/Blog/intro/graph/net_stream_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>New York 和 Baltimore 要进行3场比赛, 所以说要分配3场胜利给”New York和Baltimore这场比赛”. 而”New York 和 Baltimore” 再分这3场胜利.</p>
+<p>而这场比赛最多分给New York 三场胜利. 最多分给Baltimore3场胜利. (但不可能两个队都获得3场胜利, 因为我们只分给NY-Bal这场比赛3次胜利)</p>
+<p><img src="/Blog/intro/graph/net_stream_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>同理其余队伍的胜利分配可以用边表示出来.</p>
+<p><img src="/Blog/intro/graph/net_stream_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而我们希望没有队伍的胜利场次大于底特律.</p>
+<p>也就是说纽约队最多只能胜利1场, Baltimore最多获得5场胜利, 波士顿对最多应7场, 多伦多最多获得13场胜利</p>
+<p><img src="/Blog/intro/graph/net_stream_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们看这个网络的最大流是多少. 如果这个网络流的最大流是27的话, 就说明对于这27场比赛, 可以分配27场胜利给0-3 Team, 使得它们的胜场比底特律队小.</p>
+<p>反之就说明无法分配, 也就是说底特律肯定赢不了.</p>
+<br>
+
+<blockquote>
+<p>然而我有一个观点, 对于这个特定的问题</p>
+<p><img src="/Blog/intro/graph/net_stream_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>2-3 这层其实是没有用的, 因为3层肯定能完整地接收2层传来的所有资源.</p>
+<p>为什么不这样计算?</p>
+<p>要分配27场胜利给4个队伍.(1-2)层</p>
+<p>而4个队伍最多只能接收26场胜利(3-4)层 (如果不允许队伍的胜场大于76)</p>
+<p>所以肯定无法分配.</p>
+</blockquote>
+<p>网络流是一个分配资源的模型.</p>
+<br>
+
+<br>
+
+<h2 id="匹配问题"><a href="#匹配问题" class="headerlink" title="匹配问题"></a>匹配问题</h2><h3 id="最大匹配和完全匹配"><a href="#最大匹配和完全匹配" class="headerlink" title="最大匹配和完全匹配"></a>最大匹配和完全匹配</h3><p><img src="/Blog/intro/graph/match.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这是一个<strong>无向图</strong>算法, 但解决问题的思路和有向图相关</p>
+<p>同时这个图也是一个二分图</p>
+<p>假设左边是男士, 右边是女士, 边代表男士与女士有成亲的可能,</p>
+<p>那么对于这张图我们最多可以让多少张合适的新人成婚?</p>
+<br>
+
+<p>还有其他例子: 选导师</p>
+<p><img src="/Blog/intro/graph/match_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>红色的边就是其中一种匹配方案, 且是最大匹配方案, 我们无法在这张图中找到4组匹配.</p>
+<p>通常解决我们不去考虑匹配方案, 我们最关心的还是最大匹配的结果(数字). 因此找到一组最大匹配的方案就可以了</p>
+<br>
+
+<p>这张图有8个节点, 但最大匹配数只有3, 而不是4, 说明有顶点没有被匹配.</p>
+<p>如果添加一条边 1-7</p>
+<p><img src="/Blog/intro/graph/match_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最大匹配就是4, 此时所有的点都被匹配了, 这就是完全匹配</p>
+<br>
+
+<blockquote>
+<p>完全匹配一定是最大匹配</p>
+<p>最大匹配不一定是完全匹配</p>
+</blockquote>
+<p>而我们看一张图有没有完全匹配就是先找到最大匹配, 如果所有点都被匹配了, 说明是完全匹配.</p>
+<p>因此最大匹配和完全匹配的算法其实是一致的.</p>
+<br>
+
+<br>
+
+<h3 id="使用最大流算法解决匹配问题"><a href="#使用最大流算法解决匹配问题" class="headerlink" title="使用最大流算法解决匹配问题"></a>使用最大流算法解决匹配问题</h3><p>最大流算法是分配资源的模型</p>
+<p>那么对于匹配问题来说什么是资源? 资源就是节点, 或者说资源是边(点与点之间的联系)(或者说关系)</p>
+<p><img src="/Blog/intro/graph/match_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>我们设立源点汇点, 将二分图(二分图可以分为两个部分)的一部分连接源点, 一部分连接汇点</p>
+<p><img src="/Blog/intro/graph/match_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>将无向边改为有向边, 让和源点连接的点指向和汇点连接的点</p>
+<blockquote>
+<p> 将无向图问题转化成有向图问题. </p>
+</blockquote>
+<p><img src="/Blog/intro/graph/match_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们让(“<strong>关系</strong>“这个资源)从s流向t. 而每条边的<strong>容量只设为1</strong>.也就是说每个点的资源只能流向另外一个点.</p>
+<p>换句话说, 一个点只能和另一个点有<strong>关系</strong>.</p>
+<p>这样这幅图的最大流就是最大匹配数</p>
+<br>
+
+<h4 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/match/BipartiteMatching.java" target="_blank" rel="noopener">算法实现</a></h4><br>
+
+<h4 id="leetcode-例题"><a href="#leetcode-例题" class="headerlink" title="leetcode 例题"></a>leetcode 例题</h4><p><a href="https://leetcode-cn.com/problems/broken-board-dominoes/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/broken-board-dominoes/</a></p>
+<p>这道题中, 同样要分析一下什么是资源. 一个格子可以和它上下左右4个方向的相邻格子建立联系. 这就是资源, 我们要分配格子间的联系.</p>
+<p><img src="/Blog/intro/graph/match_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>换句话说, 一个白色的格子可以和它周围4个黑色的各自建立联系.</p>
+<p>如果进行分配, 那么就是让资源从源点s流入白色格子, 再流入它周围的4个黑色格子. 再流入汇点t.</p>
+<pre><code class="java">class Solution {
+
+    int[][] d = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+    int n, m;
+    Set&lt;Integer&gt; brokenBlocks;
+    WeightedGraph g;
+
+    public int domino(int n, int m, int[][] broken) {
+        this.n = n;
+        this.m = m;
+        brokenBlocks = new HashSet&lt;&gt;();
+        g = new WeightedGraph(n*m+2, false);
+        int s = n*m;
+        int t = n*m + 1;
+
+        for(int[] block : broken){
+            brokenBlocks.add(getIndex(block[0], block[1]));
+        }
+
+        // 建图
+        for(int i = 0; i &lt; n; i++){
+            for(int j = 0; j &lt; m; j++){
+                if(!isNotBroken(i, j) || (i+j)%2 != 0)
+                    continue;
+                // 把白色格子和周围黑色的格子连接
+                for (int[] direction : d) {
+                    int x = i + direction[0];
+                    int y = j + direction[1];
+                    if (inArea(x, y) &amp;&amp; isNotBroken(x, y)) {
+                        g.addEdge(getIndex(i, j), getIndex(x, y), 1);
+                    }
+                }
+            }
+        }
+        BipartiteMatching bm = new BipartiteMatching(g);
+        return bm.maxMatching();
+    }
+
+    private boolean isNotBroken(int x, int y){
+        return !brokenBlocks.contains(getIndex(x, y));
+    }
+
+    private int getIndex(int x, int y){
+        return x*m + y;
+    }
+
+    private boolean inArea(int x, int y){
+        return x &gt;= 0 &amp;&amp; x &lt; n &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; m;
+    }
+}</code></pre>
+<br>
+
+<p>然而这么实现需要导入很多自己写类.</p>
+<p>如果对最大流算法熟悉的话, 可以直接在broken这个数组的基础上直接写一个最大流算法而不建图. // TODO</p>
+<br>
+
+<br>
+
+<h3 id="匈牙利算法"><a href="#匈牙利算法" class="headerlink" title="匈牙利算法"></a>匈牙利算法</h3><p>使用最大流算法求解最大匹配并不是求解匹配问题的唯一算法</p>
+<p>匈牙利算法不借助有向图, 也不借助网络流模型, 看可不可以直接通过这个无向图解决问题.</p>
+<p><img src="/Blog/intro/graph/match_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>毕竟通过这个无向图搭建出来的网络流模型本身就是一个特殊的网络流模型(每条边的容量只为1)</p>
+<p>匈牙利算法就是看看能否直接在这个图上选边</p>
+<br>
+
+<h4 id="匈牙利算法的流程"><a href="#匈牙利算法的流程" class="headerlink" title="匈牙利算法的流程"></a>匈牙利算法的流程</h4><p>匈牙利算法就是从左边还没有匹配的点出发, 看能不能添加新的匹配</p>
+<p><img src="/Blog/intro/graph/match_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>关键是怎么寻找当前图是否有新的匹配</p>
+<p>先从0出发, 从0直接到4, 4也是一个没有匹配的点, 两个没有匹配的点相连, 他们肯定可以是一组匹配, 将他们匹配上, 标记为蓝色</p>
+<p><img src="/Blog/intro/graph/match_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>看左边没匹配的点, 从1出发到达4, 而4是右侧已经匹配的点. 对于右侧已经匹配的点, 我们寻找新的匹配的过程就是在找一个路径, 此时我们不遍历4的所有相邻顶点, 而是直接走到和4匹配的这个点0</p>
+<p><img src="/Blog/intro/graph/match_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于左边这个点, 我们可以寻找和它相邻的任意一个顶点(没有遍历过), 和0相邻的顶点中4已经被遍历过了, 而6还没有被遍历过, 所以来到6. 而6是一个未匹配的点. 此时匹配就结束了</p>
+<p><img src="/Blog/intro/graph/match_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>我们找到的是这样一个路径</p>
+<p><img src="/Blog/intro/graph/match_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个路径的特点是: 首尾都是没有被匹配的点.而中间的点是匹配的点. 且这两个点存在匹配边. 而收尾两个顶点是非匹配的顶点, 所以1-4, 0-6这两条边一定是非匹配的边</p>
+<p>此时我们断开4-0之间的边, 转而连接1-4, 0-6这两条边, 同时1, 6两个点也设置为匹配</p>
+<p>这样就相当于让原来只有一个匹配变成有两个匹配</p>
+<p><img src="/Blog/intro/graph/match_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>下面从点2出发再按照刚才的原则, 寻找一个路径.</p>
+<p>从2找到6, 而6是一个已经匹配了的顶点. 对于匹配的顶点转到和它对应的匹配点. 于是来到顶点0</p>
+<p><img src="/Blog/intro/graph/match_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>下面遍历0的所有相邻顶点, 对于0的相邻顶点, 6已经遍历过了, 而4还没有遍历过. 于是来到4. 而4又是一个已经匹配过的顶点, 对于已经匹配的顶点来到它对应的匹配点. 于是来到顶点1. 对于1 遍历它的相邻顶点, 4已经遍历过了, 7是一个未遍历的点. 于是来到7</p>
+<p>而7是一个未匹配的点, 至此寻找路径结束了.</p>
+<p>  <img src="/Blog/intro/graph/match_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时找到的路径是</p>
+<p><img src="/Blog/intro/graph/match_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>依然是起始顶点和结尾顶点都是<strong>未匹配</strong>的顶点. 中间4个顶点是两两配对形成匹配边的</p>
+<p>此时五条边的关系为 : 01010 (0 代表 未匹配, 1 代表匹配). 我们要把它变为: 10101, 这样就增加了一条边</p>
+<p>之后把这条路径的收尾两个顶点标为匹配</p>
+<br>
+
+<p><img src="/Blog/intro/graph/match_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这里增广路径的概念和网络流中的增广路径不一样</p>
+<p>有增广路径, 意味着最大匹配数可以加一</p>
+<br>
+
+<p><img src="/Blog/intro/graph/match_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最后从3找到7, 然而无法沿着这条路径找到一个未匹配的结尾点. 所以找不到<strong>增广路径</strong>. 无法通过这条路径让整张图的匹配数加一.</p>
+<p><img src="/Blog/intro/graph/match_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时从3寻找其他路径, 3匹配5.</p>
+<br>
+
+<p>至此左边再没有节点, 匹配算法结束. 这就是匈牙利算法</p>
+<p>从左侧一个尚未匹配的点出发, 不断寻找<strong>可以增广的交替路</strong></p>
+<p>如何找这样一个增广路径?</p>
+<p>BFS, 或者 DFS.</p>
+<p>然而右侧的点不需要寻路. 如果右侧的点是未匹配的点, 算法结束, 如果是已经匹配的点, 则直接跳到它对应的匹配点.</p>
+<br>
+
+<br>
+
+<p>匈牙利算法复杂度初始遍历所有点, 对左侧所有点进行广度优先遍历$V*(V+E) = O(VE)$ 连通图V&lt;E</p>
+<br>
+
+<h4 id="BFS-匈牙利算法实现"><a href="#BFS-匈牙利算法实现" class="headerlink" title="BFS 匈牙利算法实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/match/HungarianBFS.java" target="_blank" rel="noopener">BFS 匈牙利算法实现</a></h4><h4 id="DFS-匈牙利算法实现"><a href="#DFS-匈牙利算法实现" class="headerlink" title="DFS 匈牙利算法实现"></a><a href="https://github.com/DaoLinZhou/GrapyTheory/blob/master/src/match/HungarianDFS.java" target="_blank" rel="noopener">DFS 匈牙利算法实现</a></h4>
             </div>
             <hr>
             <div>

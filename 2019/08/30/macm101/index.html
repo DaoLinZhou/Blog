@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    8.8k 字
+                    10.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      52 分钟
+                      60 分钟
                   </span>
                 
 
@@ -1490,7 +1490,7 @@ aRb</code></pre><p>ex)</p>
 <h3 id="二分图"><a href="#二分图" class="headerlink" title="二分图"></a>二分图</h3><p>定义:</p>
 <p>一个图, G = (V, E) 是一个二分图, 如果我们可以分出两个vertex set $V_1, V_2$满足下列条件</p>
 <ol>
-<li>$V_1\cap V_2 = {}$</li>
+<li>$V_1\cap V_2 = \empty$</li>
 <li>$V_1 \cup V_2 = V$</li>
 <li>every edge in $E$ is incident with one vertex in $V_1$ and one vertex in $V_2$</li>
 </ol>
@@ -1585,7 +1585,286 @@ $$
 <p>如果两个图是同构, 他们必须有同样的性质</p>
 <p>同样的顶点数, 同样的边数, 同样的degree, 同样的cycle….</p>
 <p><img src="/Blog/intro/isomorphic.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>目前没有算法测试两场图是同构.</p>
+<p>目前没有快速的算法测试两场图是同构.</p>
+<br>
+
+<br>
+
+<h2 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h2><p>把m个球扔进n个箱子中, 空箱子的期望值是多少?</p>
+<p>让X = number of empty bins</p>
+<p>所以$X=\sum_{i=1}^n x_i$, $x_i=1$如果第i个箱子为空, 反之为0<br>$$<br>E(X)=E(x_1+x_2\cdots+x_n)=\sum_{i=1}^n E(x_i)<br>$$</p>
+<p>$$<br>E(x_i) = 0<em>Pr(x_i=0)+1</em>Pr(x_i=1)=1(\frac {n-1} n)^m<br>$$</p>
+<p>$$<br>E(X) =\sum_{i=1}^nE(x_i)=n(\frac {n-1} n)^m<br>$$</p>
+<p><img src="/Blog/intro/except_ball_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>有多少箱子中有1个球?</p>
+<p><img src="/Blog/intro/except_ball.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Recurrence-Relations"><a href="#Recurrence-Relations" class="headerlink" title="Recurrence Relations"></a>Recurrence Relations</h2><h3 id="Linear-recurrence-relation"><a href="#Linear-recurrence-relation" class="headerlink" title="Linear recurrence relation"></a>Linear recurrence relation</h3><p><img src="/Blog/intro/recur.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如斐波那契数列<br>$$<br>f_{n+1} = f_n+f_{n-1}<br>$$<br>等价于<br>$$<br>f_{n+1} - f_n - f_{n-1} = 0<br>$$<br>这个就是2nd order homogeneous recurrence.</p>
+<p>因为(n+1) - (n-1) = 2. 所以是2nd order</p>
+<br>
+
+<p>例题:</p>
+<p>让$S_n$ 是一个长度为n的binary string set, 它有一个性质(1后面必须跟着0)(所以1不能用于结尾)</p>
+<p>1) list $S_1,S_2, S_3$</p>
+<p>2) let $c_n=|S_n|$ Give a recurrence relation for $c_n$</p>
+<br>
+$$
+S_0 = \{""\},\ S_1 = \{0\},\ S_2=\{00, 10\},\ S_3=\{000,010, 100\}
+$$
+一个长度为n的string可以这样组成
+$$
+0u, where\ \ u\in S_{n-1}
+$$
+
+<p>$$<br>10w, where\ \ w \in S_{n-2}<br>$$</p>
+<p>所以:<br>$$<br>c_n = c_{n-1} + c_{n-2},\ \ \  c_0 = 1, c_1 = 1<br>$$<br>就是斐波那契数列</p>
+<br>
+
+<p><img src="/Blog/intro/recur_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Solve-Recurrence-Relations"><a href="#Solve-Recurrence-Relations" class="headerlink" title="Solve Recurrence Relations"></a>Solve Recurrence Relations</h3><br>
+
+<h4 id="Solve-First-Order-Recurrence-Relations"><a href="#Solve-First-Order-Recurrence-Relations" class="headerlink" title="Solve First Order Recurrence Relations"></a>Solve First Order Recurrence Relations</h4><p><img src="/Blog/intro/solve_first_ord_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>一定要check一下, check和MI很像, 检查base, 检查n</p>
+<p><img src="/Blog/intro/solve_first_ord_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<blockquote>
+<p> Theorem</p>
+<p>Every sequence x0, x1, x2… satisfying the recurrence $x_n=dx_{n-1}$ has the general solution $x_n=cd^n$ for come constant c. (The sequence is a geometric progression)<br>$$<br>x_0=c<br>$$</p>
+<p>$$<br>x_1=dx_0=dc =cd<br>$$</p>
+<p>$$<br>x_2=dx_1=d(cd)=cd^2<br>$$</p>
+<p>$$<br>x_k=dx_{k-1}=d(cd^{k-1})=cd^k<br>$$</p>
+<p><img src="/Blog/intro/solve_first_ord_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<p><img src="/Blog/intro/solve_first_ord_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Solve-Second-Order-Recurrence-Relation"><a href="#Solve-Second-Order-Recurrence-Relation" class="headerlink" title="Solve Second Order Recurrence Relation"></a>Solve Second Order Recurrence Relation</h4><p>second order 的解法就不像 First order那么直接, 但也相当巧妙</p>
+<p>假设我们现在有一个Second Order RRS.<br>$$<br>ax_n+bx_{x-1}+cx_{n-2}=0, for\ n \ge 2<br>$$<br>假设$x_n=r^n$是上面式子的一个解, 因为:</p>
+<p>$$<br>a_n=da_{n-1}\ \ \ \ solve\ \ to \ \ \ \ a_n=cd^n<br>$$<br>所以替换$x_n和r^n$<br>$$<br>ar^n+br^{n-1}+cr^{n-2}=0,\ for\ n\ge 2<br>$$</p>
+<p>$$<br>r^{n-2}(ar^2+br+c)=0<br>$$</p>
+<p>$r^{n-2}$ 不为0, 所以 $ar^2+br+c=0$</p>
+<p>Observe that the $n\ge 2$ condition is redundant in equation (2). If this holds for $n=2$, then it holds for all larger values (multiplying by powers ofrgives theother equations). This reduces us to a familiar equation</p>
+<p>这样就解出了 r</p>
+<blockquote>
+<p>A number $r$ satisfies $ar^2+br+c=0$ if and only if $x_n=r^n$ is a solution to our recurrence</p>
+</blockquote>
+<p><img src="/Blog/intro/second_order.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>例题:</p>
+<p><img src="/Blog/intro/second_order_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>check:</p>
+<p>当 $x_n=2^n$<br>$$<br>x_n-5_{n-1}+6x_{n-2}=0<br>$$</p>
+<p>$$<br>2^n-5<em>2^{n-1}+6</em>2^{n-2}=2^n+2^{n-2}(6-10)=2^n-2^n=0<br>$$</p>
+<p>同理$x_n=3^n$也通过check.</p>
+<br>
+
+<br>
+
+<p>定理:</p>
+<p><img src="/Blog/intro/second_order_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例题:</p>
+<p><img src="/Blog/intro/second_order_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通过初始值(base value) 解出系数</p>
+<br>
+
+<p>通解:</p>
+<p><img src="/Blog/intro/second_order_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例题:</p>
+<p><img src="/Blog/intro/second_order_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>但是有可能我们得到两个复数解. 或者有两个相同的实数根</p>
+<p><img src="/Blog/intro/second_order_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果有两个相同的实数根:</p>
+<p>很显然其中一个根就是$r^n$, 但另一个根怎么办? 我们在前面乘以一个n</p>
+<p>$nr^n$是一个变量, 和$r^n$不同, 可以作为另一个解</p>
+<p><img src="/Blog/intro/second_order_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例子:</p>
+<p><img src="/Blog/intro/second_order_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Solving-first-order-non-homogenous-RRS"><a href="#Solving-first-order-non-homogenous-RRS" class="headerlink" title="Solving first order non-homogenous RRS"></a>Solving first order non-homogenous RRS</h4><p><img src="/Blog/intro/nhrrs.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/nhrrs_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>求和公式<br>$$<br>\sum_{i=1}^ni = \frac {n(n+1)}2<br>$$</p>
+<p>$$<br>\sum_{i=1}^ni^2=\frac {n(n+1)(2n+1)}6<br>$$</p>
+<p>$$<br>\sum_{i=0}^{n-1}a^i=\frac {a^n-1}{a-1}<br>$$</p>
+<p>$$<br>\sum_{k=0}^n{n \choose k} = 2^n<br>$$</p>
+<p>$$<br>\sum_{k=0}^nk{n\choose k}=n2^{n-1}<br>$$</p>
+<br>
+
+<h4 id="Solving-Non-Homogeneous-Relations"><a href="#Solving-Non-Homogeneous-Relations" class="headerlink" title="Solving Non-Homogeneous Relations"></a>Solving Non-Homogeneous Relations</h4><p>Non-Homogeneous relation概念之前就说过.</p>
+<p>怎么解这个RRS?</p>
+<blockquote>
+<p> 定理</p>
+<p><img src="/Blog/intro/nhrrs_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Non-Homogeneous 的 General Solution 是 Non-Homogeneous的一个特解+Homogeneous的通解</p>
+</blockquote>
+<br>
+
+<p>例子:</p>
+<p>$x_n=6x_{n-1}+3^n$ for $n&gt;1, x+0=7$</p>
+<p>首先解 Homogeneous 的通解<br>$$<br>x_n-6x_{n-1}=0<br>$$</p>
+<p>$$<br>r-6=0\ \rightarrow \ \ \ \  r=6<br>$$</p>
+<p>所以通解是 $x_n^{(h)}=C\cdot 6^n$</p>
+<p>再找一个Non-Homogeneous的特解, 我们尝试 $x_n^{(p)}=k3^n$, 代入式子中<br>$$<br>k3^n=6(k3^{n-1})+3^n<br>$$</p>
+<p>$$<br>-3k=3<br>$$</p>
+<p>解得k=-1</p>
+<p>所以一个特解是$x_n^{(p)}=-3^n$</p>
+<br>
+
+<p>那么这个Non-Homogeneous的通解是<br>$$<br>x_n = C6^n-3^n<br>$$<br>代入$x_0=7$ 解出 C = 8</p>
+<p>所以:<br>$$<br>x_n = 8\cdot6^n-3^n<br>$$<br><br></p>
+<p>例子:</p>
+<p><img src="/Blog/intro/nhrrs_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>然而很有可能, homogeneous 的通解包括了一些non-homogeneous 的特解.</p>
+<p>就像之前Homogeneous的通解中两个解都是一样的情况, 我们要找到一个方式在找到一个解</p>
+<p><img src="/Blog/intro/nhrrs_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果f(n)是 $kr^n$ 这种形式. 我们要找particular solution时要尝试的解是$x_n^{(p)}=Cr^n$ 如果 这是homogeneous的解的一部分, 则尝试 $x_n^{(p)}=Cn^mr^n$</p>
+<p>如果f(n)是$kn^d$这种形式, 则尝试$<em>n^{(p)}=a_dn^d+a</em>{d-1}n^{d-1}\cdots a_1n+a_0$这种形式的解</p>
+<p>如果有一项$n^t$是homogeneous的解的一部分, 则整体乘以$n^s$, 使得它和homog的solution没有关系</p>
+<p><img src="/Blog/intro/nhrrs_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Divide-and-Conquer-Algorithms"><a href="#Divide-and-Conquer-Algorithms" class="headerlink" title="Divide and Conquer Algorithms"></a>Divide and Conquer Algorithms</h2><p><img src="/Blog/intro/merge.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/merge_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/merge_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Generating-Functions"><a href="#Generating-Functions" class="headerlink" title="Generating Functions"></a>Generating Functions</h2><p>定义:</p>
+<p>如果 $P(x)$ 是一个多项式那么 $<a href="P(x)">x^k</a>$ 就代表 $x^k$ 在$P(x)$ 中的系数</p>
+<br>
+
+<p>例题:</p>
+<p><img src="/Blog/intro/generating_function.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个多项式的$x^7$可能有多个组合, 可能是$x^1x^3x^3$…这就代表$a_1=1, a_2=3, a_3=3$ 这样让他们组成$x^7$ 而$a_i$可能是0, 1, 2, 3. 所以相乘时 每个x的指数分别是0,1,2,3. 相乘就是从第一个括号中选一个x乘以第二个括号中选一个x, 乘以第三个括号中选一个x.</p>
+<p>如果最后结果为$x^7$, 那么就是一个解$x^7$的系数+1, 因此左后$x^7$的系数就是解的个数.</p>
+<br>
+
+<p>同理, 如果掷两次骰子, 问有多少次和为6.<br>$$<br>P(x) = (x^1+x^2\cdots x^6)^2<br>$$<br>答案就是$[x^6]P(x)=5$</p>
+<p>掷一个骰子可能得到的值是1-6</p>
+<br>
+
+<p>特殊一点, 如果每个a的值的限制不同?</p>
+<p><img src="/Blog/intro/generating_function_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这和以前counting中的一个问题类似</p>
+<p><img src="/Blog/intro/generating_function_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/generating_function_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>所有的多项式都可以看作时generating function.</p>
+<p>只要把其余项的系数看作是0即可</p>
+<p><img src="/Blog/intro/generating_function_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Generating-function-的-inverse"><a href="#Generating-function-的-inverse" class="headerlink" title="Generating function 的 inverse"></a>Generating function 的 inverse</h3><p>A(x) 和 B(x) 是两个 generating function</p>
+<p>如果$A(x)\cdot B(x) = 1,\ A(x)=\frac 1 {B(x)}, B(x)=\frac 1 {A(x)}$, 二者互为inverse</p>
+<p><img src="/Blog/intro/generating_function_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例题:</p>
+<p><img src="/Blog/intro/generating_function_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="计算Generating-Function"><a href="#计算Generating-Function" class="headerlink" title="计算Generating Function"></a>计算Generating Function</h3><p>定义:</p>
+<p><img src="/Blog/intro/generating_function_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+$$
+\frac 1 {1-x}=1+x+x^2+x^3+\cdots=\sum_{n=0}^\infin x^n
+$$
+
+<p>$$<br>\frac 1 {(1-x)^k}=(1+x+x^2+x^3+\cdots)^k<br>$$</p>
+<p>那么此时 $x^n$ 的系数的含义是什么</p>
+<p>可以类比将n个球扔进k个盒子中的可能. 转换为counting problem. 那么这个系数就是${n+k-1 \choose n}$</p>
+<p>因此<br>$$<br>\frac 1 {(1-x)^k}=(1+x+x^2+x^3+\cdots)^k=\sum_{n=0}^{\infin}{n+k-1 \choose n}x^n<br>$$<br><img src="/Blog/intro/generating_function_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>// TODO 这里和 泰勒序列很像, 可能和泰勒展开有一些关系</p>
+<p><img src="/Blog/intro/generating_function_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>再一般化: 我们可以拆解一个rational function:</p>
+<p><img src="/Blog/intro/generating_function_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这个还可以用来解一些看起来无关的难题</p>
+<p><img src="/Blog/intro/generating_function_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="通过Generating-Function-解决Recurrences"><a href="#通过Generating-Function-解决Recurrences" class="headerlink" title="通过Generating Function 解决Recurrences"></a>通过Generating Function 解决Recurrences</h3><p><img src="/Blog/intro/generating_function_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>思想:</p>
+<p><img src="/Blog/intro/generating_function_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/generating_function_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Summation-Operator"><a href="#Summation-Operator" class="headerlink" title="Summation Operator"></a>Summation Operator</h3><p>如何计算<br>$$<br>\sum_{i=1}^ni^2, \ \ \ \sum_{i=1}^ni^3, \ \ ,\sum_{i=1}^ni^4<br>$$<br><br></p>
+<p>让 $A(x)=a_0+a_1x+a_2x^2+\cdots$</p>
+<p>那么<br>$$<br>A(x)(\frac 1{1-x}) = (a_0+a_1x+a_2x^2+\cdots)\cdot (1+x+x^2+x^3\cdots)<br>$$</p>
+<p>$$<br>=a_0+(a_0+a_1)x+(x_0+a_1+a_2)x^2 \cdots+(a_0+a_1\cdots a_n)x^n+\cdots<br>$$</p>
+<p>所以$A(x)(\frac 1{1-x})$ 是下面序列的generating function<br>$$<br>a_0,\ \ a_0+a_1,\ \ a_0+a_1+a_2\cdots<br>$$<br>因此我们称$\frac 1 {1-x}$ 为 <strong>summetion operator</strong></p>
+<br>
+
+<p><img src="/Blog/intro/summetion_op.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如何求$\sum_{i=1}^ni^2$</p>
+<p>既然我们知道 $a_n=n^2$的 generating function 是$\frac {x+x^2}{(1-x)^3}$</p>
+<p>我们要求和就是求$\frac {x+x^2}{(1-x)^3} \cdot \frac 1{1-x}$的第n项系数</p>
+<p>用 summetion operator 生成一个新的函数, 这个函数的第n项代表原本函数前n项之和</p>
+<p><img src="/Blog/intro/summetion_op_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/summetion_op_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
 
             </div>
             <hr>
