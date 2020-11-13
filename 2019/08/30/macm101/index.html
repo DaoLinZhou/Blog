@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.5k 字
+                    10.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      60 分钟
+                      61 分钟
                   </span>
                 
 
@@ -1864,6 +1864,27 @@ $$
 <br>
 
 <br>
+
+<h2 id="图论-1"><a href="#图论-1" class="headerlink" title="图论"></a>图论</h2><h3 id="multigraph"><a href="#multigraph" class="headerlink" title="multigraph"></a>multigraph</h3><p>定义: multigraph G=(V, E) is a set V of vertices and a <strong>multiset</strong> E of of edges where each edge is in $V\times V$.</p>
+<p>Simple graphs are multigraphs with no loops and no parallel edges.</p>
+<p>举个例子:</p>
+<pre><code>V={1, 2, 3, 4}, E={{1,2}, {1,2},{2,3},{3,3}, {3,4}, {4,1}}</code></pre><p>1-2这条边出现两次,  且有3-3这个自环边</p>
+<br>
+
+<h3 id="walk"><a href="#walk" class="headerlink" title="walk"></a>walk</h3><p>定义: 让x,y是multigraph的两个顶点. G=(V, E), walk in G is a finite alternating sequence.</p>
+<p>$$<br>xe_1x_1e_2\cdots e_{n-1}x_{n-1}e_ny<br>$$<br>就是一个顶点一个边, 一个顶点一个边…</p>
+<p>如果$x=y$ 就说是close walk, 如果$x\ne y$ 就说是open walk</p>
+<br>
+
+<h3 id="Trails-and-Circults"><a href="#Trails-and-Circults" class="headerlink" title="Trails and Circults"></a>Trails and Circults</h3><p>路径和回路, 定义 :</p>
+<ul>
+<li>A Trail from x to y is an open walk in G that has no repeated edges</li>
+<li>A circuit from x to x is a close walk in G that has no repeated edges.</li>
+</ul>
+<p><img src="/Blog/intro/trails.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/trails_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
 
 
             </div>
