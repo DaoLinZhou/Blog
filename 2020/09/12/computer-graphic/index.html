@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    25.2k 字
+                    26.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      108 分钟
+                      113 分钟
                   </span>
                 
 
@@ -627,6 +627,134 @@ float a = 2;</code></pre>
 
 <br>
 
+<h2 id="纹理"><a href="#纹理" class="headerlink" title="纹理"></a>纹理</h2><h3 id="纹理贴图-Texture-Mappiing"><a href="#纹理贴图-Texture-Mappiing" class="headerlink" title="纹理贴图 (Texture Mappiing)"></a>纹理贴图 (Texture Mappiing)</h3><p><img src="/Blog/intro/com_graphic/texture.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="mipmap"><a href="#mipmap" class="headerlink" title="mipmap"></a>mipmap</h3><p><img src="/Blog/intro/com_graphic/texture_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="javascript">gl.texImage2D(
+    gl.TEXTURE_2D,  // bind point
+    0,  // level of detail
+    gl.RGBA,    // internal format
+    gl.RGBA,    // format
+    gl.UNSIGNED_BYTE,   // image 数据类型
+    image
+)</code></pre>
+<p>第二个参数level of detail就是设置level, 如果level为0, 就说明用原图. <code>(256x256)</code></p>
+<p>如果level=1, 就把宽高缩减一半 <code>(128x128)</code></p>
+<br>
+
+<h4 id="gl-texParameteri"><a href="#gl-texParameteri" class="headerlink" title="gl.texParameteri()"></a>gl.texParameteri()</h4><p><code>gl.texParameteri()</code> 是用来设置贴图的参数</p>
+<br>
+
+<p>如果texture的坐标正好契合要贴图位置的坐标</p>
+<p>如果用 <code>TEXTURE_MIN_FILTER</code></p>
+<pre><code class="javascript">gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.NEAREST
+);</code></pre>
+<p><img src="/Blog/intro/com_graphic/texture_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/texture03.jpg" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图片非常小, 只有2x2=4个像素</p>
+<br>
+
+<p>如果用 <code>TEXTURE_MAG_FILTER</code></p>
+<pre><code class="javascript">gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MAG_FILTER,
+    gl.NEAREST
+);</code></pre>
+<p><img src="/Blog/intro/com_graphic/texture_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>LINEAR 会根据周围像素进行加权blur</p>
+<p>无论 <code>TEXTURE_MAG_FILTER</code> 还是 <code>TEXTURE_MIN_FILTER</code> 得到的都是这样的图</p>
+<pre><code class="javascript">gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MAG_FILTER,
+    gl.LINEAR
+);</code></pre>
+<p><img src="/Blog/intro/com_graphic/texture_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果不契合, 默认会进行repeat</p>
+<p><img src="/Blog/intro/com_graphic/texture_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<pre><code class="javascript">gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_WRAP_T,
+    gl.CLAMP_TO_EDGE
+);
+gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MAG_FILTER,
+    gl.NEAREST
+);</code></pre>
+<p><img src="/Blog/intro/com_graphic/texture_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><code>TEXTURE_WRAP</code>是指当超出纹理范围时, 它会停留在最后一个像素</p>
+<p>STPQ 四种方向, 但是<code>TEXTURE_WRAP_S</code>或者<code>TEXTURE_WRAP_T</code>两种可能 </p>
+<pre><code class="javascript">gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_WRAP_S,
+    gl.CLAMP_TO_EDGE
+);
+gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_WRAP_T,
+    gl.CLAMP_TO_EDGE
+);
+gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MAG_FILTER,
+    gl.NEAREST
+);</code></pre>
+<p><img src="/Blog/intro/com_graphic/texture_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="光照现象"><a href="#光照现象" class="headerlink" title="光照现象"></a>光照现象</h2><p>光在传播中会有反射, 折射, 吸收, 散射等现象.</p>
+<p>从能量角度看, 光有辐射现象.</p>
+<p><img src="/Blog/intro/com_graphic/light_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>更复杂一些还有折射</p>
+<p><img src="/Blog/intro/com_graphic/light_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>再复杂一些, 可能有漫反射以及材质的问题</p>
+<p><img src="/Blog/intro/com_graphic/light_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="一个简单的模型"><a href="#一个简单的模型" class="headerlink" title="一个简单的模型"></a>一个简单的模型</h3><p>如果一个点没有光照, 那么它就乘以0, <code>#000000</code>是黑色.</p>
+<p>如果光照最强, 就显示原本的颜色</p>
+<p><img src="/Blog/intro/com_graphic/light_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果light = 1就是直射的效果, light=0.5就是斜着照射的效果, light=0 就是夹角大于90度(照到背面)的效果.</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/light_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>n是法向量, l是光照的反方向. 如果他们都是单位向量.</p>
+<p>nl点乘的结果就是$\cos\theta$  这符合物理规律, 当夹角为0时, 光照为1. 就是直射, 法向量和光照反方向重合.</p>
+<p>而$\theta$ 如果在 $[0, \pi/2]$之间 那么$\cos\theta$就是一个0到1的值</p>
+<br>
+
+<br>
+
+<h3 id="点光源的简单模型"><a href="#点光源的简单模型" class="headerlink" title="点光源的简单模型"></a>点光源的简单模型</h3><p><img src="/Blog/intro/com_graphic/light_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>点光源要告诉模型光源的位置, 以及眼睛的位置.</p>
+<p>光照打在一个片段上. 这个片段的颜色如何决定? 有两个因素</p>
+<ol>
+<li>光源和平面的夹角</li>
+<li>眼睛的位置, 如果反射直接射入眼睛, 此时感受到的光最亮(大多数情况不是镜面反射, 而是有一定偏移, 这就是中间方向)</li>
+</ol>
+<p>光源和眼睛有一个中间方向, 而光源和法向量之间有一个入射角. </p>
+<p>当中间方向等于法向量, 入射角等于反射角, 眼睛在反射角的线上, 此时亮度最亮.</p>
+<br>
+
+<h4 id="数学模型"><a href="#数学模型" class="headerlink" title="数学模型"></a>数学模型</h4><p><img src="/Blog/intro/com_graphic/light_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对比区别</p>
+<p><img src="/Blog/intro/com_graphic/light_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
 <h2 id="图像学中-shape-的表示"><a href="#图像学中-shape-的表示" class="headerlink" title="图像学中 shape 的表示"></a>图像学中 shape 的表示</h2><p><img src="/Blog/intro/com_graphic/shape.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>Mesh 和 Polygons 的组合是最经常使用的.</p>
 <br>
@@ -899,7 +1027,86 @@ Loop from 0 to 6
 <p><img src="/Blog/intro/com_graphic/light_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/light_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/light_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Phong reflection model for local illumination: the color at<br>a point on a surface due to one light source:<br>$$<br>I = ambient + diffuse + specular<br>$$</p>
+<ul>
+<li>Not concerned with translucent surfaces</li>
+<li>Efficient enough to be interactive</li>
+</ul>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/light_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/light_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>注意 l, n, r 都是单位向量</p>
+<br>
+
+<p>如果要在webgl中使用light, user需要指定一切参数</p>
+<p><img src="/Blog/intro/com_graphic/light_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Ambient-light-component"><a href="#Ambient-light-component" class="headerlink" title="Ambient light component"></a>Ambient light component</h4><p>Models <strong>general brightness</strong> due to light source</p>
+<p>一个比较粗糙的方法.<br>$$<br>I_a = k_aL_a,\ \ \ \ 0\le k_a\le 1<br>$$</p>
+<ul>
+<li>$L_a$: ambient light energy (property of light source)</li>
+<li>$k_a$: ambient reflection coefficient (a material property)</li>
+</ul>
+<p>$k_a$ of ambient reflected; $1-k_a$ absorbed</p>
+<p><img src="/Blog/intro/com_graphic/light_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="光线的衰减"><a href="#光线的衰减" class="headerlink" title="光线的衰减"></a>光线的衰减</h4><p>光的强度应该根据<strong>点光源</strong>到平面的距离($d_L$)而减弱.</p>
+<p>光的强度应该和$d_L^2$成反比</p>
+<p>需要一个attenuation(衰减) 参数 $f_att$</p>
+<p><img src="/Blog/intro/com_graphic/light_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>红色的曲线是分母这个多项式函数的绘制图</p>
+<p><img src="/Blog/intro/com_graphic/light_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>light source</p>
+<p><img src="/Blog/intro/com_graphic/light_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Shading-of-surface"><a href="#Shading-of-surface" class="headerlink" title="Shading of surface"></a>Shading of surface</h3><h4 id="Shading-of-flat-polygons"><a href="#Shading-of-flat-polygons" class="headerlink" title="Shading of flat polygons"></a>Shading of flat polygons</h4><p><img src="/Blog/intro/com_graphic/light_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/light_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Gouraud-Shadiing"><a href="#Gouraud-Shadiing" class="headerlink" title="Gouraud Shadiing"></a>Gouraud Shadiing</h4><p><img src="/Blog/intro/com_graphic/light_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>norm 是通过周围的norm计算得出的</p>
+<br>
+
+<h4 id="Color-interpolation"><a href="#Color-interpolation" class="headerlink" title="Color interpolation"></a>Color interpolation</h4><p><img src="/Blog/intro/com_graphic/light_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>linear是从一点到另外一点颜色渐变. </p>
+<p>Bilinear是使用两次linear, 现用一次linear求出$l_a, l_b$ 在用一次linear 通过 $l_a, l_b$ 求出 $l_p$</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/light_30.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Phone-Shading"><a href="#Phone-Shading" class="headerlink" title="Phone Shading"></a>Phone Shading</h4><p>也叫做 accurate Shading</p>
+<p>对每一个点都进行shading</p>
+<p><img src="/Blog/intro/com_graphic/light_31.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>对于边界, shading是比较敏感的, 可以看到有明显的顶点</p>
+<p><img src="/Blog/intro/com_graphic/light_32.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>解决的办法就是在边界进行更细致的划分.</p>
+<p><img src="/Blog/intro/com_graphic/light_33.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>当进行bilinear shading时, 颜色会取决于方向, 如果选择方向, 那么一个点shading的颜色就可能不一样, 例如</p>
+<p><img src="/Blog/intro/com_graphic/light_34.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>左图p是ABD三个点进行加权平均的颜色, 而旋转90度后同样的点p则是取决于ABC三个点</p>
+<p>解决方法是使用三角形.</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/light_35.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到顶点和面的normal vector 不一致, 解决方法也是细分</p>
 <br>
 
 <h1 id="计算机视觉"><a href="#计算机视觉" class="headerlink" title="计算机视觉"></a>计算机视觉</h1><h2 id="opencv-的一些简单的使用方法"><a href="#opencv-的一些简单的使用方法" class="headerlink" title="opencv 的一些简单的使用方法"></a>opencv 的一些简单的使用方法</h2><h3 id="读取视频-播放视频"><a href="#读取视频-播放视频" class="headerlink" title="读取视频, 播放视频"></a>读取视频, 播放视频</h3><pre><code class="python">def test_read_video():
@@ -4029,7 +4236,7 @@ def ifftshift(F:np.ndarray):
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -4056,7 +4263,7 @@ def ifftshift(F:np.ndarray):
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -4065,7 +4272,7 @@ def ifftshift(F:np.ndarray):
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

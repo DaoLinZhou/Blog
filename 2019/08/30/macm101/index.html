@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.7k 字
+                    10.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      61 分钟
+                      62 分钟
                   </span>
                 
 
@@ -1885,6 +1885,25 @@ $$
 <p><img src="/Blog/intro/trails_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<br>
+
+<h3 id="Planar-graph"><a href="#Planar-graph" class="headerlink" title="Planar graph"></a>Planar graph</h3><p>我们说G是一个plannar, 如果G<strong>有一种</strong>绘制方法, 使得所有边不相交.</p>
+<p><img src="/Blog/intro/planar.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>有两个关键的Observation:</p>
+<p>$K_{3,3} 和 K_5$不是planar. 后续证明一个图不是planner就是使用这两个observation</p>
+<p><img src="/Blog/intro/planar_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="subdivision"><a href="#subdivision" class="headerlink" title="subdivision"></a>subdivision</h4><p>如果在一个图的一条边上添加一个点, 这样就把这条边分为两部分. </p>
+<p>通过这种操作得到的图叫做原图的subdivision</p>
+<p><img src="/Blog/intro/planar_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果说H是G的subdivision, 那么H是planar <strong>if and only if</strong> G 是planner.</p>
+<p>这就意味着, 如果一张图的subdivision中如果包含$K_{3,3}$和 $K_5$, 那么这张图就不是Planar.</p>
+<p><img src="/Blog/intro/planar_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/planar_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
 
 
             </div>
@@ -1947,7 +1966,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1974,7 +1993,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1983,7 +2002,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
