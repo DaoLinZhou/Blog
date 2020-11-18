@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    11.8k 字
+                    12.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      53 分钟
+                      55 分钟
                   </span>
                 
 
@@ -2251,6 +2251,128 @@ t = 12 – 5 – 2 = 5 bits
 <p><img src="/Blog/intro/comp_sys/digital_logic_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/digital_logic_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/digital_logic_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><p>Central processing Unit(CPU) 主要由两个部分组成:</p>
+<ul>
+<li><p><strong>Datapath</strong>: contains the hardware necessary to perform operations required by the processor</p>
+<ul>
+<li>Reacts to what the controller tells it! (ie. “I was told to do an add, so I”ll feed these arguments through an adder)</li>
+</ul>
+</li>
+<li><p><strong>Control</strong>: decides what each piece of the datapath should do</p>
+<ul>
+<li><p>What operation am I performing? Do I need to get info from memory? Should I write to a register? Which register?</p>
+</li>
+<li><p>Has to make decisions based on the input instruction only!</p>
+</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p>一条二进制指令<code>0101010111....</code></p>
+<p>会先发送给 Control, 由它分析这条指令的类型, 应由哪个Datapath进行处理. 之后发给对应的Datapath.</p>
+<br>
+
+<h3 id="如何设计一个Datapath"><a href="#如何设计一个Datapath" class="headerlink" title="如何设计一个Datapath?"></a>如何设计一个Datapath?</h3><p>我们有6种不同的指令类型: R, I, S, SB, U, UI</p>
+<br>
+
+<h4 id="如果运行R-type指令"><a href="#如果运行R-type指令" class="headerlink" title="如果运行R-type指令"></a>如果运行R-type指令</h4><p>假设要运行一个R-type的指令要进行哪些步骤?</p>
+<ol>
+<li><p>获得指令</p>
+<p><code>add t0 t2 t3</code></p>
+</li>
+<li><p>解析指令的 fields (rd, rs1, rs2, operation…)</p>
+<p><code>rd=t0, rs1=t2, rs3=t3</code></p>
+</li>
+<li><p>通过解析的结果读取数据</p>
+<p><code>R[t2], R[t3]</code></p>
+</li>
+<li><p>进行运算</p>
+<p><code>R[t2]+R[t3]</code></p>
+</li>
+<li><p>写入destination register</p>
+<p><code>R[t0] = R[t2] + R[t3]</code></p>
+</li>
+</ol>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/datapath.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="如果运行I-type指令"><a href="#如果运行I-type指令" class="headerlink" title="如果运行I-type指令"></a>如果运行I-type指令</h4><p>如果改为执行一个I-type的指令?</p>
+<ul>
+<li><p>A: Get the instruction </p>
+</li>
+<li><p>B: Parse instruction fields (rd, rs1, rs2)</p>
+<ul>
+<li>此时要解析 immediate</li>
+</ul>
+</li>
+<li><p>C: Read data based on parsed operands</p>
+</li>
+<li><p>D: Perform operation</p>
+</li>
+<li><p>E: Write result to our destination register</p>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/datapath_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通过添加 imm gen 以及多路复用器来让这个系统同时支持 add 和 addi</p>
+<p><img src="/Blog/intro/comp_sys/datapath_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>然而 I-type 还有 lw 这些操 作memory 的指令</p>
+<p><code>R[rd]=Memory[R[rs1] + IMM]</code></p>
+<p><img src="/Blog/intro/comp_sys/datapath_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Memory[] 这个怎么表示?</p>
+<p>我们增加一个<code>DMEM</code>模块, 它接受一个address返回data</p>
+<p><img src="/Blog/intro/comp_sys/datapath_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<blockquote>
+<p><img src="/Blog/intro/comp_sys/datapath_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
+<br>
+
+<p>对于load指令, 我们有lw, lh, lb.</p>
+<p><img src="/Blog/intro/comp_sys/datapath_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而 func 3 就是用来控制具体使用那种load的</p>
+<br>
+
+<br>
+
+<h4 id="如果运行S-type指令"><a href="#如果运行S-type指令" class="headerlink" title="如果运行S-type指令"></a>如果运行S-type指令</h4><p><img src="/Blog/intro/comp_sys/datapath_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>S-type 和 I-type 的imm值的区别只有最后5位, 因此只需要对最后5位通过多路复用器进行一次选择. 如果是I就取得$[20:25]$位的元素, 如果是R就选择$[7:12]$位置的元素</p>
+<br>
+
+<p>Branch 和 Store format 差不多</p>
+<p><img src="/Blog/intro/comp_sys/datapath_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="I-format-Jalr-指令"><a href="#I-format-Jalr-指令" class="headerlink" title="I-format Jalr 指令"></a>I-format Jalr 指令</h4><p><img src="/Blog/intro/comp_sys/datapath_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/datapath_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
 
             </div>
             <hr>
