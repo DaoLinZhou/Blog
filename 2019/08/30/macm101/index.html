@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    10.9k 字
+                    11.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      62 分钟
+                      63 分钟
                   </span>
                 
 
@@ -1905,6 +1905,47 @@ $$
 <p><img src="/Blog/intro/planar_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<h3 id="Faces"><a href="#Faces" class="headerlink" title="Faces"></a>Faces</h3><p>具体的定义就不细说了, 直接上图:</p>
+<p><img src="/Blog/intro/faces.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>定理: Euler’s fomular</p>
+<p><img src="/Blog/intro/faces_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>证明: 通过数学归纳法</p>
+<p>base case: 当 $|E| = 0$ 时, 只有一个顶点, 没有边, face为1<br>$$<br>|V|-|E|+|F| = 1-0+1=2<br>$$<br>假设 fomular 对于小于 n 个边的graph成立</p>
+<p>此时有两种情况:</p>
+<ol>
+<li>此时图中有环</li>
+</ol>
+<p><img src="/Blog/intro/faces_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么一定有一条边, 边的一侧时一个face, 另一次是另一个face.</p>
+<p>如果把这条边删掉, 就是n-1条边的图. 根据我们的假设, fomular对此时的子图成立(在原图上删去一条边, 删去一个面)<br>$$<br>|V|-(|E|-1)+(|F|-1) = 2<br>$$</p>
+<p>$$<br>|V|-|E|+|F|=2<br>$$</p>
+<p>成立;</p>
+<ol start="2">
+<li>如果此时图中没有环</li>
+</ol>
+<p>那么就一定有一个顶点的degree为1.</p>
+<p>如果删去这条边, 顶点个数-1, 边数-1, face数不变. 此时图的边数也是n-1, fomular hold this graph</p>
+<p><img src="/Blog/intro/faces_3.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>(|V|-1)-(|E|-1)+|F|=2<br>$$</p>
+<p>$$<br>|V|-|E|+|F|=2<br>$$</p>
+<p>根据数据归纳法, 此时 fomular 成立</p>
+<br>
+
+<br>
+
+<h4 id="Face-degree"><a href="#Face-degree" class="headerlink" title="Face degree"></a>Face degree</h4><p><img src="/Blog/intro/faces_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/faces_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/faces_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就可以证明 $K_5$ 不是 planar</p>
+<p>因为 $K_5$ 有5个顶点 10条边<br>$$<br>10=|E| &gt; 3|V|-6=9<br>$$<br>根据上面的定理,  $K_5$ 不是 planar</p>
+<br>
+
+<p><img src="/Blog/intro/faces_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>根据这个定理, 就可以证明$K_{3,3}$ 不是planar.</p>
+<br>
+
+<h3 id="Dual-graph"><a href="#Dual-graph" class="headerlink" title="Dual graph"></a>Dual graph</h3><p><img src="/Blog/intro/faces_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

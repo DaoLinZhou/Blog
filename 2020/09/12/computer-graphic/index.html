@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    26.2k 字
+                    26.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      113 分钟
+                      116 分钟
                   </span>
                 
 
@@ -1009,7 +1009,7 @@ Loop from 0 to 6
 
 <br>
 
-<h3 id="Illumination-and-Shading-照明与阴影"><a href="#Illumination-and-Shading-照明与阴影" class="headerlink" title="Illumination and Shading(照明与阴影)"></a>Illumination and Shading(照明与阴影)</h3><p>光照和阴影使得图形看起来更加真实</p>
+<h3 id="Local-Illumination-and-Shading-照明与阴影"><a href="#Local-Illumination-and-Shading-照明与阴影" class="headerlink" title="Local Illumination and Shading(照明与阴影)"></a>Local Illumination and Shading(照明与阴影)</h3><p>光照和阴影使得图形看起来更加真实</p>
 <br>
 
 <p>要设置照明模型, 有一些东西一定要设置: light source, material properties, location of viewer, surface orientation…</p>
@@ -1057,7 +1057,7 @@ Loop from 0 to 6
 
 <h4 id="光线的衰减"><a href="#光线的衰减" class="headerlink" title="光线的衰减"></a>光线的衰减</h4><p>光的强度应该根据<strong>点光源</strong>到平面的距离($d_L$)而减弱.</p>
 <p>光的强度应该和$d_L^2$成反比</p>
-<p>需要一个attenuation(衰减) 参数 $f_att$</p>
+<p>需要一个attenuation(衰减) 参数 $f_{att}$</p>
 <p><img src="/Blog/intro/com_graphic/light_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>红色的曲线是分母这个多项式函数的绘制图</p>
 <p><img src="/Blog/intro/com_graphic/light_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -1107,6 +1107,167 @@ Loop from 0 to 6
 
 <p><img src="/Blog/intro/com_graphic/light_35.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>可以看到顶点和面的normal vector 不一致, 解决方法也是细分</p>
+<br>
+
+<br>
+
+<h3 id="Global-Illumination"><a href="#Global-Illumination" class="headerlink" title="Global Illumination"></a>Global Illumination</h3><p><strong>LIM(Local Illumination) 的局限</strong></p>
+<p><img src="/Blog/intro/com_graphic/gim.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>GIM 尝试 illuminate the <strong>whole scene dependently</strong></p>
+<p>Local models 依然会被使用</p>
+<p>Global Illumination会合并scene中所有的光. 尤其是反射光</p>
+<p><img src="/Blog/intro/com_graphic/gim_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>暴力方式:</p>
+<pre><code class="python">for all light sources
+    for all light rays from a light source, in all directions
+        trace ray until it hits screen or “leaves the room” or has decayed beyond recognition</code></pre>
+<br>
+
+<p>有两个公认的比较好的算法</p>
+<ul>
+<li>Ray tracing: discretize the image plane</li>
+<li>Radiosity: discretize the scene objects/environment</li>
+</ul>
+<p>二者都简化了rendering equation</p>
+<br>
+
+<p>Ray tracing 是 <strong>view-dependent</strong></p>
+<p>traces light rays in <strong>reversed</strong> direction</p>
+<p>是一个混合模型(hybrid model): Local IM也同时被使用</p>
+<p>For each surface point hit, combine contribution of direct illumination(LIM) and reflection + refraction.</p>
+<br>
+
+<h4 id="Visible-surface-ray-tracing"><a href="#Visible-surface-ray-tracing" class="headerlink" title="Visible surface ray tracing"></a>Visible surface ray tracing</h4><p><img src="/Blog/intro/com_graphic/gim_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>从每个像素中射出一个ray: </p>
+<ul>
+<li><p>如果 ray 碰到了光源, 就返回光的颜色.</p>
+</li>
+<li><p>如果 ray 射向无尽(infinity), 返回背景颜色</p>
+</li>
+<li><p>如果 ray 碰到了物体表面(surface), 使用 Phong LIM.</p>
+</li>
+</ul>
+<p>This basically performs visibility</p>
+<p>Otherwise the same as Phong Shading</p>
+<br>
+
+<h4 id="add-shadow-rays"><a href="#add-shadow-rays" class="headerlink" title="add shadow rays"></a>add shadow rays</h4><p><img src="/Blog/intro/com_graphic/gim_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="add-reflections"><a href="#add-reflections" class="headerlink" title="add reflections"></a>add reflections</h4><p><img src="/Blog/intro/com_graphic/gim_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="add-transmissions"><a href="#add-transmissions" class="headerlink" title="add transmissions"></a>add transmissions</h4><p><img src="/Blog/intro/com_graphic/gim_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/gim_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>伪代码:</p>
+<p><img src="/Blog/intro/com_graphic/gim_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+ <br>
+
+<h4 id="ray-tracing中的漫反射"><a href="#ray-tracing中的漫反射" class="headerlink" title="ray tracing中的漫反射"></a>ray tracing中的漫反射</h4><p>Current ray tracer only accounts for a single reflected ray</p>
+<ul>
+<li>Only perfect mirror reflection contributes to pixel color</li>
+</ul>
+<p>Diffuse relector:</p>
+<ul>
+<li>light from all directions should contribute</li>
+</ul>
+<p>Current ray tracer only suited for a shiny environment.</p>
+<br>
+
+<p>什么时候停止递归?</p>
+<ul>
+<li>当ray traveled long enough(energy decay)</li>
+<li>当ray 离开一个enclosing environment</li>
+</ul>
+<p>More efficient ray-object intersection</p>
+<ul>
+<li>Use of <strong>bounding volumes</strong></li>
+<li>Use of BSP trees or other <strong>spatial subdivisions</strong></li>
+</ul>
+<p><strong>Super-sampling</strong> a pixel. 例如 &gt; 1 rays per pixel</p>
+<p><strong>Stochastically generate reflected rays</strong> for better illumination of diffuse objects: <strong>path tracing</strong></p>
+<p><img src="/Blog/intro/com_graphic/gim_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Rendering-equation"><a href="#Rendering-equation" class="headerlink" title="Rendering equation"></a>Rendering equation</h4><p>光可以看作是能量.</p>
+<p>假设在一个 <strong>closed environment</strong></p>
+<p>有无限数量的rays 进行absorption, emission, and reflection.</p>
+<p>We reach a steady state, an <strong>equilibrium</strong>, which we compute from the <strong>rendering equation</strong></p>
+<p>Ray tracing: 是一种简化 rendering equation 的方法</p>
+<p><img src="/Blog/intro/com_graphic/gim_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$\epsilon$ 是self emission.  integral 那部分是指所有反射光的加和</p>
+<p>g 是occlusion, 如果$x’和x$ 之间有一个物体, 此时occlusion就是0, 没有光线从x’ 到达 x</p>
+<p><img src="/Blog/intro/com_graphic/gim_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>为了求解 I 这个公式, 我们需要不同的模型:</p>
+<ol>
+<li>A model of the emitted light $\epsilon$ (property of surface)</li>
+<li>A model for the BRDF $\rho$ (property of surface)</li>
+<li>Visibility information g (determined by geometry)</li>
+</ol>
+<br>
+
+<p>然而这个equation 很复杂</p>
+<ul>
+<li>no analytic solution in general</li>
+<li>practical algorithms perform lots of simplification</li>
+</ul>
+<p>如果我们能解出I, 那么我们就知道每个点的光的强度</p>
+<ul>
+<li>a color can be assigned based on view</li>
+</ul>
+<br>
+
+<h4 id="Radiosity"><a href="#Radiosity" class="headerlink" title="Radiosity"></a>Radiosity</h4><p>Ray tracing 是 view dependent 的算法</p>
+<ul>
+<li>Consider $I(x’, x)$ only for<ul>
+<li>x(a pixel location) on the image plane</li>
+<li>x’ along ray from the eye through pixel x</li>
+</ul>
+</li>
+<li>Consider x’’ only from perfect reflections and refractions</li>
+</ul>
+<br>
+
+<p>Radiosity 则是 view independent 的算法</p>
+<ul>
+<li>Discretize the scene into small <strong>patches</strong>, to be flat shaded</li>
+<li>Each patch is assumed to be <strong>perfectly diffuse</strong></li>
+<li>Project patches onto image plane using computed colors - this is ok for diffuse surface(look the same from all views)</li>
+</ul>
+<br>
+
+<h5 id="Light-source"><a href="#Light-source" class="headerlink" title="Light source"></a>Light source</h5><p>In ray tracing, 我们假设使用点光源, only one shadow ray to consider per light source</p>
+<p>In radiosity, light sources modeled as patches. Can have <strong>area light sources</strong> – more realistic</p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/gim_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h5 id="Form-factors"><a href="#Form-factors" class="headerlink" title="Form factors"></a>Form factors</h5><p><img src="/Blog/intro/com_graphic/gim_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><strong>compute</strong></p>
+<p><img src="/Blog/intro/com_graphic/gim_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/gim_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h1 id="计算机视觉"><a href="#计算机视觉" class="headerlink" title="计算机视觉"></a>计算机视觉</h1><h2 id="opencv-的一些简单的使用方法"><a href="#opencv-的一些简单的使用方法" class="headerlink" title="opencv 的一些简单的使用方法"></a>opencv 的一些简单的使用方法</h2><h3 id="读取视频-播放视频"><a href="#读取视频-播放视频" class="headerlink" title="读取视频, 播放视频"></a>读取视频, 播放视频</h3><pre><code class="python">def test_read_video():
