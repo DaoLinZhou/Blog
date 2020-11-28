@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    12.3k 字
+                    13.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      56 分钟
+                      59 分钟
                   </span>
                 
 
@@ -2409,6 +2409,199 @@ t = 12 – 5 – 2 = 5 bits
 
 <br>
 
+<h3 id="Control-Signals"><a href="#Control-Signals" class="headerlink" title="Control Signals"></a>Control Signals</h3><p>设计一个 Control Signal 有几个问题要思考:</p>
+<ul>
+<li>Control siganl 对于所有指令(I, R, S, SB…)是否都一样, If so, can you use a combination of opcode/func3/func7 to encode the value.</li>
+<li>control signal 是否 dependent on other controls?<ul>
+<li>例如PCSel, BrEq, BrLT</li>
+</ul>
+</li>
+<li>Does the value of this control signal alter the execution of the instruction.<ul>
+<li>Some cases: yes (MemRW)</li>
+<li>Some cases: No (ImmSel in R-type inst)</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p>设计PCSel</p>
+<p>当PCSel = 0, <code>PC = PC+4</code> PCSel=1, <code>PC=ALUout</code></p>
+<p>我们怎么知道一条指令是 Branch 指令</p>
+<p><img src="/Blog/intro/comp_sys/pcsel.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<ul>
+<li><p>Look at that! they all have the same opcode! We should also check to make sure no other instructions have the same one!</p>
+</li>
+<li><p>spoiler: they don’t, but you should check!</p>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/pcsel_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果 opcode == 63, 输出1, 反之输出0</p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/pcsel_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/pcsel_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/comp_sys/pcsel_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/pcsel_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当IF执行完之后(200ps), IF在剩余指令执行完之前没有干任何事.</p>
+<p>这就造成资源浪费.  那么如何提高性能?</p>
+<br>
+
+<br>
+
+<h4 id="Processor-Performance"><a href="#Processor-Performance" class="headerlink" title="Processor Performance"></a>Processor Performance</h4><p><img src="/Blog/intro/comp_sys/control.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/comp_sys/control_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>运行一条指令需要1000ps, 但是运行3条指令只需要1400ps</p>
+<p>而如果一条指令一条指令运行, 每条指令要800ps, 3条指令就是2400ps</p>
+<p>使用pipline, 第一个指令运行时间会长一些, 但之后的指令速度会很快</p>
+<p><img src="/Blog/intro/comp_sys/control_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/control_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Instruction-Level-Parallelism-ILP"><a href="#Instruction-Level-Parallelism-ILP" class="headerlink" title="Instruction Level Parallelism (ILP)"></a>Instruction Level Parallelism (ILP)</h3><ul>
+<li><p>Pipelining allows us to execute parts of multiple instructions at the same time using the same hardware!</p>
+<ul>
+<li>This is known as <strong>instruction level parallelism</strong></li>
+</ul>
+</li>
+<li><p>Later<strong>:</strong> Other types of parallelism</p>
+<ul>
+<li>DLP: same operation on lots of data (SIMD)</li>
+<li>TLP: executing multiple threads “simultaneously” (OpenMP)</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/control_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/control_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Piplining-Hazard"><a href="#Piplining-Hazard" class="headerlink" title="Piplining Hazard"></a>Piplining Hazard</h3><p>A <em>hazard</em> is a situation that prevents starting the next instruction in the next clock cycle</p>
+<ol>
+<li><p><strong>Structural hazard</strong></p>
+<ul>
+<li>A required resource is busy<br> (e.g. needed in multiple stages)</li>
+</ul>
+</li>
+<li><p><strong>Data hazard</strong></p>
+<ul>
+<li>Data dependency between instructions</li>
+<li>Need to wait for previous instruction to complete its data write</li>
+</ul>
+</li>
+<li><p><strong>Control hazard</strong></p>
+<ul>
+<li>Flow of execution depends on previous instruction</li>
+</ul>
+</li>
+</ol>
+<br>
+
+<br>
+
+<h4 id="Structural-Hazard"><a href="#Structural-Hazard" class="headerlink" title="Structural Hazard"></a>Structural Hazard</h4><p>问题: 当pipline中两个以上的指令竞争同一块physical resource的访问时.</p>
+<p>solution1: Instructions take turns using resource, some instructions have to stall (wait)</p>
+<p>solution2: Add more hardware to machine</p>
+<p><strong>Can always solve a structural hazard by adding more hardware</strong></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>load 指令的第5个cycle会把数据写入寄存器</p>
+<p>然而sub指令也在此时访问了寄存器</p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/structural_hazard_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Data-Hazards"><a href="#Data-Hazards" class="headerlink" title="Data Hazards"></a>Data Hazards</h4><p>思考下面的指令</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而在pipeline中, 一条指令要5个cycle才能执行完毕, 在执行完毕之前, s0 是没有被更新的. 而在s0更新之前, 是不能读取s0的.</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此所有指令读取s0必须在第一条指令写入s0之后</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Stall reduce performance</p>
+<ul>
+<li>decrease throughput of “valid” or useful instructions</li>
+<li>Can also be seen as increasing the latency of our stalled instruction</li>
+</ul>
+<p>但是为了得到正确的值, stall是必要的</p>
+<p>Compiler可以arrange code来减少hazard and stalls.</p>
+<p>然而这也需要 pipeline structure 和 instruction inseractions 的知识</p>
+<p>另一种方法是添加额外的物理线路, 当前一条指令计算出结果(还没有执行完成/写入)就通过这条线图传递到下一条指令.</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/comp_sys/structural_hazard_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当两条相邻指令depend on each other, 在这两条指令中间要有一个load delay slot, <code>nop</code>, 如果不手动写nop, 编译器会自动插入nop.</p>
+<p>有时候重新组织代码顺序可以提高性能, 就不同nop了</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Control-Hazard"><a href="#Control-Hazard" class="headerlink" title="Control Hazard"></a>Control Hazard</h4><p>Branch 语句(beq, bne..) 决定 flow of control.</p>
+<p>也就是说下一条指令取决于branch的结果</p>
+<p>Pipline can’t always fetch correct instruction</p>
+<p>解决办法就是 <strong>stall or flush</strong> on branch until we have the new PC value</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到只有指令3会正确执行, 也就是跳过了两条指令</p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/structural_hazard_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

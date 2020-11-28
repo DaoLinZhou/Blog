@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    27.7k 字
+                    27.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      120 分钟
+                      121 分钟
                   </span>
                 
 
@@ -1273,7 +1273,7 @@ Loop from 0 to 6
 
 <br>
 
-<h3 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h3><p><img src="/Blog/intro/com_graphic/buffer.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h2 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h2><p><img src="/Blog/intro/com_graphic/buffer.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/buffer_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/buffer_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
@@ -1483,6 +1483,69 @@ Loop from 0 to 6
 <p><img src="/Blog/intro/com_graphic/tex_coor_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/tex_coor_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/com_graphic/tex_coor_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Smooth-Curves-and-Surfaces"><a href="#Smooth-Curves-and-Surfaces" class="headerlink" title="Smooth Curves and Surfaces"></a>Smooth Curves and Surfaces</h2><p>Although smooth curves and surfaces are converted to triangle meshes when <strong>rendered</strong>, they still provide the means for conceptual modeling</p>
+<p><img src="/Blog/intro/com_graphic/curve_surf.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>在computer graphic中, curves 和 surfaces 通过 <strong>polynomials</strong> 表示</p>
+<ul>
+<li><strong>Approximation power</strong>: Can approximate any continuous<br>function to any accuracy (Weierstrass’s Theorem)</li>
+<li>Can offer <strong>local control</strong> for shape design through the use of<br>piecewise polynomials</li>
+<li>All <strong>derivatives and integrals</strong> are available (infinitely smooth)<br>and easy to compute</li>
+<li><strong>Compact representation</strong></li>
+<li><strong>Efficient evaluation</strong> – e.g., Horner’s rule</li>
+</ul>
+<br>
+
+<h3 id="Horner’s-rule"><a href="#Horner’s-rule" class="headerlink" title="Horner’s rule"></a>Horner’s rule</h3><p><img src="/Blog/intro/com_graphic/curve_surf_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Fairness-vs-Smoothness"><a href="#Fairness-vs-Smoothness" class="headerlink" title="Fairness vs Smoothness"></a>Fairness vs Smoothness</h3><ul>
+<li><p>Smoothness of curves and surfaces:</p>
+<ul>
+<li>Local property: often achieved by design</li>
+<li>Related to existence and continuity of various derivative</li>
+<li>$f(x) = 3x^{100}-9x^2…$ is infinitely smooth, but is it “visually pleasing?”</li>
+</ul>
+</li>
+<li><p>Fairness (often appears in CAGD literature)</p>
+<ul>
+<li><strong>Global property</strong>: often achieved by some form of <strong>energy minimization</strong></li>
+<li>Related to the “energy” of a curve or surface</li>
+<li>$f(x) = 3x^{100}-9x^2…$ has high bending energy, and is not very visually pleasing.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/com_graphic/curve_surf_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/com_graphic/curve_surf_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Curve-design"><a href="#Curve-design" class="headerlink" title="Curve design"></a>Curve design</h3><p><img src="/Blog/intro/com_graphic/curve_surf_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$[t^3, t^2, t, 1]’=[3t^2,2t, 1, 0]$ 所以$x’(0)=[0,0,1,0]$</p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <h1 id="计算机视觉"><a href="#计算机视觉" class="headerlink" title="计算机视觉"></a>计算机视觉</h1><h2 id="opencv-的一些简单的使用方法"><a href="#opencv-的一些简单的使用方法" class="headerlink" title="opencv 的一些简单的使用方法"></a>opencv 的一些简单的使用方法</h2><h3 id="读取视频-播放视频"><a href="#读取视频-播放视频" class="headerlink" title="读取视频, 播放视频"></a>读取视频, 播放视频</h3><pre><code class="python">def test_read_video():
