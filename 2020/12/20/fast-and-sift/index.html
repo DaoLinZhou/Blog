@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="Daolin">
   <meta name="keywords" content>
-  <title>opencv的一些坑 - Daolin&#39;s Repository</title>
+  <title>FAST and SIFT - Daolin&#39;s Repository</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -108,7 +108,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/Blog/intro/eye.jpg') no-repeat center center;
+         style="background: url('/Blog/intro/lulutiya.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask rgba-black-light flex-center">
@@ -121,7 +121,7 @@
               
                 <p class="mt-3 post-meta">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                  Sunday, September 20th 2020, 5:38 pm
+                  Sunday, December 20th 2020, 11:33 am
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    315 字
+                    1.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      1 分钟
+                      6 分钟
                   </span>
                 
 
@@ -166,53 +166,189 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <a id="more"></a>
+              <p>特征检测算法 FAST 和 SIFT</p>
+<a id="more"></a>
 
-<h2 id="imshow和imwrite结果不同"><a href="#imshow和imwrite结果不同" class="headerlink" title="imshow和imwrite结果不同"></a>imshow和imwrite结果不同</h2><p>imwrite always expects [0,255], whereas imshow expects [0,1] for floating point and [0,255] for unsigned chars.</p>
-<pre><code class="python">def test():
-    img = cv2.imread(&quot;../resources/cards.jpg&quot;)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+<h1 id="FAST"><a href="#FAST" class="headerlink" title="FAST"></a>FAST</h1><p><a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_fast/py_fast.html" target="_blank" rel="noopener">OpenCV Tutorial</a></p>
+<p>算法思想比较简单</p>
+<p>就是对一个像素与它周围16个点进行对比, 如果周围有<strong>连续</strong>12(有时候也可以选择9)个像素<strong>一定程度</strong>大于或小于这个像素, 就说明这个点是一个特征点</p>
+<pre><code class="python">import cv2
+import numpy as np
+from scipy.signal import convolve2d
 
-    lapkern = np.array([[0, -1, 0],
-                        [-1, 4, -1],
-                        [0, -1, 0]])
-    lap = conv2(img, lapkern, mode=&quot;same&quot;)    # 在图像学的那篇文章中我实现了conv2
-    cv2.imshow(&quot;test1&quot;, lap.astype(float))
-    cv2.imwrite(&quot;test2.png&quot;, lap)</code></pre>
-<p>期望显示的图片</p>
-<p><img src="/Blog/intro/com_graphic/lapkern_1.png" srcset="/Blog/img/loading.gif" alt></p>
-<p>实际显示的图片:</p>
-<p><img src="/Blog/intro/com_graphic/lapkern_2.png" srcset="/Blog/img/loading.gif" alt></p>
+# neighbors&#39; offset from p
+# fellow this order: https://opencv-python-tutroals.readthedocs.io/en/latest/_images/fast_speedtest.jpg
+d = [[-3, 0], [-3, 1],  # 1, 2
+     [-2, 2],  # 3
+     [-1, 3], [0, 3], [1, 3],  # 4, 5, 6
+     [2, 2],  # 7
+     [3, 1], [3, 0], [3, -1],  # 8, 9, 10
+     [2, -2],  # 11
+     [1, -3], [0, -3], [-1, -3],  # 12, 13, 14
+     [-2, -2],  # 15
+     [-3, -1]]  # 16
+
+sobel = np.array([[-1, 0, 1],
+                  [-2, 0, 2],
+                  [-1, 0, 1]])
+
+
+# 获取一个点的周围16个neighbors
+def get_neighbors(img: np.ndarray, x: int, y: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    :param img: image
+    :param x: row number
+    :param y: column number
+    :return: the 16 neighbors ordered from 1-16
+    &quot;&quot;&quot;
+    return np.array([img[x + offset[0], y + offset[1]] for offset in d], dtype=int)
+
+
+# 快速判断一个点不是 feature point
+def high_speed_test(img: np.ndarray, x: int, y: int, t):
+    &quot;&quot;&quot;
+    :param img:
+    :param x: row number
+    :param y: column number
+    :param t: threshold
+    :return:  0 if test fail
+              1 if 3 of them are too bright
+             -1 if 3 of them are too dark
+    &quot;&quot;&quot;
+    intensity = img[x, y]
+    # points contains neighbors[1, 5, 9, 13]
+    points = np.array([img[x + d[i &lt;&lt; 2][0], y + d[i &lt;&lt; 2][1]] for i in range(4)])
+    if np.sum(points &gt;= (intensity + t)) &gt;= 3:
+        return 1
+    elif np.sum(points &lt;= (intensity - t)) &gt;= 3:
+        return -1
+    else:
+        return 0
+
+
+# 通过 neighbors 和 当前 pixel 的 intensity 以及给定的 threshold 判断一个点是否是特征点
+def FAST(neighbors: np.ndarray, intensity, t, darker: bool):
+    if darker:
+        tmp = neighbors &lt;= (intensity - t)
+    else:
+        tmp = neighbors &gt;= (intensity + t)
+    if np.sum(tmp) &lt; 12:
+        return False
+    tmp2 = np.concatenate([tmp, tmp]).tostring()
+    return tmp2.find(np.ones(12, dtype=bool).tostring()) != -1
+
+
+def my_fast_detector(img: np.ndarray, t=10):
+    r, c = img.shape
+    indexes = np.zeros((r, c), dtype=int)
+    kps = []
+    for i in range(r):
+        for j in range(c):
+
+            if i &lt; 3 or i + 3 &gt;= r or j &lt; 3 or j + 3 &gt;= c:
+                # if (i, j) doesn&#39;t have all neighbors
+                continue
+
+            test_res = high_speed_test(img, i, j, t)
+            if test_res == 0:
+                # high speed test fails
+                continue
+
+            neighbors = get_neighbors(img, i, j)
+            if FAST(neighbors, img[i, j], t, test_res == -1):
+                indexes[i, j] = 1
+                kps.append([j, i])
+    return indexes, kps
+
+
+def robust_by_harris_cornerness_metric(img: np.ndarray, indexes: np.ndarray):
+    gauss = cv2.getGaussianKernel(5, 1)
+    gauss = gauss.dot(gauss.T)
+    dog = convolve2d(gauss, sobel)
+
+    ix = cv2.filter2D(img, -1, dog)
+    iy = cv2.filter2D(img, -1, dog.T)
+
+    ix2g = cv2.filter2D(ix**2, -1, gauss)
+    iy2g = cv2.filter2D(iy**2, -1, gauss)
+    ixiyg = cv2.filter2D(ix*iy, -1, gauss)
+
+    harcor = ix2g * iy2g - ixiyg**2 - 0.05 * ((ix2g + iy2g) ** 2)
+    return np.bitwise_and(harcor &gt; 0.001, indexes)
+
+
+if __name__ == &#39;__main__&#39;:
+    img = cv2.imread(&quot;./S2-im1.png&quot;)
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    indices, kps = my_fast_detector(img_gray)
+    robust_indexes = robust_by_harris_cornerness_metric(img_gray, indices)
+
+    cv2.imwrite(&quot;kps.png&quot;, robust_indexes*255)
+    cv2.waitKey(0)
+</code></pre>
+<p><img src="/Blog/intro/fast/S2-im1.png" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/fast/kps.png" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
-<p>然而实际保存的图片却是期望的图片.</p>
 <br>
 
-<p>这是因为imshow和imwrite的期望值不同.</p>
-<p>要解决这个问题, 有两种方法</p>
-<ol>
-<li>由于imshow和imwrite都支持[0, 255]的整型, 所以我们就把它们转化为整型进行存储和展示</li>
-</ol>
-<pre><code class="python"># 一定要进行一次过滤, 不然.astype(np.unit8)会有整型溢出, -1 会变为 255, 256会变为-1
-lap[lap &lt; 0] = 0
-lap[lap &gt; 255] = 255
-
-cv2.imshow(&quot;test1&quot;, lap.astype(np.uint8))
-cv2.imwrite(&quot;test1.png&quot;, lap.astype(np.uint8))</code></pre>
+<h1 id="SIFT"><a href="#SIFT" class="headerlink" title="SIFT"></a>SIFT</h1><p>SIFT(Scale Invariant Feature Transform)</p>
+<p>这个算法为了实现Scale Invariant, 使用高斯金字塔模拟摄像头的远近来scale image. 在scale后的image中寻找特征点.</p>
+<p>因为原图中的一个特征点可能会因为缩放变为一条边</p>
+<p><img src="/Blog/intro/fast/sift.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每个 octave 是一组. </p>
+<p>octave 1 是对原图进行不同高斯过滤(使用不同$\sigma$ 的高斯核)后的结果</p>
+<p>octave 2 的第一张图是对 octave 1 进行 subsampleing 后的结果. 之后重复使用高斯核来得到octave中其他的图片.</p>
 <br>
 
-<ol start="2">
-<li>第二种方法就是imshow的参数用[0, 1]之间的小数, imwrite的参数用[0, 255]</li>
-</ol>
-<p>此时就不需要过滤了, imshow和imwrite会自动过滤</p>
-<p>(第一种方法不能自动过滤是因为我们在过滤前就溢出了)</p>
-<pre><code class="python">cv2.imshow(&quot;test2&quot;, lap/255)
-cv2.imwrite(&quot;test2.png&quot;, lap)</code></pre>
+<p>那么一共要几个octave? David 的论文中使用 $O=[\log_2(min(M,N))]-3$</p>
+<p>为什么?</p>
+<p>因为我们进行subsampling就是把图片长和宽都缩小2倍, 因此O从原图的长和宽的最小值中取$\log_2$是合理的结果, 然而考虑到如果图片太小就得不到有意义的信息. 因此舍去最小的三个octave.</p>
+<p><img src="/Blog/intro/com_graphic/feature_des_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对高斯金字塔中同一个octave中所有层求差值, 得到高斯差分金字塔.</p>
+<p>高斯差分金字塔比原本高斯金字塔每个octave少一层. 而我们要对高斯差分金字塔的中间层求极值. 因此要对比一个像素的周围26个像素.(如图所示)</p>
+<p>因此最上层和最下层无法求极值, 又有2层无法使用. 因此如果说高斯金字塔每个octave的层数是S, 我们希望每个octave中有n层用于计算极值, 那么 $S=n+3$</p>
+<p><img src="/Blog/intro/fast/sift_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>sigma的取值:</p>
+<p>sigma0 为什么等于 1.52?</p>
+<p>当相机进行拍照时会进行一次blur. David 认为此时blur的sigma为0.5. 如果我们想要让第一个octave的第一张图blur的sigma为1.6的话, 就要让sigma0位1.52, 因为高斯核的sigma满足$a^2+b^2=c^2$的性质</p>
+<p>octave2取octave1的倒数第3个image进行subsampling, 因为这一层的sigma 是$2\sigma_0, k^n=2$</p>
+<p>octave中的每个image都是对原图的blur. 不同的sigma对应不同程度的blur.</p>
+<p>而不同程度的模糊对一些极值点来说影响较大, 对普通的点影响较小, 因此求差分才显得有意义(个人理解)</p>
+<br>
+
+<p>在差分金字塔中求得的极值点再反向计算它在原图中的位置. 我们就得到了临时的特征点.</p>
+<p>此时还可以用泰勒展开求精确的极值点. (需要矩阵求导,这块我还没太理解)</p>
+<p>最后用 Harris 矩阵来舍弃一些不好的极值点(舍弃在<strong>边</strong>上的极值点)</p>
+<p>这样就得到最终的特征点了.</p>
+<br>
+
+<br>
+
+<h1 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h1><p>通过 FAST 和 SIFT都求得了特征点</p>
+<p>之后就可以通过这些特征点和原图求他们的特征描述符, 在通过匹配特征描述符来匹配两张图片</p>
+<p><img src="/Blog/intro/fast/S2-im1.png" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/fast/S2-im2.png" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/fast/S2-im3.png" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/fast/S2-fastR.png" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/fast/S2-fastRMatch.png" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/fast/S2-panorama.png" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
             <div>
               <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/计算机视觉/">计算机视觉</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
                 
                 
                   <span>
@@ -220,9 +356,9 @@ cv2.imwrite(&quot;test2.png&quot;, lap)</code></pre>
                     
                       <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
                     
-                      <a class="hover-with-bg" href="/Blog/tags/opencv/">opencv</a>
+                      <a class="hover-with-bg" href="/Blog/tags/计算机视觉/">计算机视觉</a>
                     
-                      <a class="hover-with-bg" href="/Blog/tags/图像学/">图像学</a>
+                      <a class="hover-with-bg" href="/Blog/tags/opencv/">opencv</a>
                     
                   </span>
                 
@@ -235,18 +371,12 @@ cv2.imwrite(&quot;test2.png&quot;, lap)</code></pre>
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/Blog/2020/12/20/fast-and-sift/">
-                        <i class="fa fa-chevron-left"></i>
-                        <span class="hidden-mobile">FAST and SIFT</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/Blog/2020/09/12/computer-graphic/">
-                        <span class="hidden-mobile">图像学</span>
+                      <a href="/Blog/2020/09/20/opencv-trap/">
+                        <span class="hidden-mobile">opencv的一些坑</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="fa fa-chevron-right"></i>
                       </a>
@@ -425,7 +555,7 @@ cv2.imwrite(&quot;test2.png&quot;, lap)</code></pre>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "opencv的一些坑&nbsp;",
+        "FAST and SIFT&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
