@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    11k 字
+                    12k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      47 分钟
+                      51 分钟
                   </span>
                 
 
@@ -1922,6 +1922,124 @@ barplot(dpois(x, 12), names.arg=x)</code></pre>
 <br>
 
 <br>
+
+<br>
+
+<h2 id="贝叶斯统计-Bayesian-Statistic"><a href="#贝叶斯统计-Bayesian-Statistic" class="headerlink" title="贝叶斯统计(Bayesian Statistic)"></a>贝叶斯统计(Bayesian Statistic)</h2><p><img src="/Blog/intro/bs.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>频率论统计的流程是:</p>
+<ol>
+<li>根据问题提出假设$H_0, H_A$</li>
+<li>假设 $H_0$ 为真, 计算当前情况可能发生的概率</li>
+<li>根据这个概率进行决策</li>
+</ol>
+<br>
+
+<p>而贝叶斯统计的流程是:</p>
+<ol>
+<li>根据问题提出假设 $H_1, H_2\cdots H_n$(可以有多个假设, 且假设的地位对等, 不像$H_0, H_A$那样是对立的)</li>
+<li>根据收集到的证据(数据) 判断在当前证据下每一个假设为真的概率</li>
+<li>根据这个概率进行决策</li>
+</ol>
+<br>
+
+<p>而这个概率怎么求? 使用贝叶斯定理</p>
+<p>if events B<sub>1</sub>, B<sub>2</sub>,…B<sub>k</sub> form a <strong>partition</strong> of S<br>$$<br>\bigcup_{i=1}^KB_i=S\ \ and \ \ \bigcap_{i=1}^KB_i=\empty<br>$$<br>Then:<br>$$<br>P(B_i|A)=\frac {P(AB_i)} {P(A)}<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  =\frac {P(A|B_i)P(B_i)}{\sum_{j=1}^K P(A|B_j)P(B_j)}<br>$$</p>
+<br>
+
+<br>
+
+<h3 id="贝叶斯推断"><a href="#贝叶斯推断" class="headerlink" title="贝叶斯推断"></a>贝叶斯推断</h3><p><img src="/Blog/intro/bs_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先把样本空间分成两部分, 两部分交集为空, 并集为整个样本空间</p>
+<p>对于每一个假设提出一个它为 true 的可能性的概率: $P(H_1), P(H_2)$</p>
+<p><img src="/Blog/intro/bs_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个概率和频率论框架下的概率不同, 这个概率可以是主观信念</p>
+<p>也叫做<strong>先验概率(Prior probability)</strong></p>
+<p>这个概率取决于每个人的观点, 例如一个人认为明天有 $20%$ 可能下雨, 而另一个人认为有$50%$的可能下雨(可以根据喜好或经验决定这个概率)</p>
+<p>接下来收集数据, 求出在 $H_1, H_2$ 为真的情况下看到当前数据的概率</p>
+<p>在某个假设下看到当前数据的概率叫做 Likelihood (似然)</p>
+<p><img src="/Blog/intro/bs_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>接下来就可以通过贝叶斯公式得到在当前数据为真的情况下$H_1, H_2$ 为真的概率, 这个概率就叫做<strong>后验概率(Posterior probability)</strong></p>
+<p><img src="/Blog/intro/bs_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>之后可以继续进行测试, 第二次测试要用第一次测试的后验概率作为先验概率. (主观的信念在证据的面前得到更新) 这叫做贝叶斯更新</p>
+<p><img src="/Blog/intro/bs_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这样就形成了一个循环, 不断通过证据更新概率. 这样即使最开始概率有偏差, 它也会逐渐接近真相.</p>
+<br>
+
+<p>举一个例子</p>
+<p><img src="/Blog/intro/bs_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>第一次迭代</p>
+<p><img src="/Blog/intro/bs_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设到此为止, 我们会选择HIV</p>
+<br>
+
+<p>第二次迭代</p>
+<p>把后验概率替换为先验概率</p>
+<p><img src="/Blog/intro/bs_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而真正作决策时可能要考虑选错的损失. 此时就要对每个假设计算一下损失, 比较哪个损失更小.</p>
+<br>
+
+<br>
+
+<h3 id="贝叶斯因子-Bayes-Factor"><a href="#贝叶斯因子-Bayes-Factor" class="headerlink" title="贝叶斯因子(Bayes Factor)"></a>贝叶斯因子(Bayes Factor)</h3><p><img src="/Blog/intro/bs_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>上个例子中就可以得到这样两个因子</p>
+<p><img src="/Blog/intro/bs_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>怎么解读它们?</p>
+<p><img src="/Blog/intro/bs_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Odds-和-Odds-ratio"><a href="#Odds-和-Odds-ratio" class="headerlink" title="Odds 和 Odds ratio"></a>Odds 和 Odds ratio</h3><p><img src="/Blog/intro/bs_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>0.147 说明 HIV 不太可能发生</p>
+<p>2.252 说明 HIV 有可能发生</p>
+<p>odds ratio = 15.4 告诉我们: 当我们进行一次检测, 并且结果是阳性以后HIV发生的可能性是收集证据前HIV发生可能性的15.4倍</p>
+<br>
+
+<br>
+
+<p>另一个例子:</p>
+<p>假设研究问题: 治疗高血压的新药是否有效</p>
+<p>方法: 让高血压患者复用新药一段时间, 然后检查高血压症状是否有所改善</p>
+<p>使用症状得到改善的患者占总患者数的比例来近似代表新药的有效程度</p>
+<p>数据: 100人复用新药, 78人症状有所改善</p>
+<p><img src="/Blog/intro/bs_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/bs_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/bs_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/bs_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="先验概率的选择对后验概率的影响"><a href="#先验概率的选择对后验概率的影响" class="headerlink" title="先验概率的选择对后验概率的影响"></a>先验概率的选择对后验概率的影响</h3><p><img src="/Blog/intro/bs_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个图中, 后验概率和likelihood是一样的. 而如果我们换一个先验概率</p>
+<p><img src="/Blog/intro/bs_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>后验概率是先验概率和 likelihood 的综合.</p>
+<br>
+
+<h3 id="样本容量对后验概率的影响"><a href="#样本容量对后验概率的影响" class="headerlink" title="样本容量对后验概率的影响"></a>样本容量对后验概率的影响</h3><p><img src="/Blog/intro/bs_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>大样本降低了不确定性, 给出了一个更精准的范围, 可以看出大样本量, 只有6个点明显大于0.1, 而在小样本中则有很多点</p>
+<br>
+
+<h3 id="置信区间-credible-interval"><a href="#置信区间-credible-interval" class="headerlink" title="置信区间(credible interval)"></a>置信区间(credible interval)</h3><p>使用<strong>拒绝采样(rejection sampling)</strong> 方法从后验概率分布中抽样, 然后计算分位数以得到置信区间</p>
+<br>
+
+<h4 id="拒绝采样"><a href="#拒绝采样" class="headerlink" title="拒绝采样"></a>拒绝采样</h4><p>抽样次数: n = 100, 000</p>
+<ul>
+<li><p>x 代表 $p_{respond}$</p>
+</li>
+<li><p>y 代表 $p_{respond}$ 的后验概率</p>
+<p><img src="/Blog/intro/bs_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</li>
+</ul>
+<p><img src="/Blog/intro/bs_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+
             </div>
             <hr>
             <div>
