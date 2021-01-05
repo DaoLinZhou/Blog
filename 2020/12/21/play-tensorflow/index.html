@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.4k 字
+                    6.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      20 分钟
+                      30 分钟
                   </span>
                 
 
@@ -654,6 +654,127 @@ tf.Tensor(
 
 <br>
 
+<h3 id="Tf-data"><a href="#Tf-data" class="headerlink" title="Tf.data"></a>Tf.data</h3><p>from_tensor_slices 可以传入 列表, numpy数组, 字典…</p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    dataset = tf.data.Dataset.from_tensor_slices(np.arange(10))
+    print(dataset)
+    for item in dataset:
+        print(item)</code></pre>
+<p>输出结果:</p>
+<pre><code>&lt;TensorSliceDataset shapes: (), types: tf.int32&gt;
+tf.Tensor(0, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor(3, shape=(), dtype=int32)
+tf.Tensor(4, shape=(), dtype=int32)
+tf.Tensor(5, shape=(), dtype=int32)
+tf.Tensor(6, shape=(), dtype=int32)
+tf.Tensor(7, shape=(), dtype=int32)
+tf.Tensor(8, shape=(), dtype=int32)
+tf.Tensor(9, shape=(), dtype=int32)</code></pre><br>
+
+<pre><code>new_dataset = dataset.repeat(3) # 返回一个新的dataset, 元素重复3次</code></pre><br>
+
+<pre><code class="python">dataset = dataset.repeat(3).batch(7)
+for item in dataset:
+    print(item)</code></pre>
+<p>输出: 30个元素, 每7个分为一份, 可以分成4份, 余下的2个单独组成一份</p>
+<pre><code>tf.Tensor([0 1 2 3 4 5 6], shape=(7,), dtype=int32)
+tf.Tensor([7 8 9 0 1 2 3], shape=(7,), dtype=int32)
+tf.Tensor([4 5 6 7 8 9 0], shape=(7,), dtype=int32)
+tf.Tensor([1 2 3 4 5 6 7], shape=(7,), dtype=int32)
+tf.Tensor([8 9], shape=(2,), dtype=int32)</code></pre><br>
+
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    dataset = tf.data.Dataset.from_tensor_slices(np.arange(10))
+    dataset = dataset.repeat(3).batch(7)
+    # interleave, 对dataset中每一个元素进行处理形成新的数据集
+
+    dataset2 = dataset.interleave(
+        map_func=lambda v: tf.data.Dataset.from_tensor_slices(v),  # map_func, 进行什么样的变化
+        cycle_length=5,      # cycle_length 并行程度, 同时处理多少元素
+        block_length=5       # block_length 从变换结果中每次取多少个元素出来
+    )
+
+    for item in dataset2:
+        print(item)</code></pre>
+<br>
+
+<p>结果:</p>
+<p>0, 1, 2, 3, 4 取自第一个tensor中的前五个元素</p>
+<pre><code>tf.Tensor(0, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor(3, shape=(), dtype=int32)
+tf.Tensor(4, shape=(), dtype=int32)
+tf.Tensor(7, shape=(), dtype=int32)
+tf.Tensor(8, shape=(), dtype=int32)
+tf.Tensor(9, shape=(), dtype=int32)
+tf.Tensor(0, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(4, shape=(), dtype=int32)
+tf.Tensor(5, shape=(), dtype=int32)
+tf.Tensor(6, shape=(), dtype=int32)
+tf.Tensor(7, shape=(), dtype=int32)
+tf.Tensor(8, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor(3, shape=(), dtype=int32)
+tf.Tensor(4, shape=(), dtype=int32)
+tf.Tensor(5, shape=(), dtype=int32)
+tf.Tensor(8, shape=(), dtype=int32)
+tf.Tensor(9, shape=(), dtype=int32)
+tf.Tensor(5, shape=(), dtype=int32)
+tf.Tensor(6, shape=(), dtype=int32)
+tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor(3, shape=(), dtype=int32)
+tf.Tensor(9, shape=(), dtype=int32)
+tf.Tensor(0, shape=(), dtype=int32)
+tf.Tensor(6, shape=(), dtype=int32)
+tf.Tensor(7, shape=(), dtype=int32)</code></pre><br>
+
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    x = np.array([[1, 2], [3, 4], [5, 6]])
+    y = np.array([&#39;cat&#39;, &#39;dog&#39;, &#39;fox&#39;])
+    dataset = tf.data.Dataset.from_tensor_slices((x, y))
+
+    for item_x, item_y in dataset:
+        print(item_x, item_y)</code></pre>
+<pre><code>tf.Tensor([1 2], shape=(2,), dtype=int32) tf.Tensor(b&#39;cat&#39;, shape=(), dtype=string)
+tf.Tensor([3 4], shape=(2,), dtype=int32) tf.Tensor(b&#39;dog&#39;, shape=(), dtype=string)
+tf.Tensor([5 6], shape=(2,), dtype=int32) tf.Tensor(b&#39;fox&#39;, shape=(), dtype=string)</code></pre><br>
+
+<br>
+
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    x = np.array([[1, 2], [3, 4], [5, 6]])
+    y = np.array([&#39;cat&#39;, &#39;dog&#39;, &#39;fox&#39;])
+    dataset = tf.data.Dataset.from_tensor_slices({&quot;feature&quot;: x, &quot;label&quot;: y})
+
+    for item in dataset:
+        print(item)</code></pre>
+<pre><code>{&#39;feature&#39;: &lt;tf.Tensor: shape=(2,), dtype=int32, numpy=array([1, 2])&gt;, &#39;label&#39;: &lt;tf.Tensor: shape=(), dtype=string, numpy=b&#39;cat&#39;&gt;}
+{&#39;feature&#39;: &lt;tf.Tensor: shape=(2,), dtype=int32, numpy=array([3, 4])&gt;, &#39;label&#39;: &lt;tf.Tensor: shape=(), dtype=string, numpy=b&#39;dog&#39;&gt;}
+{&#39;feature&#39;: &lt;tf.Tensor: shape=(2,), dtype=int32, numpy=array([5, 6])&gt;, &#39;label&#39;: &lt;tf.Tensor: shape=(), dtype=string, numpy=b&#39;fox&#39;&gt;}</code></pre><br>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
 <br>
 
 <h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><p>卷积神经网络的核心就是卷积. 通常卷积神经网络和卷积操作用于处理图像.</p>
@@ -826,6 +947,238 @@ model.add(keras.layers.SeparableConv2D(filters=32, kernel_size=3,
 
 model.add(keras.layers.MaxPool2D(pool_size=2))</code></pre>
 <p>深度卷积可分离网络的准确率降低了一些, 但计算量少, 可以在手机端运行</p>
+<br>
+
+<br>
+
+<h3 id="经典卷积网络模型"><a href="#经典卷积网络模型" class="headerlink" title="经典卷积网络模型"></a>经典卷积网络模型</h3><h4 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h4><p><img src="/Blog/intro/tf/ccnm.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>论文: <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf" target="_blank" rel="noopener">http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf</a></p>
+<br>
+
+<h4 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h4><p>适用于识别较为复杂的彩色图, 可识别1000种类别</p>
+<p>结构复杂, 使用relu作为激活函数.</p>
+<p><img src="/Blog/intro/tf/ccnm_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="VGG-16"><a href="#VGG-16" class="headerlink" title="VGG-16"></a>VGG-16</h4><p><img src="/Blog/intro/tf/ccnm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h1 id="循环神经网络"><a href="#循环神经网络" class="headerlink" title="循环神经网络"></a>循环神经网络</h1><p><img src="/Blog/intro/tf/embedding_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>先使用不同的神经网络对文本进行二分类</p>
+<pre><code class="python">def plot_learning_curve(history, label, epochs, min_values, max_values):
+    data = {}
+    data[label] = history.history[label]
+    data[&#39;val_&#39;+label] = history.history[&#39;val_&#39;+label]
+    pd.DataFrame(data).plot(figsize=(8, 5))
+    plt.grid(True)
+    plt.axis([0, epochs, min_values, max_values])
+    plt.show()
+
+
+def decode_review(reverse_word_index, text_ids):
+    return &#39; &#39;.join([reverse_word_index.get(word_id, &quot;&lt;UNK&gt;&quot;) for word_id in text_ids])
+
+
+if __name__ == &#39;__main__&#39;:
+    imdb = keras.datasets.imdb
+    vocab_size = 10000  # 只处理10000个不同的字符, 其余的字符会变为 unk
+    index_from = 3
+    (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=vocab_size, index_from=index_from)
+    print(train_data.shape, train_labels.shape)
+    print(len(train_data[0]), len(train_data[1]))  # 样本是变长的
+
+    word_index = imdb.get_word_index()
+    # index 改为从4开始, 这样流出4个位置放置特殊字符
+    word_index = {k: (v + 3) for k, v in word_index.items()}
+
+    # 特殊字符
+    word_index[&#39;&lt;PAD&gt;&#39;] = 0
+    word_index[&#39;&lt;START&gt;&#39;] = 1
+    word_index[&#39;&lt;UNK&gt;&#39;] = 2
+    word_index[&#39;&lt;END&gt;&#39;] = 3
+
+    reverse_word_index = {v: k for k, v in word_index.items()}
+    # print(decode_review(reverse_word_index, train_data[0]))
+
+    # 长度小于500的句子被补全, 大于500的句子被截断
+    max_length = 500
+    train_data = keras.preprocessing.sequence.pad_sequences(
+        train_data,        # list of list
+        value=word_index[&#39;&lt;PAD&gt;&#39;],
+        padding=&#39;post&#39;,    # padding 放在句子后面
+        maxlen=max_length
+    )
+
+    test_data = keras.preprocessing.sequence.pad_sequences(
+        test_data,
+        value=word_index[&#39;&lt;PAD&gt;&#39;],
+        padding=&#39;post&#39;,
+        maxlen=max_length
+    )
+
+    embedding_dim = 16  # 每个 word 都 embedding 为16维向量
+    batch_size = 128
+
+    model = keras.models.Sequential([
+        # 把每个word转为16维向量, 此时一个句子就是一个 max_length * embedding_dim 的矩阵
+        # 有 batch_size 个矩阵, 所以输出是三维矩阵(batch_size, max_length, embedding_dim)
+        keras.layers.Embedding(vocab_size, embedding_dim, input_length=max_length),
+
+        # 通过pooling, 把三维矩阵(batch_size, max_length, embedding_dim)转为
+        # 二维矩阵(batch_size, embedding_dim)
+        keras.layers.GlobalAveragePooling1D(),
+        keras.layers.Dense(64, activation=&quot;relu&quot;),
+        keras.layers.Dense(1, activation=&quot;sigmoid&quot;)     # 二分类
+    ])
+
+    model.summary()
+    model.compile(optimizer=&quot;adam&quot;, loss=&quot;binary_crossentropy&quot;, metrics=[&#39;accuracy&#39;])
+
+    history = model.fit(train_data, train_labels,
+                        epochs=30,
+                        batch_size=batch_size,
+                        validation_split=0.2)
+
+    plot_learning_curve(history, &quot;accuracy&quot;, 30, 0, 1)
+    plot_learning_curve(history, &quot;loss&quot;, 30, 0, 1)</code></pre>
+<p><img src="/Blog/intro/tf/acc.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/tf/loss.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这种合并 + padding有一些缺点:</p>
+<ol>
+<li>信息丢失<ul>
+<li>多个embedding合并</li>
+<li>Pad噪音, 无主次</li>
+</ul>
+</li>
+<li>无效计算太多<ul>
+<li>有太多padding</li>
+</ul>
+</li>
+</ol>
+<br>
+
+<h2 id="序列式问题"><a href="#序列式问题" class="headerlink" title="序列式问题"></a>序列式问题</h2><p>普通的神经网络是一对一. </p>
+<p><img src="/Blog/intro/tf/rnn_s_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>而有时候我们需要一对多的输出, 例如通过图片生成描述</p>
+<p><img src="/Blog/intro/tf/rnn_s_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>多对一的输出: 文本分类, 或文本感情分析</p>
+<p><img src="/Blog/intro/tf/rnn_s_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>多对多: encoding-decoding, 机器翻译</p>
+<p><img src="/Blog/intro/tf/rnn_s_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>实时多对多</p>
+<p><img src="/Blog/intro/tf/rnn_s_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>什么是循环神经网络?</p>
+<p>rnn每一步会维护一个状态作为下一步的额外输入</p>
+<br>
+
+<p>举个例子:</p>
+<p>字符语言模型, 预测下一个字符</p>
+<p>词典 [j, e, p]</p>
+<p>样本 jeep</p>
+<p><img src="/Blog/intro/tf/rnn_s_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>第二次的输入就是第一次的状态和e, 第三次的输入是第二次的状态和e</p>
+<br>
+
+<p><img src="/Blog/intro/tf/rnn_s_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>序列式预测时, 我们不知道ground truth, 因此要把前一层的输出作为下一层的输入</p>
+<p>而这种情况下, 如果开头预测错误, 那么后面整体就全错了. 这也是序列式问题的一个难点.</p>
+<br>
+
+<br>
+
+<h2 id="使用循环神经网络完成二分类"><a href="#使用循环神经网络完成二分类" class="headerlink" title="使用循环神经网络完成二分类"></a>使用循环神经网络完成二分类</h2><pre><code class="python">def plot_learning_curve(history, label, epochs, min_values, max_values):
+    data = {}
+    data[label] = history.history[label]
+    data[&#39;val_&#39;+label] = history.history[&#39;val_&#39;+label]
+    pd.DataFrame(data).plot(figsize=(8, 5))
+    plt.grid(True)
+    plt.axis([0, epochs, min_values, max_values])
+    plt.show()
+
+
+def decode_review(reverse_word_index, text_ids):
+    return &#39; &#39;.join([reverse_word_index.get(word_id, &quot;&lt;UNK&gt;&quot;) for word_id in text_ids])
+
+
+if __name__ == &#39;__main__&#39;:
+    imdb = keras.datasets.imdb
+    vocab_size = 10000  # 只处理10000个不同的字符, 其余的字符会变为 unk
+    index_from = 3
+    (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=vocab_size, index_from=index_from)
+    print(train_data.shape, train_labels.shape)
+    print(len(train_data[0]), len(train_data[1]))  # 样本是变长的
+    print(train_data[0])
+
+    word_index = imdb.get_word_index()
+    # index 改为从4开始, 这样流出4个位置放置特殊字符
+    word_index = {k: (v + 3) for k, v in word_index.items()}
+
+    # 特殊字符
+    word_index[&#39;&lt;PAD&gt;&#39;] = 0
+    word_index[&#39;&lt;START&gt;&#39;] = 1
+    word_index[&#39;&lt;UNK&gt;&#39;] = 2
+    word_index[&#39;&lt;END&gt;&#39;] = 3
+
+    reverse_word_index = {v: k for k, v in word_index.items()}
+    # print(decode_review(reverse_word_index, train_data[0]))
+
+    # 长度小于500的句子被补全, 大于500的句子被截断
+    max_length = 500
+    train_data = keras.preprocessing.sequence.pad_sequences(
+        train_data,        # list of list
+        value=word_index[&#39;&lt;PAD&gt;&#39;],
+        padding=&#39;post&#39;,    # padding 放在句子后面
+        maxlen=max_length
+    )
+
+    test_data = keras.preprocessing.sequence.pad_sequences(
+        test_data,
+        value=word_index[&#39;&lt;PAD&gt;&#39;],
+        padding=&#39;post&#39;,
+        maxlen=max_length
+    )
+
+    embedding_dim = 16  # 每个 word 都 embedding 为16维向量
+    batch_size = 128
+
+    # 模型依然需要 embedding
+    model = keras.models.Sequential([
+        keras.layers.Embedding(vocab_size, embedding_dim, input_length=max_length),
+        # 双向RNN结构, 只使用最后的输出
+        keras.layers.Bidirectional(keras.layers.SimpleRNN(units=32, return_sequences=False)),   
+        keras.layers.Dense(64, activation=&quot;relu&quot;),
+        keras.layers.Dense(1, activation=&quot;sigmoid&quot;)
+    ])
+
+    model.summary()
+    model.compile(optimizer=&quot;adam&quot;, loss=&quot;binary_crossentropy&quot;, metrics=[&#39;accuracy&#39;])
+
+    history = model.fit(train_data, train_labels,
+                        epochs=30,
+                        batch_size=batch_size,
+                        validation_split=0.2)
+
+    plot_learning_curve(history, &quot;accuracy&quot;, 30, 0, 1)
+    plot_learning_curve(history, &quot;loss&quot;, 30, 0, 1)</code></pre>
+<p>和上一个例子相比, 只对模型部分进行更改</p>
+<p><img src="/Blog/intro/tf/rnn_s_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/tf/rnn_s_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看出有明显的过拟合</p>
+<p>然而如果使用多层RNN, 多层双向RNN, 则过拟合倾向更为严重.</p>
 
             </div>
             <hr>
@@ -860,6 +1213,12 @@ model.add(keras.layers.MaxPool2D(pool_size=2))</code></pre>
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2021/01/02/taylor/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">泰勒 Taylor</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">
