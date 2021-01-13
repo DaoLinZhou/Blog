@@ -4,6 +4,56 @@
   
   
   <entry>
+    <title>Numerical Analysis</title>
+    <link href="/Blog/2021/01/11/Numerical-Analysis/"/>
+    <url>/Blog/2021/01/11/Numerical-Analysis/</url>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><p>如何表达一个数?</p><p>例如:</p><p>532.98 可以表达为:</p><p>$5<em>10^2+3</em>10^1+2<em>10^0+9</em>10^{-1}+8*10^{-2}$</p><br><p>计算机是二进制的, 同理: $(1001.11)_2$</p><p>$1<em>2^3+1</em>2^0+1<em>2^{-1}+1</em>2^{-2}$</p><br><p>如果我们要在机器上表示一个十进制的数, 我们可能会有误差.</p><p>例如如果我们要在计算机中表达 0.1<br>$$<br>(\frac {1}{10})_{10}=&gt;(?)_2<br>$$<br>那么怎么表示呢?</p><p>假设 1/10 可以表示为 $(0.a_1a_2a_3\cdots)_2$, 即<br>$$<br>\frac {1}{10} = (0.a_1a_2a_3…)_2<br>$$<br>左右两边同时乘以2.</p><p>二进制乘以2相当于左移一位<br>$$<br>\frac {2}{10} = (a_1.a_2a_3…)_2<br>$$<br>而明显这个值小于1, 所以 $a_1=0$, $\frac {2}{10} = (0.a_2a_3…)_2$</p><p>再乘以2<br>$$<br>\frac {4}{10} = (a_2.a_3a_4a_5…)_2<br>$$<br>同理 $a_2=0$</p><br><p>重复这个过程我们得到<br>$$<br>\frac {1}{10} = (0.000110011001…)_2<br>$$<br>得到一个无限循环小数, 因此在计算机中表示1/10 会有误差</p><br><p>$732.5051 = 0.7325051*10^3$</p><p>0.7325051 叫做 mantissa, 它有一个正负sign</p><p>3 叫做 exponent, 它也有一个正负sign</p><br><br><h2 id="三种衡量error的方法"><a href="#三种衡量error的方法" class="headerlink" title="三种衡量error的方法"></a>三种衡量error的方法</h2><p>Absolute error : $|p-p^*|$</p><p>Relative error : $\frac {|p-p^*|}{|p|}$</p><p>Significant Digits:</p><blockquote><p>$p^<em>$ approximates $p$ to $t$ significant digits if the relative error is less than $5</em>10^{-t}$ </p></blockquote><p>举个例子</p><p>Exact: 0.1</p><p>Approx: 0.099</p><p>求 Significant Digits</p><p>首先 relative error = 0.01</p><p>当 t = 0, relative error = 0.01 &lt; $5 * 10^0$</p><p>当 t = 1, relative error = 0.01 &lt; $5 * 10^{-1}$</p><p>当 t = 2, relative error = 0.01 &lt; $5 * 10^{-2}$</p><p>当 t = 3, relative error = 0.01 &gt; $5 * 10^{-3}$</p><p>因此 t = 2. significant Digits = 2</p><br><br><p>我们用 fl(x) 来表示 machine representation of <em>x</em></p><p>如果计算机计算 x+y, 那么它实际计算的是:$fl(fl(x)+fl(y))$</p><br><p><strong>cancellation error</strong></p><p>假设<br>$$<br>fl(x) =0.d_1d_2…d_p\alpha_{p+1}\alpha_{p+2}…\alpha_k*10^n<br>$$</p><p>$$<br>fl(y) =0.d_1d_2…d_p\beta_{p+1}\beta_{p+2}…\beta_k*10^n<br>$$</p><p>同时 $x &gt; y$. </p><p>fl(x) 和 fl(y) 前 p 个 digits 是相同的</p><p>当二者相减时:<br>$$<br>fl(fl(x)-fl(y)) = 0.\sigma_{p+1}\sigma_{p+2}…\sigma_k*10^{n-p}<br>$$<br><br><br>$$<br>0.\sigma_{p+1}\sigma_{p+2}…\sigma_k=0.\alpha_{p+1}\alpha_{p+2}…\alpha_k-0.\beta_{p+1}\beta_{p+2}…\beta_k<br>$$<br>关键点是 这里只有 $k-p$ digits significant </p><p> 丢失了 p digits</p><br><blockquote><p>例如:</p><p>p = 0.54617, q = 0.54601</p><p>exact value $r = p-q=0.00016$</p><p>but now with 4 digit randing</p><p>$p^*=0.5462$</p><p>$q^* = 0.5460$</p><p>$r^<em>=fl(p^</em>-q^<em>)=0.0002$<br>$$<br>\frac {|r-r^</em>|}{|r|} = 0.25<br>$$<br>1 significant digit $0.25 &lt; 5*10^{-1}$</p><p>p和q都能正确在机器上表示, 但是他们的差却不能正确表示</p></blockquote><br><br><p><strong>cancellation error</strong>的另一个例子</p><p>考虑 $f(x) = \frac {1-\cos x}{x^2}$</p><p>如果让 $\bar x = 1.2 * 10^{-5}$</p><p>那么 $c = fl(cos(\bar x)) = 0.9999999999$ (rounded to 10 digits)</p><p>$\frac {1-c} {\bar x ^ 2}=0.694…$</p><p>然而真实的值应该是0.5</p><p>函数图像:</p><p><img src="/Blog/intro/macm316/func.PNG" srcset="/Blog/img/loading.gif" alt></p><br><p>明显答案是错误的.</p><p>那么如何才能正确计算?</p><p>明显问题的原因是在分子, 我们让两个近似与1的数进行相减, 因此才产生cancellation error</p><p>当两个相近的数进行相减时会产生cancellation error</p><p>因此我们为cos引入一个新的表达式.<br>$$<br>\cos x = 1-2\sin^2(\frac x 2)<br>$$<br>重写表达式<br>$$<br>f(x) = \frac 12 (\frac {\sin(\frac x 2)}{x/2})^2<br>$$<br>此时 $f(\bar x) \approx 0.5$</p><br><p>因此 解决cancellation error的方法就是使用数学表达式进行抵消</p><br><p>另一种减少计算机计算error的方式是奸商浮点数运算</p><p>例如:<br>$$<br>f(z) = 1.01<em>z^4-4.62</em>z^3-3.11<em>z^2+12.2z-1.99<br>$$<br>这个式子可以写成<br>$$<br>f(z) = 1.01</em>z<em>z</em>z<em>z-4.62</em>z<em>z</em>z-3.11<em>z</em>z+12.2z-1.99<br>$$<br>这个式子有14个运算符号, 然而我们可以这么写<br>$$<br>f(z) = (1.01<em>z</em>z<em>z-4.62</em>z<em>z-3.11</em>z+12.2)*z-1.99<br>$$<br>此时只有11个运算符号</p><p>同理可以继续这样简化<br>$$<br>f(z) = (((1.01<em>z-4.62)</em>z-3.11)<em>z+12.2)</em>z-1.99<br>$$<br>到这一步就只有8个浮点operation了, 相比与14, 大大化简的浮点运算的数量, 自然精度也就上升了</p><br><br><p>再来一个例子:</p><p>对于二次函数的解 $ax^2+bx+c=0$<br>$$<br>x_1 = \frac {-b+\sqrt{b^2-4ac}}{2a}<br>$$</p><p>$$<br>x_2 = \frac {-b-\sqrt{b^2-4ac}}{2a}<br>$$</p><p>如果b=600, a=c=1.</p><p>那么 $x_1$ 的分子就明显会产生 cancellation error, 相当于两个近似与600的数相减.</p><p>而 $x_2$ 不会有任何问题.</p><p>此时的方法就是<br>$$<br>x_1 = \frac {-b+\sqrt{b^2-4ac}}{2a} * \frac {-b-\sqrt{b^2-4ac}}{-b-\sqrt{b^2-4ac}}=\frac {4ac}{2a(-b-\sqrt{b^2-4ac})}<br>$$<br>这样就避免了 cancellation error.</p><p>而如果b = -600. 情况就正好相反</p><p>$x_1$ 不会有任何问题, 相当于两个近似与600的数相加</p><p>而$x_2$ 会有 cancellation error. 同理也要用类似的方法来减小误差.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数学</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>23种基本设计模式</title>
+    <link href="/Blog/2021/01/06/design-pattern/"/>
+    <url>/Blog/2021/01/06/design-pattern/</url>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h1 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h1><p>类型: 创建型, 但不属于 GOF23 种设计模式</p><p>使用场景:</p><ol><li>工厂类负责创建的对象比较少</li><li>客户端 (应用层) 只知道传入工厂类的参数, 对于如何创建对象 (逻辑) 不关心</li></ol><br><ul><li><p>优点: 只需要传入一个正确的参数, 就可以获取所需要的对象, 而<strong>无须知道其创建细节</strong></p></li><li><p>缺点:</p><ul><li>工厂类的职责相对过重, <strong>增加新的产品需要修改工厂类的判断逻辑</strong>, 违背开闭原则</li><li>工厂类集中了产品创建逻辑, 一旦出现问题, 整个系统都会受到影响, 且简单工厂会增加系统中类的个数, 增加了系统的复杂度和理解难度</li><li>无法形成基于继承的等级结构</li></ul></li></ul><br><p><a href="https://github.com/DaoLinZhou/DisignPattern/tree/main/src/com/zhou/design/creational/simplefactory" target="_blank" rel="noopener">完整代码</a></p><p>核心代码</p><pre><code class="java">public class VideoFactory {    public Video getVideo(String type){        if(&quot;java&quot;.equalsIgnoreCase(type)){            return new JavaVideo();        }else if(&quot;python&quot;.equalsIgnoreCase(type)){            return new PythonVideo();        }        return null;    }}</code></pre><p>每当让工厂支持新的类时, 都要修改内部逻辑</p><br><br><h1 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h1><p>类型: 创建型</p><p>适用场景:</p><ul><li>创建对象需要大量重复代码</li><li>客户端 (应用层) 不依赖于产品类实例如何被创建, 实现等细节</li></ul><p>一个类通过其子类来指定创建那个对象</p><br><p>优点:</p><ul><li>用户只需要关注所需产品对应的工厂, 无须关心创建细节</li><li>加入新产品符合开闭原则, 提高可扩展性</li></ul><p>缺点:</p><ul><li>类的个数容易过多, 增加复杂度</li><li>增加了系统的抽象性和理解难度</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>设计模式</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>设计模式</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>泰勒 Taylor</title>
     <link href="/Blog/2021/01/02/taylor/"/>
     <url>/Blog/2021/01/02/taylor/</url>

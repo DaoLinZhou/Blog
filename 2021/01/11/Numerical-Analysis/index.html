@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>Numerical Analysis - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/internet.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Monday, January 11th 2021, 6:06 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.1k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><p>如何表达一个数?</p>
+<p>例如:</p>
+<p>532.98 可以表达为:</p>
+<p>$5<em>10^2+3</em>10^1+2<em>10^0+9</em>10^{-1}+8*10^{-2}$</p>
+<br>
+
+<p>计算机是二进制的, 同理: $(1001.11)_2$</p>
+<p>$1<em>2^3+1</em>2^0+1<em>2^{-1}+1</em>2^{-2}$</p>
+<br>
+
+<p>如果我们要在机器上表示一个十进制的数, 我们可能会有误差.</p>
+<p>例如如果我们要在计算机中表达 0.1<br>$$<br>(\frac {1}{10})_{10}=&gt;(?)_2<br>$$<br>那么怎么表示呢?</p>
+<p>假设 1/10 可以表示为 $(0.a_1a_2a_3\cdots)_2$, 即<br>$$<br>\frac {1}{10} = (0.a_1a_2a_3…)_2<br>$$<br>左右两边同时乘以2.</p>
+<p>二进制乘以2相当于左移一位<br>$$<br>\frac {2}{10} = (a_1.a_2a_3…)_2<br>$$<br>而明显这个值小于1, 所以 $a_1=0$, $\frac {2}{10} = (0.a_2a_3…)_2$</p>
+<p>再乘以2<br>$$<br>\frac {4}{10} = (a_2.a_3a_4a_5…)_2<br>$$<br>同理 $a_2=0$</p>
+<br>
+
+<p>重复这个过程我们得到<br>$$<br>\frac {1}{10} = (0.000110011001…)_2<br>$$<br>得到一个无限循环小数, 因此在计算机中表示1/10 会有误差</p>
+<br>
+
+<p>$732.5051 = 0.7325051*10^3$</p>
+<p>0.7325051 叫做 mantissa, 它有一个正负sign</p>
+<p>3 叫做 exponent, 它也有一个正负sign</p>
+<br>
+
+<br>
+
+<h2 id="三种衡量error的方法"><a href="#三种衡量error的方法" class="headerlink" title="三种衡量error的方法"></a>三种衡量error的方法</h2><p>Absolute error : $|p-p^*|$</p>
+<p>Relative error : $\frac {|p-p^*|}{|p|}$</p>
+<p>Significant Digits:</p>
+<blockquote>
+<p>$p^<em>$ approximates $p$ to $t$ significant digits if the relative error is less than $5</em>10^{-t}$ </p>
+</blockquote>
+<p>举个例子</p>
+<p>Exact: 0.1</p>
+<p>Approx: 0.099</p>
+<p>求 Significant Digits</p>
+<p>首先 relative error = 0.01</p>
+<p>当 t = 0, relative error = 0.01 &lt; $5 * 10^0$</p>
+<p>当 t = 1, relative error = 0.01 &lt; $5 * 10^{-1}$</p>
+<p>当 t = 2, relative error = 0.01 &lt; $5 * 10^{-2}$</p>
+<p>当 t = 3, relative error = 0.01 &gt; $5 * 10^{-3}$</p>
+<p>因此 t = 2. significant Digits = 2</p>
+<br>
+
+<br>
+
+<p>我们用 fl(x) 来表示 machine representation of <em>x</em></p>
+<p>如果计算机计算 x+y, 那么它实际计算的是:$fl(fl(x)+fl(y))$</p>
+<br>
+
+<p><strong>cancellation error</strong></p>
+<p>假设<br>$$<br>fl(x) =0.d_1d_2…d_p\alpha_{p+1}\alpha_{p+2}…\alpha_k*10^n<br>$$</p>
+<p>$$<br>fl(y) =0.d_1d_2…d_p\beta_{p+1}\beta_{p+2}…\beta_k*10^n<br>$$</p>
+<p>同时 $x &gt; y$. </p>
+<p>fl(x) 和 fl(y) 前 p 个 digits 是相同的</p>
+<p>当二者相减时:<br>$$<br>fl(fl(x)-fl(y)) = 0.\sigma_{p+1}\sigma_{p+2}…\sigma_k*10^{n-p}<br>$$<br><br><br>$$<br>0.\sigma_{p+1}\sigma_{p+2}…\sigma_k=0.\alpha_{p+1}\alpha_{p+2}…\alpha_k-0.\beta_{p+1}\beta_{p+2}…\beta_k<br>$$<br>关键点是 这里只有 $k-p$ digits significant </p>
+<p> 丢失了 p digits</p>
+<br>
+
+<blockquote>
+<p>例如:</p>
+<p>p = 0.54617, q = 0.54601</p>
+<p>exact value $r = p-q=0.00016$</p>
+<p>but now with 4 digit randing</p>
+<p>$p^*=0.5462$</p>
+<p>$q^* = 0.5460$</p>
+<p>$r^<em>=fl(p^</em>-q^<em>)=0.0002$<br>$$<br>\frac {|r-r^</em>|}{|r|} = 0.25<br>$$<br>1 significant digit $0.25 &lt; 5*10^{-1}$</p>
+<p>p和q都能正确在机器上表示, 但是他们的差却不能正确表示</p>
+</blockquote>
+<br>
+
+<br>
+
+<p><strong>cancellation error</strong>的另一个例子</p>
+<p>考虑 $f(x) = \frac {1-\cos x}{x^2}$</p>
+<p>如果让 $\bar x = 1.2 * 10^{-5}$</p>
+<p>那么 $c = fl(cos(\bar x)) = 0.9999999999$ (rounded to 10 digits)</p>
+<p>$\frac {1-c} {\bar x ^ 2}=0.694…$</p>
+<p>然而真实的值应该是0.5</p>
+<p>函数图像:</p>
+<p><img src="/Blog/intro/macm316/func.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>明显答案是错误的.</p>
+<p>那么如何才能正确计算?</p>
+<p>明显问题的原因是在分子, 我们让两个近似与1的数进行相减, 因此才产生cancellation error</p>
+<p>当两个相近的数进行相减时会产生cancellation error</p>
+<p>因此我们为cos引入一个新的表达式.<br>$$<br>\cos x = 1-2\sin^2(\frac x 2)<br>$$<br>重写表达式<br>$$<br>f(x) = \frac 12 (\frac {\sin(\frac x 2)}{x/2})^2<br>$$<br>此时 $f(\bar x) \approx 0.5$</p>
+<br>
+
+<p>因此 解决cancellation error的方法就是使用数学表达式进行抵消</p>
+<br>
+
+<p>另一种减少计算机计算error的方式是奸商浮点数运算</p>
+<p>例如:<br>$$<br>f(z) = 1.01<em>z^4-4.62</em>z^3-3.11<em>z^2+12.2z-1.99<br>$$<br>这个式子可以写成<br>$$<br>f(z) = 1.01</em>z<em>z</em>z<em>z-4.62</em>z<em>z</em>z-3.11<em>z</em>z+12.2z-1.99<br>$$<br>这个式子有14个运算符号, 然而我们可以这么写<br>$$<br>f(z) = (1.01<em>z</em>z<em>z-4.62</em>z<em>z-3.11</em>z+12.2)*z-1.99<br>$$<br>此时只有11个运算符号</p>
+<p>同理可以继续这样简化<br>$$<br>f(z) = (((1.01<em>z-4.62)</em>z-3.11)<em>z+12.2)</em>z-1.99<br>$$<br>到这一步就只有8个浮点operation了, 相比与14, 大大化简的浮点运算的数量, 自然精度也就上升了</p>
+<br>
+
+<br>
+
+<p>再来一个例子:</p>
+<p>对于二次函数的解 $ax^2+bx+c=0$<br>$$<br>x_1 = \frac {-b+\sqrt{b^2-4ac}}{2a}<br>$$</p>
+<p>$$<br>x_2 = \frac {-b-\sqrt{b^2-4ac}}{2a}<br>$$</p>
+<p>如果b=600, a=c=1.</p>
+<p>那么 $x_1$ 的分子就明显会产生 cancellation error, 相当于两个近似与600的数相减.</p>
+<p>而 $x_2$ 不会有任何问题.</p>
+<p>此时的方法就是<br>$$<br>x_1 = \frac {-b+\sqrt{b^2-4ac}}{2a} * \frac {-b-\sqrt{b^2-4ac}}{-b-\sqrt{b^2-4ac}}=\frac {4ac}{2a(-b-\sqrt{b^2-4ac})}<br>$$<br>这样就避免了 cancellation error.</p>
+<p>而如果b = -600. 情况就正好相反</p>
+<p>$x_1$ 不会有任何问题, 相当于两个近似与600的数相加</p>
+<p>而$x_2$ 会有 cancellation error. 同理也要用类似的方法来减小误差.</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/学习笔记/">学习笔记</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/数学/">数学</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2021/01/06/design-pattern/">
+                        <span class="hidden-mobile">23种基本设计模式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Numerical Analysis&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
