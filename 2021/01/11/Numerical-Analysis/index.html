@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.1k 字
+                    1.2k 字
                   </span>
                 
 
@@ -264,18 +264,18 @@
 
 <p>另一种减少计算机计算error的方式是减少浮点数运算</p>
 <p>例如:</p>
-<p>$f(z) = 1.01<em>z^4-4.62</em>z^3-3.11*z^2+12.2z-1.99$</p>
+<p>$f(z) = 1.01\cdot z^4-4.62\cdot z^3-3.11\cdot z^2+12.2z-1.99$</p>
 <br>
 
 <p>这个式子可以写成</p>
-<p>$f(z) = 1.01<em>z</em>z<em>z</em>z-4.62<em>z</em>z<em>z-3.11</em>z*z+12.2z-1.99$</p>
+<p>$f(z) = 1.01\cdot z\cdot z\cdot z\cdot z-4.62\cdot z\cdot z\cdot z-3.11\cdot z\cdot z+12.2z-1.99$</p>
 <p>这个式子有14个运算符号, 然而我们可以这么写</p>
-<p>$f(z) = (1.01<em>z</em>z<em>z-4.62</em>z<em>z-3.11</em>z+12.2)*z-1.99$</p>
+<p>$f(z) = (1.01\cdot z\cdot z\cdot z-4.62\cdot z\cdot z-3.11\cdot z+12.2)\cdot z-1.99$</p>
 <p>此时只有11个运算符号</p>
 <br>
 
 <p>同理可以继续这样简化</p>
-<p>$f(z) = (((1.01<em>z-4.62)</em>z-3.11)<em>z+12.2)</em>z-1.99$</p>
+<p>$f(z) = (((1.01\cdot z-4.62)\cdot z-3.11)\cdot z+12.2)\cdot z-1.99$</p>
 <p>到这一步就只有8个浮点operation了, 相比与14, 大大化简的浮点运算的数量, 自然精度也就上升了</p>
 <br>
 
@@ -346,7 +346,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -373,7 +373,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -382,7 +382,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
