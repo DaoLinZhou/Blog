@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    13.1k 字
+                    13.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      59 分钟
+                      62 分钟
                   </span>
                 
 
@@ -166,7 +166,7 @@
           <div class="post-content mx-auto" id="post">
             
             <div class="markdown-body">
-              <a id="more"></a>
+              <h1 id="计算机底层"><a href="#计算机底层" class="headerlink" title="计算机底层"></a>计算机底层</h1><a id="more"></a>
 
 <h2 id="内存和数据"><a href="#内存和数据" class="headerlink" title="内存和数据"></a>内存和数据</h2><p>由于现实中内存有限, 所以所有数据都以”固定”长度存储</p>
 <ul>
@@ -2602,6 +2602,96 @@ t = 12 – 5 – 2 = 5 bits
 <p><img src="/Blog/intro/comp_sys/structural_hazard_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/structural_hazard_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/structural_hazard_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<br>
+
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><h2 id="CPU-与-Threads"><a href="#CPU-与-Threads" class="headerlink" title="CPU 与 Threads"></a>CPU 与 Threads</h2><p>每个核(core)有多个Thread</p>
+<p><img src="/Blog/intro/comp_sys/cpu.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如这里对于每个core有两个thread, 在操作系统的视角就是有4个CPU, 但只有2个物理core.</p>
+<p><img src="/Blog/intro/comp_sys/cpu_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Memory slots是放内存条的地方, socket是放cpu的地方. 每个socket对应一组Memory slots.</p>
+<p><img src="/Blog/intro/comp_sys/cpu_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通常一个 processor 有 4-32 个 core</p>
+<p>一个Mainstream database servers 一般有 2-4 sockets</p>
+<br>
+
+<br>
+
+<h3 id="Non-Uniform-Memory-Access-NUMA"><a href="#Non-Uniform-Memory-Access-NUMA" class="headerlink" title="Non-Uniform Memory Access (NUMA)"></a>Non-Uniform Memory Access (NUMA)</h3><p><img src="/Blog/intro/comp_sys/cpu_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>处理器之间是相互连接的</p>
+<p>处理器和内存也是相互连接的</p>
+<p>而处理器访问自己对应连接的内存的速度是最快的, 访问其他处理器的内存时会随着距离变慢. 这个叫做 “<strong>NUMA effect</strong>“</p>
+<p>可以使用 <code>numactl -H</code> 查看cpu的线程数, 以及对应node的内存大小</p>
+<br>
+
+<br>
+
+<h2 id="计算机的主要组成部分"><a href="#计算机的主要组成部分" class="headerlink" title="计算机的主要组成部分"></a>计算机的主要组成部分</h2><h3 id="Main-memory"><a href="#Main-memory" class="headerlink" title="Main memory"></a>Main memory</h3><p>也叫做DRAM: dynamic rando access memory<a href="https://zh.wikipedia.org/wiki/%E5%8A%A8%E6%80%81%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E5%99%A8" target="_blank" rel="noopener">wiki</a></p>
+<p>它是因此它属于一种易失性存储器（volatile memory）设备, 如果断电会丢失数据</p>
+<p>系统可能也有小量的 non-volatile RAM 用来存储基本信息</p>
+<ul>
+<li>Bootstrap loader</li>
+<li>BIOS (Basic input output system)</li>
+</ul>
+<br>
+
+<h3 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h3><p>permanent home of data</p>
+<p>大体有两种</p>
+<ul>
+<li>Hard disk</li>
+<li>SSD (solid state drive)</li>
+</ul>
+<br>
+
+<h4 id="Hard-Disk"><a href="#Hard-Disk" class="headerlink" title="Hard Disk"></a>Hard Disk</h4><p>过去10年主要的持久存储方式</p>
+<p>由多个sectors组成, 每个sector有 512 byte block</p>
+<p>可以看作是一个 array of sectors</p>
+<p><img src="/Blog/intro/comp_sys/sectors.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>对一单个sector进行访问是具备原子性的. 要么全部写入要么不写 </p>
+<p>然而对多个sector进行写入时可能会出现这种情况: 第一个sector被写入, 第二个sector没有, 而第三个sector被写入(torn writes)</p>
+<br>
+
+<h4 id="NAND-Flash-memory"><a href="#NAND-Flash-memory" class="headerlink" title="NAND Flash memory"></a>NAND Flash memory</h4><p>Basic building block: floating gate transistors(cells)</p>
+<ul>
+<li>Data stored in cells</li>
+<li>Number of bits per cell determined by voltage levels</li>
+</ul>
+<p>Flash memory types:</p>
+<ul>
+<li>Single-level cell (SLC): 1 bit/cell (1 threshold voltage)</li>
+<li>Multi-level cell (MLC): 2 bit/cell (3 threshold voltages)</li>
+<li>More recently: TLC and QLC</li>
+</ul>
+<p>Organized in blocks and pages</p>
+<ul>
+<li><strong>can read/write at page level, modification must erase block</strong></li>
+</ul>
+<p>Fixed erase cycles</p>
+<ul>
+<li>SLC best, MLC worse, TLC even worse, QLC worst</li>
+</ul>
+<br>
+
+<p>对于程序员来说 Hard disk 和 SSD 的接口是一样的, 所以不同太在意</p>
+<p>因此对于SSD来说要使用 Flash Translation Layer(FTL) 来把Block/page 映射为sector来统一操作</p>
+<p><img src="/Blog/intro/comp_sys/sectors_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/sectors_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/sectors_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>一些查看计算机信息的指令</p>
+<p><code>df</code> Storage usage stats</p>
+<p><code>mount</code> Mount existing file system for access</p>
+<p><code>iostat</code>: show storage I/O speeds</p>
+<p><code>free</code>: show memory usage</p>
+<p><code>hdparm/sdparm:</code> Show I/O device stats and parameters.</p>
 
             </div>
             <hr>

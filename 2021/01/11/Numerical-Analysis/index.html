@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.2k 字
+                    2.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      5 分钟
+                      11 分钟
                   </span>
                 
 
@@ -292,6 +292,107 @@
 <p>而如果b = -600. 情况就正好相反</p>
 <p>$x_1$ 不会有任何问题, 相当于两个近似与600的数相加</p>
 <p>而$x_2$ 会有 cancellation error. 同理也要用类似的方法来减小误差.</p>
+<br>
+
+<br>
+
+<h1 id="Algorithms-and-Convergence"><a href="#Algorithms-and-Convergence" class="headerlink" title="Algorithms and Convergence"></a>Algorithms and Convergence</h1><p>假设 sequence ${\alpha_n}$ converges to $\alpha$, 可以写成:<br>$$<br>\lim_{n\to \inf} \alpha_n = \alpha<br>$$<br>然而我们<strong>不仅仅</strong>关系$\alpha$, 我们更关心<strong>how rapidly the sequence converges to its limit</strong>. (converge 的速度)</p>
+<p>algorithms that converge rapidly to their limit are going to be more efficient and more desirable to us</p>
+<br>
+
+<blockquote>
+<p> 来个例子:<br>$$<br>\alpha_n = \sin(\frac 1n)<br>$$<br>当 $n\to \inf$ , $\alpha_n$ converge to 0</p>
+<p>$\alpha = \lim_{n \to \inf} \sin(\frac 1 n)=0$</p>
+<br>
+
+<p>然而有时候使用 finite limit 比使用 infinite limit 要简单</p>
+<p>例如我们可以这样替换<br>$$<br>\lim_{n \to \inf} \sin(\frac 1n)<br>$$</p>
+<p>$$<br>\lim_{h\to 0}\sin(h)<br>$$</p>
+<p>使用h来代替 $\frac 1n$</p>
+<p>$\lim_{h\to 0}\sin(h) = 0$</p>
+<br>
+
+<p>然而我们想知道 How rapidly sin(h) tends to 0.</p>
+<p>使用Taylor series 来进行展开.<br>$$<br>\sin(h) = h - \frac {h^3} {6} + \cdots<br>$$<br>因此<br>$$<br>\sin(h) - \lim_{h\to 0}\sin(h)<br>$$</p>
+<p>$$<br>=\sin(h)-\alpha=\sin(h)-0<br>$$</p>
+<p>$$<br>=h - \frac {h^3} {6} + \cdots<br>$$</p>
+<p>这个告诉我们什么?</p>
+<p>as $h$ tends to zero $\sin(h)$ tends to zero and it does so in a similiar way to $h$</p>
+<p>$\sin(h) \to 0$ like $h\to 0$<br>$$<br>h - \frac {h^3} {6} + \cdots<br>$$<br>为什么我们忽略了其余的高阶项?</p>
+<p>因为当h变小时 $h^3, h^7…$ vanish very rapidly as $h$ tends to zero</p>
+<p>当 $h\to 0$ 其他高阶项会比h小多了</p>
+<p>so the most important term here is the leading order term $h$, others are much much smaller.</p>
+</blockquote>
+<br>
+
+<br>
+$$
+\lim_{n\to \inf}\alpha_n = \alpha
+$$
+假设现在有另一个 sequence $\{\beta_n\}$
+$$
+\lim_{n\to \inf}\beta_n = 0
+$$
+我们要将二者建立关系. 为什么?
+
+<p>因为$\alpha_n$ is something we want to understand.</p>
+<p>而 $\beta_n$ is something we understand quit well</p>
+<br>
+
+<p>如果$|\alpha_n-\alpha| \le k|\beta_n|$,   $k$ 是一个大于零的常数</p>
+<p>我们说 ${\alpha_n}$ converges to $\alpha$ with <strong>rate of convergence</strong> $O(\beta_n)$  (big-oh of $\beta_n$)</p>
+<p>如果 $\alpha_n \to \alpha$ with r.o.c (rate of convergence) $O(\beta_n)$ then we sometimes write<br>$$<br>\alpha_n = \alpha + O(\beta_n)<br>$$<br><br></p>
+<br>
+
+<p>而在上面的例子中<br>$$<br>\alpha_n = \sin(\frac 1n)<br>$$</p>
+<p>$$<br>\alpha = \lim_{n\to \inf}\sin(\frac 1 n) = 0<br>$$</p>
+<p>$\alpha_n = \sin(\frac 1n)$ was like $\frac 1n$ as $n\to \inf$</p>
+<p>所以我们可以 compare  with $\beta_n$ = $\frac 1 n$ (让$\beta_n = \frac 1 n$, 这样就可以进行比较)</p>
+<p>$\alpha_n = \sin(\frac 1n)$ converges to $\alpha = 0$ with r.o.c   $O(\beta_n) = \frac 1n$</p>
+<br>
+
+<br>
+
+<p>通常我们compare how  fast $\alpha_n \to 0$ with how fast $\beta_n=\frac 1{n^p} \to 0$</p>
+<p>我们想要最大的p, 使得${\alpha_n}\to\alpha$ with r.o.c $O(\frac 1 {n^p})$</p>
+ <br>
+
+<br>
+
+<p>另一个例子:<br>$$<br>\lim_{n\to \inf} n\sin(\frac 1n) = 1<br>$$<br>我们想知道 how quickly it tends to 1.<br>$$<br>\alpha_n = n\sin(\frac 1n)<br>$$</p>
+<p>$$<br>\alpha = 1<br>$$</p>
+<p>让 $h=\frac 1n$, 上面的问题等价于这个<br>$$<br>\lim_{h\to 0} \frac 1h \sin(h) = 1<br>$$<br>so<br>$$<br>\frac 1h \sin(h) - 1 = O(h^p)<br>$$<br>左边可以对sin(h)进行泰勒展开 <strong>(对点0进行泰勒展开, 因为lim趋近于0)</strong><br>$$<br>\frac 1h \sin(h) - 1 = \frac 1h(h-\frac {h^3}{6}+\cdots)  - 1<br>$$</p>
+<p>$$<br>=1 - \frac {h^2}{6}+\cdots-1<br>$$</p>
+<p>$$<br>=-\frac {h^2}{6}+\cdots<br>$$</p>
+<p>所以 $\frac 1h \sin(h) - 1 \to 0$ like $-\frac {h^2}{6} \to 0$</p>
+<p>rate of converges is $O(h^2)$ 或者说 $O(\frac 1 {n^2})$</p>
+<br>
+
+<br>
+
+<h1 id="求解线性方程"><a href="#求解线性方程" class="headerlink" title="求解线性方程"></a>求解线性方程</h1><p>Gauss 法求解线性方程组是线性代数的内容. 这里不赘述</p>
+<p>回忆一下它是怎么求解的:</p>
+<p>假设我们要消去某一行的首元.</p>
+<p>要让第一行的每一项乘以一个倍数, 再加上另一行来消去它的首元</p>
+<br>
+
+<p><img src="/Blog/intro/macm316/matrix.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>例如要消去 $a_{21}$ 就要让 $E_1$(第一行) 乘以 $-\frac {a_{21}}{a_{11}}$ 在加上 $E_2$<br>$$<br>E_2+(-\frac {a_{21}}{a_{11}})E_1<br>$$<br>因此需要进行一次除法, n次乘法, 时间复杂度是 n+1</p>
+<p>因此对于一个 $(n, n+1)$的矩阵, 进行高斯消元形成上三角矩阵的话需要:<br>$$<br>(n-1)\cdot (n+1)+(n-2)(n)+(n-3)(n-1)\cdots<br>$$<br>最开始对一行进行消元的复杂度是(n+1), 对除了第一行以外的所有行进行消元就是$(n-1)\cdot (n+1)$</p>
+<p>而对第二次进行消元则是对第二行下面的所有行进行消元 也就是$n-2$ 行 此时每一行要进行乘法的元素是n, 因为第一个元素是0, 不用进行乘法.</p>
+<p>所以总体化简为上三角矩阵的时间是<br>$$<br>\sum_{i=1}^{n-1}(n-i)(n-i+2)\approx \frac {2n^3} 3=O(n^3)<br>$$<br>而从上三角矩阵的复杂度时 $O(n^2)$ .</p>
+<p>因此总体是$O(n^3)$的复杂度. 这个复杂度很高, 是我们不能接受的.</p>
+<br>
+
+<br>
+
+<p>而且在计算机中, 它有精度问题</p>
+<p>假如我们的线性系统是这样的:<br>$$<br>10^{-20}x_1+x_2+x_3=1 \tag 1<br>$$</p>
+<p>$$<br>x_1+2x_2+3x_3=4 \tag 2<br>$$</p>
+<p>$E_2-10^{20}E_1 \to E_2$</p>
+<p>所以新的 $E_2$ 是:<br>$$<br>(-10^{20}+2)x_2+(-10^{20}+3)x_3=(-10^{20}+4)<br>$$<br>在计算机中基本就等价于<br>$$<br>x_2+x_3=1<br>$$<br>$E_2$ 本来是一个非常漂亮的式子. 但是因为 $E_1$ 导致它被rounding了</p>
+<p>此时$E_2$ 就消失了</p>
+<p>另一个会出现 round off error 的地方就是反向求解的时候</p>
 
             </div>
             <hr>
@@ -322,6 +423,12 @@
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
+                    
+                      <a href="/Blog/2021/01/13/algorithm-analysis/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">algorithm analysis</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </div>
                   <div class="post-next col-6">

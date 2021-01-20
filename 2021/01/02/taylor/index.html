@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    819 字
+                    1.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      4 分钟
+                      6 分钟
                   </span>
                 
 
@@ -261,6 +261,31 @@ $$</p>
 <li>$M$ is a number such that $|f^{n+1}(x)| \le M$</li>
 </ul>
 <p><img src="/Blog/intro/taylor_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>还有一种说法是:<br>$$<br>R_n(x) = \frac {f^{n+1}(c)}{(n+1)!}(x-a)^{n+1}<br>$$<br>c is between $a$ and $x$</p>
+<p>approximation will be best when $x$ is close to $a$</p>
+<br>
+
+<br>
+
+<p>例如: 求f(x) = sin(x) 在$x_0=0$的三解泰勒多项式<br>$$<br>P_3(x)=f(0)+f’(0)(x-x_0)+\frac {f’’(0)}{2!}(x-x_0)^2+\frac {f’’’(0)}{3!}(x-x_0)^3<br>$$<br>由于$x_0=0$, 所以<br>$$<br>P_3(x)=f(0)+f’(0)x+\frac {f’’(0)}{2!}x^2+\frac {f’’’(0)}{3!}x^3<br>$$</p>
+<p>$$<br>f’(x) = \cos(x),\ f’(0)=1<br>$$</p>
+<p>$$<br>f’’(x)=-\sin(x), f’’(0)=0<br>$$</p>
+<p>$$<br>f’’’(x)=-\cos(x), f’’’(0)=-1<br>$$</p>
+<p>$$<br>P_3(x)=x-x^3/6<br>$$</p>
+<p>那么 error 是什么?<br>$$<br>R_3(x) = \frac {f’’’’(c)}{4!}x^4=\frac {\sin(c)}{24}x^4<br>$$<br>然而这里我们不知道c的值</p>
+<p>如果我们evaluating $R_3(\frac \pi 2)$<br>$$<br>R_3(\frac \pi 2) = \frac {\sin(c)} {24}(\frac \pi 2)^4,\ \ \  c\in (0, \pi/2)<br>$$<br>我们知道 $|\sin(c) \le 1|$<br>$$<br>R_3(\frac \pi 2) = \frac {1} {24}(\frac \pi 2)^4 =\approx 0.25<br>$$<br>实际误差是<br>$$<br>|f(\pi/2) - P_3(\pi/2)|\approx 0.075<br>$$<br><br></p>
+<br>
+
+<p>再来一个例子: 求 $\sqrt{16.1}$<br>$$<br>f(x) = \sqrt x<br>$$</p>
+<p>$$<br>f(x_0+h)\approx f(x_0)+hf’(x_0)<br>$$</p>
+<p>$$<br>f(16.1) \approx f(16)+0.1\cdot f’(16) = \sqrt {16} + (0.1)*(\frac 1 2)(\frac 1 {\sqrt {16}})<br>$$</p>
+<p>$$<br>=4+\frac {0.05} 4 = 4.0125<br>$$</p>
+<p>$f(16.1)=4.0124805…$</p>
+<p>可以看到结果很相近</p>
 
             </div>
             <hr>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>algorithm analysis - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/internet.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Wednesday, January 13th 2021, 7:05 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.2k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+<h2 id="算法的要求"><a href="#算法的要求" class="headerlink" title="算法的要求"></a>算法的要求</h2><p><strong>Correctness</strong>(正确):  如果对于任何给定<strong>输入</strong>, 算法都会在<strong>有限的步骤</strong>内给予正确的<strong>输出</strong> (an algorithm for a problem is correct if for any input instance ofthe problem, the algorithm gives a correct output in finite steps)</p>
+<p><strong>Efficiency</strong>(效率): 如果算法以输入大小终止于<strong>多项式时间</strong>，则该算法是有效的 (an algorithm is efficient if the algorithm terminates in polynomialtime (many steps) in the size of the input)</p>
+<ul>
+<li>计算时间和内存空间是有限的资源 (Computing time and memory space are bounded resource)</li>
+<li>许多计算问题是优化问题，需要使用最佳资源来解决问题 (Many computing problems are optimization problems, solving the problemsusing optimum resources)</li>
+<li>就时间和/或空间而言，算法应高效 (Algorithms should be efficient in terms of time and/or space)</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="设计与分析算法"><a href="#设计与分析算法" class="headerlink" title="设计与分析算法"></a>设计与分析算法</h2><ol>
+<li>Identify a problem</li>
+<li>Formulating the problem with certain mathematical precision</li>
+<li>Design an algorithm to solve the problem</li>
+<li>Analyze the algorithm<ul>
+<li>Prove the correctness of algorithm</li>
+<li>Analyze the efficiency of algorithm</li>
+</ul>
+</li>
+</ol>
+<br>
+
+<p>举个例子:</p>
+<p><img src="/Blog/intro/cmpt307/aa_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/aa_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/aa_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/aa_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/aa_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>证明算法正确性的步骤和数学归纳法(Mathematical induction) 很像</p>
+<p>但有一点, 数学中的概念是无限的. 而计算机是有限的. 所以对于计算机问题来说是有边界的. 所以最后一步就是确定边界的正确性.</p>
+<br>
+
+<p><img src="/Blog/intro/cmpt307/aa_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Efficient-algorithms"><a href="#Efficient-algorithms" class="headerlink" title="Efficient algorithms"></a>Efficient algorithms</h3><ul>
+<li>一个算法是 poly-time (polynomial running time) 如果对于常数c, d $c&gt;0,d&gt;0$ 使得 对于每个size n 的输入, 算法的运行时间小于$cn^d$ primitive computational steps.</li>
+<li>poly-time 的算法叫做 efficient algorithm</li>
+<li>A  poly-time algorithm has the desirable scaling property:<ul>
+<li>When the input size doubles, the running time increases by at most a constant factor</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>例如: 如果输入是size n, 算法使用 $cn^d$步, 如果输入是2n, 算法用$c2^dn^d$ 步, 而$c2^d$是一个常数, 可以看作是一个新的$c$ 所以依然是$cn^d$</p>
+</blockquote>
+<br>
+
+<h3 id="Messures-for-running-time"><a href="#Messures-for-running-time" class="headerlink" title="Messures for running time"></a>Messures for running time</h3><p>有5种方式来measure running time:</p>
+<ol>
+<li>Worst-case running time<ul>
+<li>对于任何 size 为 n 的输入, 最长的运行时间</li>
+</ul>
+</li>
+<li>Average-case running time<ul>
+<li>对于所有 size 为 n 的输入, 平均的运行时间</li>
+<li>The notion of “average” assumes a probability distribution over the inputs.</li>
+</ul>
+</li>
+<li>Expected running time<ul>
+<li>一个随机算法的 running time</li>
+</ul>
+</li>
+<li>Amotized running time<ul>
+<li>Worest case running time of any sequence of <em>n</em> operations</li>
+</ul>
+</li>
+<li>Big-oh notation, $t(n)$ is $O(t_1(n))$ if there exist constants $c&gt;0$ and $n_0&gt;0$,  s.t. $0\le t(n)\le t_1(n)$ for all $n \ge n_0$</li>
+</ol>
+<p><img src="/Blog/intro/cmpt307/insertion_sort.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>在解决 sorting 问题时一些常见思想</p>
+<p>甚至在解决一些其他算法问题时也可以用到的思想:</p>
+<ol>
+<li>incremental approach (insertion-sort): 假设$A[1…j-1]$ 已经是排好序的, 把 $A[j]$ 插入其中使得 $A[1…j]$ 是排好序的</li>
+<li>Divide-and-conquer approach(分治算法):<ul>
+<li>把一个问题分成若干子问题</li>
+<li>递归解决子问题</li>
+<li>把子问题的结果合并成最终问题的解</li>
+<li>Merge sort 就是一个例子</li>
+</ul>
+</li>
+</ol>
+<p><img src="/Blog/intro/cmpt307/merge_sort.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/merge_sort_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们为两个子块的最后一个元素后面添加一个无穷大的元素, 这样就不用考虑边界问题了</p>
+<br>
+
+<h4 id="分析-merge-sort-的正确性"><a href="#分析-merge-sort-的正确性" class="headerlink" title="分析 merge sort 的正确性"></a>分析 merge sort 的正确性</h4><p><img src="/Blog/intro/cmpt307/merge_sort_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/merge_sort_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/merge_sort_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Merge sort 的 running time</p>
+<ul>
+<li>让 $T(n)$ 作为 Merge sort 的 running time. $T(1) = c, c&gt;0$ c is constant</li>
+<li>Divide array of size <em>n</em> takes $c_1n$ time, $c_1&gt;0$ a constant</li>
+<li>Recursion on an array of size $n/2$ takes $T(n/2)$ time</li>
+<li>Merge two arrays of size n/2 takes $c_2n$ times, $c_2 &gt; 0$ a constant</li>
+<li>$T(n) = c_1n+T(n/2)+T(n/2)+c_2n$</li>
+<li>解决这个recurrence, 我们得到 $T(n) = O(n\log n)$</li>
+</ul>
+<p><img src="/Blog/intro/cmpt307/merge_sort_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Asymptotic-Order-of-Groth"><a href="#Asymptotic-Order-of-Groth" class="headerlink" title="Asymptotic Order of Groth"></a>Asymptotic Order of Groth</h2><p>计算机科学中有几种 notation:</p>
+<ul>
+<li><strong>Big-oh notation</strong>: $t(n)$ is $O(t_1(n))$, 如果有常数 $c&gt;0, n_0&gt;0$ 使得: $0\le t(n) \le c t_1(n)$ $\forall n \ge n_0$ <ul>
+<li>上界</li>
+<li>例如 $t(n) = 5n^2+7n+4$, $t(n) = O(n^2)$ 而不是 $O(n^k)\ for\ 0 &lt; k&lt; 2$</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><strong>Big-Omega notation:</strong> $t(n)$ is $\Omega(t_1(n))$, 如果有常数 $c&gt;0, n_0&gt;0$ 使得 $t(n) \ge c\cdot t_1(n) \ge0 ,\forall n\ge n_0$<ul>
+<li>下界</li>
+<li>例如 $t(n) = 5n^2+7n+4$, $t(n) = \Omega(n^k) ,\forall k\le2$ 而不是 $O(n^k)\ for\ 2 &lt; k$</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><strong>Big-Theta notation:</strong> $t(n)$ is $\Theta(t_1(n))$ 如果有常数 $c_1,c_2&gt;0, n_0&gt;0$ , 使得 $0\le c_1 t_1(n) \le t(n) \le c_2t_1(n)$ for all $n \ge n_0$<ul>
+<li>如果 $t(n)$ is $O(t_1(n))$ 同时 $t(n)$ is $\Omega(t_1(n))$, 那么 t(n) 就是 $\Omega(t_1(n))$  <strong>For tight (up to a constantfactor) upper and lower bounds on time/space complexit</strong></li>
+<li>$t(n)=n^2+7n+4$, $t(n)$ is $\Theta(n^2)$ 而不是 $\Theta(n^k), \forall k\ne 2$</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><strong>Lette-oh notation</strong>: $t(n)$ is $o(t_1(n))$ 如果对于任意常数 $c&gt;0$, 存在一个常数 $n_0&gt;0$ 使得$0\le t(n)\le ct_1(n), \forall n \ge n_0$ <ul>
+<li>也可以表示为: $\lim_{n\to \inf} t(n)/t_1(n)=0$</li>
+<li>$t(n)=n^2+7n+4$ is $o(n^k)$ for $k&gt;2$</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><strong>Lettle-omega notation</strong>: $t(n)$ is $\omega(t_1(n))$ ,如果对于任意常数 $c&gt;0$, 存在一个常数 $n_0&gt;0$ 使得$0\le ct_1(n)\le t(n), \forall n \ge n_0$ <ul>
+<li>也可以表示为: $\lim_{n\to \inf} t(n)/t_1(n)=\inf$</li>
+<li>$t(n)=n^2+7n+4$ is $o(n^k)$ for $k&lt;2$</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<br>
+
+<p>这些 notation 遵循下面的性质</p>
+<p><img src="/Blog/intro/cmpt307/notations.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/notations_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/notations_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>常见复杂度</p>
+<p><img src="/Blog/intro/cmpt307/notations_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/notations_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/cmpt307/notations_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/notations_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/notations_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/算法与数据结构/">算法与数据结构</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/算法分析/">算法分析</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2021/01/11/Numerical-Analysis/">
+                        <span class="hidden-mobile">Numerical Analysis</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "algorithm analysis&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
