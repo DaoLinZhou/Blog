@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.3k 字
+                    2.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      12 分钟
                   </span>
                 
 
@@ -393,6 +393,55 @@ $$
 <p>所以新的 $E_2$ 是:<br>$$<br>(-10^{20}+2)x_2+(-10^{20}+3)x_3=(-10^{20}+4)<br>$$<br>在计算机中基本就等价于<br>$$<br>x_2+x_3=1<br>$$<br>$E_2$ 本来是一个非常漂亮的式子. 但是因为 $E_1$ 导致它被rounding了</p>
 <p>此时$E_2$ 就消失了</p>
 <p>另一个会出现 round off error 的地方就是反向求解的时候</p>
+<br>
+
+<br>
+
+<p>有 3 种方式解决这个问题:</p>
+<ol>
+<li>partial piviting</li>
+<li>scaled piviting</li>
+<li>complete piviting</li>
+</ol>
+<br>
+
+<p><strong>partial piviting:</strong></p>
+<p>如果说<br>$$<br>E_1: 0.003x_1+59.14x_2=59.17<br>$$</p>
+<p>$$<br>E_2:5.291x_1-6.130x_2= 46.78<br>$$</p>
+<p>对于这个问题, 有着唯一解: $x_1=10, x_2=1$</p>
+<p>然而如果我们直接求解: $\frac{5.291}{0.003} \approx 1764$<br>$$<br>E_2 - E_1\cdot \frac{5.291}{0.003} \to E_2<br>$$<br>于是得到<br>$$<br>E_1: 0.003x_1+59.14x_2=59.17<br>$$</p>
+<p>$$<br>E_2: -1043002x_2 = -104400<br>$$</p>
+<p>解得:</p>
+<p>$x_2= 1.001, x_1\approx \frac {59.17-(59.14\cdot 1.001)}{0.003}\approx -10$</p>
+<p>$x_1$的值应该是10 而不是-10 </p>
+<br>
+
+<p>原因就是E1 近乎与x1轴平行, 当一条线的slop趋近与0时, $x_2$ 上的任何微小的误差都会导致在$x1$上巨大的偏差</p>
+<p><img src="/Blog/intro/macm316/err.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此一个简单的方法就是交换 pivit.</p>
+<p>也就是说当我们发现 $E_2$ 的 pivit 比 $E_1$ 的大时, 就交换二者<br>$$<br>E_1:5.291x_1-6.130x_2= 46.78<br>$$</p>
+<p>$$<br>E_2: 0.003x_1+59.14x_2=59.17<br>$$</p>
+<p>此时求 $0.003/5.291 = 0.000567$<br>$$<br>E_1:5.291x_1-6.130x_2= 46.78<br>$$</p>
+<p>$$<br>E_2:59.14x_2\approx 59.14<br>$$</p>
+<p>解得 $x_2=1, x_1 = 10$</p>
+<p>此时就是正确的结果.</p>
+<p>然而. 有些情况这样是行不通的.</p>
+<br>
+
+<br>
+
+<p><strong>scaled piviting:</strong></p>
+<p>如果我们把$E_1$ 进行一下缩放<br>$$<br>E_1: 30x_1+591400x_2=591700<br>$$<br>此时pivit 就比$E_2$ 要大, 按照前面的理论我们要选择$E_1$.</p>
+<p>然而实际$E_1$ 的slop 没有变</p>
+<p>此时我们应该计算一下每个function 的slop<br>$$<br>E_1: 30x_1+591400x_2=591700<br>$$</p>
+<p>$$<br>E_2:5.291x_1-6.130x_2= 46.78<br>$$</p>
+<p>$$<br>\frac {30}{591400} &lt; \frac {5.291}{6.13}<br>$$<br>因此应该选择$E_2$</p>
+<br>
+
+<p>还有更为强大的第三种方法 completing pivits</p>
+<p>这是$O(n^3)$ 的算法</p>
+<br>
+
 
             </div>
             <hr>
@@ -454,7 +503,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -481,7 +530,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -490,7 +539,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

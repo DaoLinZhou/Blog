@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.2k 字
+                    1.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      5 分钟
+                      8 分钟
                   </span>
                 
 
@@ -341,6 +341,146 @@
 <p><img src="/Blog/intro/cmpt307/notations_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/notations_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/notations_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<br>
+
+<h3 id="Maximum-subarray-problem"><a href="#Maximum-subarray-problem" class="headerlink" title="Maximum subarray problem"></a>Maximum subarray problem</h3><p>使用分治算法解决问题</p>
+<p>解决 max-subarray 问题</p>
+<p>具体的问题描述可以参考<a href="https://leetcode.com/problems/maximum-subarray/" target="_blank" rel="noopener">leetcode53</a></p>
+<p>简单来说就是求一个数组中的一段区间, 使得这段区间的值最大</p>
+<br>
+
+<p><strong>暴力解法</strong></p>
+<p>一种直观的想法就是尝试所有的可能. 再从中找到最小值</p>
+<p><img src="/Blog/intro/cmpt307/msa_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>通过这个图可以看出是一个$O(n^2)$ 的算法</p>
+<pre><code class="c++">class Solution {
+public:
+    int maxSubArray(vector&lt;int&gt;&amp; nums) { 
+        int max = nums[0];
+        int n = nums.size() - 1;
+        for(int i = 0; i &lt;= n; i++){
+            int sum = 0;
+            // find max subarray [i...k]
+            for(int k = i; k &lt;= n; k++){
+                sum += nums[k];
+                if(sum &gt; max){
+                    max = sum;
+                }
+            }
+        }
+        return max;
+    }
+};</code></pre>
+<br>
+
+<p>然而这道题可以使用分治算法</p>
+<p>对于一个数组$A[1:n]$ 我们可以把它分为两个部分 $A[1:m] ,A[m+1:n]$</p>
+<p>此时有三种可能:</p>
+<ol>
+<li>最大subarray在$A[1:m]$ 之间 ($A_l$)</li>
+<li>最大subarray在$A[m+1:n]$ 之间 ($A_r$)</li>
+<li>最大subarray在$A[i: j]$ 之间 $i\le m\le j$ ($A_c$)</li>
+</ol>
+<p>对于前两种可能, 递归求解即可.</p>
+<p>而如果最大subarray在它们之间, 也很简单, 只要从mid这个点向两侧扩张即可.</p>
+<p>对于这三种可能得到的结果, 选择它们中最大的那个值.</p>
+<p>伪代码:</p>
+<p><img src="/Blog/intro/cmpt307/msa_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/msa_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/msa_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="c++">class Solution {
+public:
+
+    // find subarray cross mid from [l, r]
+    int getMaxCrossingSubArray(vector&lt;int&gt;&amp; nums, int l, int r, int mid,
+                   int&amp; ret_l, int&amp; ret_r){
+        // [l, mid]
+        int max_l = 0;
+        int sum_l = 0;
+        int c_i = mid+1;
+        for(int i = mid; i &gt;= l; i--){
+            sum_l += nums[i];
+            if(sum_l &gt; max_l){
+                max_l = sum_l;
+                c_i = i;
+            }
+        }
+
+        // [mid+1, r]
+        int max_r = 0;
+        int sum_r = 0;
+        int c_j = mid;
+        for(int j = mid+1; j &lt;= r; j++){
+            sum_r += nums[j];
+            if(sum_r &gt; max_r){
+                max_r = sum_r;
+                c_j = j;
+            }
+        }
+
+        ret_l = c_i;
+        ret_r = c_j;
+        return max_l + max_r;
+    }
+
+    // find subarray from [l, r]
+    int getMaxSubArray(vector&lt;int&gt;&amp; nums, int l, int r, int&amp; ret_l, int&amp; ret_r){
+        if(l == r){
+            ret_l = ret_r = l;
+            return nums[l];
+        }
+
+        int mid = (r+l)/2;
+        int li = 0, lj = 0;
+        int ri = 0, rj = 0;
+        int ci = 0, cj = 0;
+        int max_sum_l = getMaxSubArray(nums, l, mid, li, lj);
+        int max_sum_r = getMaxSubArray(nums, mid+1, r, ri, rj);
+        int max_sum_c = getMaxCrossingSubArray(nums, l, r, mid, ci, cj);
+
+        // find the max return value between 2 sub arrays
+        int ret_max;
+        if(max_sum_l &gt; max_sum_r){
+            ret_l = li;
+            ret_r = lj;
+            ret_max = max_sum_l;
+        }else{
+            ret_l = ri;
+            ret_r = r;
+            ret_max = max_sum_r;
+        }
+
+        // if ci and cj are valid and the sum is biggest
+        if(ci &lt;= cj &amp;&amp; max_sum_c &gt; ret_max){
+            ret_l = ci;
+            ret_r = cj;
+            ret_max = max_sum_c;
+        }
+
+        return ret_max;
+    }
+
+    int maxSubArray(vector&lt;int&gt;&amp; nums) {
+        int l = 0, r = 0;
+        return getMaxSubArray(nums, 0, nums.size()-1, l, r);
+    }
+};</code></pre>
+<br>
+
+<br>
+
+<p>证明算法的正确性:</p>
+<p><img src="/Blog/intro/cmpt307/msa_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/msa_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/msa_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>分析算法:</p>
+<p><img src="/Blog/intro/cmpt307/msa_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -396,7 +536,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -423,7 +563,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -432,7 +572,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
