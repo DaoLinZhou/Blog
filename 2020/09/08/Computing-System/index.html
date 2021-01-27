@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    13.7k 字
+                    14.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      62 分钟
+                      67 分钟
                   </span>
                 
 
@@ -2692,6 +2692,261 @@ t = 12 – 5 – 2 = 5 bits
 <p><code>iostat</code>: show storage I/O speeds</p>
 <p><code>free</code>: show memory usage</p>
 <p><code>hdparm/sdparm:</code> Show I/O device stats and parameters.</p>
+<br>
+
+<br>
+
+<h2 id="CPU-Device-Interactions"><a href="#CPU-Device-Interactions" class="headerlink" title="CPU-Device Interactions"></a>CPU-Device Interactions</h2><p>每一个device 都有它自己的controller</p>
+<p>相当于一个小的电脑: 例如SSD 有ARM处理器以及RAM</p>
+<br>
+
+<p>CPU 和 device controllers 通过 common bus</p>
+<p>CPU 通过main memory 向 device 传输/接收数据</p>
+<br>
+
+<p>每一个 device 都被 device driver 所管理,</p>
+<p>device driver 是:</p>
+<ul>
+<li>Software to use the controller</li>
+<li>Provides a uniform interface to the device for OS</li>
+<li>Specific to hardware and the OS using the device</li>
+</ul>
+<p>CPU 和 其他 device 的 controller 可以同时工作 互不影响</p>
+<br>
+
+<br>
+
+<p><strong>Input/Output Example</strong></p>
+<p>从键盘读取一个字符</p>
+<ol>
+<li>cpu 告诉 键盘的controller 说它要读取字符<ul>
+<li>by loading registers in the device, using device driver</li>
+</ul>
+</li>
+<li>键盘controller就只要 它收到了一个”read” 的请求</li>
+<li>键盘收到字符后就把它放入local buffer中</li>
+</ol>
+<p>现在键盘的controller就需要让CPU知道读取操作结束了</p>
+<p>这是通过系统中断进行的.</p>
+<br>
+
+<h3 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h3><p>Signals sent by hardware devices to the CPU</p>
+<ul>
+<li>一个主流的方法是用硬件进行系统中断</li>
+<li>当CPU收到信号, 它就会停止当前的工作来处理中断请求 通过 interrupt service routine(ISR)<ul>
+<li>Aka interrupt handlers</li>
+<li>Callback function triggered when an interrupt is signaled</li>
+</ul>
+</li>
+<li>ISR执行结束后, CPU在继续执行之前的工作</li>
+<li>相当于异步操作</li>
+</ul>
+<br>
+
+<p>如何找到对应的 ISR</p>
+<p>我们希望interrupts 可以被快速处理, 同时系统可以支持多个interrupt </p>
+<p>解决办法就是使用中断向量表(interrupt vector)</p>
+<br>
+
+<h3 id="Busy-Waiting"><a href="#Busy-Waiting" class="headerlink" title="Busy Waiting"></a>Busy Waiting</h3><p>另一种方法是 busy waiting</p>
+<ol>
+<li>CPU 向device controller 发送 I/O operations</li>
+<li>Controller 处理请求, 返回结果</li>
+<li>CPU 等待 I/O 操作结束在返回其他工作</li>
+</ol>
+<p><img src="/Blog/intro/comp_sys/interrupts.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Interrupt-Driven-I-O"><a href="#Interrupt-Driven-I-O" class="headerlink" title="Interrupt-Driven I/O"></a>Interrupt-Driven I/O</h3><p>总共有3步:</p>
+<ol>
+<li>数据从 device 传输到它的 local buffer</li>
+<li>发送 interrupt 给 CPU 或 device</li>
+<li>CPU 通过从device 的 local buffer中 拷贝数据到main memory来处理 interrupt </li>
+</ol>
+<p>如果少量数据的话这么做是可行的, 但high overhead for transferring a lot of data.</p>
+<ul>
+<li>many interrupts</li>
+<li>many CPU involvement</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/interrupts_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Direct-Memory-Access-DMA"><a href="#Direct-Memory-Access-DMA" class="headerlink" title="Direct Memory Access (DMA)"></a>Direct Memory Access (DMA)</h3><p><strong>Transferring data without involving the CPU</strong></p>
+<ul>
+<li>Used for high-speed I/O devices able to transmit information at close to memory speeds.</li>
+<li>Device transfers data from its local buffer directly to main memory<ul>
+<li>Device gains access to memory</li>
+<li><strong>No CPU involvement</strong></li>
+</ul>
+</li>
+<li>Only one interrupt is generated data block/request</li>
+</ul>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/interrupts_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Operating-System-Operations"><a href="#Operating-System-Operations" class="headerlink" title="Operating System Operations"></a>Operating System Operations</h2><ol>
+<li><p>Bootstrapping using a bootstrap program</p>
+<ul>
+<li>simple code to initialize the system and load the kernel</li>
+</ul>
+</li>
+<li><p>After the kernel is loaded, start system deamons</p>
+<ul>
+<li>Services provided outside of the kernel</li>
+</ul>
+</li>
+<li><p>Run user programs</p>
+</li>
+</ol>
+<br>
+
+<p>操作系统的另一个主要的任务是manage process</p>
+<br>
+
+<p>我们希望让多个程序在cpu中执行</p>
+<p>我们需要在不同的process之间进行交换, 此时就需要 一些 scheduling algorithms</p>
+<ul>
+<li>当一个process在等待IO时, 切换到另一个process继续执行(让cpu一直工作)</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="Multi-Mode-Operations"><a href="#Multi-Mode-Operations" class="headerlink" title="Multi Mode Operations"></a>Multi Mode Operations</h2><p>只有操作系统可以使用 privileged instructions</p>
+<ul>
+<li>Privileged instructions: operations that may cause harm<ul>
+<li>例如: I/O control, timer management, interrupts</li>
+</ul>
+</li>
+<li>User and kernel modes:<ul>
+<li>User mode: Process executes on behalf of the user</li>
+<li>Kernel mode: Process executes on behalf on the kernel </li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p>如果不在kernel mode, 可以让硬件发起一个中断</p>
+<p>这会把系统切换成kernel mode</p>
+<p>如何让用户对privileged instruction进行访问?</p>
+<p>使用 System call</p>
+<br>
+
+<p>当使用System call时, 系统先会检查权限等一些东西, 如果一些都合法, 就会切换到kernel mode</p>
+<p>系统执行system call在返回user mode</p>
+<br>
+
+<br>
+
+<h2 id="Operating-System-Structures"><a href="#Operating-System-Structures" class="headerlink" title="Operating System Structures"></a>Operating System Structures</h2><p>我们如何设计像OS一个复杂的系统</p>
+<ul>
+<li>Monolithic</li>
+<li>Layered</li>
+<li>Microkernel</li>
+<li>Modular</li>
+<li>Hybrid</li>
+</ul>
+<br>
+
+<h3 id="Monolithic-Structure"><a href="#Monolithic-Structure" class="headerlink" title="Monolithic Structure"></a>Monolithic Structure</h3><p>写很多c file,最后把他们一起编译成一个二进制文件</p>
+<p><img src="/Blog/intro/comp_sys/kernel.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Linux 就是 monolithic kernel</p>
+<br>
+
+<p>优点:</p>
+<p>性能高</p>
+<ul>
+<li>little overhead in system call interface</li>
+<li>Communication within the kernel is fase</li>
+</ul>
+<p>缺点:</p>
+<p>Difficult to implement &amp; maintain</p>
+<ul>
+<li>too much in one layer</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/kernel_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Layered-Structure"><a href="#Layered-Structure" class="headerlink" title="Layered Structure"></a>Layered Structure</h3><p>把OS 分成多层</p>
+<p>每一层layer都只会使用下一层的layer提供的服务</p>
+<p><img src="/Blog/intro/comp_sys/kernel_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>优点:</p>
+<p>开发更简单, 更方便维护</p>
+<br>
+
+<p>缺点:</p>
+<p>Less efficient:</p>
+<ul>
+<li>Each layer adds some overhead</li>
+</ul>
+<p>Tricky to define layers</p>
+<br>
+
+<h3 id="Microkernel-Structure"><a href="#Microkernel-Structure" class="headerlink" title="Microkernel Structure"></a>Microkernel Structure</h3><p><strong>Kernel provides minimal services; the rest in user space</strong></p>
+<ul>
+<li>Modules communicate using message passing</li>
+</ul>
+<p>优点:</p>
+<ul>
+<li>Easier to extend and port to new hardware architectures</li>
+<li>More reliable and secure: most services are in user mode</li>
+</ul>
+<p>这也是linux很难支持新的原因. 每当要新增hardware, 都需要在kernel mode下device driver写作一个kernel module.</p>
+<p>缺点: 性能降低</p>
+<br>
+
+<p>Microkernel Structure Example: Mach</p>
+<p><img src="/Blog/intro/comp_sys/kernel_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Modular-Structure"><a href="#Modular-Structure" class="headerlink" title="Modular Structure"></a>Modular Structure</h3><p>Implement OS as separate components(modules)</p>
+<ul>
+<li>Core components in kernel module</li>
+<li>Other modules loaded linked to kernel as needed<ul>
+<li>no recompilation</li>
+</ul>
+</li>
+<li>Each module has a well-defined interface<ul>
+<li>modules talk to each other using interfaces</li>
+</ul>
+</li>
+</ul>
+<p>Most modern OSes (e.g. Linux) implement kernel modules</p>
+<br>
+
+<p>优点:</p>
+<ul>
+<li>易于维护</li>
+<li>类似于layers但更稳定<ul>
+<li>avoid the problem of defining layers</li>
+</ul>
+</li>
+<li>类似与microkernel 但更高效<ul>
+<li>modules can call others directly</li>
+</ul>
+</li>
+</ul>
+<p>缺点:</p>
+<p>Modules are part of the kernel with <strong>full permission</strong></p>
+<ul>
+<li>Stability: buggy modules may cause the OS to crash</li>
+<li>Security: a malicious module can compromise the whole system</li>
+</ul>
+<br>
+
+<h3 id="Hybrid-Structures-Most-Current-OSes"><a href="#Hybrid-Structures-Most-Current-OSes" class="headerlink" title="Hybrid Structures: Most Current OSes"></a>Hybrid Structures: Most Current OSes</h3><p><img src="/Blog/intro/comp_sys/kernel_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="System-Boot"><a href="#System-Boot" class="headerlink" title="System Boot"></a>System Boot</h3><p>OS must be available to hardware to start it</p>
+<p>On powered up the instruction register is loaded with a predefined memory location</p>
 
             </div>
             <hr>
@@ -2759,7 +3014,7 @@ t = 12 – 5 – 2 = 5 bits
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -2786,7 +3041,7 @@ t = 12 – 5 – 2 = 5 bits
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -2795,7 +3050,7 @@ t = 12 – 5 – 2 = 5 bits
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

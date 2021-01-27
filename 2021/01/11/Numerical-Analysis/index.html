@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.7k 字
+                    3.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      12 分钟
+                      16 分钟
                   </span>
                 
 
@@ -171,11 +171,11 @@
 <h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><p>如何表达一个数?</p>
 <p>例如:</p>
 <p>532.98 可以表达为:</p>
-<p>$5<em>10^2+3</em>10^1+2<em>10^0+9</em>10^{-1}+8*10^{-2}$</p>
+<p>$5\cdot 10^2+3\cdot 10^1+2\cdot 10^0+9\cdot 10^{-1}+8\cdot 10^{-2}$</p>
 <br>
 
 <p>计算机是二进制的, 同理: $(1001.11)_2$</p>
-<p>$1<em>2^3+1</em>2^0+1<em>2^{-1}+1</em>2^{-2}$</p>
+<p>$1\cdot 2^3+1\cdot 2^0+1\cdot 2^{-1}+1\cdot 2^{-2}$</p>
 <br>
 
 <p>如果我们要在机器上表示一个十进制的数, 我们可能会有误差.</p>
@@ -199,7 +199,7 @@
 <p>Relative error : $\frac {|p-p^*|}{|p|}$</p>
 <p>Significant Digits:</p>
 <blockquote>
-<p>$p^<em>$ approximates $p$ to $t$ significant digits if the relative error is less than $5</em>10^{-t}$ </p>
+<p>$p^\star$ approximates $p$ to $t$ significant digits if the relative error is less than $5\cdot 10^{-t}$ </p>
 </blockquote>
 <p>举个例子</p>
 <p>Exact: 0.1</p>
@@ -399,13 +399,13 @@ $$
 
 <p>有 3 种方式解决这个问题:</p>
 <ol>
-<li>partial piviting</li>
-<li>scaled piviting</li>
-<li>complete piviting</li>
+<li>partial pivoting</li>
+<li>scaled pivoting</li>
+<li>complete pivoting</li>
 </ol>
 <br>
 
-<p><strong>partial piviting:</strong></p>
+<p><strong>partial pivoting:</strong></p>
 <p>如果说<br>$$<br>E_1: 0.003x_1+59.14x_2=59.17<br>$$</p>
 <p>$$<br>E_2:5.291x_1-6.130x_2= 46.78<br>$$</p>
 <p>对于这个问题, 有着唯一解: $x_1=10, x_2=1$</p>
@@ -418,8 +418,8 @@ $$
 
 <p>原因就是E1 近乎与x1轴平行, 当一条线的slop趋近与0时, $x_2$ 上的任何微小的误差都会导致在$x1$上巨大的偏差</p>
 <p><img src="/Blog/intro/macm316/err.PNG" srcset="/Blog/img/loading.gif" alt></p>
-<p>因此一个简单的方法就是交换 pivit.</p>
-<p>也就是说当我们发现 $E_2$ 的 pivit 比 $E_1$ 的大时, 就交换二者<br>$$<br>E_1:5.291x_1-6.130x_2= 46.78<br>$$</p>
+<p>因此一个简单的方法就是交换 pivot.</p>
+<p>也就是说当我们发现 $E_2$ 的 pivot 比 $E_1$ 的大时, 就交换二者<br>$$<br>E_1:5.291x_1-6.130x_2= 46.78<br>$$</p>
 <p>$$<br>E_2: 0.003x_1+59.14x_2=59.17<br>$$</p>
 <p>此时求 $0.003/5.291 = 0.000567$<br>$$<br>E_1:5.291x_1-6.130x_2= 46.78<br>$$</p>
 <p>$$<br>E_2:59.14x_2\approx 59.14<br>$$</p>
@@ -430,18 +430,109 @@ $$
 
 <br>
 
-<p><strong>scaled piviting:</strong></p>
-<p>如果我们把$E_1$ 进行一下缩放<br>$$<br>E_1: 30x_1+591400x_2=591700<br>$$<br>此时pivit 就比$E_2$ 要大, 按照前面的理论我们要选择$E_1$.</p>
+<p><strong>scaled pivoting:</strong></p>
+<p>如果我们把$E_1$ 进行一下缩放<br>$$<br>E_1: 30x_1+591400x_2=591700<br>$$<br>此时pivot 就比$E_2$ 要大, 按照前面的理论我们要选择$E_1$.</p>
 <p>然而实际$E_1$ 的slop 没有变</p>
 <p>此时我们应该计算一下每个function 的slop<br>$$<br>E_1: 30x_1+591400x_2=591700<br>$$</p>
 <p>$$<br>E_2:5.291x_1-6.130x_2= 46.78<br>$$</p>
 <p>$$<br>\frac {30}{591400} &lt; \frac {5.291}{6.13}<br>$$<br>因此应该选择$E_2$</p>
+<p>对于第i行, 我们计算一个值<br>$$<br>\max_{j=1.\cdots n} \frac {|a_{j1}|}{S_j}<br>$$<br>就是让这一行中每一个值除以这一行所有值的和. 也就是计算出这一行中占比最大的值.</p>
+<p>当对所有行都计算完成后, 让所有行中这个值最大的行来当pivot</p>
 <br>
 
-<p>还有更为强大的第三种方法 completing pivits</p>
+<p>还有更为强大的第三种方法 completing pivots</p>
 <p>这是$O(n^3)$ 的算法</p>
+<p>这里不讲它, 了解有这么个东西即可</p>
 <br>
 
+<br>
+
+<h1 id="PLU-分解"><a href="#PLU-分解" class="headerlink" title="PLU 分解"></a>PLU 分解</h1><p>LU分解在线性代数中讲解的很清楚了.</p>
+<p>plu分解既可以看作是:<br>$$<br>A=PLU<br>$$<br>也可以看作是:<br>$$<br>PA=LU<br>$$<br>总之就是把A进行行交换后再进行LU分解</p>
+<p>P 是一个正交矩阵, $P^{-1}=P^T$</p>
+<br>
+$$
+Ax = b
+$$
+
+<p>$$<br>PAx=Pb<br>$$</p>
+<p>$$<br>\because PA=LU<br>$$</p>
+<p>$$<br>\therefore LUx = Pb<br>$$</p>
+<p>此时我们在解得x</p>
+<p>一种方法是找到P, 之后再求 PA, 在进行LU分解, 最后解x.</p>
+<br>
+
+<p>然而还有一种方法:</p>
+<p>假设一个问题是这样:</p>
+<p>Find the permutation matrix so that $PA$ can be factored into the product $LU$</p>
+<p><img src="/Blog/intro/macm316/PLU.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先我们看到第一行第一个元素是0, 所以将第一行和第二行进行交换</p>
+<p><img src="/Blog/intro/macm316/PLU_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>$E_3 - E_1 \to E_3,\ \ E_4-E_1\to E_4$</p>
+<p><img src="/Blog/intro/macm316/PLU_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到第一列中的后面3个元素都被消为0. 然而我们知道他们是0, 我们可以对这些空间加以利用, 我们将把后面两元素设为1</p>
+<p><img src="/Blog/intro/macm316/PLU_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>他们是 mulitipler, zero out the entry</p>
+<p>$E_3 - E_1 \to E_3$ 因此我们把第三行第一个元素设为1</p>
+<p>$E_4-E_1\to E_4$ 因此我们把第四行第一个元素设为1</p>
+<p>hopefully we can form $L$ as part of our procedure</p>
+<p><img src="/Blog/intro/macm316/PLU_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>虚线下方的元素属于$L$, 虚线上方的元素属于$U$</p>
+<p>此时要交换$E_2,E_4$</p>
+<p><img src="/Blog/intro/macm316/PLU_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/PLU_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>$E_4+E_3\to E_4$</p>
+<p><img src="/Blog/intro/macm316/PLU_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时的multiplier是 -1, 所以把-1放到对应的位置</p>
+<p><img src="/Blog/intro/macm316/PLU_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/PLU_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>那么矩阵P呢?</p>
+<p>我们之前交换 $E_1, E_2$, 又交换$E_2,E_4$</p>
+<p><img src="/Blog/intro/macm316/PLU_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这个方法是真正coding时用到的, 因为它更高效</p>
+<br>
+
+<br>
+
+<h1 id="Special-Types-of-Maries"><a href="#Special-Types-of-Maries" class="headerlink" title="Special Types of Maries"></a>Special Types of Maries</h1><p>有时候有的矩阵有一些性质</p>
+<h2 id="Strictly-diagonally-dominant-matries"><a href="#Strictly-diagonally-dominant-matries" class="headerlink" title="Strictly diagonally dominant matries"></a>Strictly diagonally dominant matries</h2><p>$$<br>|a_{ii}| &gt; \sum_{j=1, j\ne i}^n|a_{ij}|<br>$$</p>
+<p>如果一个矩阵的对角线上的元素的绝对值大于当前行的所有绝对值的和, 那么 它就叫做 Strictly diagonally dominant matries</p>
+<p><img src="/Blog/intro/macm316/PLU_11.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>|3h| &gt; |h|+|h|<br>$$</p>
+<p>$$<br>|10|&gt;|4|+|4|<br>$$</p>
+<p>$$<br>|-3| &gt; |1|+|1|<br>$$</p>
+<p>这个矩阵是Strictly diagonally dominant matries 当 $h\ne 0$</p>
+<p>这样的矩阵有什么好处?</p>
+<ol>
+<li>它肯定是可逆的, 是非奇异矩阵</li>
+<li>它可以进行LU分解, 而不需要行或列的交换操作</li>
+</ol>
+<br>
+
+<p>另一种特殊的矩阵是:</p>
+<h2 id="positive-definite-matrices"><a href="#positive-definite-matrices" class="headerlink" title="positive definite matrices"></a>positive definite matrices</h2><p>symmetric positive definite matrices</p>
+<p>矩阵A满足<br>$$<br>\vec x^TA \vec x &gt; 0<br>$$<br>例如:</p>
+<p>Find all values of $\alpha$ for which $A$ is positive definite</p>
+<p><img src="/Blog/intro/macm316/PLU_12.PNg" srcset="/Blog/img/loading.gif" alt></p>
+<p>答案是 $\alpha &gt; 2$</p>
+<br>
+
+<p>如果一个矩阵是positive definite matrix</p>
+<ol>
+<li>A 可逆, 不是非奇异矩阵, 不然 $Ax = \vec 0,\ xAx=0$</li>
+<li>对角线上所有元素大于0</li>
+<li>$\max_{1\le k1j\le n} |a_{kj}| \le \max_{1\le i \le n} |a_{ii}|$</li>
+<li>$(a_{ij})^2 &lt; a_{ii}a_{jj}$</li>
+</ol>
+<br>
+
+<p>(2) 的证明: 假设A的一个对角线元素是负数$a_{ii}$, 如果x中只有第$i$个元素是1, 其他元素都是0</p>
+<p>此时 $x^tAx=a_{ii}$ 而这个元素是负数, 假设矛盾.</p>
 
             </div>
             <hr>
@@ -503,7 +594,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -530,7 +621,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -539,7 +630,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
