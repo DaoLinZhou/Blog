@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -518,7 +518,7 @@ $$
 <h2 id="positive-definite-matrices"><a href="#positive-definite-matrices" class="headerlink" title="positive definite matrices"></a>positive definite matrices</h2><p>symmetric positive definite matrices</p>
 <p>矩阵A, 对于任何非零向量$x$满足<br>$$<br>\vec x^TA \vec x &gt; 0<br>$$<br>例如:</p>
 <p>Find all values of $\alpha$ for which $A$ is positive definite</p>
-<p><img src="/Blog/intro/macm316/PLU_12.PNg" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/PLU_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>答案是 $\alpha &gt; 2$</p>
 <br>
 
@@ -580,10 +580,10 @@ $$
 
 <h2 id="Choleski’s-Algorithm"><a href="#Choleski’s-Algorithm" class="headerlink" title="Choleski’s Algorithm"></a>Choleski’s Algorithm</h2><p>这个算法是对symmetric positive definite matrix 进行 $LL^T$分解的</p>
 <p>时间复杂度时 $n^3/6+n^2/2-2n/3$</p>
-<p>step 1: select $l_{11} &amp; u_{11}$ staisfying $l_{11}u_{11}=a_{11}$, 而 $l_{11}$ 等于 $u_{11}$, 所以 $l_{11}=\sqrt{a_{11}}$ </p>
+<p>step 1: select $l_{11}, u_{11}$ staisfying $l_{11}u_{11}=a_{11}$, 而 $l_{11}$ 等于 $u_{11}$, 所以 $l_{11}=\sqrt{a_{11}}$ </p>
 <p>step 2: $l_{j1} = a_{j1}/u_{11} =a_{j1}/l_{11}$</p>
 <p>step 3: (no change)</p>
-<p>step 4: select $l_{ii}&amp;u_{ii}$ staisfying $l_{ii}u_{ii}=a_{ii}-\sum_{k=1}^{i-1}l_{ik}u_{ki}=a_{ii}-\sum_{k=1}^{i-1}l_{ik}l_{ik}=\sqrt{a_{ii}-\sum l_{ik}^2}$</p>
+<p>step 4: select $l_{ii},u_{ii}$ staisfying $l_{ii}u_{ii}=a_{ii}-\sum_{k=1}^{i-1}l_{ik}u_{ki}=a_{ii}-\sum_{k=1}^{i-1}l_{ik}l_{ik}=\sqrt{a_{ii}-\sum l_{ik}^2}$</p>
 <p>step 5:<br>$$<br>l_{ji} = \frac 1 {u_{ii}} [a_{ji} - \sum_{k=1}^{i-1} l_{jk} u_{ki}] = \frac 1 {l_{ii}} [a_{ji} - \sum_{k=1}^{i-1} l_{jk} u_{ki}]<br>$$<br>step 6:<br>$$<br>l_{nn} u_{nn} = a_{nn} - \sum_{k=1}^{n-1}l_{nk} u_{kn}<br>$$</p>
 <p>$$<br>l_{nn}l_{nn}= a_{nn} - \sum_{k=1}^{n-1}l_{nk} l_{nk}<br>$$</p>
 <p>$$<br>l_{nn}= \sqrt {a_{nn} - \sum_{k=1}^{n-1}l_{nk} l_{nk}}<br>$$</p>
@@ -629,15 +629,21 @@ $$
 <li>$||\alpha x|| = |\alpha| \cdot ||x||$</li>
 <li>$||x+y||\le ||x||+||y||$ for all $x, y \in \R^n$ </li>
 </ol>
-<p>$l_2$ norm (L2 范数) or Euclidean norm of a vector x is given by :<br>$$<br>||x||<em>2 = { \sum</em>{i=1}^n x_i^2}^{1/2}<br>$$<br>定义: The infinity or max norm of a vector x is given by<br>$$<br>||x||<em>\inf = \max</em>{1\le i\le n} |x_i|<br>$$<br><br></p>
-<p>L2 distance :<br>$$<br>||x-y||<em>2 = { \sum</em>{i=1}^n (x_i-y_i)^2}^{1/2}<br>$$<br>l infinity distance:<br>$$<br>||x-y||<em>\inf = \max</em>{1\le i\le n} |x_i-y_i|<br>$$</p>
+<p>$l_2$ norm (L2 范数) or Euclidean norm of a vector x is given by :</p>
+<p>$$<br>{||x||<em>2} = { \sum</em>{i=1}^n x_i^2}^{1/2}<br>$$</p>
+<p>定义: The infinity or max norm of a vector x is given by</p>
+<p>$$<br>||x||<em>\inf = \max</em>{1\le i\le n} |x_i|<br>$$<br><br></p>
+<p>L2 distance :</p>
+<p>$$<br>||x-y||<em>2 = { \sum</em>{i=1}^n (x_i-y_i)^2}^{1/2}<br>$$</p>
+<p>l infinity distance:</p>
+<p>$$<br>||x-y||<em>\inf = \max</em>{1\le i\le n} |x_i-y_i|<br>$$</p>
 </blockquote>
 <br>
 
 <br>
 
 <h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a>Convergence</h2><p>Scaler 的converge 是这样的:<br>$$<br>\lim_{k\to \inf} x^{(k)} = x_0<br>$$<br>vector 的 converge也是一样的</p>
-<p>The sequence of vectors ${x^{(k)}}$ converges to x in $\R^n$ with $||\cdot||<em>\inf$ if and only if<br>$$<br>\lim</em>{k\to \inf} x_i^{(k)} = x_i<br>$$<br>for each $x_i$</p>
+<p>The sequence of vectors ${x^{(k)}}$ converges to x in $\R^n$ with ${||\cdot||<em>\inf}$ if and only if<br>$$<br>\lim</em>{k\to \inf} x_i^{(k)} = x_i<br>$$<br>for each $x_i$</p>
 <br>
 
 <br>
@@ -675,7 +681,8 @@ $$
 <li>$||A+B||\le ||A||+||B||$</li>
 <li>$||A\cdot B||\le ||A||\cdot ||B||$</li>
 </ol>
-<p>定义: the distance between nxn matrices A and B wrt a matrix norm $||\cdot||$ is<br>$$<br>||A-B||<br>$$<br><br></p>
+<p>定义: the distance between nxn matrices A and B wrt a matrix norm $||\cdot||$ is </p>
+<p>$$<br>||A-B||<br>$$<br><br></p>
 <p>定理:</p>
 <p>如果 $||\cdot||$ is a vector norm on $\R^n$ then $||A||=\max_{||x||=1} ||Ax||$ is a matrix norm</p>
 <p>This is called the natrual or induced matrix norm associated with the vector norm</p>
@@ -689,7 +696,7 @@ $$
 
 <p>定理:<br>$$<br>||Ax|| \le ||A||\cdot ||x||<br>$$<br><br></p>
 <p>定理:</p>
-<p>if $A(a_{ij})$ is an nxn matrix then $||A||<em>\inf = \max</em>{1\le i\le n} \sum_{j=1}^n |a_{ij}|$</p>
+<p>if $A(a_{ij})$ is an nxn matrix then $|A|<em>\inf = \max</em>{1\le i\le n} \sum_{j=1}^n |a_{ij}|$</p>
 <p><img src="/Blog/intro/macm316/norm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>如果求 L1 norm 就是找每一列的norm的最大值, </p>
 <br>
@@ -765,7 +772,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -792,7 +799,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -801,7 +808,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
