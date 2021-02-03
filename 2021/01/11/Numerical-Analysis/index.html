@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -630,26 +630,29 @@ $$
 <li>$||x+y||\le ||x||+||y||$ for all $x, y \in \R^n$ </li>
 </ol>
 <p>$l_2$ norm (L2 范数) or Euclidean norm of a vector x is given by :</p>
-<p>$$<br>{||x||<em>2} = { \sum</em>{i=1}^n x_i^2}^{1/2}<br>$$</p>
+<p>$$<br>{|x|<em>2} = { \sum</em>{i=1}^n x_i^2}^{1/2}<br>$$</p>
 <p>定义: The infinity or max norm of a vector x is given by</p>
-<p>$$<br>||x||<em>\inf = \max</em>{1\le i\le n} |x_i|<br>$$<br><br></p>
+<p>$$<br>|x|<em>{\inf} = \max</em>{1\le i\le n} |x_i|<br>$$<br><br></p>
 <p>L2 distance :</p>
-<p>$$<br>||x-y||<em>2 = { \sum</em>{i=1}^n (x_i-y_i)^2}^{1/2}<br>$$</p>
+<p>$$<br>|x-y|<em>2 = { \sum</em>{i=1}^n (x_i-y_i)^2}^{1/2}<br>$$</p>
 <p>l infinity distance:</p>
-<p>$$<br>||x-y||<em>\inf = \max</em>{1\le i\le n} |x_i-y_i|<br>$$</p>
+<p>$$<br>|x-y|<em>\inf = \max</em>{1\le i\le n} |x_i-y_i|<br>$$</p>
 </blockquote>
 <br>
 
 <br>
 
 <h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a>Convergence</h2><p>Scaler 的converge 是这样的:<br>$$<br>\lim_{k\to \inf} x^{(k)} = x_0<br>$$<br>vector 的 converge也是一样的</p>
-<p>The sequence of vectors ${x^{(k)}}$ converges to x in $\R^n$ with ${||\cdot||<em>\inf}$ if and only if<br>$$<br>\lim</em>{k\to \inf} x_i^{(k)} = x_i<br>$$<br>for each $x_i$</p>
+<p>The sequence of vectors ${x^{(k)}}$ converges to x in $\R^n$ with $| \cdot |_\inf$ if and only if</p>
+<p>$$<br>\lim_{k\to \inf} x_i^{(k)} = x_i<br>$$</p>
+<p>for each $x_i$</p>
 <br>
 
 <br>
 
 <p>例题:</p>
-<p>$x^{(k)}=(1/k, 1+e^{1-k}, -2/k^2)$ is convergent  with $||\cdot||<em>\inf$ and find the limit of the sequence<br>$$<br>\lim</em>{k\to \inf} 1/k = 0<br>$$</p>
+<p>$x^{(k)}=(1/k, 1+e^{1-k}, -2/k^2)$ is convergent  with $|\cdot|_\inf$ and find the limit of the sequence</p>
+<p>$$<br>\lim_{k\to \inf} 1/k = 0<br>$$</p>
 <p>$$<br>\lim_{k\to \inf} 1+e^{1-k} = 1<br>$$</p>
 <p>$$<br>\lim_{k\to \inf} -2/k^2 = 0<br>$$</p>
 <p>所以sequence convegers to $(0, 1, 0)$ with respect to the infinity norm</p>
@@ -772,7 +775,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -799,7 +802,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -808,7 +811,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
