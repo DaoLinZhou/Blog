@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.7k 字
+                    2.8k 字
                   </span>
                 
 
@@ -614,6 +614,59 @@ for i = 1 to n do:
 </li>
 </ul>
 <p>The average running time is $O(n+tE[X])=O(n+t\log n)$</p>
+<br>
+
+<br>
+
+<h2 id="Heap-Sort"><a href="#Heap-Sort" class="headerlink" title="Heap Sort"></a>Heap Sort</h2><p>具体的 heap sort 和 heapify 都在其他的文章中写了, 这里主要讲解一些证明</p>
+<p>max leap 的 properity: $A[\lfloor i/2 \rfloor] \ge A[i]$</p>
+<p><img src="/Blog/intro/cmpt307/heap.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/heap_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>为什么是 $O(\sum_{k=1}^{\log_2n}kn/2^k)$</p>
+<p>当对一个node进行shift down, 需要k步, $k$ 是高度, 而这一层一共有$n/2^k$个node, $O(\sum_{k=1}^{\log_2n}kn/2^k) = O(n \sum_{k=1}^{\log_2n}k/2^k)=O(n)$</p>
+<br>
+
+<p>heap sort</p>
+<p><img src="/Blog/intro/cmpt307/heap_sort.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>heap increase key: 增加某个值</p>
+<p><img src="/Blog/intro/cmpt307/heap_sort_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/heap_sort_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/heap_sort_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Quick-Sort"><a href="#Quick-Sort" class="headerlink" title="Quick Sort"></a>Quick Sort</h2><p><img src="/Blog/intro/cmpt307/quick_sort.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Randomized-QuickSort"><a href="#Randomized-QuickSort" class="headerlink" title="Randomized QuickSort"></a>Randomized QuickSort</h2><p><img src="/Blog/intro/cmpt307/quick_sort_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每个元素都和pivot比较<strong>一次</strong></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Comparison-Base-Sorting-Alogrighm-的极限"><a href="#Comparison-Base-Sorting-Alogrighm-的极限" class="headerlink" title="Comparison Base Sorting Alogrighm 的极限"></a>Comparison Base Sorting Alogrighm 的极限</h2><p><img src="/Blog/intro/cmpt307/quick_sort_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>一些不基于比较的排序算法可以在linear time 进行排序</p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/quick_sort_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

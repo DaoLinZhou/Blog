@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.5k 字
+                    4.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      16 分钟
+                      23 分钟
                   </span>
                 
 
@@ -436,7 +436,7 @@ $$
 <p>此时我们应该计算一下每个function 的slop<br>$$<br>E_1: 30x_1+591400x_2=591700<br>$$</p>
 <p>$$<br>E_2:5.291x_1-6.130x_2= 46.78<br>$$</p>
 <p>$$<br>\frac {30}{591400} &lt; \frac {5.291}{6.13}<br>$$<br>因此应该选择$E_2$</p>
-<p>对于第i行, 我们计算一个值<br>$$<br>\max_{j=1.\cdots n} \frac {|a_{j1}|}{S_j}<br>$$<br>就是让这一行中每一个值除以这一行所有值的和. 也就是计算出这一行中占比最大的值.</p>
+<p>对于第j行, 我们找到这一行的最大值$S_j$, 这个值是不变的.<br>$$<br>\max_{j=1.\cdots n} \frac {|a_{j1}|}{S_j}<br>$$<br>就是让这一行中第一个值除以这一行的最大值.</p>
 <p>当对所有行都计算完成后, 让所有行中这个值最大的行来当pivot</p>
 <br>
 
@@ -516,7 +516,7 @@ $$
 
 <p>另一种特殊的矩阵是:</p>
 <h2 id="positive-definite-matrices"><a href="#positive-definite-matrices" class="headerlink" title="positive definite matrices"></a>positive definite matrices</h2><p>symmetric positive definite matrices</p>
-<p>矩阵A满足<br>$$<br>\vec x^TA \vec x &gt; 0<br>$$<br>例如:</p>
+<p>矩阵A, 对于任何非零向量$x$满足<br>$$<br>\vec x^TA \vec x &gt; 0<br>$$<br>例如:</p>
 <p>Find all values of $\alpha$ for which $A$ is positive definite</p>
 <p><img src="/Blog/intro/macm316/PLU_12.PNg" srcset="/Blog/img/loading.gif" alt></p>
 <p>答案是 $\alpha &gt; 2$</p>
@@ -526,13 +526,184 @@ $$
 <ol>
 <li>A 可逆, 不是非奇异矩阵, 不然 $Ax = \vec 0,\ xAx=0$</li>
 <li>对角线上所有元素大于0</li>
-<li>$\max_{1\le k1j\le n} |a_{kj}| \le \max_{1\le i \le n} |a_{ii}|$</li>
+<li>$\max_{1\le k_{1j}\le n} |a_{kj}| \le \max_{1\le i \le n} |a_{ii}|$</li>
 <li>$(a_{ij})^2 &lt; a_{ii}a_{jj}$</li>
 </ol>
 <br>
 
 <p>(2) 的证明: 假设A的一个对角线元素是负数$a_{ii}$, 如果x中只有第$i$个元素是1, 其他元素都是0</p>
 <p>此时 $x^tAx=a_{ii}$ 而这个元素是负数, 假设矛盾.</p>
+<br>
+
+<br>
+
+<p>上面的四个性质对于大matrix很难进行check.</p>
+<p>因此有了下面的方法</p>
+<blockquote>
+<p>定义: Leading principal submatrix</p>
+<p>一个 leading principal submatrix of a matrix $A$ is a matrix of the from:</p>
+<p><img src="/Blog/intro/macm316/lpsm.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>for some $1\le k \le n$</p>
+<p>简单来说就是取矩阵的左上角的 $(k, k)$ 方阵</p>
+</blockquote>
+<p><strong>Theorem:</strong> </p>
+<p>一个 symmetric matrix $A$ 是 Positive definite <strong>if and only if</strong> $A$ 的每一个leading principal submatrix 的 行列式的值是positive</p>
+<br>
+
+<br>
+
+<p>举个例子: 寻找 $\alpha$ 使得 $A$ 是 Positive definite</p>
+<p><img src="/Blog/intro/macm316/lpsm_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因此我们有3个条件</p>
+<p><img src="/Blog/intro/macm316/lpsm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>解得 $-2&lt;\alpha &lt; 3/2$</p>
+<br>
+
+<br>
+
+<p>为什么我们关注 symmetric positive definite matrices?</p>
+<p><strong>Theorem:</strong></p>
+<p>一个symmetric matrices $A$ 是 positive definite <strong>if and only if</strong> Gaussian Elimination can be performed on the linear system $Ax=b$ <strong>with all the pivot elements positive</strong></p>
+<p>也就是说如果对symmetric positive definite matrices 进行高斯消元, 我们将不会得到 zero pivot</p>
+<p>此时 计算是更加stable 的, without the growth of round off error.</p>
+<br>
+
+<br>
+
+<p>如果$A$ 是 symmetric positive definite, 那么它一定可以进行LU 分解, 甚至由于它是symmetric, 那么 $LU$ 中的 $U$ 就可以是$L^T$</p>
+<p>因为:<br>$$<br>A=LU,\ \ A^T=A=LU \<br>$$</p>
+<p>$$<br>A^T=LU,(A^T)^T=(LU)^T=U^TL^T=A<br>$$</p>
+<p>$U^T$ 是下三角矩阵 $L^T$ 是上三角矩阵</p>
+<p>因此另一个另一个<strong>theorem</strong>是这样的:</p>
+<p>如果$A$ 是 symmetric positive definite, <strong>if and only if</strong>  it can be factored in the form $LL^T$</p>
+<br>
+
+<h2 id="Choleski’s-Algorithm"><a href="#Choleski’s-Algorithm" class="headerlink" title="Choleski’s Algorithm"></a>Choleski’s Algorithm</h2><p>这个算法是对symmetric positive definite matrix 进行 $LL^T$分解的</p>
+<p>时间复杂度时 $n^3/6+n^2/2-2n/3$</p>
+<p>step 1: select $l_{11} &amp; u_{11}$ staisfying $l_{11}u_{11}=a_{11}$, 而 $l_{11}$ 等于 $u_{11}$, 所以 $l_{11}=\sqrt{a_{11}}$ </p>
+<p>step 2: $l_{j1} = a_{j1}/u_{11} =a_{j1}/l_{11}$</p>
+<p>step 3: (no change)</p>
+<p>step 4: select $l_{ii}&amp;u_{ii}$ staisfying $l_{ii}u_{ii}=a_{ii}-\sum_{k=1}^{i-1}l_{ik}u_{ki}=a_{ii}-\sum_{k=1}^{i-1}l_{ik}l_{ik}=\sqrt{a_{ii}-\sum l_{ik}^2}$</p>
+<p>step 5:<br>$$<br>l_{ji} = \frac 1 {u_{ii}} [a_{ji} - \sum_{k=1}^{i-1} l_{jk} u_{ki}] = \frac 1 {l_{ii}} [a_{ji} - \sum_{k=1}^{i-1} l_{jk} u_{ki}]<br>$$<br>step 6:<br>$$<br>l_{nn} u_{nn} = a_{nn} - \sum_{k=1}^{n-1}l_{nk} u_{kn}<br>$$</p>
+<p>$$<br>l_{nn}l_{nn}= a_{nn} - \sum_{k=1}^{n-1}l_{nk} l_{nk}<br>$$</p>
+<p>$$<br>l_{nn}= \sqrt {a_{nn} - \sum_{k=1}^{n-1}l_{nk} l_{nk}}<br>$$</p>
+<br>
+
+<h2 id="banded-matrices"><a href="#banded-matrices" class="headerlink" title="banded matrices"></a>banded matrices</h2><p>concentrate their non-zero entries about the main diagonal</p>
+<blockquote>
+<p>定义:</p>
+<p>An $n\times n$ matrix is called a band matrix if integers $p, q$ with $1&lt;p, q&lt;n$ exist having the property that $a_{ij} = 0$ if $p\le j$ or $j+q\le i$ </p>
+<p>the band width of a band matrix is defined as $w=p+q-1$</p>
+</blockquote>
+<p>例如:</p>
+<p><img src="/Blog/intro/macm316/band.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/band_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/band_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p> tridiagonal matrix</p>
+<p><img src="/Blog/intro/macm316/band_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对这种矩阵进行$LU$分解</p>
+<p><img src="/Blog/intro/macm316/band_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>将二者相乘</p>
+<p><img src="/Blog/intro/macm316/band_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个算法只有 $O(n)$的复杂度</p>
+<br>
+
+<br>
+
+<p>我们依然关注解决$Ax=b$这样的问题, 假设$A$中有大量元素为0</p>
+<p>此时我们考虑iterative techniques</p>
+<p>每次iteration 我们得到一个值 $x^{(0)}, x^{(1)}\cdots$ 随着迭代次数的增加, 这个值越来越接近真实的结果.</p>
+<blockquote>
+<p>感觉和深度学习, 机器学习比较像</p>
+</blockquote>
+<p>而每次iteration的耗时都比较短</p>
+<p>我们想知道 how we are converging. 这就引导我们走向一个新的idea: matrix 的 norm</p>
+<blockquote>
+<p>定义:</p>
+<p>vector norm on $\R^n$ is a function $||\cdot ||$ with the following properties:</p>
+<ol>
+<li>$||x|| \ge 0$ for all $x\in \R^n$</li>
+<li>$||x||=0$ iff $x=\vec 0$</li>
+<li>$||\alpha x|| = |\alpha| \cdot ||x||$</li>
+<li>$||x+y||\le ||x||+||y||$ for all $x, y \in \R^n$ </li>
+</ol>
+<p>$l_2$ norm (L2 范数) or Euclidean norm of a vector x is given by :<br>$$<br>||x||<em>2 = { \sum</em>{i=1}^n x_i^2}^{1/2}<br>$$<br>定义: The infinity or max norm of a vector x is given by<br>$$<br>||x||<em>\inf = \max</em>{1\le i\le n} |x_i|<br>$$<br><br></p>
+<p>L2 distance :<br>$$<br>||x-y||<em>2 = { \sum</em>{i=1}^n (x_i-y_i)^2}^{1/2}<br>$$<br>l infinity distance:<br>$$<br>||x-y||<em>\inf = \max</em>{1\le i\le n} |x_i-y_i|<br>$$</p>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="Convergence"><a href="#Convergence" class="headerlink" title="Convergence"></a>Convergence</h2><p>Scaler 的converge 是这样的:<br>$$<br>\lim_{k\to \inf} x^{(k)} = x_0<br>$$<br>vector 的 converge也是一样的</p>
+<p>The sequence of vectors ${x^{(k)}}$ converges to x in $\R^n$ with $||\cdot||<em>\inf$ if and only if<br>$$<br>\lim</em>{k\to \inf} x_i^{(k)} = x_i<br>$$<br>for each $x_i$</p>
+<br>
+
+<br>
+
+<p>例题:</p>
+<p>$x^{(k)}=(1/k, 1+e^{1-k}, -2/k^2)$ is convergent  with $||\cdot||<em>\inf$ and find the limit of the sequence<br>$$<br>\lim</em>{k\to \inf} 1/k = 0<br>$$</p>
+<p>$$<br>\lim_{k\to \inf} 1+e^{1-k} = 1<br>$$</p>
+<p>$$<br>\lim_{k\to \inf} -2/k^2 = 0<br>$$</p>
+<p>所以sequence convegers to $(0, 1, 0)$ with respect to the infinity norm</p>
+<br>
+
+<p>那么在 L2 范数的convergence呢?<br>$$<br>||x||_\inf \le ||x||_2\le \sqrt{n} ||x||_\inf<br>$$<br>证明:<br>$$<br>||x||_\inf = \max|x_i| = |x_j|<br>$$</p>
+<p>$$<br>||x||<em>\inf ^2 = |x_j|^2=x_j^2\le \sum</em>{i=1}^n x_i^2\le nx_j^2=n||x||_\inf^2<br>$$</p>
+<br>
+
+<p>两边在开根就完成证明</p>
+<br>
+
+<p>例子:</p>
+<p>prove that $x^{(k)}=(1/k, 1+e^{1-k}, -2/k^2)$ is convergent wrt $||\cdot||_2$<br>$$<br>0\le ||x^{(k)}-x||_2 \le \sqrt 3||x^{(k)}-x||_\inf<br>$$</p>
+<p>$$<br>\lim_{k\to \inf}||x^{(k)}-x||_\inf = 0<br>$$</p>
+<p>通过夹逼定理, 得到:<br>$$<br>\lim_{k\to \inf}||x^{(k)}-x||_2 = 0<br>$$<br><br></p>
+<br>
+
+<p>假设有两个norm, $||\cdot ||_a$ $||\cdot||_b$ , 如果 ${x^{(k)}}$ has the limit x wrt $||\cdot ||_a$, then it also has limit x wrt $||\cdot ||_b$</p>
+<p>他们可能有different convergent rate 但是他们要么一起converge, 要么一起不converge</p>
+<br>
+
+<br>
+
+<h2 id="Norm-of-Matrix"><a href="#Norm-of-Matrix" class="headerlink" title="Norm of Matrix"></a>Norm of Matrix</h2><ol>
+<li>$||A|| \ge 0$</li>
+<li>$||A||=0$ iff $A= 0$</li>
+<li>$||\alpha A|| = |\alpha| \cdot ||A||$</li>
+<li>$||A+B||\le ||A||+||B||$</li>
+<li>$||A\cdot B||\le ||A||\cdot ||B||$</li>
+</ol>
+<p>定义: the distance between nxn matrices A and B wrt a matrix norm $||\cdot||$ is<br>$$<br>||A-B||<br>$$<br><br></p>
+<p>定理:</p>
+<p>如果 $||\cdot||$ is a vector norm on $\R^n$ then $||A||=\max_{||x||=1} ||Ax||$ is a matrix norm</p>
+<p>This is called the natrual or induced matrix norm associated with the vector norm</p>
+<p><img src="/Blog/intro/macm316/norm.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于Ax这个椭圆, 我们找距离原点最大的点, 这个向量的norm就是A的norm</p>
+<br>
+
+<p>其他的norm也一样:</p>
+<p><img src="/Blog/intro/macm316/norm_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>定理:<br>$$<br>||Ax|| \le ||A||\cdot ||x||<br>$$<br><br></p>
+<p>定理:</p>
+<p>if $A(a_{ij})$ is an nxn matrix then $||A||<em>\inf = \max</em>{1\le i\le n} \sum_{j=1}^n |a_{ij}|$</p>
+<p><img src="/Blog/intro/macm316/norm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果求 L1 norm 就是找每一列的norm的最大值, </p>
+<br>
+
+<br>
+
+<p>定义: The spectrol radius $p(A)$ of a matrix $A$ is defined by<br>$$<br>p(A) = \max|\lambda|<br>$$<br>就是最大的特征值</p>
+<p>如果$A$ 是 nxn matrix</p>
+<ol>
+<li>$||A||_2 = [p(A^TA)]^{1/2}$</li>
+<li>$p(A)\le ||A||$ for any natural norm $||\cdot||$</li>
+</ol>
+<p><img src="/Blog/intro/macm316/norm_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/norm_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
