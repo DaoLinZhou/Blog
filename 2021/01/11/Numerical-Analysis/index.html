@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.9k 字
+                    4.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      23 分钟
+                      22 分钟
                   </span>
                 
 
@@ -630,13 +630,15 @@ $$
 <li>$||x+y||\le ||x||+||y||$ for all $x, y \in \R^n$ </li>
 </ol>
 <p>$l_2$ norm (L2 范数) or Euclidean norm of a vector x is given by :</p>
-<p>$$<br>{|x|<em>2} = { \sum</em>{i=1}^n x_i^2}^{1/2}<br>$$</p>
+<p><img src="/Blog/intro/macm316/f1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>定义: The infinity or max norm of a vector x is given by</p>
-<p>$$<br>|x|<em>{\inf} = \max</em>{1\le i\le n} |x_i|<br>$$<br><br></p>
+<p><img src="/Blog/intro/macm316/f2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
 <p>L2 distance :</p>
-<p>$$<br>|x-y|<em>2 = { \sum</em>{i=1}^n (x_i-y_i)^2}^{1/2}<br>$$</p>
+<p><img src="/Blog/intro/macm316/f3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>l infinity distance:</p>
-<p>$$<br>|x-y|<em>\inf = \max</em>{1\le i\le n} |x_i-y_i|<br>$$</p>
+<p><img src="/Blog/intro/macm316/f4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 </blockquote>
 <br>
 
@@ -659,7 +661,7 @@ $$
 <br>
 
 <p>那么在 L2 范数的convergence呢?<br>$$<br>||x||_\inf \le ||x||_2\le \sqrt{n} ||x||_\inf<br>$$<br>证明:<br>$$<br>||x||_\inf = \max|x_i| = |x_j|<br>$$</p>
-<p>$$<br>||x||<em>\inf ^2 = |x_j|^2=x_j^2\le \sum</em>{i=1}^n x_i^2\le nx_j^2=n||x||_\inf^2<br>$$</p>
+<p><img src="/Blog/intro/macm316/f5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <p>两边在开根就完成证明</p>
@@ -699,7 +701,8 @@ $$
 
 <p>定理:<br>$$<br>||Ax|| \le ||A||\cdot ||x||<br>$$<br><br></p>
 <p>定理:</p>
-<p>if $A(a_{ij})$ is an nxn matrix then $|A|<em>\inf = \max</em>{1\le i\le n} \sum_{j=1}^n |a_{ij}|$</p>
+<p>if $A(a_{ij})$ is an nxn matrix then </p>
+<p><img src="/Blog/intro/macm316/f6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/macm316/norm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>如果求 L1 norm 就是找每一列的norm的最大值, </p>
 <br>
@@ -775,7 +778,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -802,7 +805,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -811,7 +814,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
