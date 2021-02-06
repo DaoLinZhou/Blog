@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.8k 字
+                    5.4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      22 分钟
+                      25 分钟
                   </span>
                 
 
@@ -717,6 +717,61 @@ $$
 </ol>
 <p><img src="/Blog/intro/macm316/norm_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/macm316/norm_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Converge-of-matrix"><a href="#Converge-of-matrix" class="headerlink" title="Converge of matrix"></a>Converge of matrix</h2><p>我们说 一个nxn matrix convergent if<br>$$<br>\lim_{k\to \inf} (A^k)_{ij} = 0<br>$$<br><img src="/Blog/intro/macm316/matrix_con.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p> $\lim_{k\to \inf} p_k=0$ 证明方法就是 $A\cdot A^{k-1}$ 看 $p_k$ 位置的值, 我们会得到$p_k = \frac {16}{2^{k-1}}+1/2\cdot p_{k-1}$</p>
+<br>
+
+<p>下面的式子等价:</p>
+<ol>
+<li>$A$ is a convergent matrix</li>
+<li>$p(A) &lt; 1$ 最大的绝对值 特征值</li>
+<li>$\lim_{n\to \inf} A^nx=0$ for every x</li>
+<li>$\lim_{n\to \inf} |A^n|=0$</li>
+</ol>
+<br>
+
+<p>我们想求解的问题是 $Ax=b$,  $A$中 的大部分元素都是0.</p>
+<p>Terative techniques convert the system $Ax=b$ into an equivalent system<br>$$<br>x=Tx+c<br>$$<br>$T$ 是一个 fixed matrix</p>
+<p>c 是一个vector<br>$$<br>x^{(k)}=Tx^{(k-1)}+c<br>$$<br>$x^{(k)}$ 是 approximations to the solution</p>
+<p>当k逐渐变大, 就会趋近于真值</p>
+<p>同时我们希望converge reate够快</p>
+<p>我们要选择一个T, 一个c, 以及初始的x</p>
+<br>
+
+<p>首先我们尝试找$T$</p>
+<p>我们把矩阵A进行分解来得到$T$<br>$$<br>(M+(A-M))x=b<br>$$</p>
+<p>$$<br>Mx=b+(M-A)x<br>$$</p>
+<p>$$<br>x=(I-M^{-1}A)x+M^{-1}b<br>$$</p>
+<p>$$<br>x=Tx+c<br>$$</p>
+<p>$$<br>T=(I-M^{-1}A)x, c=M^{-1}b<br>$$</p>
+<p>因为需要M的逆, 所以我们希望M是容易求逆的</p>
+<p>我们不能让$M=A$ 因为这样依然要求A的逆, 并没有简化问题. 所以我们让$M$ “close” to $A$,  用数学表示: 我们希望 $p(T)$ small</p>
+<h3 id="Jacobi-iterative-method"><a href="#Jacobi-iterative-method" class="headerlink" title="Jacobi iterative method"></a>Jacobi iterative method</h3><p>如果让$M$等于 一个对角矩阵, 对角线上的元素等于$A$对角线上的元素. </p>
+<p>对角矩阵的逆是很好求的, 而且如果$A$ 是strongly diagonally dominate, $T$ 会很接近 $A$</p>
+<p>$$<br>A = D-L-U<br>$$<br><img src="/Blog/intro/macm316/matrix_con_1.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>Ax=b<br>$$</p>
+<p>$$<br>(D-L-U)x=b<br>$$</p>
+<p>$$<br>Dx=(L+U)x+b<br>$$</p>
+<p>$$<br>x=D^{-1}(L+U)x+D^{-1}b<br>$$</p>
+<p>$$<br>T=D^{-1}(L+U), c=D^{-1}b<br>$$</p>
+<p><img src="/Blog/intro/macm316/matrix_con_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/matrix_con_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/matrix_con_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/matrix_con_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而这个方法需要D的逆, 因此我们希望$A$对角线上的元素不为0</p>
+<p>因此我们要reording equation 使得对角线上元素不为0</p>
+<br>
+
+<p>Jacobi’s method 也可以这样写:<br>$$<br>x^{(k+1)}=D^{-1}(L+U)x^{(k)}+D^{-1}b<br>$$<br>we find that:<br>$$<br>x_i^{(k+1)} = \sum_{j=1, j\ne i}^n \frac {(-a_{ij}x_j^{(k)})+b_i}{a_{ii}}<br>$$<br>when you have improved approximations of x as soon as they’re avilable</p>
+<h3 id="高斯-赛德尔迭代"><a href="#高斯-赛德尔迭代" class="headerlink" title="高斯-赛德尔迭代"></a>高斯-赛德尔迭代</h3><p>Gauss-Seidel<br>$$<br>x_i^{(k+1)} =\frac{ - \sum_{j=1}^{i-1} (a_{ij}x_j^{(k+1)})-\sum_{j=i+1}^n(a_{ij}x_j^{(k)})+b_i}{a_{ii}}<br>$$<br>Matrix form<br>$$<br>M = (D-L)<br>$$</p>
+<p>$$<br>(D-L-U)x=b<br>$$</p>
+<p>$$<br>(D-L)x=Ux+b<br>$$</p>
+<p>$$<br>x=(D-L)^{-1}Ux+(D-L)^{-1}b<br>$$</p>
+<p>iteration becomes</p>
+<p>此时:<br>$$<br>x^{(k+1)}=(D-L)^{-1}Ux^{(k)}+(D-L)^{-1}b<br>$$</p>
 
             </div>
             <hr>
@@ -778,7 +833,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -805,7 +860,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -814,7 +869,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

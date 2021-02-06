@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.8k 字
+                    2.9k 字
                   </span>
                 
 
@@ -618,7 +618,8 @@ for i = 1 to n do:
 
 <br>
 
-<h2 id="Heap-Sort"><a href="#Heap-Sort" class="headerlink" title="Heap Sort"></a>Heap Sort</h2><p>具体的 heap sort 和 heapify 都在其他的文章中写了, 这里主要讲解一些证明</p>
+<h2 id="Heap-Sort"><a href="#Heap-Sort" class="headerlink" title="Heap Sort"></a>Heap Sort</h2><p><img src="/Blog/intro/cmpt307/heapify.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>具体的 heap sort 和 heapify 都在其他的文章中写了, 这里主要讲解一些证明</p>
 <p>max leap 的 properity: $A[\lfloor i/2 \rfloor] \ge A[i]$</p>
 <p><img src="/Blog/intro/cmpt307/heap.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/heap_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
@@ -667,6 +668,30 @@ for i = 1 to n do:
 <p><img src="/Blog/intro/cmpt307/quick_sort_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/quick_sort_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/quick_sort_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Redix-Sort"><a href="#Redix-Sort" class="headerlink" title="Redix Sort"></a>Redix Sort</h2><p><img src="/Blog/intro/cmpt307/radix.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/radix_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Bucket-Sort"><a href="#Bucket-Sort" class="headerlink" title="Bucket Sort"></a>Bucket Sort</h2><p><img src="/Blog/intro/cmpt307/radix_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/radix_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/radix_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Medians-and-Order-Statistics"><a href="#Medians-and-Order-Statistics" class="headerlink" title="Medians and Order Statistics"></a>Medians and Order Statistics</h2><p><img src="/Blog/intro/cmpt307/radix_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/radix_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/radix_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/radix_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这种方法会找到一个x, 这个x距离median很近, 之后进行paration</p>
+<br>
+
+<br>
+
 
             </div>
             <hr>
@@ -722,7 +747,7 @@ for i = 1 to n do:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -749,7 +774,7 @@ for i = 1 to n do:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -758,7 +783,7 @@ for i = 1 to n do:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
