@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    15.3k 字
+                    16.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      69 分钟
+                      74 分钟
                   </span>
                 
 
@@ -3089,6 +3089,180 @@ t = 12 – 5 – 2 = 5 bits
 <br>
 
 <h3 id="Process-thread-Types"><a href="#Process-thread-Types" class="headerlink" title="Process(thread) Types"></a>Process(thread) Types</h3><p><img src="/Blog/intro/comp_sys/signal_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/signal_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>大部分的操作系统只有 CPU scheduler</p>
+<br>
+
+<h3 id="Scheduler-Types"><a href="#Scheduler-Types" class="headerlink" title="Scheduler Types"></a>Scheduler Types</h3><h4 id="Long-term-scheduler-aka-job-scheduler"><a href="#Long-term-scheduler-aka-job-scheduler" class="headerlink" title="Long-term scheduler(aka job scheduler)"></a>Long-term scheduler(aka job scheduler)</h4><ul>
+<li>select which process should be brought into the ready queue</li>
+<li>Controls the degree of multiprogramming<ul>
+<li>how many process to keep in memory</li>
+</ul>
+</li>
+<li>Invoked infrequently(seconds, minutes)<ul>
+<li>can be slow</li>
+</ul>
+</li>
+<li>Should maintain a ‘good mix’ of CPU-bound and I/O-bound jobs in the system</li>
+</ul>
+<br>
+
+<h4 id="Short-term-scheduler-aka-CPU-scheduler"><a href="#Short-term-scheduler-aka-CPU-scheduler" class="headerlink" title="Short-term scheduler(aka CPU scheduler)"></a>Short-term scheduler(aka CPU scheduler)</h4><ul>
+<li>Selects which process should be executed next and allocates CPU to it</li>
+<li>Invoked very frequently (milliseconds)<ul>
+<li>Must be fast</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h4 id="Medium-term-scheduler"><a href="#Medium-term-scheduler" class="headerlink" title="Medium-term scheduler"></a>Medium-term scheduler</h4><ul>
+<li>Swaps processes in and out of ready queue to enhance performance (i.e. maintain the good mix of job)</li>
+</ul>
+<br>
+
+<h2 id="CPU-Scheduler"><a href="#CPU-Scheduler" class="headerlink" title="CPU Scheduler"></a>CPU Scheduler</h2><p>从ready queue中选择一个进程来在CPU上执行</p>
+<p>核心就两个, “谁”在CPU上运行, 以及运行多长时间</p>
+<ul>
+<li>Scheduling can be <strong>non-preemptive</strong> or <strong>preemptive</strong></li>
+</ul>
+<br>
+
+<p><strong>Non-preemptive:</strong></p>
+<p>Once a process is allocated a CPU, it does not leave unless:</p>
+<ul>
+<li>it has to wait, e.g. for an I/O or for a child to terminate, or</li>
+<li>it terminates</li>
+</ul>
+<br>
+
+<p><strong>Preemptive:</strong></p>
+<p>OS can force (preempt) a process from CPU at anytime</p>
+<ul>
+<li>Say, to allocate the CPU to another higher-priority process</li>
+</ul>
+<br>
+
+<blockquote>
+<p>Preemptive is more difficult to implement</p>
+<p>It need to maintain consistency of data shared between processes and kernel data structures (e.g., I/O queues)</p>
+<ul>
+<li>Preemption while kernel is executing a syscall on behalf of a process (many OSs wait for syscall to finish)</li>
+<li>May need hardware support (like timers)</li>
+</ul>
+</blockquote>
+<br>
+
+<h2 id="Dispatcher"><a href="#Dispatcher" class="headerlink" title="Dispatcher"></a>Dispatcher</h2><p>Dispatcher: 当scheduler选择接下来要执行的进程, dispatcher会allocate a CPU 给这个进程, which involves:</p>
+<ul>
+<li>Switching context</li>
+<li>Switching to user mode</li>
+<li>Jumping to the proper location(in the selected process) and (re)starting it</li>
+</ul>
+<p>Dispatch latency: time take for the dispatcher to stop one process and start another</p>
+<br>
+
+<br>
+
+<h2 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h2><p>Scheduling Criteria(准则):</p>
+<ul>
+<li>最大化:<ul>
+<li>CPU utilization - keep the CPU as busy as possible</li>
+<li>Throughput - number of processes that complete their execution per time uint</li>
+</ul>
+</li>
+<li>最小化<ul>
+<li>Turnaround time - amount of time to execute a particular process (time from submission to termination)</li>
+<li>Waiting time - amount of time a process has bean waiting in ready queue</li>
+<li>Response time - amount of time it takes from when a request is submitted until the first response is preduced</li>
+</ul>
+</li>
+</ul>
+<h3 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a><strong>Algorithms</strong></h3><ul>
+<li>First come, First Served</li>
+<li>Shortest Job First (SJF)<ul>
+<li>Approximate SJF</li>
+<li>Shortest-Remaining-Time-First (SRTF)</li>
+</ul>
+</li>
+<li>Priority</li>
+<li>Round Robin</li>
+<li>Multilevel Queue Scheduling</li>
+<li>Multilevel Feedback Queue Scheduling</li>
+</ul>
+<blockquote>
+<p>一个process可能有many CPU bursts, 但是下面的例子我们假设只有一个CPU</p>
+</blockquote>
+<br>
+
+<h4 id="FCFS-First-come-First-served"><a href="#FCFS-First-come-First-served" class="headerlink" title="FCFS(First come, First served)"></a>FCFS(First come, First served)</h4><p><img src="/Blog/intro/comp_sys/scheduling_algorithm.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>burst time 就是 一个process执行所需要的时间</p>
+<p>此时就是Non-preemptive scheduling</p>
+<p>这个的waiting time取决于哪个进程先来. 如果以P2, P3, P1 这个顺序arrive的话, waiting time也会不同</p>
+<p><img src="/Blog/intro/comp_sys/scheduling_algorithm_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这里我们没有考虑Dispatcher latency 和 scheduler latency</p>
+<br>
+
+<p>坏处</p>
+<p><img src="/Blog/intro/comp_sys/scheduling_algorithm_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="SJF-Shortest-Job-First"><a href="#SJF-Shortest-Job-First" class="headerlink" title="SJF(Shortest-Job-First)"></a>SJF(Shortest-Job-First)</h4><p><img src="/Blog/intro/comp_sys/scheduling_algorithm_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个算法需要知道process的运行时间</p>
+<p>当P1执行完成后, P2, P3, P4 就都在ready queue中了</p>
+<p>我们发现P3有最小的运行时间, 所以接下来让P3执行</p>
+<p>P3执行完成后, 由于P2和P4的执行时间一样, 所以选哪个都行</p>
+<p>怎么看waiting time呢?  就是看每一个进程的到达时间和开始执行时间的间距就一这个进程的waiting time</p>
+<p>依然这是non-preemptive</p>
+<br>
+
+<h4 id="Shortest-Remaining-Time"><a href="#Shortest-Remaining-Time" class="headerlink" title="Shortest-Remaining-Time"></a>Shortest-Remaining-Time</h4><p><img src="/Blog/intro/comp_sys/scheduling_algorithm_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就是preemptive的算法</p>
+<p>思想就是当一个process<strong>来到队列</strong>时, 就对当前任务进行一下暂停, 同时计算一下它剩余的预计要完成时间, 对于所有的process的剩余预计完成时间, 挑选最小的那个进行执行. 同理当<strong>一个任务完成时</strong>也这样执行一次.</p>
+<p>这样就可以保证当前执行的任务是所有process中最快完成的</p>
+<br>
+
+<br>
+
+<h4 id="Priority-Scheduling"><a href="#Priority-Scheduling" class="headerlink" title="Priority Scheduling"></a>Priority Scheduling</h4><p><strong>Schedule the process with the highest priority</strong></p>
+<p>Priority: An integer associated with each process</p>
+<ul>
+<li><p>Priority can be based on many factors</p>
+<ul>
+<li>Time limits</li>
+<li>Memory requirements</li>
+<li>External factors<ul>
+<li>e.g. system vs user jobs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Can be preemptive or non-preemptive</p>
+</li>
+<li><p>Vulnerable to starvation</p>
+<ul>
+<li>low priority processes may never execute</li>
+<li>Possible solution: change priority dynamically<ul>
+<li>Aging- increase the priority of a process as it waits</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>if priority is inverse of CPU burst length, then it becomes <strong>SJF</strong></p>
+<br>
+
+<h4 id="Round-Robin-RR-Scheduling"><a href="#Round-Robin-RR-Scheduling" class="headerlink" title="Round Robin(RR) Scheduling"></a>Round Robin(RR) Scheduling</h4><p><img src="/Blog/intro/comp_sys/scheduling_algorithm_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>随机为每个进程分配一些运行时间$q$, 当时间到了的时候就切换进程</p>
+<p>If there are n processes in the ready queue</p>
+<ul>
+<li>Each process gets $1/n$ of  CPU time</li>
+<li>Processes wait for at most $(n-1)q$ time units before executing</li>
+</ul>
+<p>Typically, higher average turnaround time than SJF, but better response time</p>
+<p>如果 $q$ 非常大就会变成FCFS</p>
+<p>如果 $q$ 非常小, High overhead due to many context switches</p>
+<p><img src="/Blog/intro/comp_sys/scheduling_algorithm_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

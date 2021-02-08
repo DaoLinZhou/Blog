@@ -772,7 +772,80 @@ $$
 <p>$$<br>x=(D-L)^{-1}Ux+(D-L)^{-1}b<br>$$</p>
 <p>iteration becomes</p>
 <p>此时:<br>$$<br>x^{(k+1)}=(D-L)^{-1}Ux^{(k)}+(D-L)^{-1}b<br>$$</p>
+<br>
 
+<br>
+$$
+x^{(k)}=Tx^{(k-1)}+c
+$$
+Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists $$ (i-t)^{-1}="I+T+T^2+\cdots" <br>
+
+<h3 id="强力的定理"><a href="#强力的定理" class="headerlink" title="强力的定理"></a>强力的定理</h3><p>Therom:</p>
+<p>对于任意$x^{(0)}\in R^n$ , sequence ${ x^{(k)} }_{k=0}$ defined by<br>$$<br>x^{(k)}=Tx^{(k-1)}+c<br>$$<br>converges to the unique solution of<br>$$<br>x=Tx+c<br>$$<br>if and only if<br>$$<br>p(T) &lt; 1<br>$$<br><br></p>
+<p>证明: &lt;=</p>
+<p>假设 $p(T)&lt;1$<br>$$<br>x^{(k)} = Tx^{(k-1)}+c<br>$$</p>
+<p>$$<br>= T(Tx^{(k-2)}+c)+c = T^2x^{(k-2)}+(T+I)c<br>$$</p>
+<p>$$<br>=\cdots \cdots<br>$$</p>
+<p>$$<br>=T^kx^{(0)}+(T^{k-1}+\cdots +T+I)c<br>$$</p>
+<p>由于$p(T)&lt;1$, matrix $T$ is convergent 所以 $\lim_{k\to \inf} T^kx^{(0)}=0$</p>
+<p>因此<br>$$<br>\lim_{k\to \inf}x^{(k)} = \lim_{k\to \inf} T^kx^{(0)}+\lim_{k\to \inf}(\sum_{j=0}^{k-1}T^j)c<br>$$</p>
+<p>$$<br> =O+(I-T)^{-1}c<br>$$</p>
+<br>
+
+<p>证明: =&gt;</p>
+<p>${ x^{(k)}}$ converges to the unique solution of $x=Tx+c$</p>
+<p>假设$x^{(0)} \in R^n$ be arbitrary, 我们知道 ${ x^{(k)}}_0^\inf$ converges to  solution of $x=Tx+c$<br>$$<br>x-x^{(k)} = (Tx+c)-(Tx^{(k-1)}+c) = T(x-x^{(k-1)})<br>$$<br>因此<br>$$<br>x-x^{(k)}=T(x-x^{(k-1)})=T^2(x-x^{(k-2)})<br>$$</p>
+<p>$$<br>=\cdots<br>$$</p>
+<p>$$<br>=T^k(x-x^{(0)})<br>$$</p>
+<p>而当k趋近于无穷时 $x-x^{(k)}\to 0$</p>
+<p>由于 $x^{(0)}$ 是arbitrary, $x-x^{(0)}$ 是arbitrary</p>
+<p>因此 唯一能让$T^k(x-x^{(0)})$ 为0的方法就是 T is convergent, 也就是说 $p(T)&lt;1$</p>
+<br>
+
+<br>
+
+<p>any natural norm of matrix $T$,  $||T||&lt;1$ , 那么$x^{(k)}=Tx^{(k-1)}+c$ converges, 并且following error bounds hold:</p>
+<ol>
+<li>$||x-x^{(k)}||\le ||T||^k||x^{(0)}-x||$</li>
+<li>$||x-x^{(k)}||\le \frac {||T||^k}{1-||T||}||x^{(1)}-x^{(0)}||$</li>
+</ol>
+<p>然而我们其实不知道x, 所以1其实我们用不了, 它只能告诉我们error是怎么decreasing的</p>
+<p>第二个明确给出了error的bound</p>
+<br>
+
+<p>$p(A)\le ||A||$ in practice:<br>$$<br>||x-x^{(k)}||\approx p(T)^k||x^{(0)}-x||<br>$$<br>so it is desirable to have $p(T)$ to be as small as possible</p>
+<p>然而这个没有严格的数学证明</p>
+<br>
+
+<br>
+
+<p>Theorem: 如果A是strictly diagonally dominant then for any choice of $x^{(0)}$ both Jacobi and gauss-seidel method gives sequences ${x^{(0)}}_{k=0}^\inf$ that converge to the unique solution $Ax=b$</p>
+<p>然而没有general result 说哪种方法converge 更快</p>
+<br>
+
+<p>有一些speciallize situation可以知道哪种方法converge更快</p>
+<h3 id="Stein-Sosenberg"><a href="#Stein-Sosenberg" class="headerlink" title="Stein Sosenberg"></a>Stein Sosenberg</h3><p>如果$a_{ij}\le 0$ for each $i\ne j$ and $a_{ii}&gt;0$ for each $i=1,2,…n$ then exactly one of the following holds:</p>
+<ol>
+<li>$0\le p(T_g)\le p(T_j) &lt; 1$</li>
+<li>$1&lt;p(T_j)&lt;p(T_g)$</li>
+<li>$p(T_j)=p(T_g)=0$ or $p(T_j)=p(T_g)=1$</li>
+</ol>
+<p>(1) 说两种方法都converge, Gauss-Seidel method converge quickly</p>
+<p>(2) 说两种方法都diverge, Gauss-Seidel method diverge quickly</p>
+<br>
+
+<h3 id="Successive-Over-Relaxation-SOR"><a href="#Successive-Over-Relaxation-SOR" class="headerlink" title="Successive Over Relaxation (SOR)"></a>Successive Over Relaxation (SOR)</h3><p>Given $x^{(k)}$ , 对它使用一次Gauss-Seidel 得到$\tilde x^{(k+1)}$<br>$$<br>x^{(k+1)} = w\tilde x^{(k+1)}+(1-w)x^{(k)}<br>$$<br>$1&lt;w&lt;2$当w=1时就是取gauss-seidel的结果<br>$$<br>x^{(k+1)}=T_{sor}x^{(k)}+c<br>$$<br>Theorm:</p>
+<p>如果所有 $a_{ii}\ne 0$ 那么: $p(T_{sor})\ge |w-1|$</p>
+<p>sor can converge only if $0&lt;w&lt;2$</p>
+<br>
+
+<p>Theorm:</p>
+<p>If A is a sysmetric positive definite matrix and $0&lt;w&lt;2$ then the SOR method converges for any choice of initial approximation vector $x^{(0)}$</p>
+<br>
+
+<p>Theorm:</p>
+<p>If A is a sysmetric positive definite matrix and tridiagonal, then<br>$$<br>p(T_g)=[p(T_j)]^2&lt;1<br>$$<br>and the optional choice of $w$ for the SOR method is<br>$$<br>w=\frac {2}{1+\sqrt{1-p(T_j)^2}}<br>$$<br>with this $w$, $p(T_{sor}) = w-1$</p>
+</1$>
             </div>
             <hr>
             <div>
