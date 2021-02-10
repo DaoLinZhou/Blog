@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -601,13 +601,18 @@ $$
 <p><img src="/Blog/intro/macm316/band_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
-<p> tridiagonal matrix</p>
-<p><img src="/Blog/intro/macm316/band_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Crout-Factorization-for-Tridiagonal-Linear-Systems"><a href="#Crout-Factorization-for-Tridiagonal-Linear-Systems" class="headerlink" title="Crout Factorization for Tridiagonal Linear Systems"></a>Crout Factorization for Tridiagonal Linear Systems</h3><p><img src="/Blog/intro/macm316/band_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>对这种矩阵进行$LU$分解</p>
 <p><img src="/Blog/intro/macm316/band_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>将二者相乘</p>
 <p><img src="/Blog/intro/macm316/band_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>这个算法只有 $O(n)$的复杂度</p>
+<p>这么看有点抽象, 我把书中的例子放进来</p>
+<p><img src="/Blog/intro/macm316/Crout_factorizatio.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/Crout_factorizatio_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/Crout_factorizatio_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/Crout_factorizatio_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/macm316/Crout_factorizatio_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
 <br>
@@ -845,6 +850,58 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 
 <p>Theorm:</p>
 <p>If A is a sysmetric positive definite matrix and tridiagonal, then<br>$$<br>p(T_g)=[p(T_j)]^2&lt;1<br>$$<br>and the optional choice of $w$ for the SOR method is<br>$$<br>w=\frac {2}{1+\sqrt{1-p(T_j)^2}}<br>$$<br>with this $w$, $p(T_{sor}) = w-1$</p>
+<p>然而如果是三角矩阵我们就可以直接用其他方法求出来了</p>
+<br>
+
+<br>
+
+<h2 id="Solution-of-Nonlinear-Equations"><a href="#Solution-of-Nonlinear-Equations" class="headerlink" title="Solution of Nonlinear Equations"></a>Solution of Nonlinear Equations</h2><p>Find a root $x\in R$ of an equation of the form $f(x)=0$ for a given continuous function $f$</p>
+<p>这个问题通常没有解析解( can’t solve analytically )</p>
+<p>但是可以考虑使用iterative methods 来逼近 true solution</p>
+<br>
+
+<h3 id="Bisection-method"><a href="#Bisection-method" class="headerlink" title="Bisection method"></a>Bisection method</h3><p>这个方法是先找到一个区间$[a,b]$, 使得 $f(a), f(b)$ 的sign不同: 一个为正数一个为负数</p>
+<p> 而由于$f$是连续的, 所以a,b之间一定有一个root</p>
+<p>之后就是不断用二分法, 来缩小$[a, b]$ 之间的距离</p>
+<br>
+
+<p>我们需要对比$f(a)$ 和$f(b)$ 的符号, 一种方法是看$f(a)\cdot f(b)&lt;0$</p>
+<p>然而当$f(a),f(b)$都很小时, $f(a)\cdot f(b)$ 有underflow的风险</p>
+<p>所以一种更好的方法是:<br>$$<br>sign(f(a))\cdot sign(f(b))&lt;0<br>$$<br>我们只关心他们的sign</p>
+<br>
+
+<p>我们需要在某些时刻停止iteration</p>
+<h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>一种方法是:</p>
+<p>当区间的值小于某些 tolerance<br>$$<br>\frac {|b_n-a_n|}{2} &lt; TOL<br>$$<br>这么做的好处:</p>
+<ol>
+<li>确保root的值是在tolerance中的</li>
+<li>easy error analysis</li>
+</ol>
+<p>坏处:</p>
+<ol>
+<li>无法确保$f(p_n)$ small</li>
+<li>基于absolute error而不是relative error</li>
+</ol>
+<br>
+
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>另一种方法是<br>$$<br>\frac {|p_n-p_{n-1}|}{|p_n|} &lt; TOL<br>$$<br>$p_n \ne 0$, $p_n$ 是第n次迭代的root</p>
+<br>
+
+<h4 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h4><p>第三种方法<br>$$<br>|f(p_n)| &lt;TOL<br>$$<br>有时候我们只关心$f(p_n)$ 是否够小</p>
+<br>
+
+<h4 id="方法4"><a href="#方法4" class="headerlink" title="方法4"></a>方法4</h4><p>我们可以固定迭代次数, 这个和方法1密切相关</p>
+<br>
+
+<p>bisection的精确度:</p>
+<p>通过 bisection 我们得到一组$p_i$ $p_n$ 是最后一次迭代的值, $p$ 是真正的root<br>$$<br>|p_n-p| \le \frac {b-a} {2^n}<br>$$<br>每次我们都把interval对半分</p>
+<br>
+
+<br>
+
+<p>例子$x^3+x-4=0$ on the interval $[1,4]$ to an accuracy of $10^{-3}$</p>
+<p>也就就是说$\frac {b-a} {2^n} \le 10^{-3}$<br>$$<br>\frac {4-1}{2^n} \le 10^{-3}<br>$$<br>解得 $n\approx 11.5$</p>
+<p>所以 让 $n=12$</p>
 </1$>
             </div>
             <hr>
@@ -906,7 +963,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -933,7 +990,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -942,7 +999,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
