@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -783,8 +783,7 @@ $$
 $$
 x^{(k)}=Tx^{(k-1)}+c
 $$
-Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists $$ (i-t)^{-1}="I+T+T^2+\cdots" <br>
-
+Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists <p>$$<br>(I-T)^{-1}=I+T+T^2+\cdots<br>$$<br><br><p></p>
 <h3 id="强力的定理"><a href="#强力的定理" class="headerlink" title="强力的定理"></a>强力的定理</h3><p>Therom:</p>
 <p>对于任意$x^{(0)}\in R^n$ , sequence ${ x^{(k)} }_{k=0}$ defined by<br>$$<br>x^{(k)}=Tx^{(k-1)}+c<br>$$<br>converges to the unique solution of<br>$$<br>x=Tx+c<br>$$<br>if and only if<br>$$<br>p(T) &lt; 1<br>$$<br><br></p>
 <p>证明: &lt;=</p>
@@ -902,6 +901,98 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 <p>例子$x^3+x-4=0$ on the interval $[1,4]$ to an accuracy of $10^{-3}$</p>
 <p>也就就是说$\frac {b-a} {2^n} \le 10^{-3}$<br>$$<br>\frac {4-1}{2^n} \le 10^{-3}<br>$$<br>解得 $n\approx 11.5$</p>
 <p>所以 让 $n=12$</p>
+<br>
+
+<br>
+
+<h3 id="Fixed-Point-Iteration"><a href="#Fixed-Point-Iteration" class="headerlink" title="Fixed Point Iteration"></a>Fixed Point Iteration</h3><p>我们希望找到$f(p)=0$ 的root. 而这里我们将关注使用 iterate method 解决这个问题<br>$$<br>p^{n+1}=g(p^n)<br>$$<br>fix point 定义:</p>
+<blockquote>
+<p>A fix point $p$ is the value $p$ s.t. $g(p)=p$</p>
+</blockquote>
+<br>
+
+<p>我们可以把 root finding problem 转换为 fix point problem</p>
+<p>假设 $p$ 是$f(x)$ 的根. 我们可以让$g(x)=f(x)+x$ </p>
+<p>$g(p)=f(p)+p$, $f(p)=0$ 所以 $p=g(p)$</p>
+<p>当然 $g(x)$ 还有其他选择, 例如:$g(x)=f^3(x)+x$</p>
+<br>
+
+<p>也可以反过来:</p>
+<p>把 fix point problem 转换为 root finding problem</p>
+<p>已知$g(p)=p$ 可以让$f(x)=g(x)-x$</p>
+<p>那么$f(p)=g(p)-p=0$</p>
+<br>
+
+<p>例题:</p>
+<p>$g(x)=\sin\pi x$ 在 $[0,1]$之间的fix point</p>
+<p><img src="/Blog/intro/macm316/fix_point.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>有两个fix point</p>
+<br>
+
+<br>
+
+<h4 id="Mean-value-Theorem"><a href="#Mean-value-Theorem" class="headerlink" title="Mean value Theorem"></a>Mean value Theorem</h4><p>如果$f$ 在$(a,b)$连续可导, 那么有$c\in(a,b)$<br>$$<br>f’(c)=\frac {f(b)-f(a)}{b-a}<br>$$<br>theorem:</p>
+<ol>
+<li><p>If $g\in C[a,b]$ and $g(x)\in [a, b]$ for all $x\in[a,b]$ then $g(x)$ has a fixed point in $[a,b]$</p>
+<ul>
+<li>就是说如果$g$在$(a,b)$ 处连续, 同时$g(x)$在$(a,b)$之间, 那么$g$ 在$(a,b)$中有fix point</li>
+</ul>
+</li>
+<li><p>suppose, in addition that $g’(x)$ exists on $(a,b)$ and that a positive constant $k\le 1$ exists with<br>$$<br>|g’(x)|\le k&lt;1<br>$$<br>for all $x\in (a,b)$. then the fixed point in $[a,b]$ is unique</p>
+</li>
+</ol>
+<p>2可以用反证法, 假设有两个fix point 根据 Mean value Theorem, 两点之间必然有一点的导等于1. 和假设不符. </p>
+<br>
+
+<p>例题:<br>$$<br>p^3+4p^2-10=0<br>$$<br>首先尝试 $x=g_1(x)=x-x^3-4x+10$</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>$x_n$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>1</td>
+<td>-0.875</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6.732</td>
+</tr>
+<tr>
+<td>3</td>
+<td>-469.7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$1.03\times 10^8$</td>
+</tr>
+</tbody></table>
+<p>明显diverge.</p>
+<br>
+
+<p>再尝试$x=g_2(x)=\sqrt {\frac {10}{x}-4x}$</p>
+<p>式子是哪来的?<br>$$<br>x^3+4x^2-10=0<br>$$</p>
+<p>$$<br>x^3=10-4^2<br>$$</p>
+<p>$$<br>x^2=\frac {10}{x}-4x<br>$$</p>
+<p>$$<br>x=\sqrt {\frac {10}{x}-4x}<br>$$</p>
+<br>
+
+<p>我们不仅希望converge, 还希望converge足够快</p>
+<p>然而有的iteration converge 有的 diverge, 并且速度不一样</p>
+<p>前面我们知道</p>
+<p>suppose, in addition that $g’(x)$ exists on $(a,b)$ and that a positive constant $k\le 1$ exists with<br>$$<br>|g’(x)|\le k&lt;1<br>$$<br>for all $x\in (a,b)$. then the fixed point in $[a,b]$ is unique</p>
+<p>还有一点就是convege</p>
+<p>证明:<br>$$<br>|p_n-p|=|g(p_{n-1})-g(p)|<br>$$<br>根据Mean value theorem<br>$$<br>=|g’(c)||p_{n-1}-p|<br>$$</p>
+<p>$$<br>\le k|p_{n-1}-p|<br>$$</p>
+<p>同理可以替换为<br>$$<br>\le k^2|p_{n-2}-p|<br>$$</p>
+<p>$$<br>\le k^n|p_{0}-p|<br>$$</p>
+<p>$k&lt;1$ 所以取limit 就是 0, 因此converge</p>
 </1$>
             </div>
             <hr>
@@ -963,7 +1054,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -990,7 +1081,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -999,7 +1090,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

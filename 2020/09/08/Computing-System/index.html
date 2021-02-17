@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    16.2k 字
+                    16.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      74 分钟
+                      77 分钟
                   </span>
                 
 
@@ -3263,6 +3263,129 @@ t = 12 – 5 – 2 = 5 bits
 <p>如果 $q$ 非常大就会变成FCFS</p>
 <p>如果 $q$ 非常小, High overhead due to many context switches</p>
 <p><img src="/Blog/intro/comp_sys/scheduling_algorithm_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h4 id="Multilevel-Queue-Scheduling"><a href="#Multilevel-Queue-Scheduling" class="headerlink" title="Multilevel Queue Scheduling"></a>Multilevel Queue Scheduling</h4><p>本质是上述算法的结合</p>
+<p><img src="/Blog/intro/comp_sys/scheduling_algorithm_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时我们有多个ready queue, 我们可以给每一个queue使用一个算法</p>
+<p>一个进程可以在多个不同的queue中移动(动态改变priority)</p>
+<p>思想: 当一个进程需要大量CPU时就把它挪到lower priority queue中</p>
+<p>为此, 我们需要定义:</p>
+<ol>
+<li>number of queues</li>
+<li>每一个queue的独调度算法</li>
+<li>Method to move process up/down in queues</li>
+<li>Start queue for each process</li>
+</ol>
+<p><img src="/Blog/intro/comp_sys/scheduling_algorithm_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Q1中的任务只有在Q0为空时才会执行</p>
+<p>一个新的job会先放入Q0中, 得到8ms的运行时间, 如果没有运行完, 把它转移到Q1(<strong>当一个进程需要大量CPU时就把它挪到lower priority queue中</strong>)</p>
+<p>因此: </p>
+<p>Short processes are served faster -&gt; more responsive</p>
+<p>Long processes will sink to the bottom (FCFS) (higher throughput)</p>
+<br>
+
+
+
+<h3 id="Multiple-Processor-Scheduling"><a href="#Multiple-Processor-Scheduling" class="headerlink" title="Multiple-Processor Scheduling"></a>Multiple-Processor Scheduling</h3><p>然而, 通常电脑是有多个CPU的, 多个hyper-thread</p>
+<p>需要在其中多个处理器之间分配负载</p>
+<ul>
+<li>比单核的CPU调度更难</li>
+</ul>
+<p>如何divide load?</p>
+<ul>
+<li>Asymmetric multiprocessor<ul>
+<li>One master processor does the scheduling for others</li>
+</ul>
+</li>
+<li>Symmetric multiprocessor(SMP)<ul>
+<li>Each processor runs its own scheduler</li>
+<li>One ready queue for all processors or separate ready queue for each processor</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="SMP-Issues"><a href="#SMP-Issues" class="headerlink" title="SMP Issues"></a>SMP Issues</h3><p>Processor affinity:</p>
+<ul>
+<li><p>When a process runs on a processor, some data is brought in to that processor’s cache</p>
+</li>
+<li><p>Process migrates to another processor</p>
+<ul>
+<li>Cache of new processor has to be re-populated</li>
+<li>Cache of old processor has to be invalidated</li>
+<li>Performance penalty</li>
+<li>Extra interconnect traffic (NUMA effect)</li>
+</ul>
+</li>
+<li><p>Related tool: taskset</p>
+<ul>
+<li>Set processor affinity for a program (指定process在那个CPU上运行)</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p>Load balancing:</p>
+<p>确保负载在处理器之间平均分配</p>
+<p>Balance load using:</p>
+<ul>
+<li><strong>Push migration</strong>: A specific task periodically checks load on all processors and evenly distributes it by moving tasks   </li>
+<li><strong>Pull migration</strong>: Idle processor pulls a waiting task from a busy processor</li>
+</ul>
+<p>Tradeoff between load balancing and processor affinity</p>
+<br>
+
+<br>
+
+<h3 id="Real-time-Scheduling"><a href="#Real-time-Scheduling" class="headerlink" title="Real-time Scheduling"></a>Real-time Scheduling</h3><p><strong>Hard-real time systems:</strong></p>
+<ul>
+<li>Task must be finished within a deadline.<ul>
+<li>通常用于嵌入式系统, 例如飞机</li>
+</ul>
+</li>
+<li>Need different types of schedulers to ensure deadlines are met.<ul>
+<li>Rate monotonic, earliest deadline first (EDF)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Soft-real time systems:</strong></p>
+<ul>
+<li>没有严格的deadline,but should be executed “quickly”<ul>
+<li>Examples: multimedia systems, kernel tasks </li>
+</ul>
+</li>
+<li>Priority based scheduling with preemption</li>
+</ul>
+<br>
+
+<h2 id="Linux-Completely-Fair-Scheduler-CFS"><a href="#Linux-Completely-Fair-Scheduler-CFS" class="headerlink" title="Linux: Completely Fair Scheduler (CFS)"></a>Linux: Completely Fair Scheduler (CFS)</h2><p>Separate scheduling classes</p>
+<ul>
+<li><p>Real-time processes: higher priority (FIFO, RR)</p>
+</li>
+<li><p>Normal processes: lower priority (CFS)</p>
+</li>
+</ul>
+<p>Each process gets a time portion based on its <strong>nice value</strong></p>
+<ul>
+<li>Nice value from -20 to +19 (lower nice = higher priority)</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/nice.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Virtual-run-time"><a href="#Virtual-run-time" class="headerlink" title="Virtual run time"></a>Virtual run time</h3><p>Used to automatically determine priority</p>
+<p>Physical run time + decay</p>
+<ul>
+<li><p>Low priority processes have higher decay</p>
+</li>
+<li><p>Normal default priority yields virtual run time = actual run time</p>
+</li>
+</ul>
+<p>优先级和虚拟运行时间成反比</p>
+<p>Preemption is allowed</p>
+<p><img src="/Blog/intro/comp_sys/nice_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -3330,7 +3453,7 @@ t = 12 – 5 – 2 = 5 bits
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -3357,7 +3480,7 @@ t = 12 – 5 – 2 = 5 bits
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -3366,7 +3489,7 @@ t = 12 – 5 – 2 = 5 bits
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
