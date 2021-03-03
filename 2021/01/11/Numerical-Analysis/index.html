@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -993,6 +993,235 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 <p>同理可以替换为<br>$$<br>\le k^2|p_{n-2}-p|<br>$$</p>
 <p>$$<br>\le k^n|p_{0}-p|<br>$$</p>
 <p>$k&lt;1$ 所以取limit 就是 0, 因此converge</p>
+<br>
+
+<br>
+
+<h3 id="Newton’s-method"><a href="#Newton’s-method" class="headerlink" title="Newton’s method"></a>Newton’s method</h3><p>这个方法比Bisection更快</p>
+<p>然而它的缺点是:</p>
+<ul>
+<li>需要我们知道$f’(x)$</li>
+<li>无法保证converge</li>
+<li>需要一个好的 initial guess</li>
+</ul>
+<p><img src="/Blog/intro/macm316/newton.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$p_0$ 是 initial guess, 我们找到$f’(p)$ 它与x轴的交点就是$p_1$ 之后持续这么做</p>
+<h4 id="Taylor’s-Theorm-derivation"><a href="#Taylor’s-Theorm-derivation" class="headerlink" title="Taylor’s Theorm derivation"></a>Taylor’s Theorm derivation</h4><p>我们希望找到$x=p$使得$f(x)=0$</p>
+<p>假设$f\in C^2[a,b]$ (continuous second derivative), 让$\bar x \in [a,b]$ 作为一个approximation to $p$, 使得 $f’(\bar x)\ne 0$ 并且 $|\bar x - p|$ 足够小, 那么<br>$$<br>f(x)=f(\bar x)+f’(\bar x)(x-\bar x)+\frac 12 f’’(c(x))(x-\bar x)^2<br>$$<br>$c(x)$ 是error, $c(x) \in [x, \bar x]$</p>
+<p>让$x=p$<br>$$<br>0=f(\bar x)+f’(\bar x)(p-\bar x)+\frac 12 f’’(c(p))(p-\bar x)^2<br>$$<br>由于$|p-\bar x|$ 足够小, $|p-\bar x|^2$ 也足够小, 因此<br>$$<br>0\approx f(\bar x)+f’(\bar x)(p-\bar x)<br>$$</p>
+<p>$$<br>(p-\bar x)\approx - \frac {f(\bar x)}{f’(\bar x)}<br>$$</p>
+<p>$$<br>p\approx \bar x - \frac {f(\bar x)}{f’(\bar x)}<br>$$</p>
+<p>所以newton’s method 说用这个approximate作为下一个solution</p>
+<p>newton’s mthod<br>$$<br>p_n \approx p_{n-1} - \frac {f(p_{n-1})}{f’(p_{n-1})}<br>$$<br>iterate until</p>
+<ol>
+<li>$|p_n-p_{n-1}| &lt; \epsilon$</li>
+<li>$\frac {|p_n-p_{n-1}|}{|p_n|} &lt; \epsilon, p_n\ne 0$</li>
+<li>$|f(p_n)|\le \epsilon$</li>
+</ol>
+<p>如果任何$f’(p_{n-1})=0$, Newton’s method 会失败</p>
+<p>同时$|p-\bar x|$ 要小, 因此我们需要一个好从初始猜测</p>
+<br>
+
+<br>
+
+<p>然而在一些条件下, newton’s method 也会 converge</p>
+<ol>
+<li>f(x) 是 smoothness</li>
+<li>good initial guess</li>
+<li>$f’(p)\ne 0$</li>
+</ol>
+<p><strong>Theorem(converges)</strong></p>
+<p>让 $f\in C^2[a,b]$ 如果 $p\in[a,b], f(p)=0, f’(p)\ne0$ 那么就存在$c&gt;0$ 使得通过newton’s method 得到的sequence${p_n}_{n=1}^\inf$ converging to $p$ for any initial approximation $p_0\in[p-c,p+c]$</p>
+<br>
+
+<p>这背后的证明思路就是fix point theorem</p>
+<br>
+
+<h3 id="Secant-method"><a href="#Secant-method" class="headerlink" title="Secant method"></a>Secant method</h3><p>newton’s mehtod 需要$f’(x)$, 然而这个难以计算, 因此我们可以用另一种方法来逼近<br>$$<br>f’(p_{n-1}) \approx \frac {f(p_{n-2})-f(p_{n-1})}{p_{n-2}-p_{n-1}}<br>$$<br><img src="/Blog/intro/macm316/newton_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Secant method 有着媲美 nweton’s method 的速度. (稍微比newton 慢点)</p>
+<br>
+
+<p>通常我们可以先用Bisection来逼近root, 只用转用newton’s method 或secant method来加快速度</p>
+<br>
+
+<br>
+
+<h3 id="Error-Analysis"><a href="#Error-Analysis" class="headerlink" title="Error Analysis"></a>Error Analysis</h3><p>example:</p>
+<p>假设我们用两种方法寻找 $x^3+4x^2-10=0$ 的根, </p>
+<p><img src="/Blog/intro/macm316/errors_root.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到方法A每次error基本都是上一次的一半</p>
+<p>而方法B的errorerror基本是上一次error的平方</p>
+<p>明显方法B比方法A更快</p>
+<br>
+
+<p>定义:</p>
+<p>假设 ${p_n}<em>{n=0}^\inf$ converge to $p$ 并且所有的$p_n \ne 0$, 如果有positive constants $\lambda, \alpha$ 存在<br>$$<br>\lim</em>{n\to \inf} \frac {|p_{n+1}-p|}{|p_n-p|^\alpha}=\lambda<br>$$<br>那么 ${p_n}_{n=0}^\inf$ converges to $p$ of order $\alpha$</p>
+<p>就是说 absolute error at step $n+1 \approx \lambda \cdot$ absolute error at step $n$   的alpha 次方</p>
+<p>$\lambda \ne 0, \lambda \ne \inf$</p>
+<p>$\lambda$ 越小, $\alpha$ 越大, converge 越快, $\lambda$ 对converge速度的effect小于$\alpha$ 的effect</p>
+<p>$\alpha=1$: linearly convergent, 这就是method A所表现出来的</p>
+<br>
+
+<blockquote>
+<p><strong>我们考虑 fix point iterations</strong> </p>
+<p>$p_{n+1} = g(p_n)$</p>
+<p>Theorem: let $g \in C[a,b]$ be such that $g(x)\in [a,b]$ for all $x\in[a,b]$</p>
+<p>假设 $g’$ 在 (a,b) 连续, positive constant $k&lt;1$ 存在使得 $|g’(x)| \le k$ for all $x\in (a,b)$</p>
+<p>如果 $g’(p)\ne 0$, 那么对于任意$p_0\in [a,b]$ then the sequence<br>$$<br>p_n=g(p_{n-1}), \ \forall n \ge 1<br>$$<br>converges only linearly to the unique fixed point $p$ in $[a,b]$</p>
+<br>
+
+<p>证明:</p>
+<p>我们直到 fixed point theroem that the sequence converge to $p$</p>
+<p>由于 $g’$ exists on $[a,b]$ 我们可以使用 mean value theorem to g<br>$$<br>g(p_n) - g(p) = g’(c_n)(p_n-p)<br>$$<br>$c_n$ 在$p_n, p$ 之间<br>$$<br>\frac {p_{n+1}-p}{(p_n-p)} = g’(c_n)<br>$$</p>
+<p>$$<br>\lim_{n \to \inf}\frac {p_{n+1}-p}{(p_n-p)} = \lim_{n \to \inf}g’(c_n)<br>$$</p>
+<p>$$<br>= g’(\lim_{n \to \inf} c_n)<br>$$</p>
+<p>$$<br>=g’(p)<br>$$</p>
+<p>我们假设$g’$非零</p>
+<p>而这个式子中$\alpha = 1$<br>$$<br>\lim_{n \to \inf}\frac {|p_{n+1}-p|}{|p_n-p|}<br>$$<br>也就是说 如果$g’(p) \ne 0$ p是root, 那么只会linear converge</p>
+</blockquote>
+<p>而方法A用的函数是 $g(x) = \frac 12 (10-x^3)^{1/2}$ </p>
+<p>$g’(p)\approx -0.51 \ne 0$ 也就是$lambda \approx -0.51$</p>
+<p>因此是linear converge</p>
+<br>
+
+<p>方法B使用 $g(x) = x-\frac {x^3+4x^2-10}{3x^2+8x}$, $g’(p)=0$ 无法使用上述定理</p>
+<br>
+
+<br>
+
+<h3 id="Error-Analysis-and-Accelerating-Convergence"><a href="#Error-Analysis-and-Accelerating-Convergence" class="headerlink" title="Error Analysis and Accelerating Convergence"></a>Error Analysis and Accelerating Convergence</h3><p>如果$g’(p) \ne 0$ p是root, 那么只会linear converge</p>
+<p>因此如果想要得到 quadratic converge 只能寻找 $g’(p)=0$ 的方法</p>
+<blockquote>
+<p> Theorem:</p>
+<p>Let $p$ be a solution of the equation $x=g(x)$</p>
+<p>假设 $g’(p)=0$ 并且 $g’’$ continuous and strictly bounded by $M$ on an open interval, interval containing $p$</p>
+<p>then there exists a $\delta &gt; 0$ s.t. for $p_0\in [p-\delta, p+\delta]$ the sequence, defined by $p_n = g(p_{n-1})$ when $n\ge 1$, <strong>sequence will converges at least quadratically</strong> to $p$</p>
+<p>Moreover for sufficiently large value of $n$<br>$$<br>|p_{n+1}-p| &lt; \frac M 2 |p_n-p|^2<br>$$</p>
+</blockquote>
+<p>Idea of proof(Main steps)</p>
+<ol>
+<li><p>we choose $k$ in (0, 1) $\delta &gt;0$ s.t. on inteval $[p-\delta, p+\delta]$, we have $|g’(x)| &lt; k &lt; 1$, 并且$g’’$ 是continuous的</p>
+</li>
+<li><p>we then show that $g$ maps $[p-\delta, p+\delta]$ into itself</p>
+</li>
+<li><p>The fanctior $g$ is expaned in a Taylor series for $x \in [p-\delta, p+\delta]$<br>$$<br>g(x)=g(p)+g’(p)(x-p)+\frac {g’’ (\delta)} 2 (x-p)^2<br>$$<br>$\delta \in [x, p]$, 让$x=p_n$<br>$$<br>g(p_n) = g(p) +\frac {g’’ (\delta_n)} 2 (p_n-p)^2<br>$$</p>
+<p>$$<br>p_{n+1}-p = \frac {g’’ (\delta_n)} 2(p_n-p)^2<br>$$</p>
+<p>$$<br>\lim_{n\to \inf} \frac {|p_{n+1}-p|}{|p_n-p|^2}=\lim_{n\to \inf}\frac 12 |g’’ (\delta_n)|<br>$$</p>
+<p>$$<br>=\frac 12 |g’’(\lim_{n\to \inf} \delta_n)|<br>$$</p>
+<p>$$<br>=\frac 12 |g’’(p)|<br>$$</p>
+<p>因此sequence ${p_n}_{n=0}^\inf$ is quadratically convergent if $g’’(p)\ne 0$ and higher order convergent if $g’’(p)=0$</p>
+</li>
+</ol>
+<blockquote>
+<p>这个过程是可以重复的, $g’(p)=0$ 就说明至少是2次方的收敛速度, $g’’(p)=0$ 就说明至少是三次方的收敛速度.. 以此类推</p>
+</blockquote>
+<p>同时我们知道$|g’’|&lt;M$ 所以<br>$$<br>|p_{n+1}-p|&lt;\frac M2 |p_n-p|^2<br>$$<br><br></p>
+<br>
+
+<p>那么对于Newton’s method 这个定理怎么说<br>$$<br>g(x)=x-\frac {f(x)}{f’(x)}<br>$$</p>
+<p>$$<br>g’(x) = 1-\frac {[f’(x)]^2-f(x)f’’(x)}{(f’(x))^2}<br>$$</p>
+<p>让$x=p,f(p)=0$<br>$$<br>g’(p) = 1- \frac{(f’(x))^2}{(f’(x))^2} = 0<br>$$<br>也就是说 newton’s method 至少quadratically converging</p>
+<br>
+
+<p>有时候 newton’s method 也会 linearly converge, 当$f’(p) = 0$的时候</p>
+<p>例如 $p^3-p^2-p+1=0$, 使用 newton’s method得到<br>$$<br>p_{n+1}=p_n-\frac {p^3-p^2-p+1}{3p^2-2p-1}<br>$$<br>只会linearly converge 因为$f’(p)=0$</p>
+<p>我们对它进行一下因式分解<br>$$<br>f(x)=(x-1)^2(x+1)<br>$$<br>$x=1$ is a zero of multiplicity 2.</p>
+<p>multiplicity 2意味着当求derivative后, $x=1$ 依然是root.</p>
+<br>
+
+<p>定义: A solution $p$ of $f(x)=0$ is a zero of <strong>multiplicity</strong> $m$ of $f$ if for $x\ne p$ we can write $f(x)=(x-p)^mq(x)$ where $\lim_{x\to p}q(x)\ne 0$</p>
+<p>We may identify the multiplicity of a zero by the two following theorems:</p>
+<p>THM: $f\in C’[a,b]$has a simple zero at $p$ in $(a,b)$ if and only if $f(p)=0$ and $f’(p)\ne 0$</p>
+<p>THM: The function $f\in C^m(a,b)$has a zero of multiplicity $m$ at $p$ if and only if $0=f(p)=f’(p)=\cdots =f^{m-1}(p)$ but $f^{(m)}(p)\ne 0$</p>
+<br>
+
+<p>所以想要得到一个快速converge 的 newton’s method的方法是创造一个新函数, 使得它和原本函数有一样的root, 但是root点的derivative不为0</p>
+<p>want $p$ s.t. $f(p)=0, f’(p)\ne 0$<br>$$<br>\mu (x) = \frac {f(x)}{f’(x)}<br>$$<br>我们希望$\mu(p)=0$ but has a simple root</p>
+<br>
+
+<p>假设$f$ 有root $p$, multiplicity $m$</p>
+<p>$$<br>f(x) = (x-p)^mq(x)<br>$$</p>
+<p>$$<br>\mu(x)=\frac {(x-p)^mq(x)}{m(x-p)^{m-1}q(x)+q’(x)(x-p)^m}<br>$$</p>
+<p>$$<br>=\frac {(x-p)q(x)}{m\cdot q(x)+q’(x)(x-p)}<br>$$</p>
+<p>$\mu (p) = 0$ with multiplicity 1, multiplicity 1 意味着求导后$\mu’(p)\ne 0$</p>
+<p>好处: give quadratically converging for any multiplicity</p>
+<p>坏处: </p>
+<ul>
+<li>需要$f’’$</li>
+<li>$\mu$ is more expensive toe evaluative than $f$</li>
+<li>可能有round off</li>
+</ul>
+<br>
+
+<br>
+
+<h3 id="Aitken’s-method"><a href="#Aitken’s-method" class="headerlink" title="Aitken’s method"></a>Aitken’s method</h3><p>假设我们有一个linearly converge sequence, 我们想为它加速, 怎么办?</p>
+<p>我们要理解error, 利用error </p>
+<p>liner converge是这样<br>$$<br>|p_{n+1}-p| \approx \lambda  |p_n-p|<br>$$</p>
+<p>$$<br>\frac {p_{n+1}-p} {p_n-p} \approx \frac {p_{n+2}-p} {p_{n+1}-p}<br>$$</p>
+<p>求$p$<br>$$<br>p \approx \hat p_{n+1} = p_n - \frac {p_{n+1}^2 - p_np_{n+1}+p_n^2}{p_{n+2}-2p_{n+1}+p_n}<br>$$<br>这个就给我们一个new sequence</p>
+<blockquote>
+<p>Theorem:</p>
+<p>假设 ${p_n}$ 是一个sequence converge linearly to the limit $p$, and that for all sufficiently large values of n we have<br>$$<br>(p_n-p)(p_{n+1-p})&gt;0<br>$$<br>Then the sequence ${\hat p_n}_{n=0}^\inf$ converges faster than ${p_n}$ to $p$ in the since that<br>$$<br>\frac {\hat p_n - p}{p_n-p} \to^n_\inf 0<br>$$</p>
+</blockquote>
+<br>
+
+<h3 id="多项式的root-deflation"><a href="#多项式的root-deflation" class="headerlink" title="多项式的root(deflation)"></a>多项式的root(deflation)</h3><p>一个n阶多项式, 一定有n个解(可能有重复解)</p>
+<p>可以写成这种模式<br>$$<br>p(x)=a_n(x-x_1)^{m_1}(x-x_2)^{m_2}\cdots(x-x_k)^{m_k}<br>$$</p>
+<p>$$<br>\sum_{i=1}^{k}m_i=n<br>$$</p>
+<p>让多项式 $P, Q$ 为degree at most $n$ 的多项式</p>
+<p>如果 $x_1\cdots x_k$  $k&gt;n$ 是不同的number with $P(x_i) = Q(x_i)$ for $i=1,2,\cdots k$ then $P(x)=Q(x)$ for all $x$</p>
+<blockquote>
+<p>如果两个$n$ 阶多项式有大于n个重合的点, 那么这两个多项式其实是一样的</p>
+</blockquote>
+<p>我们想用newton’s method 求多项式的近似解, 因此我们希望有高效的方法evaluating $p, p’$</p>
+<br>
+
+<p>一种方法是用nesting to evaluate<br>$$<br>P(x)=a_4x^4+a_3x^3+a_2x^2+a_1x+a_0<br>$$</p>
+<p>$$<br>P(x)=((((a_4x+a_3)x+a_2)x+a_1)x+a_0<br>$$</p>
+<p>这只需要$n$次加法$n$次乘法.</p>
+<p>我们可以这么整理</p>
+<blockquote>
+<p>$$<br>b_n=a_n<br>$$</p>
+<p>$$<br>b_k=a_k+b_{k+1}x<br>$$</p>
+<p>$$<br>b_0=P(x)<br>$$</p>
+<p>$$<br>0\le k\le n-1<br>$$</p>
+</blockquote>
+<p>然而我们还要求$P’(x)$</p>
+<p>这个也可以有上面变化而来</p>
+<blockquote>
+<p>$$<br>b_n’ = 0<br>$$</p>
+<p>$$<br>b_k’=b_{k+1}’x+b_{k+1}<br>$$</p>
+<p>$$<br>b_0’ = P’(x)<br>$$</p>
+<p>或者 relable 一下</p>
+<blockquote>
+<p>$$<br>c_{n+1} = b_n’<br>$$</p>
+<p>$$<br>c_n=a_n<br>$$</p>
+<p>$$<br>c_k=c_{k+1}x+b_{k}<br>$$</p>
+<p>$$<br>c_1 = P’(x)<br>$$</p>
+</blockquote>
+</blockquote>
+<br>
+
+<br>
+
+<p>假设我们已经通过Horner’s method 找到了$P$的一个解 $x_0$</p>
+<p>此时我们就可以把$a_n$ 替换成$b_n$, $b_k=a_k+b_{k+1}x$<br>$$<br>P(x)=a_nx^n + a_{n-1}x^{n-1}+\cdots +a_1x+a_0<br>$$</p>
+<p>$$<br>=b_nx^n+(b_{n-1}-b_nx_0)x^{n-1}+\cdots +(b_1-b_2x_0)x+(b_0-b_1x_0)<br>$$</p>
+<p>式子可以整理为<br>$$<br>=(b_nx^{n-1}+b_{n-1}x^{n-2}+\cdots+b_2x+b_1)x-(b_nx^{n-1}+b_{n-1}x^{n-2}+\cdots+b_2x+b_1)x_0+b_0<br>$$</p>
+<p>$$<br>=(b_nx^{n-1}+b_{n-1}x^{n-2}+\cdots+b_2x+b_1)(x-x_0)+b_0<br>$$</p>
+<p>$$<br>=Q(x)(x-x_0)+b_0<br>$$</p>
+<p>让$Q(x) = (b_nx^{n-1}+b_{n-1}x^{n-2}+\cdots+b_2x+b_1)$</p>
+<p>如果$x_0$ 是root, 所以$P(x_0)=b_0=0$</p>
+<p>所以$Q(x)(x-x_0) = P(x)$</p>
+<p>如果我们想要其他的root, 只要对$Q(x)$重复上诉步骤</p>
+<p>通过这种方法我们可以近乎没有代价的分解$P(x)$</p>
+<blockquote>
+<p>然而有一些细节, 由于machine error, $P(x)$ 的root和$Q(x)$ 的root 并不完全一样, 但是$Q(x)$的root可以当作initial guess</p>
+<p>如果多项式有conplex coefficient, 这个方法依然有用, 不过initial guess 的imaginary component应该非零</p>
+</blockquote>
 </1$>
             </div>
             <hr>
@@ -1054,7 +1283,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1081,7 +1310,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1090,7 +1319,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

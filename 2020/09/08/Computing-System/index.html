@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    16.8k 字
+                    17.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      77 分钟
+                      80 分钟
                   </span>
                 
 
@@ -3386,6 +3386,162 @@ t = 12 – 5 – 2 = 5 bits
 <p>优先级和虚拟运行时间成反比</p>
 <p>Preemption is allowed</p>
 <p><img src="/Blog/intro/comp_sys/nice_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Synchronization-Tools"><a href="#Synchronization-Tools" class="headerlink" title="Synchronization Tools"></a>Synchronization Tools</h2><p><strong>Processes/Threads may cooperate with each other</strong></p>
+<p>因此需要一种方法来share data safely</p>
+<p>有两种方法: Shared Memory, Message Passing</p>
+<p><img src="/Blog/intro/comp_sys/share.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Shared Memory 的优缺点:</p>
+<p>优点:</p>
+<ul>
+<li>快速(memory speed)</li>
+<li>易于编程 (just regular memory)</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li>需要管理conflict (tricky for distributed systems and multi-threaded processes)</li>
+</ul>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/share_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Message Passing 的优缺点</p>
+<p>优点:</p>
+<ul>
+<li>没有冲突</li>
+<li>易于交换消息，尤其是在分布式系统中</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li>high overload, 慢</li>
+<li>prepare messages</li>
+<li>Kernel involvement: sender $\to$ kernel $\to$ receiver</li>
+<li>Several system calls</li>
+</ul>
+<br>
+
+<h3 id="The-Producer-Consumer-problem"><a href="#The-Producer-Consumer-problem" class="headerlink" title="The Producer-Consumer problem"></a>The Producer-Consumer problem</h3><p>两个process (thread) 共享一块内存</p>
+<p>其中一个向 buffer 中放入数据 (producer)</p>
+<p>另一个从 buffer 中读取数据 (consumer)</p>
+<p><img src="/Blog/intro/comp_sys/share_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/share_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/share_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/share_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>多进程(多线程)使用共享内存时, 可能会出现数据不一致的情况, 这取决于指令执行的顺序</p>
+<p>如何处理这个问题?</p>
+<ul>
+<li>Mark code segment that manipulates shared data as critical section (CS)</li>
+<li>If a process is executing the CS, no other processes can execute the CS</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/share_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>同一时间, 只有一个进程(线程)能访问critical section</p>
+<br>
+
+<p>然而如果我们要用上述方法, 有三个 requirements</p>
+<ul>
+<li>互斥(Mutual exclusion): 同一时间, 只有一个进程(线程)能访问critical section</li>
+<li>Progress: Process/thread should eventually complete (i.e., make progress)</li>
+<li>Bounded waiting: An upper bound must exist for the amount of time a thread/process waits to enter the CS (i.e., at most wait for a finite amount of time)</li>
+</ul>
+<br>
+
+<br>
+
+<p>其他的解决方案:</p>
+<ul>
+<li>On uniprocessor systems<ul>
+<li>禁止在 CS 中运行 interrupts</li>
+<li>Currently running code executes without preemption</li>
+<li>缺点是CS的大小掌握在user手中, 如果非常大, 系统会长时间没有响应</li>
+</ul>
+</li>
+</ul>
+<p>还有其他更好的解决方案</p>
+<br>
+
+<br>
+
+<h3 id="Perterson’s-solution"><a href="#Perterson’s-solution" class="headerlink" title="Perterson’s solution"></a>Perterson’s solution</h3><p>software solution, 不需要硬件支持</p>
+<p>solution for <strong>2 processes</strong></p>
+<p>假设load和store指令是atomic</p>
+<ul>
+<li>May not always work on modern computers due to reordering</li>
+</ul>
+<p>需要 2 shared data items</p>
+<ul>
+<li>One integer (<code>turn</code>)</li>
+<li>One boolean array (<code>flag[2]</code>)</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/perterson.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Hardware-Instructions-for-Synchronization"><a href="#Hardware-Instructions-for-Synchronization" class="headerlink" title="Hardware Instructions for Synchronization"></a>Hardware Instructions for Synchronization</h3><p>现代机器提供特殊的<strong>atomic instructions</strong>, 使得软件层的synchronization更方便</p>
+<p>Example:</p>
+<ul>
+<li><strong>Atomic Swap:</strong> 用new value更新memroy word, 返回old value</li>
+<li><strong>Compare-and-Swap(CAS):</strong> update one memory word if its original value matches a given value</li>
+</ul>
+<p>上述都是abstract instructions</p>
+<p>具体指令取决于系统架构(architecture)</p>
+<p><img src="/Blog/intro/comp_sys/synchronize.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><code>atomic_swap(&amp;lock, 1)</code> 是在请求锁的使用, 只有请求成功才能访问受保护的数据</p>
+<p><img src="/Blog/intro/comp_sys/synchronize_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="互斥锁-Mutual-Execution-Mutex-Locks"><a href="#互斥锁-Mutual-Execution-Mutex-Locks" class="headerlink" title="互斥锁(Mutual Execution (Mutex) Locks)"></a>互斥锁(Mutual Execution (Mutex) Locks)</h3><p>Atomic Swap 和 Compare-and-Swap 都是互斥锁</p>
+<p><img src="/Blog/intro/comp_sys/synchronize_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h4 id="自旋锁-Mutex-Spinlock"><a href="#自旋锁-Mutex-Spinlock" class="headerlink" title="自旋锁 Mutex(Spinlock)"></a>自旋锁 Mutex(Spinlock)</h4><p><img src="/Blog/intro/comp_sys/synchronize_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><code>acquire</code> 和 <code>release</code> 都必须是原子性操作</p>
+<ul>
+<li>当等待所的时候会不断的spinning(自旋)<ul>
+<li>可能会浪费CPU cycle</li>
+<li>No context switching occurs when thread is spinning<ul>
+<li>Useful especially for short critical sections</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>广泛应用在多处理器系统</p>
+<ul>
+<li>A thread keeps spinning on one processor (waiting for lock)</li>
+<li>While another thread performs CS on another processor, which will eventually release the lock for the spinning thread </li>
+</ul>
+<br>
+
+<h4 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h4><p><strong>Used to control access to a finite number of instances of some resource</strong></p>
+<p>一个 semaphore $S$ 就是一个可以被两种原子操作(<code>wait</code>, <code>signal</code>)访问的integer</p>
+<ul>
+<li>To gain access to resource: call <code>wait</code></li>
+<li>To release access: call <code>signal</code></li>
+</ul>
+<p>$S$ is initialized to the number of resource instances variable</p>
+<ul>
+<li>$S==0$ 意味着所有resource都被使用</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/synchronize_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时 <code>wait/signal</code> 指令必须是原子性的</p>
+<p>Cannot allow semaphore values to be modified at the same time by more than one process</p>
+<p><code>wait</code> and <code>signal</code> become CS (must be protected)</p>
+<ul>
+<li>禁止中断(interrupts)(uniprocessor systems only)<ul>
+<li>对多核操作系统进行中断太expensive</li>
+</ul>
+</li>
+<li>Busy waiting or spinlocks (multiprocessor systems)</li>
+</ul>
+<p>Busy waiting not completely eliminated</p>
+<p>Just got shifted from application-level CS entry to semaphore’s wait and signal commands, which are very short</p>
+<p><img src="/Blog/intro/comp_sys/synchronize_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -3453,7 +3609,7 @@ t = 12 – 5 – 2 = 5 bits
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -3480,7 +3636,7 @@ t = 12 – 5 – 2 = 5 bits
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -3489,7 +3645,7 @@ t = 12 – 5 – 2 = 5 bits
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

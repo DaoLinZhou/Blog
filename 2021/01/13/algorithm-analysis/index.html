@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.1k 字
+                    3.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      15 分钟
+                      16 分钟
                   </span>
                 
 
@@ -735,6 +735,87 @@ for i = 1 to n do:
 <p><img src="/Blog/intro/cmpt307/hash_table_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/hash_table_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/hash_table_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Binary-Search-Tree"><a href="#Binary-Search-Tree" class="headerlink" title="Binary Search Tree"></a>Binary Search Tree</h2><p><img src="/Blog/intro/cmpt307/bst.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>右边的树是这样: 每个节点的所有子节点用单向链表连接. 而父亲节点只指向第一个子节点.</p>
+<p><img src="/Blog/intro/cmpt307/bst_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/bst_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Dynamic-Progrmming"><a href="#Dynamic-Progrmming" class="headerlink" title="Dynamic Progrmming"></a>Dynamic Progrmming</h2><ul>
+<li><p>动态规划：将问题划分为重叠(overlapping)的子问题，为每个子问题找到一个解决方案，并将解决方案保留在表中，然后根据表中的解决方案查找原始问题的解决方案。 贝尔曼（Bellman）在1950年代率先进行了动态编程的系统研究</p>
+</li>
+<li><p>分治算法: 将一个问题划分为独立(independent)的子问题，找出每个子问题的解，并将子问题的解与原问题的解相结合(其实对于重叠子问题, 可以用一张表记录子问题的解, 这样来避免重复的计算)</p>
+</li>
+<li><p>Main steps to develop a dynamic programming algorithm</p>
+<ol>
+<li>Characterize the structure of an optimal solution.</li>
+<li>Recursively define the value of an optimal solution</li>
+<li>Compute the value of an optimal solution, usually in a bottom up fashion</li>
+<li>Construct an optimal solution from computed information</li>
+</ol>
+</li>
+</ul>
+<br>
+
+<h3 id="Rod-cutting-problem"><a href="#Rod-cutting-problem" class="headerlink" title="Rod cutting problem"></a>Rod cutting problem</h3><p><img src="/Blog/intro/cmpt307/dynamic_pro.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>top-down 方法, 使用递归</p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>top-down 方法, 使用递归, 使用表来记忆子问题的结果</p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>对于这个问题, 我有我的见解. 我们不用计算所有的 $p[i] + r[n-i]$ pairs, 反正最终都会被分为长度为1,2,3,4的rod, 我们只需要判断 &lt;1, n-1&gt;, &lt;2, n-2&gt;, &lt;3, n-3&gt;, &lt;4, n-4&gt; 这4个值中最大的pairs即可, 这样算法就变成 O(n) 级别的</p>
+</blockquote>
+<br>
+
+<h3 id="Matrix-chain-multiplication"><a href="#Matrix-chain-multiplication" class="headerlink" title="Matrix-chain multiplication"></a>Matrix-chain multiplication</h3><p><img src="/Blog/intro/cmpt307/dynamic_pro_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>矩阵乘法的计算顺序就非常重要</p>
+<p>那么如何才能找到一个最好的矩阵乘法的顺序?</p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Longest-common-sequence-LCS-problem"><a href="#Longest-common-sequence-LCS-problem" class="headerlink" title="Longest common sequence(LCS) problem"></a>Longest common sequence(LCS) problem</h3><p><img src="/Blog/intro/cmpt307/dynamic_pro_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Optimal-binary-search-tree-BST"><a href="#Optimal-binary-search-tree-BST" class="headerlink" title="Optimal binary search tree (BST)"></a>Optimal binary search tree (BST)</h3><p><img src="/Blog/intro/cmpt307/dynamic_pro_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -790,7 +871,7 @@ for i = 1 to n do:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -817,7 +898,7 @@ for i = 1 to n do:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -826,7 +907,7 @@ for i = 1 to n do:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
