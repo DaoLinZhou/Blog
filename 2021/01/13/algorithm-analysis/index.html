@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.6k 字
+                    4.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      17 分钟
+                      19 分钟
                   </span>
                 
 
@@ -829,6 +829,74 @@ for i = 1 to n do:
 <h3 id="0-1-背包问题"><a href="#0-1-背包问题" class="headerlink" title="0-1 背包问题"></a>0-1 背包问题</h3><p><img src="/Blog/intro/cmpt307/dynamic_pro_34.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/dynamic_pro_35.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/dynamic_pro_36.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_pro_37.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="贪心算法-Greedy-Algorithm"><a href="#贪心算法-Greedy-Algorithm" class="headerlink" title="贪心算法(Greedy Algorithm)"></a>贪心算法(Greedy Algorithm)</h2><blockquote>
+<p>贪心算法实现简单思路也简单, 但难就难在如何证明一个问题可以通过贪心算法来解决</p>
+</blockquote>
+<p><img src="/Blog/intro/cmpt307/greedy_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>算法很简单, 只要每次选择最先完成的一个任务, 之后以这个任务的结束时间作为基准, 再以这个时间之后的所有任务中挑选最先完成的一个任务</p>
+<p>上面的例子中最多可以完成 b, e, h 三个任务</p>
+<p><img src="/Blog/intro/cmpt307/greedy_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>首先, 这个问题是可以用动态规划来解决的</p>
+<p><img src="/Blog/intro/cmpt307/greedy_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/greedy_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>算法是先把所有的任务根据结束时间排序, 之后第一个任务就是我要选择的$a_1$ 之后根据$a_1$ 的结束之间, 找到其余所有开始时间大于$a_1$结束时间的其他任务 $S_1$, 在从$S_1$ 中找到最早结束的任务$a_4$作为接下来选择的任务, 把$S_1$中开始时间大于$a_4$ 结束时间的任务组合称为$S_4$ 不断重复这个过程</p>
+<p><img src="/Blog/intro/cmpt307/greedy_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/greedy_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>如何设计一个贪心算法?</p>
+<ul>
+<li>Cast the optimization problem as one in which a choice leaves one subproblem.</li>
+<li>证明贪心的选择会个出这个问题的解  在贪婪选择后, 表现出最优子结构，即在，剩余的子问题具有以下性质：如果将子问题的最优解与贪婪选择相结合，则可以获得最优解。</li>
+</ul>
+<p>In dynamic programming, a solution to a subproblem is computed based on solutions to <strong>multiple</strong> smaller subproblems.</p>
+<p>In greedy, to find a solution to a subproblem, the number of smaller subproblems considered is reduced to one.</p>
+<br>
+
+<p>Greedy-choice property: a global optimal solution can be computed by making locally optimal greedy choices, each choice finds a solution for a (larger) subprobelm.</p>
+<p><strong>Optimal substructure</strong>(最优子结构): Optimal solution contains optimal solutions to subproblems.</p>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/cmpt307/greedy_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/greedy_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/greedy_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="霍夫曼编码问题"><a href="#霍夫曼编码问题" class="headerlink" title="霍夫曼编码问题"></a>霍夫曼编码问题</h2><p><img src="/Blog/intro/cmpt307/huffman.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/huffman_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/huffman_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>参考<a href="https://daolinzhou.github.io/Blog/2020/07/23/Huffman-Tree/">哈夫曼树</a></p>
+<p><img src="/Blog/intro/cmpt307/huffman_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/huffman_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>有个typo, 应该是<code>z.right=y=...</code></p>
+</blockquote>
+<br>
+
+<h2 id="Amortized-Analysis"><a href="#Amortized-Analysis" class="headerlink" title="Amortized Analysis"></a>Amortized Analysis</h2><p>Average the time required to perform a sequence of operations.</p>
+<p>Give the average performance of each operation in the worst case. no probability is involved.</p>
+<p>有三种技巧</p>
+<ol>
+<li><p>Aggregate analysis: 确定upper bound $T(n)$ on the total cost of a sequence of $n$ operations, 之后用 $T(n)/n$ 作为 amortized cost of each operation</p>
+</li>
+<li><p>Accounting method:  determine an amortized cost of each operation; 不同type的operation可能有不同的amortized costs</p>
+<p>overcharge some operations early in the sequence, store the overcharge as “prepaid credit”  and the credits pay for later operations that are charged less than they actually cost</p>
+</li>
+<li><p>Potential method: 类似于accounting method, 但是credits are maintained as “potential energy” for a whole sequence rather than individual operations</p>
+</li>
+</ol>
+<p><img src="/Blog/intro/cmpt307/Amortized_analysis.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -884,7 +952,7 @@ for i = 1 to n do:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -911,7 +979,7 @@ for i = 1 to n do:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -920,7 +988,7 @@ for i = 1 to n do:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

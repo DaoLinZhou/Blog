@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    17.5k 字
+                    18.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      80 分钟
+                      84 分钟
                   </span>
                 
 
@@ -3542,6 +3542,167 @@ t = 12 – 5 – 2 = 5 bits
 <p><img src="/Blog/intro/comp_sys/synchronize_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/synchronize_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/synchronize_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Classic-Synchronization-Problems"><a href="#Classic-Synchronization-Problems" class="headerlink" title="Classic Synchronization Problems"></a>Classic Synchronization Problems</h2><h3 id="Bounded-Buffer-Problem"><a href="#Bounded-Buffer-Problem" class="headerlink" title="Bounded-Buffer Problem"></a>Bounded-Buffer Problem</h3><p>Processes(threads) sharing a buffer</p>
+<p>Producer向buffer中放入元素</p>
+<p>Consumers从buffer中提取元素</p>
+<p><img src="/Blog/intro/comp_sys/share_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而buffer的大小是固定的, 当buffer满了的时候producer要wait, buffer为空的时候consumer wait</p>
+<p>有可能出现的问题:</p>
+<ul>
+<li>Violation of buffer structure (count ++, count –)</li>
+<li>Producing when full</li>
+<li>Consuming when empty</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Readers-Writer-Problem"><a href="#Readers-Writer-Problem" class="headerlink" title="Readers-Writer Problem"></a>Readers-Writer Problem</h3><p>reader: 只执行read操作, 不update数据</p>
+<p>writer: 既可以read也可以write</p>
+<p>需求:</p>
+<ul>
+<li>可以有多个 reader, 但没有writer</li>
+<li>可以有一个writer, 没有 reader</li>
+</ul>
+<p>解决方案: 读写索(reader-writer lock)</p>
+<p>由操作系统提供:</p>
+<ul>
+<li><code>pthread_rw_lock*</code></li>
+<li>一个 process/thread 可以向读写锁请求 read/write lock</li>
+</ul>
+<br>
+
+<p>什么时候使用读写锁?</p>
+<ul>
+<li>当可以简单分别 reader 和 writer 时</li>
+<li>reader 比 writer 多</li>
+</ul>
+<p>Tradeoff: cost vs concurrency</p>
+<ul>
+<li>More complex to implement that mutex(write only lock)</li>
+<li>More overhead to coordinate readers and writers</li>
+<li>Higher concurrency by allowing multiples readers</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><code>writer_acquire</code> 和 <code>writer_release</code> 都比较好理解</p>
+<pre><code>reader_acquire(RWLock* lock){
+    wait(&amp;lock-&gt;mutex);
+    lock-&gt;read_count ++;
+
+    // 如果是第一个reader来请求
+    // 那么可能有write还没结束, 所以要等待write结束
+    // 而如果在等待的过程中第二个reader请求来了
+    // 那么会被 wait(&amp;lock-&gt;mutex) 挡住
+    if(lock-&gt;read_count == 1)
+        wait(&amp;lock-&gt;rw_mutex);
+    signal(&amp;lock-&gt;mutex);
+}</code></pre><p>同理, 当<code>reader_release</code> 的时候, 如果是最后一个reader那么就要释放<code>rw_mutex</code>这个锁</p>
+<br>
+
+<h3 id="哲学家就餐问题-Dining-Philosophers-Problem"><a href="#哲学家就餐问题-Dining-Philosophers-Problem" class="headerlink" title="哲学家就餐问题 Dining Philosophers Problem"></a>哲学家就餐问题 Dining Philosophers Problem</h3><p>哲学家会在<strong>吃饭</strong>和<strong>思考</strong>两件事情上进行切换</p>
+<ul>
+<li>To eat, a philosopher needs two forks (at her left and right)</li>
+<li>To think, no forks needed</li>
+</ul>
+<p>Models multiple processes sharing multiple resources</p>
+<p>我们的目标是: Coordinate forks utilization among all philosophers</p>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而这种方法可能会出现死锁: 当所有哲学家都拿到左叉子, 等待右叉子时</p>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Condition-variable"><a href="#Condition-variable" class="headerlink" title="Condition variable"></a>Condition variable</h4><p><img src="/Blog/intro/comp_sys/synchronize_prob_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h4 id="Synchronization-and-Priorities"><a href="#Synchronization-and-Priorities" class="headerlink" title="Synchronization and Priorities"></a>Synchronization and Priorities</h4><p><img src="/Blog/intro/comp_sys/synchronize_prob_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><a href="https://zh.wikipedia.org/wiki/%E4%BC%98%E5%85%88%E7%BA%A7%E7%BB%A7%E6%89%BF" target="_blank" rel="noopener">优先级继承</a></p>
+<br>
+
+<br>
+
+<h2 id="DeadLock"><a href="#DeadLock" class="headerlink" title="DeadLock"></a>DeadLock</h2><p><img src="/Blog/intro/comp_sys/synchronize_prob_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>为什么会出现死锁?</p>
+<ul>
+<li>复杂的依赖 (尤其实在大型应用中) <ul>
+<li>必须仔细设计锁定策略，以避免循环依赖</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/synchronize_prob_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如何处理死锁?</p>
+<p>预防: 不让死锁出现. 让上述4个条件中至少有一个不满足</p>
+<p>避免：利用调度程序来避免死锁</p>
+<p>让系统可以检测死锁并恢复</p>
+<ul>
+<li>Detection and recovery</li>
+</ul>
+<br>
+
+<h3 id="预防死锁-Circular-Wait"><a href="#预防死锁-Circular-Wait" class="headerlink" title="预防死锁: Circular Wait"></a>预防死锁: Circular Wait</h3><p><img src="/Blog/intro/comp_sys/synchronize_prob_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>保证所以同一种顺序进行require lock</p>
+<br>
+
+<h3 id="预防死锁-Hold-and-Wait"><a href="#预防死锁-Hold-and-Wait" class="headerlink" title="预防死锁: Hold and Wait"></a>预防死锁: Hold and Wait</h3><p><img src="/Blog/intro/comp_sys/synchronize_prob_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="预防死锁-No-Preemption"><a href="#预防死锁-No-Preemption" class="headerlink" title="预防死锁: No Preemption"></a>预防死锁: No Preemption</h3><p><img src="/Blog/intro/comp_sys/synchronize_prob_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当require 一个lock, 如果失败, 说明有其他线程正在访问, 那么就释放所有请求到的锁. 重新执行</p>
+<br>
+
+<h3 id="预防死锁-Mutual-Exclusion"><a href="#预防死锁-Mutual-Exclusion" class="headerlink" title="预防死锁: Mutual Exclusion"></a>预防死锁: Mutual Exclusion</h3><p><img src="/Blog/intro/comp_sys/synchronize_prob_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>不使用lock而是使用原子操作</p>
+<p>通过算法来进行控制 (Lock-Free Algorithms)</p>
+<br>
+
+<br>
+
+<h3 id="Lock-Free-Algorithm"><a href="#Lock-Free-Algorithm" class="headerlink" title="Lock-Free Algorithm"></a>Lock-Free Algorithm</h3><ul>
+<li>不使用锁</li>
+<li>可能有high performance (not always)</li>
+<li>不可能有死锁</li>
+<li>Error-prone 编程更加困难<ul>
+<li>Exposes intermediate states to all threads –not protected by critical sections any more</li>
+<li>Threads must handle data races explicitly</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="通过调度来避免死锁"><a href="#通过调度来避免死锁" class="headerlink" title="通过调度来避免死锁"></a>通过调度来避免死锁</h3><ol>
+<li>Know which locks might be requested by which threads</li>
+<li>Schedule threads in a way that guarantees no deadlocks can occur</li>
+</ol>
+<p>缺点: 需要程序员知道global knowledge about all participating threads and resources</p>
+<p><img src="/Blog/intro/comp_sys/dead_lock.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/dead_lock_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>缺点: 可能会增加执行的时间</p>
+<br>
+
+<br>
+
+<h3 id="Detect-and-Recover"><a href="#Detect-and-Recover" class="headerlink" title="Detect and Recover"></a>Detect and Recover</h3><p>允许死锁发生, 通过某些操作来resolve it</p>
+<p> deadlock detector 周期性运转</p>
+<p>一种可能的approach是: 维护一个图(graph) 记录 dependencies, 检测图中是否有环</p>
+<p>如果有环就说明有潜在的deadlock, 那么就restart system or preempt some threads (aka “victims”)</p>
+<p>这种方法在database system中常用</p>
+<br>
+
+<br>
+
+<h2 id="Main-Memory"><a href="#Main-Memory" class="headerlink" title="Main Memory"></a>Main Memory</h2><p><img src="/Blog/intro/comp_sys/main_memory.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/main_memory_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/main_memory_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/main_memory_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/main_memory_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -3609,7 +3770,7 @@ t = 12 – 5 – 2 = 5 bits
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -3636,7 +3797,7 @@ t = 12 – 5 – 2 = 5 bits
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -3645,7 +3806,7 @@ t = 12 – 5 – 2 = 5 bits
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

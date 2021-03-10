@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -988,11 +988,15 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 <p>前面我们知道</p>
 <p>suppose, in addition that $g’(x)$ exists on $(a,b)$ and that a positive constant $k\le 1$ exists with<br>$$<br>|g’(x)|\le k&lt;1<br>$$<br>for all $x\in (a,b)$. then the fixed point in $[a,b]$ is unique</p>
 <p>还有一点就是convege</p>
-<p>证明:<br>$$<br>|p_n-p|=|g(p_{n-1})-g(p)|<br>$$<br>根据Mean value theorem<br>$$<br>=|g’(c)||p_{n-1}-p|<br>$$</p>
+<p>证明:<br>$$<br>|p_n-p|=|g(p_{n-1})-g(p)|<br>$$<br>根据Mean value theorem<br>$$<br>=|g’(\delta)||p_{n-1}-p|<br>$$</p>
 <p>$$<br>\le k|p_{n-1}-p|<br>$$</p>
 <p>同理可以替换为<br>$$<br>\le k^2|p_{n-2}-p|<br>$$</p>
 <p>$$<br>\le k^n|p_{0}-p|<br>$$</p>
 <p>$k&lt;1$ 所以取limit 就是 0, 因此converge</p>
+<blockquote>
+<p>$$<br>|p_n-p|\le k^n|p_0-p|<br>$$</p>
+<p>$$<br>|p_n-p|\le \frac {k^n}{1-k} |p_0-p|<br>$$</p>
+</blockquote>
 <br>
 
 <br>
@@ -1057,7 +1061,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 <br>
 
 <p>定义:</p>
-<p>假设 ${p_n}<em>{n=0}^\inf$ converge to $p$ 并且所有的$p_n \ne 0$, 如果有positive constants $\lambda, \alpha$ 存在<br>$$<br>\lim</em>{n\to \inf} \frac {|p_{n+1}-p|}{|p_n-p|^\alpha}=\lambda<br>$$<br>那么 ${p_n}_{n=0}^\inf$ converges to $p$ of order $\alpha$</p>
+<p>假设 ${p_n}<em>{n=0}^\inf$ converge to $p$ 并且所有的 $p_n \ne 0$, 如果有positive constants $\lambda, \alpha$ 存在<br>$$<br>\lim</em>{n\to \inf} \frac {|p_{n+1}-p|}{|p_n-p|^\alpha}=\lambda<br>$$<br>那么 ${p_n}_{n=0}^\inf$ converges to $p$ of order $\alpha$</p>
 <p>就是说 absolute error at step $n+1 \approx \lambda \cdot$ absolute error at step $n$   的alpha 次方</p>
 <p>$\lambda \ne 0, \lambda \ne \inf$</p>
 <p>$\lambda$ 越小, $\alpha$ 越大, converge 越快, $\lambda$ 对converge速度的effect小于$\alpha$ 的effect</p>
@@ -1222,6 +1226,222 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 <p>然而有一些细节, 由于machine error, $P(x)$ 的root和$Q(x)$ 的root 并不完全一样, 但是$Q(x)$的root可以当作initial guess</p>
 <p>如果多项式有conplex coefficient, 这个方法依然有用, 不过initial guess 的imaginary component应该非零</p>
 </blockquote>
+<br>
+
+<br>
+
+<h1 id="Approximation"><a href="#Approximation" class="headerlink" title="Approximation"></a>Approximation</h1><p>在很多应用中, function是复杂的. 我们希望something can be evaluate in a computationally inexpensive way</p>
+<br>
+$$
+P_n(x)=a_nx^n+a_{n-1}x^{n-1}+\cdots +a_1x+a_0
+$$
+多项式可以approximate any function over a closed bounded interval
+
+<blockquote>
+<p> <strong>Weierstrass Arrpoximation Theorem</strong></p>
+<p>假设 $f$ is defined and contimuous on $[a,b]$</p>
+<p>for each $\epsilon &gt; 0$ there exists a polynomial $P(x)$ defined on $[a,b]$ with the proporty that<br>$$<br>|f(x)-P(x)|&lt;\epsilon<br>$$<br>for all x in $[a,b]$</p>
+</blockquote>
+<p>然而我们不知道这个多项式长什么样子</p>
+<p>我们首先当然要尝试 Taylor series</p>
+<p>然而, 如果我们对点0进行泰勒展开, 得到$P$, 用$P(3)$ 和$f(3)$相差甚远</p>
+<p>因为距离展开的点太远, 泰勒展开无法得到正确结果</p>
+<br>
+
+<br>
+
+<p>假设我们现在有n个点, 我们假设多项式$P$ agrees with a function at n+1 data points, $f_k$ 就是点在y轴的位置<br>$$<br>P(x_k)=f_k, \ k=0,…,n<br>$$<br>对于 $n+1$ distinct interpolation point $x_0,…x_n$ and n+1 values $f_0…f_n$</p>
+<p>要解决这个问题, 我们首先要解决一个简单的问题</p>
+<blockquote>
+<p>我们要先构建$L_m$ 在通过$L_1…L_n$来构建$P$</p>
+</blockquote>
+<p>我们假设多项式$L_m(x)$的degree $\le n$<br>$$<br>L_m(x_k)=\delta_{mk}=\begin{cases} 1, &amp; k=m \ 0, &amp; k\ne m \end{cases}<br>$$<br>$\delta_{mk}$ 也被叫做kronecker delta</p>
+<p>我们知道$L_m(x)$ is 0 at $x_0, x_1…x_{m-1}, x_{m+1}, … x_n$ , 但是$L_m(x_m)=1\ne0$</p>
+<p>so we know $L_m$ contains factor $(x-x_0), (x-x_1)\cdots$</p>
+<p>但是不包含$(x-x_m)$</p>
+<p>也就是说<br>$$<br>L_m(x)=\text{const} \cdot \prod^n_{k=0,k\ne m}(x-x_k)<br>$$<br>然而我们同时还要满足当$x=x_m$的时候$L_m(x_m)=1$</p>
+<p>因此我们可以这样构建$L_m$<br>$$<br>L_m =\frac {\prod^n_{k=0,k\ne m}(x-x_k)}{\prod^n_{k=0,k\ne m}(x_m-x_k)}<br>$$<br>这样当$x=x_m$的时候, $L_m=1$</p>
+<br>
+
+<p>这样我们就得到了$L_m$, 通过$L_m$构建$P$<br>$$<br>P(x)=\sum_{m=0}^nf_mL_m(x)<br>$$<br>我们来验证一下, 当$x=x_1$时<br>$$<br>P(x_1)=\sum_{m=0}^nf_mL_m(x_1)<br>$$<br>而我们知道只有$L_1(x_1)=1$, 其余的情况下, 都是0, 所以<br>$$<br>P(x_1)=f_1<br>$$<br>同理, 可以验证其余的x</p>
+<br>
+
+<p>然而还有一个问题:  我们希望$P$的degree最小. </p>
+<p>那么我们如何证明通过上面方法得到的$P$的degree最小?</p>
+<p>假设有两个不同的多项式$p,q$ 的$\text{degree}\le n$ 同时经过这些点<br>$$<br>d \equiv p-q<br>$$</p>
+<p>$$<br>d(x_k)=0,\ k=0…n<br>$$</p>
+<p>对于non-zero degree n 的多项式, 最多有n个zeros, 而$d(x_k)$ 有$n+1$个zeros, 说明$d=0$, d是一个zero polynomal</p>
+<p>也就是说$p=q$, 说明只有一个degree为n的polynomal经过这些点, 这个多项式就是我们找到的这个</p>
+<br>
+
+<br>
+
+<p>假设</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>$x_i$</th>
+<th>$f(x_i)$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>3.2</td>
+<td>22.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2.7</td>
+<td>17.8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.0</td>
+<td>14.2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4.8</td>
+<td>38.3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5.6</td>
+<td>51.7</td>
+</tr>
+</tbody></table>
+<p>我们想找到interpolated value for $x=3.0$</p>
+<p>The $3^{rd}$ Lagrange interpolating polynomial is given by (只用前4个数)<br>$$<br>P(x)=f_0L_0(x)+f_1L_1(x)+f_2L_2(x)+f_3L_3(x)<br>$$</p>
+<p>$$<br>=\frac {(x-x_1)(x-x_2)(x-x_3)}{(x_m-x_1)(x_m-x_2)(x_m-x_3)}f_0<br>$$</p>
+<p>$$<br>+\frac {(x-x_0)(x-x_2)(x-x_3)}{(x_m-x_0)(x_m-x_2)(x_m-x_3)}f_1<br>$$</p>
+<p>$$<br>+\frac {(x-x_0)(x-x_1)(x-x_3)}{(x_m-x_0)(x_m-x_1)(x_m-x_3)}f_2<br>$$</p>
+<p>$$<br>+\frac {(x-x_0)(x-x_1)(x-x_2)}{(x_m-x_0)(x_m-x_1)(x_m-x_2)}f_3<br>$$</p>
+<p>再把$x=3.0$ 以及所有$x_i, f_i$代入就得到我们想要的值了</p>
+<p>$P(3.0)\approx 20.21$</p>
+<p>然而对于这个结果, 我们不知道它有多准确</p>
+<blockquote>
+<p>Theorem:</p>
+<p>suppose $x_0, x_1,\cdots x_n$ are distinct number in$[a,b] $ and $f\in C^{n+1}[a,b]$. Then for each $x$ in $[a,b]$ a number $\delta(x)\in [a,b]$ exists with<br>$$<br>f(x)=P(x)+\frac {f^{n+1}(\delta(x))}{(n+1)!}(x-x_0)(x-x_1)\cdots(x-x_n)<br>$$<br>$P(x)$ $n^{th}$ Lagrange interpolating polynomial</p>
+</blockquote>
+<p>Example:</p>
+<p>Suppose you need to constract six-decimal-place table for the common or base 10 logarithm function $\log_{10}(x)$ from $x=1$ to $x=10$ in such a way that linear interpolation is accurate to within $10^{-6}$</p>
+<p>我们知道$x_0…x_n$对应的$y$值 但是这些点之间的值我们要用linear interpolation(线性插值)</p>
+<p>由于我们假设x是均匀分布在$[1, 10]$之间, 所以我们让 $x_j=1+jh$</p>
+<p>$h$ 是点分布的间距, $j=0, 1,2\cdots$</p>
+<p>假设$x_j\le x \le x_{j+1}$</p>
+<p>我们想要让 absolute error 小于 $10^{-6}$<br>$$<br>|\text {error}| = |\frac {f^{(2)}(\delta(x))}{2!}(x-x_j)(x-x_{j+1})|<br>$$</p>
+<p>$$<br>=\frac 12|f’’(\delta)|\cdot |(x-x_j)(x-x_{j+1})|<br>$$</p>
+<p>而 $f(x) = \log(x)$<br>$$<br>f’’(\delta)=-\frac 1 {\delta^2 \ln(10)}<br>$$<br>因此 $1\le \delta \le 10$ 之间$|f’’(\delta)|$ 最大是在$\delta=1$ 的时候</p>
+<p>也就是说 $|f’’(\delta)|$ 最大为 $\frac 1 {\ln (10)}$</p>
+<p>在看 $|(x-x_j)(x-x_{j+1})|$</p>
+<p>这是一个最基本的二次方程, 因此它的最大值在$\frac {x_j+x_{j+1}} 2$</p>
+<p>因此<br>$$<br>\max_{x_j\le x\le x_{j+1}}|(x-x_j)(x-x_{j+1})|<br>$$</p>
+<p>$$<br>=\frac h2 \cdot \frac h 2 = \frac {h^2} 4<br>$$</p>
+<p>因此<br>$$<br>|\text{error}|\le\frac 12 \cdot \frac 1 {\ln(10)} \cdot \frac {h^2}4 \le 10^{-6}<br>$$<br>解得$h&lt;0.0042919$</p>
+<p>在某些机器上 $\log$ 可能是比较难计算的, 我们可以用线性插值法</p>
+<br>
+
+<br>
+
+<p>然而现实中我们可能不知道$f(x)$, 所以我们就无法计算$f’(x)$</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>$x_i$</th>
+<th>$f(x_i)$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>3.2</td>
+<td>22.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2.7</td>
+<td>17.8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.0</td>
+<td>14.2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4.8</td>
+<td>38.3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5.6</td>
+<td>51.7</td>
+</tr>
+</tbody></table>
+<p>如果我们有只有一组table, 那么我们可以对不同的点来得到不同的interpolating polynomianl</p>
+<p>如果不同polynomianl得到的结果类似, 我们就可以hope结果是正确的</p>
+<br>
+
+<p>例如对于上述table 我们想找到$f(3)$</p>
+<p>我们进行两种不同的 lagrange interpolating polynomials</p>
+<p>分别是 second 和 thrid lagrange  interpolating polynomials</p>
+<p>如果我们要construct 2 degree 的polynomianl 那么我们需要3个点</p>
+<p>我们使用距离3最近的3个点 $x_0, x_1, x_3$<br>$$<br>P_2(3) = L_0(x)f_0+L_1(x)f_1+L_3(x)f_3\ |_{x=3}<br>$$</p>
+<p>$$<br>=\frac {(x-x_1)(x-x_3)}{(x_0-x_1)(x_0-x_3)}f_0+\cdots<br>$$</p>
+<p>$$<br>\approx 20.27<br>$$</p>
+<p>接下来找degree 3 的 多项式, 需要4个点, 因此使用$x_0, x_1, x_2, x_3$</p>
+<p>进行同样的过程得到$20.21$</p>
+<p>这两种方法得到的值比较相近, 因此我们对结果比较有信心</p>
+<br>
+
+<p>由于我们不知道$f$ 所以我们无法使用error fomular</p>
+<p>然而我们可以通过不同的 data 和不同 order 的 polynomial 得到一个 idea about error (上面的方法)</p>
+<br>
+
+<p>然而second degree的计算和thrid degree的计算有一些地方是重复的, 例如 $\frac {(x-x_1)(x-x_3)}{(x_0-x_1)(x_0-x_3)}$</p>
+<p>因此我们可以计算thrid degree 时 reuse 这些计算结果</p>
+<br>
+
+<p>我们想基于不同的 nodes 来 examine polynomial</p>
+<p>上一个例子中, 我们使用$x_0, x_1, x_3$, 我们可以标记为$P_{013}$</p>
+<p>类似使用$x_0, x_1, x_2, x_3$可以标记为$P_{0123}$</p>
+<p>现在假设我们想得到 lagrange interpolating polynomial, base on data points $x_{m1}, x_{m2}\cdots x_{mk}$ 我们标记为$P_{m1, m2\cdots mk}$<br>$$<br>P_0(x) = f(x_0)<br>$$</p>
+<p>$$<br>P_1(x) = f(x_1)<br>$$</p>
+<p>$$<br>P_{01}(x) = L_0(x) f(x_0)+L_1(x)f(x_1)<br>$$</p>
+<p>$$<br>=\frac {(x-x_1)}{(x_0-x_1)}P_0+\frac {(x-x_0)}{(x_1-x_0)}P_1<br>$$</p>
+<p>可以看到$P_{01}$使用了$P_0(x)$ 和$P_1(x)$的结果</p>
+<p>我们想在更一般的情况进行这种操作</p>
+<blockquote>
+<p>Theorem: </p>
+<p>let $f$ be defined at $x_0,x_1\cdots x_k$ and $x_j, x_i$ be two distinct numbers in this set, then<br>$$<br>P_{0,1,\cdots k}(x) = \frac {(x-x_j)P_{0,1,\cdots j-1, j+1,\cdots k}(x) - (x-x_i)P_{0,1,\cdots i-1, i+1,\cdots k}(x)}{x_i-x_j}<br>$$<br><br></p>
+<p>证明</p>
+<p>check LHS = RHS for $x_0,\cdots x_k$</p>
+<p>case $x=x_i$ ($x=x_j$同理)</p>
+<p>$\text{LFS} = f(x_i)$</p>
+<p>$\text{RHS}=\frac {(x_i-x_j)P_{0,1,\cdots j-1, j+1,\cdots k}(x_i)}{(x_i-x_j)} = P_{0,1,\cdots j-1, j+1,\cdots k}(x_i)=f(x_i)$</p>
+<br>
+
+<p>case $x=x_l, l\ne i, l\ne j$</p>
+<p> $\text{LFS} = f(x_l)$</p>
+<p>$\text{RHS}=\frac {(x_l-x_j)f(x_l) - (x_l-x_i)f(x_l)}{x_i-x_j}=f(x_l)$</p>
+</blockquote>
+<br>
+
+<h2 id="neville’s-method"><a href="#neville’s-method" class="headerlink" title="neville’s method"></a>neville’s method</h2><p>这个Theroem让我们可以用低degree的$P$ 计算高degree的$P$</p>
+<p>这个过程叫做 neville’s method</p>
+<p>$P_{01}$ 用$P_0, P_1$计算得出</p>
+<p>$P_{12}$ 用$P_1,P_2$ 计算得出</p>
+<p><img src="/Blog/intro/macm316/neville.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>example: 假设$x_j=j$ 同时我们知道<br>$$<br>P_{0,1}(x)=2x+1<br>$$</p>
+<p>$$<br>P_{0,2}(x)=x+1<br>$$</p>
+<p>$$<br>P_{1,2,3}(2.5)=3<br>$$</p>
+<p>求 $P_{0,1,2,3}(2.5)$</p>
+<p>$P_{0,1,2}$ 可以通过 $P_{0,1}, P_{0,2}$ 求出来<br>$$<br>P_{0,1,2} = \frac {(x-x_1)P_{0,2}(x) -(x-x_2)P_{0,1}(x)}{x_2-x_1}<br>$$</p>
+<p>$$<br>=-x^2+3x+1<br>$$</p>
+<p>当$x=2.5$, $P_{0,1,2}(2.5)=2.25$</p>
+<p>$P_{0,1,2,3}$ 可以通过 $P_{1,2,3}$ 和$P_{0,1,2}$求出来<br>$$<br>P_{0,1,2} = \frac {(x-x_0)P_{1,2,3}(x) -(x-x_3)P_{0,1,2}(x)}{x_3-x_0}<br>$$</p>
+<p>$$<br>P_{0,1,2} = \frac {2.5\cdot 3-(-0.5)\cdot (2.25)}{3}=2.875<br>$$</p>
 </1$>
             </div>
             <hr>
@@ -1283,7 +1503,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1310,7 +1530,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1319,7 +1539,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
