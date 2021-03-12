@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.2k 字
+                    4.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      19 分钟
+                      23 分钟
                   </span>
                 
 
@@ -897,6 +897,80 @@ for i = 1 to n do:
 </li>
 </ol>
 <p><img src="/Blog/intro/cmpt307/Amortized_analysis.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>假设我们用一个binary array $A$表示一个数$x$, 数组长度为$k$</p>
+<p>$A[0]$ 是 lowest-order bit, $A[k-1]$ 是 highest-order bit. $x=\sum_{i=0}^{k-1}2^iA[i]$</p>
+<pre><code class="pseudocode">Increment(A) /*Add 1 mod 2^k to A*/
+    i = 0;
+    while i &lt; k and A[i] = 1 do:
+        A[i] = 0;
+        i ++;
+    if i &lt; k:
+        A[i] = 1;</code></pre>
+<ul>
+<li>Cost of a sequence of $n$ increments to $A$<ul>
+<li>Brute-force analysis: $O(k)$ for one increment, $O(kn)$ for $n$ increment</li>
+<li>Aggregate analysis:<ul>
+<li>$A[0]$ is filpped once in every $2^0=1$ increment</li>
+<li>$A[1]$ is flipped once in every $2^1=2$ iincrement</li>
+<li>$A[i]$ is flipped once in every $2^i$ increment</li>
+<li>Total cost is $\sum_{i=0}^{k-1}\lfloor n/2^i\rfloor &lt; n\sum_{i=0}^{\text{inf}}(1/2^i)=2n$</li>
+<li>Amortized cost per increment is $O(n)/n=O(1)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/cmpt307/Amortized_analysis_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Accounting-Method"><a href="#Accounting-Method" class="headerlink" title="Accounting Method"></a>Accounting Method</h3><ul>
+<li>给不同的operation不同的cost, cost charged to an operation is the amortized cost of the operation</li>
+</ul>
+<p>对于operation $i$, 定义$\hat c_i$ be the amortized cost, $c_i$ be the real cost of i. For $\hat c_i \ge c_i$, $\hat c_i -c_i$ is called credit of $i$</p>
+<p>For sequence of operations, $\sum_{i=1}^n \hat c_i \ge \sum_{i=1}^n c_i$ is always required</p>
+<p>Analysis for a sequence of $n$ PUSH, POP and MultiPOP operations</p>
+<ul>
+<li>Real cost: PUSH 1; POP 1; MultiPOP $\min(|S|, k)$</li>
+<li>Amortized cost: PUSH 2 (<strong>has credit 1, use to pay the pop of the pushed object</strong>); POP 0; MultiPOP 0</li>
+<li>Total cost $T(n)\le 2n$ and average cost per operation is $O(n)/n=O(1)$</li>
+</ul>
+<br>
+
+<br>
+
+<p>用 Accounting Method 解决increment binary counter 问题</p>
+<ul>
+<li>Real cost of flipping a bit: 1</li>
+<li>Amortized cost of flipping a bit: flip from 0 to 1 take cost <strong>2</strong>, flip from 1 to 0 take cost <strong>0</strong></li>
+<li>每次加一 exactly one $0\to 1$ filp performed (except the counter is all 1). Total cost $T(n)\le 2n$ and average cost per increment is $O(n)/n=O(1)$</li>
+</ul>
+<br>
+
+<h3 id="Potential-Method"><a href="#Potential-Method" class="headerlink" title="Potential Method"></a>Potential Method</h3><p>Credits are not associated with each operation, but use collectively as “potential energy” to pay for future operations</p>
+<p>假设一个sequence of $n$ operations, 初始时的data structure$D_0$ For each $i=1,2,…n$ let $c_i$ be the real cost of $i$th iteration and $D_i$ be the data structure agter the $i$th operation. Potential function $\Phi (D_i)$ is a real number that is the potential associated with $D_i$</p>
+<p>The amortized cost $\hat c_i$ of the ith operation w.r.t. $\Phi$ is<br>$$<br>\hat c_i=c_i+\Phi(D_i)-\Phi(D_{i-1})<br>$$<br>The total amortized cost of $n$ operations is<br>$$<br>\sum_{i=1}^n \hat c_i=\sum_{i=1}^n(c_i+\Phi(D_i)-\Phi(D_{i-1}))=\sum_{i=1}^nc_i+\Phi(D_n)-\Phi(D_{0})<br>$$<br>Usually $\Phi(D_0)=0$ and  $\Phi(D_i)\ge \Phi(D_0)$ for all i</p>
+<br>
+
+<br>
+
+<h4 id="Analysis-for-stack-operation"><a href="#Analysis-for-stack-operation" class="headerlink" title="Analysis for stack operation"></a>Analysis for stack operation</h4><p>$\Phi(D_0)=0$ for each $1 \le i \le n, \Phi(D_i)=|S|$ the number of objects in $S$ after the ith operation</p>
+<p>这里 $\Phi(D_i)$ 代表在第i次操作后stack中的元素</p>
+<ul>
+<li>If the $i$th operation is PUSH, then $\hat c_i = c_i+\Phi(D_i)-\Phi(D_{i-1})=1+1=2$</li>
+<li>If the $i$ th operation is POP, then $\hat c_i = c_i+\Phi(D_i)-\Phi(D_{i-1})=1-1=0$</li>
+<li>If the $i$ th operation is MultiPOP then $\hat c_i = c_i+\Phi(D_i)-\Phi(D_{i-1})=c_i+(-c_i)=0$</li>
+</ul>
+<p>就变成和Accounting一样的问题了</p>
+<br>
+
+<h4 id="Analysis-for-incrementing-binary-counter"><a href="#Analysis-for-incrementing-binary-counter" class="headerlink" title="Analysis for incrementing binary counter"></a>Analysis for incrementing binary counter</h4><p><img src="/Blog/intro/cmpt307/Amortized_analysis_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/Amortized_analysis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

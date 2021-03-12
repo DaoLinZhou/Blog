@@ -1061,7 +1061,9 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 <br>
 
 <p>定义:</p>
-<p>假设 ${p_n}<em>{n=0}^\inf$ converge to $p$ 并且所有的 $p_n \ne 0$, 如果有positive constants $\lambda, \alpha$ 存在<br>$$<br>\lim</em>{n\to \inf} \frac {|p_{n+1}-p|}{|p_n-p|^\alpha}=\lambda<br>$$<br>那么 ${p_n}_{n=0}^\inf$ converges to $p$ of order $\alpha$</p>
+<p>假设 ${p_n}_{n=0}^{\inf}$ converge to $p$ 并且所有的 $p_n \ne 0$, 如果有positive constants $\lambda, \alpha$ 存在使得</p>
+<p>$\lim_{n\to \inf} \frac {|p_{n+1}-p|}{|p_n-p|^\alpha}=\lambda$</p>
+<p>那么 ${p_n}_{n=0}^\inf$ converges to $p$ of order $\alpha$</p>
 <p>就是说 absolute error at step $n+1 \approx \lambda \cdot$ absolute error at step $n$   的alpha 次方</p>
 <p>$\lambda \ne 0, \lambda \ne \inf$</p>
 <p>$\lambda$ 越小, $\alpha$ 越大, converge 越快, $\lambda$ 对converge速度的effect小于$\alpha$ 的effect</p>
@@ -1230,7 +1232,7 @@ Lemma: If the spectral radius $p(T)$ satisfies $p(T)<1$ then $(i-t)^{-1}$ exists
 
 <br>
 
-<h1 id="Approximation"><a href="#Approximation" class="headerlink" title="Approximation"></a>Approximation</h1><p>在很多应用中, function是复杂的. 我们希望something can be evaluate in a computationally inexpensive way</p>
+<h1 id="拉格朗日插值法"><a href="#拉格朗日插值法" class="headerlink" title="拉格朗日插值法"></a>拉格朗日插值法</h1><p>在很多应用中, function是复杂的. 我们希望something can be evaluate in a computationally inexpensive way</p>
 <br>
 $$
 P_n(x)=a_nx^n+a_{n-1}x^{n-1}+\cdots +a_1x+a_0
@@ -1442,6 +1444,70 @@ $$
 <p>当$x=2.5$, $P_{0,1,2}(2.5)=2.25$</p>
 <p>$P_{0,1,2,3}$ 可以通过 $P_{1,2,3}$ 和$P_{0,1,2}$求出来<br>$$<br>P_{0,1,2} = \frac {(x-x_0)P_{1,2,3}(x) -(x-x_3)P_{0,1,2}(x)}{x_3-x_0}<br>$$</p>
 <p>$$<br>P_{0,1,2} = \frac {2.5\cdot 3-(-0.5)\cdot (2.25)}{3}=2.875<br>$$</p>
+<br>
+
+<br>
+
+<h2 id="Divided-Differences"><a href="#Divided-Differences" class="headerlink" title="Divided Differences"></a>Divided Differences</h2><p>divided difference 给出了另一种写lagrange interpolating polynomial的方法</p>
+<p>假设我们有一组数据点</p>
+<table>
+<thead>
+<tr>
+<th>$f_0$</th>
+<th>$f_1$</th>
+<th>$f_2$</th>
+<th>$f_3$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$x_0$</td>
+<td>$x_1$</td>
+<td>$x_2$</td>
+<td>$x_3$</td>
+</tr>
+</tbody></table>
+<p>这里我们不再假设$x$ 是均匀分布的, 我们假设他们arranged in any particular order</p>
+<p>consider the $n$th degree polynomial written in a special way<br>$$<br>P_n(x)=a_0+(x-x_0)a_1 + (x-x_0)(x-x_1)a_2+\cdots+(x-x_0)(x-x_1)\cdots (x-x_{n-1})a_n<br>$$<br>我们想找到一种有效的方法计算$a$</p>
+<p>这就是Divided Difference</p>
+<blockquote>
+<p>有点泰勒展开的意思</p>
+</blockquote>
+<p>如果让$x=x_0$<br>$$<br>P_n(x_0)=a_0<br>$$<br>而同时我们又知道 $P_n(x_0)=f_0$ 因为$P_n$ 必须穿过已知的数据点, 所以<br>$$<br>a_0=f_0<br>$$</p>
+<blockquote>
+<p>我们定义一些符号</p>
+<p>define zero th divided differences<br>$$<br>f[x_i] \equiv f(x_i)<br>$$</p>
+</blockquote>
+<br>
+
+<p>接下来让$x=x_1$<br>$$<br>P_n(x_1)=a_0+(x_1-x_0)a_1=f_0+(x_1-x_0)a_1=f_1<br>$$<br>解得<br>$$<br>a_1 = \frac {f_1-f_0} {x_1-x_0}<br>$$</p>
+<blockquote>
+<p>定义 first divided difference<br>$$<br>f[x_i, x_{i+1}] = f[x_{i+1}, x_i]<br>$$</p>
+<p>$$<br>=\frac {f[x_{i+1}]-f[x_i]}{x_{i+1}-x_i}<br>$$</p>
+<p>$a_1 = f[x_0,x_1]$</p>
+</blockquote>
+<br>
+
+<p>同理 $a_2=f[x_0,x_1,x_2]$<br>$$<br>f[x_i, x_{i+1} x_{i+1}] = \frac {f[x_{i+1}, x_{i+2}]-f[x_i,x_{i+1}]}{x_{i+2}-x_i}<br>$$<br><br></p>
+<p>定义:<br>$$<br>f[x_i,x_{i+1}\cdots,x_{i+k}] = \frac {f[x_{i+1}\cdots,x_{i+k}]-f[x_i,x_{i+1}\cdots,x_{i+k-1}]}{x_{i+k}-x_i}<br>$$<br>我们可以得到$a_k=f[x_0,x_1\cdots,x_k]$</p>
+<p>This gives Newton’s interpolatory divided difference fomula<br>$$<br>P_n(x)=f[x_0]+f<a href="x-x_0">x_0,x_1</a><br>$$</p>
+<p>$$<br>+f<a href="x-x_0">x_0,x_1,x_2</a>(x-x_1)<br>$$</p>
+<p>$$<br>+\cdots+f<a href="x-x_0">x_0,x_1\cdots x_n</a>(x-x_1)\cdots(x-x_{k-1})<br>$$</p>
+<br>
+
+<br>
+
+<p>example:</p>
+<p>假设有5个点<br>$$<br>(x_0,x_1,x_2,x_3,x_4,x_5)=(0.3,1.0,0.7,0.6,1.9)<br>$$<br>$f(x)=2x^3-x^2+x-1$</p>
+<p><img src="/Blog/intro/macm316/devided_diff.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>由于function只有degree 3, 所以4th divided difference计算出来就是0</p>
+<p><img src="/Blog/intro/macm316/devided_diff_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>disadvantage:</p>
+<ol>
+<li>如果有太多data point, $P_n(x)$可能会难以计算</li>
+<li>$P_n(x)$ 穿过data point 但是 can oscillate wildly between data when n is large (esp near boundaries and with sparse data)</li>
+</ol>
 </1$>
             </div>
             <hr>
