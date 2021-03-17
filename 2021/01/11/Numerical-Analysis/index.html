@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -1503,11 +1503,139 @@ $$
 <p><img src="/Blog/intro/macm316/devided_diff_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <br>
 
+<p><img src="/Blog/intro/macm316/devided_diff_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>disadvantage:</p>
 <ol>
 <li>如果有太多data point, $P_n(x)$可能会难以计算</li>
 <li>$P_n(x)$ 穿过data point 但是 can oscillate wildly between data when n is large (esp near boundaries and with sparse data)</li>
 </ol>
+<br>
+
+<p>Largrange Polynomial can oscillate wildly except where contained between data points that are in close proximity.</p>
+<p>我们希望interpolating polynomial 有和function一样的<strong>shape</strong> at the data points</p>
+<p>换句话说, interpolating polynomial 不仅在data point 处 agree with $f$, 同时 agree with $f’’$</p>
+<blockquote>
+<p>Theorem: </p>
+<p>If $f\in C’[a,b]$ and $x_0, \cdots x_n \in [a,b]$ are distinct</p>
+<p>the interpolating polynomial of least degree agreeing with f and f’ at $x_0, \cdots x_m$ is the Hermite polynomial of degree at most $2n+1$ given by<br>$$<br>H(x)=\sum_{j=0}^nf(x_j)H_j(x)+\sum_{j=0}^nf’(x_j)\hat H_j(x)<br>$$<br>where<br>$$<br>H_j(x)=[1-2(x-x_j)L’_j(x_j)]L_j^2(x)<br>$$</p>
+<p>$$<br>\hat H_j(x)=(x-x_j)L_j^2(x)<br>$$</p>
+<p>where $L_j(x)$ 代表 $j$th Lagrange coefficient polynomial of degree n</p>
+<p>然而这个方法太复杂了</p>
+</blockquote>
+<p>有一个基于nweton-divided difference的简单的方法</p>
+<p>divided difference method 中 我们有 $x_0,x_1…$</p>
+<p>现在我们定义:</p>
+<p>$z_0=x_0, z_1=x_0, z_2=x_1, z_3=x_1…$</p>
+<p>让 $z_{2i}=z_{2i+1}=x_i$</p>
+<p>如果我们使用nweton-divided difference<br>$$<br>f[z_{2i}]=f[z_{2i+1}]=f(x_i)<br>$$</p>
+<p>$$<br>f[z_{2i}, z_{2i+1}]=\frac {f[z_{2i+1}]-f[z_{2i}]}{z_{2i+1}-z_{2i}}=0/0<br>$$</p>
+<p>如果我们用limit<br>$$<br>\lim_{z_{2i}\to z_{2i+1}}\frac {f[z_{2i+1}]-f[z_{2i}]}{z_{2i+1}-z_{2i}}<br>$$</p>
+<p>$$<br>=\lim_{z_{2i}\to z_{2i+1}}\frac {f(z_{2i+1})-f(z_{2i})}{z_{2i+1}-z_{2i}}<br>$$</p>
+<p>这是derivative的定义<br>$$<br>=f’(z_{2i})<br>$$<br>derivative values are used in place of underfined first divided difference, otherwise newton’s divided difference formula is applied as usual</p>
+<br>
+
+<p>假设我们有$x_0, x_1$ 我们想使用newton’s divided difference求Hermite polynomial</p>
+<p><img src="/Blog/intro/macm316/devided_diff_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>给一个更具体的例子</p>
+<p>已知:</p>
+<table>
+<thead>
+<tr>
+<th>x</th>
+<th>f(x)</th>
+<th>f’(x)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$x_0=1$</td>
+<td>1.10517</td>
+<td>0.22103</td>
+</tr>
+<tr>
+<td>$x_1=1.5$</td>
+<td>1.25232</td>
+<td>0.37570</td>
+</tr>
+</tbody></table>
+<p>我们想要找到degree 3 的Hermite polynomial</p>
+<p><img src="/Blog/intro/macm316/devided_diff_4.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>H_3(x)=f[z_0]+f<a href="x-z_0">z_0, z_1</a>+f<a href="x-z_0">z_0,z_1,z_2</a>(x-z_1)+f<a href="x-z_0">z_0,z_1,z_2,z_3</a>(x-z_1)(x-z_2)<br>$$</p>
+<br>
+
+<br>
+
+<h2 id="Splines"><a href="#Splines" class="headerlink" title="Splines"></a>Splines</h2><p>目前为止如果我们希望更加准确, 我们会增加 polynomial 的 degree</p>
+<p>还有一种方法是, 我们可以把一整个区间分成多个小区间, 每个小区间求一个low degree polynomial</p>
+<br>
+
+<p><strong>Piecewise linear interpolation</strong></p>
+<p>对于这些点, 每个点之间只使用直线连接</p>
+<p><img src="/Blog/intro/macm316/splines.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>缺点是不够平滑</p>
+<br>
+
+<p><strong>Piecewise Polynomials of Hermite Type</strong></p>
+<p>如果我们同时知道每个点的slop, 那么就可以用hermite</p>
+<p><img src="/Blog/intro/macm316/splines_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>好处是平滑, 然而多数情况我们其实不知道slop</p>
+<br>
+
+<p><strong>Piecewise Quadratic Polynomials</strong></p>
+<p><img src="/Blog/intro/macm316/splines_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每个点都有一个condition确保polynomial经过这个点, 一个condition 确保 slop一致<br>$$<br>P_0(x)=a_0+b_0x+c_0x^2<br>$$</p>
+<p>$$<br>P_i(x)=a_i+b_ix+c_ix^2<br>$$</p>
+<p>3 degrees of freedom</p>
+<p>来看$P_1$, 它要经过两个点所以需要两个condition, 第一个点的slop要和$P_0$最后一个点的slop一致, 所以还需要一个condition, 总共需要3个condition</p>
+<p>同理, $P_2$ 有两个end point condition, 但此时我们需要2个 slop conditions. 在两个端点都要有slop condition</p>
+<p><img src="/Blog/intro/macm316/splines_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所以$P_2$有3 unknowns, 但是有4 conditions, 这意味着Quaratic没有足够的degree of freedom</p>
+<p>因此我们需要使用cubic splines 来satisfy all conditions</p>
+<br>
+
+<h3 id="Cubic-Spline-Interpolation"><a href="#Cubic-Spline-Interpolation" class="headerlink" title="Cubic Spline Interpolation"></a>Cubic Spline Interpolation</h3><p>idea 就是使用cubic polynomial, 这样Polynomial就需要4个常数, 就是说有4 degrees of freedom. 我们有足够的freedom使得下述成立</p>
+<ul>
+<li>agree with function at all the nodes</li>
+<li>continuously differentiable</li>
+<li>continuoused second derivatives</li>
+</ul>
+<blockquote>
+<p>Given a function f defined on $[a,b]$ and a set of nodes $a=x_0&lt;x_1&lt;\cdots &lt; x_n=b$ a cubic spline interpolant $S$ for $f$ is a function that satisfies the following<br>$$<br>P_i(x)=a_i+b_ix+c_ix^2+d_ix^3<br>$$</p>
+</blockquote>
+<p><img src="/Blog/intro/macm316/splines_3.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>S_j(x_{j+1})=f(x_{j+1})=S_{j+1}(x_{j+1})<br>$$</p>
+<p>$$<br>S_j’(x_{j+1})=S_{j+1}’(x_{j+1})<br>$$</p>
+<p>$$<br>S_j’’(x_{j+1})=S_{j+1}’’(x_{j+1})<br>$$</p>
+<p>如果我们有n cubics, 那么我们就有$4n-2$ conditions, 4n degrees of freedom</p>
+<p>我们还剩余2 degrees of freedom, 在两个端点$a,b$</p>
+<p>有两种boundary conditions</p>
+<ol>
+<li><p>clamped boundary conditons</p>
+<p>$S’(x_0)=f’(x_0),S’(x_n)=f’(x_n)$</p>
+</li>
+<li><p>Free/natural boundary conditons</p>
+<p>$S’’(x_0)=0=S’’(x_n)$</p>
+<p>此时我们有4n degrees of freedom, 4n conditons</p>
+</li>
+</ol>
+<p>我们可以用matrix 来解<br>$$<br>S_i(x)=a_i+b_i(x-x_i)+c_i(x-x_i)^2+d_i(x-x_i)^3<br>$$<br>$S_i(x_i)=f(x_i)=a_i$</p>
+<p>定义 $h_i=x_{i+1}-x_i$</p>
+<p><img src="/Blog/intro/macm316/splines_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>A 是tridiagonal matrix , 而且是strictly  diagonally dominate</p>
+<p>也就是说我们可以快速解出这个矩阵 $O(n)$</p>
+<p><img src="/Blog/intro/macm316/splines_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Theorem:</p>
+<p>let $f\in C^4[a.b]$ with $\max_{a\le x\le b}|f^{(4)}(x)|=M$</p>
+<p>If S is the unique clamped cubic spline interpolant to $f$ with respect to the nodes </p>
+<p>$a=x_0&lt;x_1&lt;\cdots &lt;x_n=b$ then<br>$$<br>\max_{a\le x\le b}|f(x)-S(x)|\le \frac {5M}{584}max_j(x_{j+1}-x_j)^4<br>$$<br><br></p>
+<p>Example:</p>
+<p>A clamped cubic spline $S$ for a function $f$ is defined by<br>$$<br>S_0(x)=1+Bx+2x^2-2x^3<br>$$<br> on $[0,1)$<br>$$<br>S_1(x)=1+b(x-1)+c(x-1)^2+7(x-1)^3<br>$$<br>on $[1,2]$</p>
+<p>Find $B, b, c, f’(0), f’(2)$</p>
+<p>我们知道 $S_0(1)=S_1(1)$<br>$$<br>1+B=1<br>$$<br>所以 $B=0$</p>
+<p>我们知道 $S_0’(1)=S_1’(1)$<br>$$<br>4-6=b<br>$$<br>所以 $b=-2$</p>
+<p>因为$S_0’’(1)=S_1’’(1)$<br>$$<br>4-12=c<br>$$<br>所以$c=-8$</p>
+<p>$f’(0)=S’(0)=B=0$<br>$$<br>f’(2)=S_1’(2)=b+2c+3\cdot 7=11<br>$$</p>
 </1$>
             </div>
             <hr>
@@ -1569,7 +1697,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1596,7 +1724,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1605,7 +1733,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

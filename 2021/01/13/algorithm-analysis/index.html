@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.8k 字
+                    5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      23 分钟
+                      24 分钟
                   </span>
                 
 
@@ -971,6 +971,41 @@ for i = 1 to n do:
 
 <h4 id="Analysis-for-incrementing-binary-counter"><a href="#Analysis-for-incrementing-binary-counter" class="headerlink" title="Analysis for incrementing binary counter"></a>Analysis for incrementing binary counter</h4><p><img src="/Blog/intro/cmpt307/Amortized_analysis_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/Amortized_analysis_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Dynamic-tables"><a href="#Dynamic-tables" class="headerlink" title="Dynamic tables"></a>Dynamic tables</h2><p>Store a non-predictable number $n$ of objects in a table.</p>
+<ul>
+<li><p>Allocate a table $T$ with size $T.size$</p>
+</li>
+<li><p>When $n &gt; T.size$, allocate a new table $T’$ with $T’.size&gt;T.size$ and store all objects in $T’$(table expansion)</p>
+</li>
+<li><p>When $n &lt;&lt; T.size$, allocate a new table $T’’$, $T’’.size &lt; T.size$ and store all objects in $T’’$ (table contraction)</p>
+</li>
+</ul>
+<p>$T$ 支持 Table-Insert (插入一个元素) 和 Table-Delete(删除一个元素)</p>
+<ul>
+<li>Table-Insert 如果没有table expansion, $O(1)$ 时间, 反之 $O(T.size)$ 时间</li>
+<li>Table-Delete 如果没有table contraction, $O(1)$ 时间, 反之 $O(T.size)$ 时间</li>
+</ul>
+<p>我们要证明amortized cost of per Table-Insert/Table-Delete is $O(1)$</p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/dynamic_table_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B 树"></a>B 树</h2><p>Balanced tree</p>
+<p><img src="/Blog/intro/cmpt307/b_tree.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt307/b_tree_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -1026,7 +1061,7 @@ for i = 1 to n do:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1053,7 +1088,7 @@ for i = 1 to n do:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1062,7 +1097,7 @@ for i = 1 to n do:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
