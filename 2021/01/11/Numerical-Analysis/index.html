@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -1315,10 +1315,10 @@ $$
 </tbody></table>
 <p>我们想找到interpolated value for $x=3.0$</p>
 <p>The $3^{rd}$ Lagrange interpolating polynomial is given by (只用前4个数)<br>$$<br>P(x)=f_0L_0(x)+f_1L_1(x)+f_2L_2(x)+f_3L_3(x)<br>$$</p>
-<p>$$<br>=\frac {(x-x_1)(x-x_2)(x-x_3)}{(x_m-x_1)(x_m-x_2)(x_m-x_3)}f_0<br>$$</p>
-<p>$$<br>+\frac {(x-x_0)(x-x_2)(x-x_3)}{(x_m-x_0)(x_m-x_2)(x_m-x_3)}f_1<br>$$</p>
-<p>$$<br>+\frac {(x-x_0)(x-x_1)(x-x_3)}{(x_m-x_0)(x_m-x_1)(x_m-x_3)}f_2<br>$$</p>
-<p>$$<br>+\frac {(x-x_0)(x-x_1)(x-x_2)}{(x_m-x_0)(x_m-x_1)(x_m-x_2)}f_3<br>$$</p>
+<p>$$<br>=\frac {(x-x_1)(x-x_2)(x-x_3)}{(x_0-x_1)(x_0-x_2)(x_0-x_3)}f_0<br>$$</p>
+<p>$$<br>+\frac {(x-x_0)(x-x_2)(x-x_3)}{(x_1-x_0)(x_1-x_2)(x_1-x_3)}f_1<br>$$</p>
+<p>$$<br>+\frac {(x-x_0)(x-x_1)(x-x_3)}{(x_2-x_0)(x_2-x_1)(x_2-x_3)}f_2<br>$$</p>
+<p>$$<br>+\frac {(x-x_0)(x-x_1)(x-x_2)}{(x_3-x_0)(x_3-x_1)(x_3-x_2)}f_3<br>$$</p>
 <p>再把$x=3.0$ 以及所有$x_i, f_i$代入就得到我们想要的值了</p>
 <p>$P(3.0)\approx 20.21$</p>
 <p>然而对于这个结果, 我们不知道它有多准确</p>
@@ -1487,11 +1487,11 @@ $$
 </blockquote>
 <br>
 
-<p>同理 $a_2=f[x_0,x_1,x_2]$<br>$$<br>f[x_i, x_{i+1} x_{i+1}] = \frac {f[x_{i+1}, x_{i+2}]-f[x_i,x_{i+1}]}{x_{i+2}-x_i}<br>$$<br><br></p>
+<p>同理 $a_2=f[x_0,x_1,x_2]$<br>$$<br>f[x_i, x_{i+1} x_{i+2}] = \frac {f[x_{i+1}, x_{i+2}]-f[x_i,x_{i+1}]}{x_{i+2}-x_i}<br>$$<br><br></p>
 <p>定义:<br>$$<br>f[x_i,x_{i+1}\cdots,x_{i+k}] = \frac {f[x_{i+1}\cdots,x_{i+k}]-f[x_i,x_{i+1}\cdots,x_{i+k-1}]}{x_{i+k}-x_i}<br>$$<br>我们可以得到$a_k=f[x_0,x_1\cdots,x_k]$</p>
-<p>This gives Newton’s interpolatory divided difference fomula<br>$$<br>P_n(x)=f[x_0]+f<a href="x-x_0">x_0,x_1</a><br>$$</p>
-<p>$$<br>+f<a href="x-x_0">x_0,x_1,x_2</a>(x-x_1)<br>$$</p>
-<p>$$<br>+\cdots+f<a href="x-x_0">x_0,x_1\cdots x_n</a>(x-x_1)\cdots(x-x_{k-1})<br>$$</p>
+<p>This gives Newton’s interpolatory divided difference fomula<br>$$<br>P_n(x)=f[x_0]+f[x_0,x_1] (x-x_0)<br>$$</p>
+<p>$$<br>+f[x_0,x_1,x_2] (x-x_0)(x-x_1)<br>$$</p>
+<p>$$<br>+\cdots+f[x_0,x_1\cdots x_n] (x-x_0)(x-x_1)\cdots(x-x_{k-1})<br>$$</p>
 <br>
 
 <br>
@@ -1560,7 +1560,7 @@ $$
 </tr>
 </tbody></table>
 <p>我们想要找到degree 3 的Hermite polynomial</p>
-<p><img src="/Blog/intro/macm316/devided_diff_4.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>H_3(x)=f[z_0]+f<a href="x-z_0">z_0, z_1</a>+f<a href="x-z_0">z_0,z_1,z_2</a>(x-z_1)+f<a href="x-z_0">z_0,z_1,z_2,z_3</a>(x-z_1)(x-z_2)<br>$$</p>
+<p><img src="/Blog/intro/macm316/devided_diff_4.PNG" srcset="/Blog/img/loading.gif" alt><br>$$<br>H_3(x)=f[z_0]+f[z_0, z_1] (x-z_0)+f[z_0,z_1,z_2] (x-z_0)(x-z_1)+f[z_0,z_1,z_2,z_3] (x-z_0)(x-z_1)(x-z_2)<br>$$</p>
 <br>
 
 <br>
@@ -1697,7 +1697,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1724,7 +1724,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1733,7 +1733,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
