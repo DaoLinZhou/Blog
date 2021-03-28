@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    18.4k 字
+                    19.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      84 分钟
+                      89 分钟
                   </span>
                 
 
@@ -3729,6 +3729,191 @@ t = 12 – 5 – 2 = 5 bits
 <p><img src="/Blog/intro/comp_sys/main_memory_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/main_memory_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/comp_sys/main_memory_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Paging"><a href="#Paging" class="headerlink" title="Paging"></a>Paging</h3><h4 id="Contiguous-vs-Non-contiguous-Allocation"><a href="#Contiguous-vs-Non-contiguous-Allocation" class="headerlink" title="Contiguous vs. Non-contiguous Allocation"></a>Contiguous vs. Non-contiguous Allocation</h4><p><img src="/Blog/intro/comp_sys/paging_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><a href="https://zh.wikipedia.org/wiki/%E5%88%86%E9%A0%81%E8%A1%A8" target="_blank" rel="noopener">分页表</a></p>
+<p>Non-contiguous Allocation</p>
+<ul>
+<li>Process is allocated memory wherever it is available</li>
+<li>Divide physical memory into fixed-sized <strong>page frames</strong><ul>
+<li>Size is power of 2 (typically 512 bytes to few GBs)</li>
+<li>OS keeps track of all free frames</li>
+</ul>
+</li>
+<li>Divide logical memory into pages of the same size as page frames</li>
+<li>For program of size n pages, need to find n  free frames</li>
+<li>Use page tables to translate logical to physical addresses</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/paging_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/paging_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/paging_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/paging_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/paging_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Implementation-of-Page-Table"><a href="#Implementation-of-Page-Table" class="headerlink" title="Implementation of Page Table"></a>Implementation of Page Table</h4><ul>
+<li>Page table is kept in main memory<ul>
+<li><strong>page-table base register</strong> (PTBR) points to page table</li>
+<li><strong>page-table length register</strong>(PTLR) indicates size of page table<ul>
+<li>Most processes do not use all their address space ranges –waste memory space to create page table entries for each possible page</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>将page table保存在memory的缺点:</p>
+<p>所有的 data/instruction access 需要请求两次memory access</p>
+<p>one for page table and one for data/instruction (<strong>慢</strong>)</p>
+<p>解决办法: Translation Look-aside Buffer(TLB)</p>
+<p>TLB 存储在cache中</p>
+<ul>
+<li>Fast-lookup associative memory, typically 32 to 1024 entries</li>
+<li>Caches page table entries (of currently running process)</li>
+<li>Part of the MMU (hardware)</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/paging_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>TLB存储page number和 frame number. 而page table只存储frame number, page number直接作为索引.</p>
+<br>
+
+<p>TLB存储在cache, 它和cache一样, 当TLB miss出现时, 会从page table中读取frame number, 顺便存储到TLB中, 以供未来使用.</p>
+<p>如果TLB满了, 我们就需要移除一个已存在的entry</p>
+<ul>
+<li>OS may participate (mostly hardware)</li>
+<li>Some cannot be removed (“wired down”)<ul>
+<li>E.g. pages containing kernel code</li>
+</ul>
+</li>
+</ul>
+<p>Each entry stores <strong>Address Space Identifier(ASID)</strong></p>
+<ul>
+<li>Identifier for process</li>
+<li>Address translation checks ASID for protection</li>
+<li>Allow TLB to hold page table entries for multiple processes simultaneously<ul>
+<li>No TLB flush (erase) during context switch</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>而且 page table 是 per process, 而TLB是shared by entire system</p>
+<p>需要在TLB中指出which entry belongs to which process</p>
+<p>因为他们可能有同样的logical page number</p>
+</blockquote>
+<br>
+
+<h4 id="Effective-Access-Time"><a href="#Effective-Access-Time" class="headerlink" title="Effective Access Time"></a>Effective Access Time</h4><p>假设访问TLB需要<strong>e</strong> time unit</p>
+<p>Memory 访问需要 <strong>tm</strong> time unit</p>
+<p>$e &lt;&lt; tm$</p>
+<p>Hit ratio $\alpha$</p>
+<ul>
+<li>percentage of times the requested page frame number is found in TLB</li>
+</ul>
+<p>Effective Access Time:<br>$$<br>(e+tm)\alpha + (e+tm+tm)(1-\alpha)<br>$$</p>
+<p>$$<br>=e+(2-\alpha)tm<br>$$</p>
+<p>当 $\alpha$ 接近1, effective access time 接近 <strong>tm</strong></p>
+<p><img src="/Blog/intro/comp_sys/paging_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Memory-Protection"><a href="#Memory-Protection" class="headerlink" title="Memory Protection"></a>Memory Protection</h3><p>将 protection bits 和 each frame 相关联</p>
+<ul>
+<li>指明一个page是 read only, read write, 还是 execute-only</li>
+<li>One bit for each to allow combinations (linux 0 到 7 权限, $2^3=8$)</li>
+</ul>
+<p>Another bit (valid-invalid) may be used</p>
+<ul>
+<li>Valid indicates whether a page is in the process’s address space, i.e., a legal page to access</li>
+<li>Invalid indicates that the page is not in the process’s address space (Illegal memory accesses trapped to OS –segfaults!)</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/mem_protect.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Shared-Pages"><a href="#Shared-Pages" class="headerlink" title="Shared Pages"></a>Shared Pages</h3><p>shared code</p>
+<ul>
+<li>one copy of read-only(reentrant) code shared among processes (e.g., editors, compilers, window systems)</li>
+<li>如果是 read-write pages, 可以用于process之间的交互</li>
+<li><strong>Shared code must appear in the same location in the logical address space of all processes</strong></li>
+</ul>
+<p>Private data:</p>
+<ul>
+<li>Each process keeps “private pages” for data</li>
+<li>Private pages can appear anywhere in address space</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/mem_protect_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/mem_protect_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Virtual-Memory-1"><a href="#Virtual-Memory-1" class="headerlink" title="Virtual Memory"></a>Virtual Memory</h2><h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>Instructions must be in physical memory to be executed</p>
+<ul>
+<li>Limit program size to physical memory size</li>
+<li>Limit multiprogramming: cannot support a lot of process</li>
+</ul>
+<p>但是entire address space is typically not need</p>
+<p>我们希望: 允许一些 portions of the address to be non-memory resident (not in physical memory)</p>
+<ul>
+<li>Demand paging: load program code/data pages into memory on demand. e.g. load shared library as needed</li>
+<li>Swapping: Stash memory pages away to the swap space backed by stable storage(e.g. disk or flash SSDs)</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Demand-Paging"><a href="#Demand-Paging" class="headerlink" title="Demand Paging"></a>Demand Paging</h4><p>A page is brought into memory only when needed</p>
+<p>好处:</p>
+<ul>
+<li><p>Less I/O needed</p>
+</li>
+<li><p>Faster response, because we load only the needed (few) pages</p>
+</li>
+<li><p>More processes can be admitted to the system</p>
+</li>
+</ul>
+<p>Process generates logical (virtual) addresses which are mapped to physical addresses using a page table </p>
+<p>If the requested page is not in memory, kernel brings it from hard disk</p>
+<h4 id="Swapping"><a href="#Swapping" class="headerlink" title="Swapping"></a>Swapping</h4><p><img src="/Blog/intro/comp_sys/virtual_eme_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Traditionally means swapping out an entire process (all of its pages)</p>
+<p>Modern implementations swap out only portions of processes, not entire processes</p>
+<ul>
+<li>I.e., “swapping with paging”</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当两个进程共享page时, 如果一个进程改变page, 会copy一个新的page, 在此基础上进行修改, 尽可能保证page被共享</p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Minor-vs-Major-Page-Faults"><a href="#Minor-vs-Major-Page-Faults" class="headerlink" title="Minor vs. Major Page Faults"></a>Minor vs. Major Page Faults</h3><p>Major Page fault:</p>
+<ul>
+<li>Need to bring page from disk </li>
+<li>Expensive, includes I/O</li>
+</ul>
+<p>Minor Page Fault:</p>
+<ul>
+<li>Does not need to bring page from disk </li>
+<li>Typically very fast (just updates the page table)</li>
+<li>Examples:<ul>
+<li>Shared pages (which already in memory) but not linked with the process address space yet</li>
+<li>Dynamic memory allocation (malloc) where kernel may not actually allocate physical memory until it is accessed<ul>
+<li>May become a bottleneck in some cases (e.g., in-memory database systems)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -3796,7 +3981,7 @@ t = 12 – 5 – 2 = 5 bits
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -3823,7 +4008,7 @@ t = 12 – 5 – 2 = 5 bits
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -3832,7 +4017,7 @@ t = 12 – 5 – 2 = 5 bits
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
