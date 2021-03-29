@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -1845,6 +1845,110 @@ $$
 由于$x_1$是mid point 所以 $f'$ 没了
 
 <p>我们不希望最后结果有$f’’$<br>$$<br>f’’(x_1)=\frac 1 {h^2}[f(x_0)-2f(x_1)+f(x_2)]+\frac {h^2}{12}f^{(4)}(\delta_2)<br>$$<br>代入得到<br>$$<br>\int_{x_0}^{x_2}f(x)dx=\frac h 3 [f(x_0)+4f(x_1)+f(x_2)]+O(h^5)<br>$$<br>这个方法叫做 <strong>Simpson’s rule</strong></p>
+<br>
+
+<br>
+
+<p>有一点我们比较关心: error</p>
+<p>如果让$f(x)=x$ (或者其他linear funciton) 此时 <strong>trapezoid rule</strong> 和 <strong>Simpson’s rule</strong> 的 error 为 0, 因为$f’’=0, f^{(4)}=0$</p>
+<p>如果 $f(x)=x^3$  <strong>trapezoid rule</strong> 有非零error,  <strong>Simpson’s rule</strong> 的 error 为 0 </p>
+<blockquote>
+<p>定义:</p>
+<p>The degree of accuracy/precision of a numerical integration formula is the largest positive integer $n$ such that the formula is exact for $x^k$ when $k=0,1\cdots n$</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Degree of accuracy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Trapezoid rule</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">Simpson’s rule</td>
+<td align="center">3</td>
+</tr>
+</tbody></table>
+</blockquote>
+<p>Trapezoid and Simpson’s rules are examples of Newton’s cote fomulas</p>
+<p>The $(n+1)$ point closed Nowton-Cotes fomula uses nodes</p>
+<p>$x_i=x_0+ih, i=0,1,\cdots,n$</p>
+<p>where $x_0=a, x_n=b, h=\frac {(b-a)}n$</p>
+<p>Then<br>$$<br>\int_a^b f(x)dx\approx \int_a^bP_n(x)dx= \int_a^b \sum_{i=0}^nL_i(x)f(x_i)<br>$$</p>
+<p>$$<br>=\sum_{i=0}^n \int_a^b L_i(x)f(x_i)<br>$$</p>
+<p>$$<br>=\sum_{i=0}^n a_if(x_i)<br>$$</p>
+<p>where $a_i=\int_a^b L_i(x)dx$</p>
+<p>The fomula is closed because the endpoints of the interval are included as nodes.</p>
+<br>
+
+<p>An error analysis gives</p>
+<blockquote>
+<p>Thm:</p>
+<p>假设 $\sum_{i=0}^n a_if(x_i)$ 表示 $(n+1)$ point closed formula with $x_0=a, x_n=b, h=(b-a)/n$  If n is even and $f\in C^{n+2}[a,b]$ then there exists $\delta \in (a,b)$ with<br>$$<br>\int_a^b f(x)dx=\sum_{i=0}^n a_if(x_i)+\frac {h^{n+3}f^{(n+2)}(\delta)}{(n+2)!}\int_0^n t^2(t-1)(t-2)\cdots(t-n)dt<br>$$<br>If n is odd and $f \in C^{n+1}[a,b]$then there exists $\delta \in (a,b)$ with<br>$$<br>\int_a^b f(x)dx=\sum_{i=0}^n a_if(x_i)+\frac {h^{n+2}f^{(n+1)}(\delta)}{(n+1)!}\int_0^nt(t-1)(t-2)\cdots(t-n)dt<br>$$<br>如果n是even, 我们得到error with order $n+3$</p>
+<p>如果n是odd, 我们得到error with order $n+2$</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">n</th>
+<th align="center">name</th>
+<th align="center">error term</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">Trapezoid rule</td>
+<td align="center">$-\frac {h^3}{12}f’’(\delta)$</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">Simpson’s rule</td>
+<td align="center">$-\frac {h^5}{90}f^{(4)}(\delta)$</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">Simpson’s 3/8 rule</td>
+<td align="center">$-\frac {3h^5}{80}f^{(4)}(\delta)$</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center"></td>
+<td align="center">$-\frac {8h^7}{945}f^{(6)}(\delta)$</td>
+</tr>
+</tbody></table>
+<p>通常我们使用even n, 因为error更小, 有时候使用trapezoid rule, 因为它简单</p>
+<br>
+
+<p>Newton-Cotes 也有 open fomula</p>
+<p>$x_i=x_0+ih$</p>
+<p>$x_0=a+h$</p>
+<p>$h=(b-a)/(n+2)$</p>
+<p>Then the open Newton’s cotes formulas are given by<br>$$<br>\int_a^bf(x)dx\approx \sum_{i=0}^na_if(x_i)<br>$$<br>where $a_i=\int_a^b L_i(x)dx$</p>
+<p>此时 $x_0=a+h, x_n=b-h$ The formulas are open because the nodes are all sontained in the open interval $(a,b)$</p>
+<p>Once again, if n is even the degree of precision is $(n+1)$ and the error is $O(h^{n+3})$</p>
+<p>if n is odd then it is $O(h^{n+2})$</p>
+<p><img src="/Blog/intro/macm316/mid_point.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>n=1<br>$$<br>\int_a^bf(x)dx=\frac {3h} {2}[f(x_0)-f(x_1)]+\frac {3h^3}{4}f’’(\delta)<br>$$<br>n=2<br>$$<br>\int_a^bf(x)dx=\frac {3h} {4}[2f(x_0)-f(x_1)+2f(x_2)]+\frac {14h^5}{45}f^{(4)}(\delta)<br>$$<br>n=3<br>$$<br>\int_a^bf(x)dx=\frac {5h} {24}[11f(x_0)+f(x_1)+f(x_2)+11f(x_3)]+\frac {95h^5}{144}f^{(4)}(\delta)<br>$$<br><br></p>
+<p>typically, we do not apply newton-cotes formula to the interval $[a,b]$ directly</p>
+<p>If we did then high degree formulas would be required to obtain accurate solutions.</p>
+<p>However we have already seen that even these high degree polynomials often gives a oscillatory</p>
+<p>为了解决这个问题, 和之前一样, 我们breake interval$[a,b]$ into serval intervals, and apply low order formulas to sub-intervals</p>
+<p>假设我们要对一个function使用 Simpson’s rule </p>
+<p><img src="/Blog/intro/macm316/mid_point_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Take $h=(b-a)/n$, $x_j=a+jh$ ,Then<br>$$<br>\int_a^bf(x)dx = \sum_{j=1}^{n/2}\int_{x_{2j-2}}^{x_{2j}}f(x)dx<br>$$</p>
+<p>$$<br>=\sum_{j=1}^{n/2}[\frac h 3[f(x_{2j-2})+4f(x_{2j+1})+f(x_{2j})]-\frac {h^5}{90}f^{(4)}(\delta_j)]<br>$$</p>
+<p>$x_{2j-2}&lt;\delta_j&lt;x_{2j}$</p>
+<p>Taking into account that $f(x_{2j})$ $0&lt;j&lt;n/2$ appears in 2 terms, this summation can be simplified somewhat<br>$$<br>\int_a^bf(x)dx =\frac h3 [f(x_0)+2\sum_{j=1}^{\frac n2-1}f(x_{2j})+4\sum_{j=1}^{\frac n2}f(x_{2j-1})+f(x_n)]+error<br>$$<br>$error = \frac {-(b-a)}{180}h^4f^{(4)}(\delta)$</p>
+<p>如果我们take sub interval larger and larger?</p>
+<p>round off error 是否会变大?</p>
+<p>假设我们用 $\tilde f(x_i)$ 来 approximate $f(x_i)$<br>$$<br>f(x_i) = \tilde f(x_i)+e_i<br>$$<br>$0\le i \le n$</p>
+<p>Then the accumulated round off error in the composite simpson’s Rule is:<br>$$<br>|e(h)|=|\frac h3 [e_0+2\sum_{j=1}^{\frac n2-1}e_{2j}+4\sum_{j=1}^{\frac n2}e_{2j-1}+e_n]|<br>$$</p>
+<p>$$<br>\le \frac h3 [|e_0|+2\sum_{j=1}^{\frac n2-1}|e_{2j}|+4\sum_{j=1}^{\frac n2}|e_{2j-1}|+|e_n|]<br>$$</p>
+<p>假设round off error bound by $\epsilon$<br>$$<br>|e(h)| \le \frac h3 [\epsilon + 2(\frac n2-1)\epsilon+4\frac n2 \epsilon+\epsilon] = nh\epsilon<br>$$</p>
+<p>$$<br>=(b-a)\epsilon<br>$$</p>
+<p>也就是说round off error 不受sub interval 数量的影响, 这点和numerical differentiation 不同</p>
 </1$>
             </div>
             <hr>
@@ -1906,7 +2010,7 @@ $$
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1933,7 +2037,7 @@ $$
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1942,7 +2046,7 @@ $$
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
