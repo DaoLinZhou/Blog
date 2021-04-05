@@ -1949,6 +1949,186 @@ $$
 <p>假设round off error bound by $\epsilon$<br>$$<br>|e(h)| \le \frac h3 [\epsilon + 2(\frac n2-1)\epsilon+4\frac n2 \epsilon+\epsilon] = nh\epsilon<br>$$</p>
 <p>$$<br>=(b-a)\epsilon<br>$$</p>
 <p>也就是说round off error 不受sub interval 数量的影响, 这点和numerical differentiation 不同</p>
+<br>
+
+<h1 id="Romberg-integration"><a href="#Romberg-integration" class="headerlink" title="Romberg integration"></a>Romberg integration</h1><p>combination of trapezoid rule:</p>
+<p>If $f\in C^2[a,b]$ then there exists a $\mu \in [a, b]$ s.t.<br>$$<br>\int_a^bf(x)dx=\frac h2[f(a)+2\sum_{j=1}^{n-1}f(x_j)+f(b)]-\frac {b-a}{12}h^2f’’(\mu)<br>$$<br>where $h=\frac {b-a} n, x_j=a+jh$</p>
+<p>然而实际上我们可以让error更precise</p>
+<p>An application of euler maclaurin summation shows that if f is sufficiently smooth, the error depends on even powers of $h$<br>$$<br>error = c_1h^2+c_2h^4+\cdots+c_mh^{2m}+O(h^{2m+2})<br>$$<br>where $c_k=const \cdot (f^{(2k-1)}(b)-f^{(2k-1)}(a))$</p>
+<p>这给出了一个有意思的结论, 如果derivatives of $f$ are equal at the endpoints. 那么我们就会有一个非常accurate formula (exact formula)</p>
+<br>
+
+<p>Example:</p>
+<p>The numerical approximation to $\int_0^1\sin^2(8\pi x) dx$ , by the composite Trapezoid rule for serveral values of $h$ is given below:</p>
+<table>
+<thead>
+<tr>
+<th align="center">h</th>
+<th>1</th>
+<th>1/2</th>
+<th>1/4</th>
+<th>1/8</th>
+<th>1/16</th>
+<th>1/32</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">composite Trapezoid rule</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1/2</td>
+<td>1/2</td>
+</tr>
+</tbody></table>
+<p>If we want a numerical quadrature to actually see the function, we need to take an interval less than $1/8$</p>
+<p><strong>如果$f$ 是一个periodic function,  并且充分sample the function, 那么使用 composite trapezoid rule will gives excat answer</strong></p>
+<br>
+
+<br>
+
+<p>Romberg integration 就是 composite trapezoid rule 和 richardson extrapolation 的结合</p>
+<p>The method makes efficient use of computations wherever possible. It reuses computations wherever possible</p>
+<p>Let $R_{k,1}$ be the approximation(composite trapezoid rule) to the integral using $m_k=2^{k-1}$ intervals. $h=\frac {(b-a)}{m_k}$<br>$$<br>R_{1,1}=\frac {h_1}{2}[f(a)+f(b)] = \frac {(b-a)}{2}[f(a)+f(b)]<br>$$</p>
+<p>$$<br>R_{2,1}=\frac {h_2} 2[f(a)+f(b)+2f(a+h_2)]<br>$$</p>
+<p>$$<br>=\frac 12 [R_{1,1}+h_1f(a+h_2)]<br>$$</p>
+<p>$$<br>R_{3,1}=\frac 12 [R_{2,1}+h_2[f(a+h_2)+f(a+3h_3)]]<br>$$</p>
+<p>$$<br>R_{k,1}=\frac 12[R_{k-1, 1}+h_{k-1}\sum_{i=1}^{2^{k-2}}f(a+(2i-1)h_k)]<br>$$</p>
+<p><img src="/Blog/intro/macm316/trap_r.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Next apply Richardson’s Extrapolation to obtain fauter convergence.<br>$$<br>\int_a^bf(x)dx-R_{k,1}=c_1h_k^2+\sum_{i=2}^mc_ih_k^{2i}+O(h^{2m+2})<br>$$</p>
+<p>$$<br>\int_a^bf(x)dx-R_{k+1,1}=\frac {c_1} 4 h_k^2+\sum_{i=2}^m\frac {c_ih_k^{2i}}{4^i}+O(h^{2m+2})<br>$$</p>
+<p>4 times second  minus the first gives an $O(h_k^4)$ error</p>
+<br>
+
+<p>we repeat the procedure to eliminate the $O(h_k^4)$ error term continuing we have an $O(h_k^{2j})$ approximation formula defined by<br>$$<br>R_{k,j}=R_{k,j-1}+\frac {R_{k,j-1}-R_{k-1, j-1}}{4^{j-1}-1}<br>$$<br>example:</p>
+<p>还是approximate $\int_0^1 e^{-x}dx$ to 5 significant digits</p>
+<p><img src="/Blog/intro/macm316/trap_r_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$R_{k,i}$ 的error的order是$O(2i)$, 例如$R_{k,2}$的error是$O(h^4)$</p>
+<br>
+
+<p>什么时候停止?</p>
+<p>通常 $|R_{n-1, n-1}-R_{n,n}|&lt;TOL$ 就可以stop</p>
+<p>but it will be little bit safer to do two level of this, 因为有可能有lucky cancellation</p>
+<p>在使用上面的停止条件的基础上, 在使用这个条件$|R_{n-2,n-2}-R_{n-1, n-1}|&lt;TOL$ </p>
+<p>当Richardson’s Extrapolation太多时, 会由cancellation error主导</p>
+<br>
+
+<br>
+
+<h1 id="Adaptive-Quadratare"><a href="#Adaptive-Quadratare" class="headerlink" title="Adaptive Quadratare"></a>Adaptive Quadratare</h1><p>adaptive numerical integration</p>
+<p><img src="/Blog/intro/macm316/trap_r_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设一个函数是这样, 我们可能不想使用equally spaced points in your quadrature.</p>
+<p>我们可能对平滑的地方使用simpson’s rule with wide intervals.</p>
+<p>而对oscillatory region使用small intervals.</p>
+<p>也就是说我们希望adapt $h$ to the behavior of the function.</p>
+<br>
+
+<p>为了调整h的step size, 我们需要estimate the error.</p>
+<p>假设我们要approximate $\int_a^bf(x)dx$ with tolerance $\epsilon &gt; 0$</p>
+<p>Start by applying Simpson’s Rule with a step size $h=(b-a)/2$<br>$$<br>\int_a^bf(x)dx=S(a,b)-\frac {h^5}{90}f^{(4)}(\mu)<br>$$<br>where $S(a,b)=\frac h 3[f(a)+4f(a+h)+f(b)], a&lt;\mu&lt;b$</p>
+<p>然而我们不知道error: 因为我们没有$f^{(4)}$ 和 $\mu$</p>
+<p>因此我们对不同step size使用Simpson’s Rule</p>
+<p>我们的思路就是使用Simpson’s Rule两次, 使用正确的 combination 来 approximate the error.<br>$$<br>\int_a^bf(x)dx=S(a, \frac {a+b} 2)+S(\frac {a+b} 2,b)-\frac {1}{16}\frac{h^5}{90}f^{(4)}(\tilde \mu)<br>$$<br>我们假设 sub interval 足够小, 使得 $f^{(4)}(\mu)\approx f^{(4)}(\tilde \mu)$</p>
+<p>之后让两个式子相减<br>$$<br>0=S(a,b)-S(a, \frac {a+b} 2)-S(\frac {a+b} 2,b)-\frac {15}{16}\frac{h^5}{90}f^{(4)}(\mu)<br>$$<br>由此我们可以解得$f^{(4)}(\mu)$</p>
+<br>
+
+<p>Error estimate for Simpson’s Rule<br>$$<br>\text{error estimate} = \frac 1{15} |S(a,b)-S(a, \frac {a+b} 2)-S(\frac {a+b} 2,b)|<br>$$<br><br></p>
+<p>例如: 用Simpson’s rule 计算 $S(a,b),S(a, \frac {a+b} 2),S(\frac {a+b} 2,b)$<br>$$<br>\int_1^{1.5}x^2\ln (x)dx<br>$$<br>并且计算 error estimate 以及actual error<br>$$<br>S(1,1.5)=\frac{0.25} 3 [f(1)+4f(1.25)+f(1.5)]=0.1922453<br>$$</p>
+<p>$$<br>S(1,1.25)=0.039372434<br>$$</p>
+<p>$$<br>S(1.25,1.5)=0.15288602<br>$$</p>
+<p>$$<br>\text{error estimate}=1/15 |S(1,1.5)-S(1,1.25)-S(1.25,1.5)|<br>$$</p>
+<p>$$<br>\approx8.77\times 10^{-7}<br>$$</p>
+<p>$$<br>\text{actual error} = |S(1,1.25)+S(1.25, 1.5)-exact|<br>$$</p>
+<p>$$<br>\approx 8.96\times 10^{-7}<br>$$</p>
+<p>error estimate 的使用:</p>
+<p>我们如果希望$error &lt; \epsilon$</p>
+<p>而我们让 $\text{error estimate} &lt; \tilde \epsilon$<br>$$<br>\tilde \epsilon = \epsilon \times \text{safe factor}<br>$$<br>safe factor &lt; 1.</p>
+<p>例如我们想让 $\frac 23$ 作为safety factor</p>
+<p>我们想approximate $\int_a^bf(x)dx$</p>
+<p>我们计算error estimate over $[a,b]$ if $\text{estimate}&lt;\tilde \epsilon$ stop</p>
+<p>otherwise, repeat on $\int_a^{\frac {a+b} 2}f(x)dx$ 和 $\int_{\frac {a+b} 2}^bf(x)dx$, using $\tilde \epsilon/2$</p>
+<br>
+
+<br>
+
+<h1 id="Gaussian-Quadrature"><a href="#Gaussian-Quadrature" class="headerlink" title="Gaussian Quadrature"></a>Gaussian Quadrature</h1><p>此前我们处理的是$x_i$是均匀分布的 quadrature formulas </p>
+<p>equally spaced node 有着很好的性质, 使得我们进行composite integration时减少了很多工作</p>
+<p>然而我们思考如果有unequally spaced point 时, 我们能否做的更好</p>
+<br>
+
+<p>现在我们允许有 n 个 nodes, 以及 n weights, 这样就是 $2n$ free parameters, 我们将寻找 quadrature formulas 的 degree 最多为 $2n-1$, 这是因为 degree 为 $2n-1$ 的 polynomial 有 $2n$ degree of freedom</p>
+<p>start with an integral $\int_a^bf(x)dx$</p>
+<p>由于node会改变, 所以我们想用same limits of integration for every integral</p>
+<p>we are going to tabulate the $x_i$, 我们不希望它们取决于 $a,b$, 所以第一步我们要change variables to change the limit of integration</p>
+<p>我们把它限制在 $-1, 1$<br>$$<br>t = \frac {2x-a-b}{b-a}<br>$$</p>
+<p>$$<br>x=\frac 12 [(b-a)t+a+b]<br>$$</p>
+<p>$$<br>dx=\frac 12 (b-a)dt<br>$$</p>
+<p>代入得到<br>$$<br>\int_{-1}^1 f(\frac 12[(b-a)t+a+b])\frac 12 (b-a)dt<br>$$<br>当 $n=1$时, best approach就是使用mid point</p>
+<p><img src="/Blog/intro/macm316/gaussian_quadr.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当 $n=2$ 时, $\int_{-1}^1f(x)dx=c_1f(x_1)+c_2f(x_2)$</p>
+<p>此时我们有4 degree of freedom $c_1,f(x_1),c_2,f(x_2)$</p>
+<p>而 degree 3 的多项式有4个degree of freedom $f(x)=a_0+a_1x+a_2x^2+a_3x^3$</p>
+<p>因此我们希望能找到一个integration formula that is exact for degree 3 polynomials</p>
+<p>由于: $\int_{-1}^1 a_0+a_1x+a_2x^2+a_3x^3 dx$<br>$$<br>=a_0\int_{-1}^1dx+a_1\int_{-1}^1xdx+a_2\int_{-1}^1x^2dx+a_3\int_{-1}^1x^3dx<br>$$<br>我们的formula is exact if it’s exact for $f(x)=1,x,x^2,x^3$</p>
+<p>$\int_{-1}^1f(x)dx=c_1f(x_1)+c_2f(x_2)$</p>
+<p>$f(x)=1,\ \ \ 2=\int_{-1}^11dx=c_1+c_2$</p>
+<p>$f(x)=x, \ \ \ \int_{-1}^1xdx=c_1x_1+c_2x_2$</p>
+<p>$f(x)=x^2, \ \ \ \int_{-1}^1x^2dx=c_1x_1^2+c_2x_2^2$</p>
+<p>$f(x)=x^3, \ \ \ \int_{-1}^1x^3dx=c_1x_1^3+c_2x_2^3$</p>
+<p>求解可以得到:</p>
+<p>$c_1=1, c_2=1, x_1=-\sqrt{3}/3, x_2=\sqrt{3}/3$</p>
+<p>因此</p>
+<p>$\int_{-1}^1f(x)dx\approx f(-\sqrt{3}/3)+f(\sqrt{3}/3)$</p>
+<p>这个方法has degree of precision three, 对于degree 4的function 不管用</p>
+<br>
+
+<h2 id="Legender-polynomials"><a href="#Legender-polynomials" class="headerlink" title="Legender polynomials"></a>Legender polynomials</h2><p>这种方式对small $n$ 有效, 然而我们更希望一些对large $n$ 也有效的东西, comething useful for theoretical development.</p>
+<br>
+
+<p>定义: Legender polynomial $P_0(x), P_1(x)\cdots$ are defined with 2 properties:</p>
+<ol>
+<li>$P_n(x)$ is a monic polynomial of degree n. ($x^n$的系数都是1)</li>
+<li>$\int_{-1}^1P(x)P_n(x)dx=0$ whenever $P(x)$ is a polynomial of degree less than $n$</li>
+</ol>
+<p>因此我们可以计算出前几个Legender polynomial</p>
+<ul>
+<li>$P_0(x)=1$</li>
+<li>$P_1(x)=x$</li>
+<li>$P_2(x)=x^2-1/3$</li>
+<li>$P_3(x)=x^3-(3/5)x$</li>
+<li>$P_4(x)=x^4-\frac 67x^2+\frac 3{35}$</li>
+</ul>
+<p>为什么我们对这种多项式感兴趣? 因为它们有一些性质;</p>
+<ul>
+<li>The roots of these polynomials are distinct</li>
+<li>The roots of these polynomials lie in $(-1,1)$</li>
+<li>这些多项式都是基于y轴对称的. root也是基于y轴对称的</li>
+<li><strong>The roots of Legender polynomial are the exact roots we need for gaussian Quadrature</strong></li>
+</ul>
+<p>也就是说我们将用 Lengender polynomial 的 root 作为 $x_i$</p>
+<br>
+
+<br>
+
+<p>例如 approximate $\int_1^{3/2}x^2\ln (x^2)dx$</p>
+<p>using Gaussian quadrature with $n=2$</p>
+<p>首先change variables<br>$$<br>\int_1^{3/2}x^2\ln (x^2)dx=\int_{-1}^{1}{(\frac {\frac 12 t+\frac 52}2)}^2\ln (\frac {\frac 12 t+\frac 52}2)(\frac {1/2} 2)dt<br>$$</p>
+<p>$$<br>\approx f(x_1)+f(x_2) = f(-\frac 1 {\sqrt 3})+f(\frac 1 {\sqrt 3})<br>$$</p>
+<p>$$<br>=0.1922687<br>$$</p>
+<p>而exact approach 是 $0.19225935$</p>
+<p>而simpson’s rule 会得到 $0.19224530$</p>
+<p>Gaussian quadrature 比 Simpson’s rule 的结果更准确</p>
+<br>
+
+<p>Example:</p>
+<p>Find the constants $c_0, c_1, x_1$ so that the quadratare formula<br>$$<br>\int_{-1}^0f(x)dx=c_0f(-1)+c_1f(x_1)<br>$$<br>has the highest degree of precision possible.<br>$$<br>f=1, \int_{-1}^11dx=1=c_0+c_1 \tag 1<br>$$</p>
+<p>$$<br>f=x, \int_{-1}^0xdx = -\frac 12 = -c_0+c_1x_1 \tag2<br>$$</p>
+<p>$$<br>f=x^2, \int_{-1}^0 x^2dx=\frac 13 = c_0+c_1x_1^2 \tag3<br>$$</p>
+<p>现在我们有3个equaltion, 3 unknown, 我们希望能求解它们</p>
+<p>$(1)+(2)$<br>$$<br>\frac 12 = c_1+c_1x_1=c_1(1+x_1)<br>$$<br>$(3)-(1)$<br>$$<br>-2/3=c_1x_1^2-c_1=c_1(x_1-1)(x_1+1)=1/2(x_1-1)<br>$$<br>解得</p>
+<p>$x_1 = -1/3, c_1=3/4, c_0=1/4$</p>
+<p>把这些值放入cubic中<br>$$<br>f=x^3, \int_{-1}^0 x^3dx=-\frac 14 \ne -c_0+c_1x_1^3<br>$$<br>所以 not exact for cubics, 这意味着 degree of precision is 2</p>
 </1$>
             </div>
             <hr>

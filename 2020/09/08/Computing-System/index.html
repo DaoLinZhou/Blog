@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    19.3k 字
+                    20.4k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      89 分钟
+                      95 分钟
                   </span>
                 
 
@@ -3914,6 +3914,272 @@ t = 12 – 5 – 2 = 5 bits
 </li>
 </ul>
 <p><img src="/Blog/intro/comp_sys/virtual_eme_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/virtual_eme_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Page-Replacement-Algorithms"><a href="#Page-Replacement-Algorithms" class="headerlink" title="Page Replacement Algorithms"></a>Page Replacement Algorithms</h3><p>目标: 最小化 page-fault rate</p>
+<p>Algorithm evaluation:</p>
+<ul>
+<li>Take a particular sequence of memory page references</li>
+<li>Compute number of page faults that will occur if we follow the access sequence</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h4 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h4><p><img src="/Blog/intro/comp_sys/virtual_eme_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>优点: 简单容易实现</p>
+<p>缺点: 性能不一定好. (May replace a page that is used heavily, Belady’s anomaly)</p>
+<p><img src="/Blog/intro/comp_sys/virtual_eme_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h4><p><img src="/Blog/intro/comp_sys/virtual_eme_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Second-chance-Clock-Replacement"><a href="#Second-chance-Clock-Replacement" class="headerlink" title="Second-chance (Clock) Replacement"></a>Second-chance (Clock) Replacement</h4><p><img src="/Blog/intro/comp_sys/virtual_eme_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当<code>ref_bit</code> 为1时, 就set为0, 再给它一次机会, 尝试在page进程replace</p>
+<br>
+
+<p><img src="/Blog/intro/comp_sys/virtual_eme_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Allocating-Kernel-Memory"><a href="#Allocating-Kernel-Memory" class="headerlink" title="Allocating Kernel Memory"></a>Allocating Kernel Memory</h3><p>Treated differently from user memory</p>
+<ul>
+<li>Some kernel memory needs to be contiguous <ul>
+<li>Some hardware devices interact directly with physical memory</li>
+</ul>
+</li>
+<li>Virtual memory may just be too expensive for the kernel (cannot afford a page fault)</li>
+</ul>
+<p>Often, a free-memory pool is dedicated to kernel from which it allocates the needed memory</p>
+<p>Examples (Unix/Linux)</p>
+<ul>
+<li>Buddy system</li>
+<li>Slab allocation </li>
+</ul>
+<br>
+
+<h3 id="Buddy-System"><a href="#Buddy-System" class="headerlink" title="Buddy System"></a>Buddy System</h3><p>Allocate memory from fixed-size segment consisting of physically-contiguous pages</p>
+<ul>
+<li>Memory allocated using power-of-2 size<ul>
+<li>When smaller allocation needed than is available, chunk split into two buddies of next-lower power of 2<ul>
+<li>Continue until appropriatesized chunk available</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>例如我们有4k, 请求3k, 我们不会划分3k而是直接把4k都给出去.</p>
+<ul>
+<li>Adjacent chunks (“buddies”) are combined togetherto form a large segment</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/alloc_ker.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Slab-Allocator"><a href="#Slab-Allocator" class="headerlink" title="Slab Allocator"></a>Slab Allocator</h3><ul>
+<li>Slab Allocator<ul>
+<li>Creates caches, each consisting of one or more slabs</li>
+<li>Slab is one or more physically contiguous pages</li>
+</ul>
+</li>
+<li>A cache for each unique kernel data structure<ul>
+<li>Each cache is filled with object instantiations</li>
+<li>Objects are initially marked as free</li>
+<li>When structures stored, objects marked as used</li>
+</ul>
+</li>
+<li>Benefits<ul>
+<li>Fast memory allocation</li>
+<li>No fragmentation</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/alloc_ker_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Memory-Mapped-Files"><a href="#Memory-Mapped-Files" class="headerlink" title="Memory-Mapped Files"></a>Memory-Mapped Files</h2><p><strong>Mapping a file into memory address space</strong></p>
+<ul>
+<li>A page-sized portion of the file is read from the file system into a physical frame</li>
+<li>Subsequent reads/writes to/from file are treated as ordinary memory accesses</li>
+<li>One way of implementing shared memory for IPC</li>
+<li>Example: <code>mmap()</code> on Linux/Unix system</li>
+</ul>
+<p>好处是:</p>
+<ol>
+<li>高效: memory access are less costly than I/O system calls</li>
+<li>简单: I/O operations (e.g. <code>read()</code>, <code>write()</code>)on file are treated as memory accesses. </li>
+</ol>
+<p><img src="/Blog/intro/comp_sys/alloc_ker_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="VM-Issues-Page-Size-and-Pre-Paging"><a href="#VM-Issues-Page-Size-and-Pre-Paging" class="headerlink" title="VM Issues: Page Size and Pre-Paging"></a>VM Issues: Page Size and Pre-Paging</h3><p>Page size selection impacts:</p>
+<ul>
+<li>Fragmentation</li>
+<li>Page table size </li>
+<li>I/O overhead</li>
+<li>Locality</li>
+</ul>
+<p>Pre-Paging: bring in some (or all) of the pages a process will need, before they are referenced</p>
+<ul>
+<li>在process开始时就减少了page faults的数量</li>
+<li>May waste memory and I/O because some of the pre-paged pages may not be used</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/alloc_ker_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="VM-Issues-I-O-interlock"><a href="#VM-Issues-I-O-interlock" class="headerlink" title="VM Issues:  I/O interlock"></a>VM Issues:  I/O interlock</h3><p>考虑下面情况:</p>
+<ul>
+<li>A process allocates buffer for I/O request (in its own address space) </li>
+<li>The process issues I/O request and waits (blocks) for it</li>
+<li>Meanwhile, CPU is given to another process, which incurs page fault</li>
+<li><strong>The page that contains the buffer as a victim</strong></li>
+<li>Later, the I/O device sends an interrupt signaling the request is ready</li>
+<li><strong>But the frame that contains buffer is now used by different process</strong></li>
+</ul>
+<p>solution:</p>
+<ul>
+<li>Lock the (buffer) page in memory (I/O Interlock) </li>
+<li>Make I/O in kernel memory (not in user memory): data is first transferred to kernel buffers then copied to user space</li>
+</ul>
+<p>其他情况</p>
+<ul>
+<li>Lock kernel pages to avoid page faults in kernel </li>
+<li>Lock page which got brought in recently but hasn’t been used yet</li>
+</ul>
+<br>
+
+<h2 id="Storage-and-I-O"><a href="#Storage-and-I-O" class="headerlink" title="Storage and I/O"></a>Storage and I/O</h2><p><img src="/Blog/intro/comp_sys/io.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="I-O-Architecture"><a href="#I-O-Architecture" class="headerlink" title="I/O Architecture"></a>I/O Architecture</h3><p>Buses:</p>
+<ul>
+<li>Data paths that provided to enable information between CPU(s), RAM, and I.O devices</li>
+</ul>
+<p>I/O Bus:</p>
+<ul>
+<li>Data path that connects a CPU to an I/O device</li>
+<li>I/O bus is connected to I/O device by three hardware components<ul>
+<li>I/O ports</li>
+<li>Interfaces</li>
+<li>Device controllers</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/io_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Nonblocking-and-Asynchronous-I-O"><a href="#Nonblocking-and-Asynchronous-I-O" class="headerlink" title="Nonblocking and Asynchronous I/O"></a>Nonblocking and Asynchronous I/O</h3><p>blocking: process 会挂起直到 I/O 结束</p>
+<ul>
+<li>使用简单, 理解简单</li>
+<li>一些情况下不够高效</li>
+<li>一些情况下不必要</li>
+</ul>
+<p>Nonblocking: I/O call returns as much as avilable</p>
+<ul>
+<li>例如: data copy (buffered I/O), user interface</li>
+<li>Implemented via multi-threading</li>
+<li>Returns quickly with count of bytes read or written</li>
+<li>E.g., select() to find if data ready then read() or write() to transfer</li>
+</ul>
+<p>Asynchronous: process runs while I/O executes</p>
+<ul>
+<li>I/O subsystem signals process when I/O completed</li>
+<li>Difficult to use</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/io_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Disk-Operation"><a href="#Disk-Operation" class="headerlink" title="Disk Operation"></a>Disk Operation</h3><p>Accessing (reading/writing) a block </p>
+<ul>
+<li>Move the head to desired track (seek time)</li>
+<li>Wait  for desired sector to rotate under the head (rotational latency time) </li>
+<li>Transfer the block to a local buffer, then to main memory (transfer time) </li>
+</ul>
+<p>Should minimize <strong>seek time</strong>, which is proportional to the seek distance (distance moved by the head)</p>
+<br>
+
+<h3 id="Disk-Caches"><a href="#Disk-Caches" class="headerlink" title="Disk Caches"></a>Disk Caches</h3><p>Internally, hard disks have caches (DRAM), 一般比较小 (8MB, 16 MB)</p>
+<p>Hold data read from or written to the physical disk structure</p>
+<p>Allow the device to respond quickly to requests</p>
+<br>
+
+<p>Write policies:</p>
+<ul>
+<li>Write-back<ul>
+<li>return ‘completed’ status as long as data is in cache</li>
+<li>Fast but be dangerous</li>
+<li>Need to barriers to “force” data to disk media</li>
+</ul>
+</li>
+<li>Write-through<ul>
+<li>Make sure data actually reaches disk(also resides in cache)</li>
+<li>Safe but may be slow</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="Files-and-Directories"><a href="#Files-and-Directories" class="headerlink" title="Files and Directories"></a>Files and Directories</h2><h3 id="Secondary-Storage-Systems"><a href="#Secondary-Storage-Systems" class="headerlink" title="Secondary Storage Systems"></a>Secondary Storage Systems</h3><p>各种存储介质:</p>
+<ul>
+<li>Magnetic disks</li>
+<li>Flash based solid state drives (SSDs)</li>
+<li>Tapes</li>
+</ul>
+<p>每种介质都有不同的物理特性</p>
+<ul>
+<li>Storing bits on disks is different from storing them on flash    </li>
+</ul>
+<p>然而系统会提供a <strong>uniform</strong> view of storage to users</p>
+<p>OS creates file systems on storage media</p>
+<ul>
+<li>Efficiently store and retrieve data</li>
+<li>Enable logical view of data<ul>
+<li>Files &amp; directories </li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="File"><a href="#File" class="headerlink" title="File"></a>File</h3><p>Linear array of bytes</p>
+<p>Persistently record user-defined information on storage</p>
+<p>Internally identified by a low-level name: <strong>inode number</strong></p>
+<ul>
+<li>Application/user not aware of this; they use file names instead</li>
+</ul>
+<p>Operations:</p>
+<ul>
+<li>Open, close, read, write, reposition, delete, truncate, etc.</li>
+<li>More operations (e.g., copy) can be composed of these primitives</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/io_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Ensuring-Data-Persistence"><a href="#Ensuring-Data-Persistence" class="headerlink" title="Ensuring Data Persistence"></a>Ensuring Data Persistence</h3><p>Recap: storage devices buffer data</p>
+<p>File systems buffer data, too</p>
+<ul>
+<li>For better performance</li>
+<li>Data written using write() are buffered in memory</li>
+<li>Data read using read() are also buffered in memory</li>
+<li>Eventually, data gets written to storage<ul>
+<li>E.g., periodically</li>
+<li>May lose “written” data</li>
+</ul>
+</li>
+</ul>
+<p>Many applications require more than eventually guarantees</p>
+<ul>
+<li>E.g., database systems, web servers</li>
+</ul>
+<p>Solution: <code>off_t fsync(int fd)</code></p>
+<ul>
+<li>Filesystem forces all dirty (i.e., not yet written) data to disk for the file referred to by the file description</li>
+<li><code>fsync()</code> returns once all of theses writes are complete</li>
+</ul>
+<blockquote>
+<p>给我的感觉类似于java中flush</p>
+</blockquote>
+<p><img src="/Blog/intro/comp_sys/io_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
