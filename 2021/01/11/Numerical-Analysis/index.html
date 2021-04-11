@@ -1721,6 +1721,16 @@ $$
 <p>y satisfies:</p>
 <p>$$<br>y(0)=y_0,\ y(1)=y_1<br>$$</p>
 <p>$$<br>y’(0)=\beta_0, y’(1)=\beta_1<br>$$</p>
+<blockquote>
+<p> 假设 曲线是 $(x(t),y(t))$</p>
+<p>$x(t)=a+bt+ct^2+dt^3$</p>
+<p>$x(0) = a(1)+b(0)+c(0)+d(0)$</p>
+<p>$x(1)= a(1)+b(1)+c(1)+d(1)$</p>
+<p>$x’(0)=a(0)+b(1)+c(0)+d(0)$</p>
+<p>$x’(1)=a(0)+b(1)+c(1)+d(1)$</p>
+<p>因此我们可以用矩阵求解$a,b,c,d$, 这就是图像学中的 <a href="https://daolinzhou.github.io/Blog/2020/09/12/computer-graphic/#Hermite-curves">Hermite curves</a></p>
+<p><img src="/Blog/intro/com_graphic/curve_surf_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+</blockquote>
 <br>
 $$
 dy/dx(t=0)=\frac {(y_0+\beta_0)-y_0}{(x_0+\alpha_0)-x_0}=\beta_0/\alpha_0
@@ -1800,6 +1810,17 @@ $$
 <p>$2^{2j}(2)-(1)$ gives<br>$$<br>M=N_j(h/2)+\frac {N_j(h/2)-N_j(h)}{2^{2j}-1}+O(h^{2j+2})<br>$$</p>
 <p>$$<br>N_{j+1}(h)=N_j(h/2)+\frac {N_j(h/2)-N_j(h)}{4^j-1}<br>$$</p>
 <p><img src="/Blog/intro/macm316/ex_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<blockquote>
+<p>例题: </p>
+<p><img src="/Blog/intro/macm316/examp.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>其实我们可以把它简写为:<br>$$<br>M(h) = N_1(h)+c_1h+c_2h^2+O(h^3) \tag 1<br>$$<br>$N_1(h) = \frac 1h [f(x_0+h)-f(x_0)]$<br>$$<br>M(h/2) = N_1(h/2)+c_1 \frac h2+c_2 \frac {h^2} 4+O(h^3)\tag 2<br>$$</p>
+<p>$$<br>M(h/4) = N_1(h/4)+c_1 \frac h4+c_2 \frac {h^2} {16}+O(h^3)\tag 3<br>$$</p>
+<p>$2\cdot(2)-(1)$<br>$$<br>M=2N_1(h/2)-N_1(h)-\frac {c_2}{2}h^2+O(h^3)\tag 4<br>$$<br>我们定义 $N_2(h)=2N_1(h/2)-N_1(h)$<br>$$<br>M=N_2(h)-\frac {c_2}{2}h^2+O(h^3)\tag 4<br>$$<br>$2\cdot(3)-(2)$<br>$$<br>M=N_2(h/2)-\frac {c_2}{8}h^2+O(h^3)\tag 5<br>$$<br>$\frac {4\cdot(5)-(4)} 3$<br>$$<br>M=\frac {4N_2(h/2)-N_2(h)}{3}+O(h^3)<br>$$<br>因此 $f’(x_0) = \frac {4N_2(h/2)-N_2(h)}{3}$, 我们知道$N_2$ 怎么求</p>
+</blockquote>
 <br>
 
 <h1 id="Numerical-Integration"><a href="#Numerical-Integration" class="headerlink" title="Numerical Integration"></a>Numerical Integration</h1><p>通常我们无法明显的找到 anti-derivative of functions</p>
@@ -2129,6 +2150,114 @@ $$
 <p>$(1)+(2)$<br>$$<br>\frac 12 = c_1+c_1x_1=c_1(1+x_1)<br>$$<br>$(3)-(1)$<br>$$<br>-2/3=c_1x_1^2-c_1=c_1(x_1-1)(x_1+1)=1/2(x_1-1)<br>$$<br>解得</p>
 <p>$x_1 = -1/3, c_1=3/4, c_0=1/4$</p>
 <p>把这些值放入cubic中<br>$$<br>f=x^3, \int_{-1}^0 x^3dx=-\frac 14 \ne -c_0+c_1x_1^3<br>$$<br>所以 not exact for cubics, 这意味着 degree of precision is 2</p>
+<br>
+
+<br>
+
+<h1 id="Numerical-method-for-initial-value-problems-for-ordinary-differential-equations"><a href="#Numerical-method-for-initial-value-problems-for-ordinary-differential-equations" class="headerlink" title="Numerical method for initial value problems for ordinary differential equations"></a>Numerical method for initial value problems for ordinary differential equations</h1><p>many problems in science and engineering can be described in terms of differential equations</p>
+<p>differential equations give us a way to mathematically express and study quantities with rates of change</p>
+<p>例子:</p>
+<p>让$y(t)$ 代表某一段时间的人口, 如果他有constant growth rate $\alpha$ (The difference between a constant birth rate and death rate) then the differential equation<br>$$<br>y’(t)=\alpha y(t)<br>$$<br>with initial condition $y(0)=y_0$ describes the population growth</p>
+<p>$$<br>\frac {y’} y = \alpha<br>$$</p>
+<p>$$<br>D_t(\ln(y(t)))=\alpha<br>$$</p>
+<p>$$<br>\ln(y(t))=\alpha t +\text {const}<br>$$</p>
+<p>$$<br>y(t)=ce^{\alpha t}, c = e^{\text {const}}<br>$$</p>
+<p>由于<br>$$<br>y(0)=c=y_0<br>$$<br>所以<br>$$<br>y(t)=y_0e^{\alpha t}<br>$$<br>这个结果short times 可能有用, 但是large times 这个结论并不realistic</p>
+<p>因为当 $t\to \inf, y \to \inf$</p>
+<p>更relistically, 应该有另一个term<br>$$<br>y’(t)=\alpha y(t)-\beta y(t)^2<br>$$<br>$\beta y(t)^2$ 可能表示competition with another species or some sort of limit to growth.</p>
+<p>然而仅仅添加这一个term, 我们就无法向上面一样进行计算. 我们需要用numerics 来解决这个问题</p>
+<p>通常 realistic initial value problem 需要用 numerical method 来approxmiate solution</p>
+<br>
+
+<br>
+$$
+\frac {dy}{dt}=f(t, y),\ \ \ for \ a\le t \le b
+$$
+initial $y(a) = \alpha $
+
+<blockquote>
+<p>定义: A function $f(t, y)$ satisfies a Lipschitz condition in the variable $y$ on a set $D \in R^2$ if a constant $L &gt; 0$ exists such that<br>$$<br>|f(t, y_1)-f(t, y_2)|\le L|y_1-y_2|<br>$$<br>whenever $(t, y_1), (t, y_2)\in D$</p>
+<p>The constant $L$ is called a Lipschitz constant</p>
+<p>就是说如果我们有small change in $y$, 那么就会得到 small changes in $f$</p>
+</blockquote>
+<p>Exmaple:</p>
+<p>Does $f(t,y)=ty$ satisfy a Lipschitz condition on $D=(t, y):0\le t \le 1, -\inf &lt; y &lt; \inf$. If so what is $L$?</p>
+<p>$$<br>|f(t, y_1)-f(t, y_2)|=|ty_1-ty_2| = |t||y_1-y_2|<br>$$</p>
+<p>$$<br>\le |y_1-y_2|<br>$$</p>
+<p>所以 $L = 1$</p>
+<br>
+
+<p>再看另一个例子:</p>
+<p>Does $f(t,y)=-ty+4t/y$ satisfy a Lipschitz condition on $D=(t, y):0\le t \le 1, -\inf &lt; y &lt; \inf$. If so what is $L$?<br>$$<br>|f(t, y_1)-f(t, y_2)|=|-ty_1+4t/y_1 + ty_2-4t/y_2|<br>$$<br>如果让 $y_1=-1, t=1, y_2\to 0^+$ </p>
+<p>那么 这个式子就会趋近与正无穷, 所以不满足条件</p>
+<br>
+
+<blockquote>
+<p>定义: A set $D \in R^2$ is said to be convex if whenever $(t,y_1), (t, y_2)$ belong to $D$ the point $((1-\lambda)t_1+\lambda t_2,\ (1-\lambda)y_1+\lambda y_2)$ also belongs to $D$ for each $\lambda \in [0, 1]$</p>
+<p><img src="/Blog/intro/macm316/convex.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>就是说任意$D$中两点练成的线也在$D$中, 那么D就是convex</p>
+</blockquote>
+<p><img src="/Blog/intro/macm316/convex_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>所以这个D是convex</p>
+<blockquote>
+<p>Theorem:</p>
+<p>假设 $f(t,y)$ is defined on a convex set $D \in R^2$ If a constant $L&gt;0$ exists with<br>$$<br>|\frac {\part f (t, y)} {\part y}| \le L<br>$$<br>for all $(t, y)\in D$ then $f$ satisfies a Lipschitz condition on $D$ in the variable $y$ with Lipschitz constant $L$</p>
+<p>证明:</p>
+<p>Let $(t,y_1), (t,y_2)$ be in $D$, 让$t$保持不变, 定义 $g(y)=f(t,y)$, 假设 $y_1&lt;y_2$ 由于 line joining $(t,y_1), (t,y_2)$ 在 $D$ 中 且 $f$ is continuous on $D$, 我们有 $g\in C[y_1, y_2]$<br>$$<br>g’(y) =\frac {\part f (t, y)} {\part y}<br>$$<br>通过 Mean Value Theorem<br>$$<br>g(y_2) - g(y_1)=g’(\delta)(y_2 - y_1)<br>$$<br>就是说<br>$$<br>f(t,y_2)-f(t,y_1)=\frac {\part f}{\part y}(y_2-y_1)<br>$$</p>
+<p>$$<br>|f(t,y_2)-f(t,y_1)|=|\frac {\part f}{\part y}||(y_2-y_1)| \le L |y_2-y_1|<br>$$</p>
+</blockquote>
+<p>通过上面的定理, 我们在做一下这道题</p>
+<p>Does $f(t,y)=ty$ satisfy a Lipschitz condition on $D=(t, y):0\le t \le 1, -\inf &lt; y &lt; \inf$. If so what is $L$?</p>
+<p>首先 $D$ 是 convex</p>
+<p>$|\frac {\part f}{\part y}| = |t| \le 1$</p>
+<p>所以 $f$  satisfy a Lipschitz condition, $L=1$</p>
+<br>
+
+<blockquote>
+<p>定理: </p>
+<p>假设 <code>D={(t,y): a&lt;=t&lt;=b, -inf &lt; y &lt; inf}</code>, $f(t, y)$ is continuous on $D$.</p>
+<p>如果$f$ satisfies a Lipschitz condition on $D$ in the variable $y$, then the IVP (initial value problem)<br>$$<br>y’(t)=f(t, y), \ a\le t \le b, y(a)=\alpha<br>$$<br>has a unique solution $y(t)$ for $a\le t \le b$</p>
+</blockquote>
+<br>
+
+<p>例如:</p>
+<p>show that the IVP $y’=y\cdot \cos (t), 0\le t \le 1, y(0)=1$ has a unqiue solution<br>$$<br>|\frac {\part f}{\part y}|=|\cos (t)| \le 1<br>$$<br>所以$L=1$ and f satisfies a Lipschitz condition. 所以有unique solution</p>
+<br>
+
+<br>
+
+<blockquote>
+<p> 定理:</p>
+<p>The initial value problem<br>$$<br>y’(t)=f(t, y), \ a\le t \le b, y(a)=\alpha<br>$$<br>is said to be well-posed if:</p>
+<ul>
+<li><p>A unique solution $y(t)$ to the problem exists</p>
+</li>
+<li><p>There exists constants $\epsilon_0&gt;0, k&gt;0$ s.t. for any $\epsilon$ with $\epsilon_0 &gt; \epsilon &gt; 0$ whenever $\delta(t)$ is CTS with $|\delta(t)|&lt;\epsilon$ for all $t\in [a,b]$ and when $|\delta_0| &lt; \epsilon$ the IVP<br>$$<br>\frac {dz}{dt}=f(t,z)+\delta(t), a\le t\le b<br>$$</p>
+<p>$$<br>z(a)=\alpha + \delta_0<br>$$</p>
+<p>has a unique solution $z(t)$ that satisfies<br>$$<br>|z(t)-y(t)|\le k\epsilon<br>$$<br>for all $t\in [a,b]$</p>
+</li>
+</ul>
+<p>第二个就是说 change differential equation by $\delta (t)$</p>
+<p>同时change initial condition by $\delta_0$</p>
+<p>If those perturbation are both small, then the change in the solution is also small $|z(t)-y(t)|\le k\epsilon$</p>
+</blockquote>
+<p>尽管这个定理一般不用, 但它说明了一下问题</p>
+<p>The perturbed problem assumes the possiblity of an error<br>$$<br>|\delta(t)| &lt; \epsilon<br>$$<br>being introduced in the statement of the differential equation as well as an error<br>$$<br>|\delta_0|&lt;\epsilon<br>$$<br>being present in the initial condition</p>
+<blockquote>
+<p>Numerical methods always solve perturbed problems since round off errors perturb the original problem</p>
+<p>因此我们只关注solve well-posed problem</p>
+</blockquote>
+<br>
+
+<blockquote>
+<p>Theorem : check well posedness</p>
+<p>假设 <code>D={(t,y): a&lt;=t&lt;=b, -inf &lt; y &lt; inf}</code></p>
+<p>如果 $f$ is CTS(continuous) and satisfies a Lipschite condition in the variable $y$ on the set $D$ then the IVP<br>$$<br>\frac {dy}{dt}=f(t,y), a\le t \le b<br>$$</p>
+<p>$$<br>y(a)=\alpha<br>$$</p>
+<p>is well posed</p>
+</blockquote>
+<p>例题:</p>
+<p>show that the IVP $y’=t^2y+1, 0\le t\le 1, y(0)=1$ is well-posed<br>$$<br>|\frac {\part (t^2y+1)}{\part y}| = t^2 \le 1<br>$$<br>satisfies Lipschite condition, 同时 $t^2y+1$ 是 continuous, 所以 这个问题是 well-posed</p>
 </1$>
             </div>
             <hr>
