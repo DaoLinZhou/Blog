@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    20.4k 字
+                    21k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      95 分钟
+                      99 分钟
                   </span>
                 
 
@@ -4180,6 +4180,198 @@ t = 12 – 5 – 2 = 5 bits
 <p>给我的感觉类似于java中flush</p>
 </blockquote>
 <p><img src="/Blog/intro/comp_sys/io_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Directories"><a href="#Directories" class="headerlink" title="Directories"></a>Directories</h3><ul>
+<li>Logical grouping of files/directories</li>
+<li>Like a file, also has <strong>inode number</strong><ul>
+<li>Unix-like systems: directory 同样是 file</li>
+</ul>
+</li>
+<li><code>List &lt;user-readable name, inode number&gt;</code> pairs<ul>
+<li>Each entry may refer to a file or directory</li>
+</ul>
+</li>
+<li>Operations<ul>
+<li>Search for a file, create a file, delete a file, rename a file</li>
+<li>List a directory –see what’s included in the directory</li>
+<li>Traverse the file system</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/io_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h3><p><img src="/Blog/intro/comp_sys/io_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当 一个文件的link为0时, 系统就会删除这个文件, 这也是<code>rm -rf</code>的原理</p>
+<p><img src="/Blog/intro/comp_sys/io_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h2><p><img src="/Blog/intro/comp_sys/io_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="File-System-Implementation"><a href="#File-System-Implementation" class="headerlink" title="File System Implementation"></a>File System Implementation</h3><p>Two aspects for implementing a file system:</p>
+<p><strong>Data structures:</strong></p>
+<p>On-disk data structures</p>
+<ul>
+<li>Directory structure, number of blocks, location of free blocks, boot information, …</li>
+<li>(In addition to data blocks, of course)</li>
+</ul>
+<p>In-memory structures</p>
+<ul>
+<li>For managing file system at runtime</li>
+<li>Per-process open-files table, system-wide mount table…</li>
+<li>Improve performance (caching)</li>
+</ul>
+<p><strong>Access methods:</strong></p>
+<ul>
+<li>Handling calls made by processes to open, close, read, write, etc</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/io_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_30.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Allocating-and-Managing-Data-Blocks"><a href="#Allocating-and-Managing-Data-Blocks" class="headerlink" title="Allocating and Managing Data Blocks"></a>Allocating and Managing Data Blocks</h3><p>inode:metadata that stores information about actual file data </p>
+<ul>
+<li>May contain direct pointers (i.e., disk addresses) to data blocks belonging to the file</li>
+<li>But inodesize is limited, i.e., number of pointers is limited<ul>
+<li>File size is limited</li>
+</ul>
+</li>
+</ul>
+<p>Solution: multi-level index</p>
+<p><img src="/Blog/intro/comp_sys/io_31.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_32.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_33.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_34.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_35.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_36.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_37.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_38.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_39.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="File-System-Crash-Consistency"><a href="#File-System-Crash-Consistency" class="headerlink" title="File System Crash Consistency"></a>File System Crash Consistency</h3><p><img src="/Blog/intro/comp_sys/io_40.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_41.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/io_42.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h4 id="The-Crash-Consistency-Problem"><a href="#The-Crash-Consistency-Problem" class="headerlink" title="The Crash Consistency Problem"></a>The Crash Consistency Problem</h4><p>Goal: move the file system from one consistent state to another atomically</p>
+<p>Challenges:</p>
+<ul>
+<li>Disk only commits one write at a time<ul>
+<li>But we often need to do multiple writes atomically</li>
+</ul>
+</li>
+<li>Crashes and power failure may happen between writes</li>
+</ul>
+<br>
+
+<h4 id="Solution-1-File-System-Checker-fsck"><a href="#Solution-1-File-System-Checker-fsck" class="headerlink" title="Solution 1: File System Checker (fsck)"></a>Solution 1: File System Checker (fsck)</h4><p>Tool for finding inconsistencies in file system and fix them</p>
+<ul>
+<li>Check superblock, free blocks, inode state, inode pointers, etc.</li>
+</ul>
+<p>然而它不能解决所有问题:</p>
+<p>Example: 文件系统看起来是一致的，但是inode指向垃圾数据</p>
+<p>就是说我们真实的目标是: 确保file system 的 meta data 是 consistent</p>
+<h4 id="Items-Checked-by-fsck"><a href="#Items-Checked-by-fsck" class="headerlink" title="Items Checked by fsck"></a>Items Checked by fsck</h4><p><strong>Superblock</strong> :find corrupted superblock</p>
+<ul>
+<li>Sanity checks such as making sure file system size &gt; number of blocks allocated</li>
+</ul>
+<p><strong>Free blocks:</strong></p>
+<p>Scan inodes, direct and indirect blocks to learn which blocks are allocated</p>
+<ul>
+<li>Essentially re-building the block allocation bitmaps</li>
+<li>Cross check with the bitmaps stored</li>
+</ul>
+<p>Inode state:</p>
+<ul>
+<li>Sanity check for corruption<ul>
+<li>E.g., type: regular file, symlink, directory</li>
+</ul>
+</li>
+<li>Inode considered suspect and cleared in case of problems<ul>
+<li>Not easy to fix</li>
+</ul>
+</li>
+</ul>
+<p>Inode links: ensure link count is correct</p>
+<ul>
+<li>Scan the entire directory tree to build up new link counts<ul>
+<li>Update inode to fix wrong counts</li>
+</ul>
+</li>
+<li>“lost+found” directory<ul>
+<li>Inode that has no directories referencing it</li>
+</ul>
+</li>
+</ul>
+<p>Duplicates:</p>
+<ul>
+<li>Check for two different inodes pointing to the same block<ul>
+<li>Clear the obviously wrong inode or copy the block</li>
+</ul>
+</li>
+</ul>
+<p>Bad blocks:</p>
+<ul>
+<li>Scan through the list of pointers, check for “bad pointers”<ul>
+<li>Example: pointer pointing to block number outside partition size</li>
+</ul>
+</li>
+</ul>
+<p>Directories:</p>
+<ul>
+<li>Additional integrity checks for directory files<ul>
+<li>Making sure “.” and “..” are the first two entries</li>
+<li>Each inode referred to in the directory is actually allocated</li>
+</ul>
+</li>
+</ul>
+<p>Note: fsck doesn’t know about the content of normal files</p>
+<p>缺点是太慢</p>
+<h4 id="Solution-2-Journaling"><a href="#Solution-2-Journaling" class="headerlink" title="Solution 2: Journaling"></a>Solution 2: Journaling</h4><p><img src="/Blog/intro/comp_sys/journaling.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h4 id="Writing-Transaction-to-Journal"><a href="#Writing-Transaction-to-Journal" class="headerlink" title="Writing Transaction to Journal"></a>Writing Transaction to Journal</h4><p>Alternative 1:one request at a time</p>
+<ul>
+<li>1 for each of: TxB, bitmap, inode, data block, TxE</li>
+<li>Five disk write requests</li>
+<li>Slow</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/journaling_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Case 1:Crash happens before transaction is written</p>
+<ul>
+<li>Skip the pending updates</li>
+</ul>
+<p>Case 2:Crash happens after transaction is written but before checkpoint</p>
+<ul>
+<li>Scan the log and look for transactions that have committed</li>
+<li>Continue with the checkpoint process for each transaction (aka replay the transaction)</li>
+</ul>
+<p>Case 3:Crash happens during checkpointing</p>
+<ul>
+<li>Redo the checkpointing process again (redundant writes are fine)</li>
+</ul>
+<p><img src="/Blog/intro/comp_sys/journaling_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/comp_sys/journaling_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -4247,7 +4439,7 @@ t = 12 – 5 – 2 = 5 bits
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -4274,7 +4466,7 @@ t = 12 – 5 – 2 = 5 bits
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -4283,7 +4475,7 @@ t = 12 – 5 – 2 = 5 bits
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
