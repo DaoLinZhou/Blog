@@ -2209,7 +2209,7 @@ initial $y(a) = \alpha $
 <p>通过上面的定理, 我们在做一下这道题</p>
 <p>Does $f(t,y)=ty$ satisfy a Lipschitz condition on $D=(t, y):0\le t \le 1, -\inf &lt; y &lt; \inf$. If so what is $L$?</p>
 <p>首先 $D$ 是 convex</p>
-<p>$|\frac {\part f}{\part y}| = |t| \le 1$</p>
+<p>$|\frac {\partial f}{\partial y}| = |t| \le 1$</p>
 <p>所以 $f$  satisfy a Lipschitz condition, $L=1$</p>
 <br>
 
@@ -2294,8 +2294,8 @@ initial $y(a) = \alpha $
 <br>
 
 <p>注意这个Theorem 需要 $|y’’(t)|\le M$</p>
-<p>然而我们可能得不到$y’’$, 但是如果$\frac {\part f}{\part t}, \frac {\part f}{\part y}$存在<br>$$<br>y’’(t)=\frac d {dt} y’(t) = \frac d{dt}f(t, y(t))<br>$$</p>
-<p>$$<br>=\frac {\part f}{\part t}(t, y(t))+\frac {\part f}{\part y}(t,y(t))\cdot f(t, y(t))<br>$$</p>
+<p>然而我们可能得不到$y’’$, 但是如果$\frac {\partial f}{\partial t}, \frac {\partial f}{\partial y}$存在<br>$$<br>y’’(t)=\frac d {dt} y’(t) = \frac d{dt}f(t, y(t))<br>$$</p>
+<p>$$<br>=\frac {\partial  f}{\partial t}(t, y(t))+\frac {\partial  f}{\partial  y}(t,y(t))\cdot f(t, y(t))<br>$$</p>
 </blockquote>
 <p>Example:</p>
 <p>What value of $h$ is needed to ensure that<br>$$<br>|y(t_i)-w_i|\le 0.1<br>$$<br>for the IVP<br>$$<br>y’=\frac 2 t y+t^2e^t, \ \ 1\le t\le 2<br>$$</p>
