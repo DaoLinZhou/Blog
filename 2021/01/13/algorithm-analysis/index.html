@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.1k 字
+                    5.2k 字
                   </span>
                 
 
@@ -1145,6 +1145,8 @@ for i = 1 to n do:
 <p><img src="/Blog/intro/cmpt307/floyd_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/floyd_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt307/floyd_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个算法的核心思想就是把一个有负权边无负权环的图转换为没有负权边的图, 再用 Dijkstra 求解</p>
+<p>重点是$h(v)$的选取(新建一个点, 使用bellman ford获得点到所有点的最短路径, 顺便检测负权环), 以及定义的新边不会影响负权环</p>
 
             </div>
             <hr>

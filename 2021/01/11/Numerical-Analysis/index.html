@@ -2201,10 +2201,10 @@ initial $y(a) = \alpha $
 <p>所以这个D是convex</p>
 <blockquote>
 <p>Theorem:</p>
-<p>假设 $f(t,y)$ is defined on a convex set $D \in R^2$ If a constant $L&gt;0$ exists with<br>$$<br>|\frac {\part f (t, y)} {\part y}| \le L<br>$$<br>for all $(t, y)\in D$ then $f$ satisfies a Lipschitz condition on $D$ in the variable $y$ with Lipschitz constant $L$</p>
+<p>假设 $f(t,y)$ is defined on a convex set $D \in R^2$ If a constant $L&gt;0$ exists with<br>$$<br>|\frac {\partial f (t, y)} {\partial y}| \le L<br>$$<br>for all $(t, y)\in D$ then $f$ satisfies a Lipschitz condition on $D$ in the variable $y$ with Lipschitz constant $L$</p>
 <p>证明:</p>
-<p>Let $(t,y_1), (t,y_2)$ be in $D$, 让$t$保持不变, 定义 $g(y)=f(t,y)$, 假设 $y_1&lt;y_2$ 由于 line joining $(t,y_1), (t,y_2)$ 在 $D$ 中 且 $f$ is continuous on $D$, 我们有 $g\in C[y_1, y_2]$<br>$$<br>g’(y) =\frac {\part f (t, y)} {\part y}<br>$$<br>通过 Mean Value Theorem<br>$$<br>g(y_2) - g(y_1)=g’(\delta)(y_2 - y_1)<br>$$<br>就是说<br>$$<br>f(t,y_2)-f(t,y_1)=\frac {\part f}{\part y}(y_2-y_1)<br>$$</p>
-<p>$$<br>|f(t,y_2)-f(t,y_1)|=|\frac {\part f}{\part y}||(y_2-y_1)| \le L |y_2-y_1|<br>$$</p>
+<p>Let $(t,y_1), (t,y_2)$ be in $D$, 让$t$保持不变, 定义 $g(y)=f(t,y)$, 假设 $y_1&lt;y_2$ 由于 line joining $(t,y_1), (t,y_2)$ 在 $D$ 中 且 $f$ is continuous on $D$, 我们有 $g\in C[y_1, y_2]$<br>$$<br>g’(y) =\frac {\partial f (t, y)} {\partial y}<br>$$<br>通过 Mean Value Theorem<br>$$<br>g(y_2) - g(y_1)=g’(\delta)(y_2 - y_1)<br>$$<br>就是说<br>$$<br>f(t,y_2)-f(t,y_1)=\frac {\partial f}{\partial y}(y_2-y_1)<br>$$</p>
+<p>$$<br>|f(t,y_2)-f(t,y_1)|=|\frac {\partial f}{\partial y}||(y_2-y_1)| \le L |y_2-y_1|<br>$$</p>
 </blockquote>
 <p>通过上面的定理, 我们在做一下这道题</p>
 <p>Does $f(t,y)=ty$ satisfy a Lipschitz condition on $D=(t, y):0\le t \le 1, -\inf &lt; y &lt; \inf$. If so what is $L$?</p>
@@ -2221,7 +2221,7 @@ initial $y(a) = \alpha $
 <br>
 
 <p>例如:</p>
-<p>show that the IVP $y’=y\cdot \cos (t), 0\le t \le 1, y(0)=1$ has a unqiue solution<br>$$<br>|\frac {\part f}{\part y}|=|\cos (t)| \le 1<br>$$<br>所以$L=1$ and f satisfies a Lipschitz condition. 所以有unique solution</p>
+<p>show that the IVP $y’=y\cdot \cos (t), 0\le t \le 1, y(0)=1$ has a unqiue solution<br>$$<br>|\frac {\partial f}{\partial y}|=|\cos (t)| \le 1<br>$$<br>所以$L=1$ and f satisfies a Lipschitz condition. 所以有unique solution</p>
 <br>
 
 <br>
@@ -2257,7 +2257,7 @@ initial $y(a) = \alpha $
 <p>is well posed</p>
 </blockquote>
 <p>例题:</p>
-<p>show that the IVP $y’=t^2y+1, 0\le t\le 1, y(0)=1$ is well-posed<br>$$<br>|\frac {\part (t^2y+1)}{\part y}| = t^2 \le 1<br>$$<br>satisfies Lipschite condition, 同时 $t^2y+1$ 是 continuous, 所以 这个问题是 well-posed</p>
+<p>show that the IVP $y’=t^2y+1, 0\le t\le 1, y(0)=1$ is well-posed<br>$$<br>|\frac {\partial (t^2y+1)}{\partial y}| = t^2 \le 1<br>$$<br>satisfies Lipschite condition, 同时 $t^2y+1$ 是 continuous, 所以 这个问题是 well-posed</p>
 <br>
 
 <h2 id="Euler’s-Method"><a href="#Euler’s-Method" class="headerlink" title="Euler’s Method"></a>Euler’s Method</h2><p>consider the IVP:<br>$$<br>y’=f(t,y), a\le t\le b<br>$$</p>
@@ -2305,7 +2305,7 @@ initial $y(a) = \alpha $
 
 <p>解:</p>
 <p>$y’’(t)$ is increasing, so $|y’’(t)|\le |y’’(2)|\approx 98.0102$</p>
-<p>Need $L$: $|\frac {\part }{\part y}(\frac 2{ty}+t^2e^t)|=|2/t|\le 2$<br>$$<br>\text {absolute error} \le \frac {hM}{2L}[e^{L(t_i-a)}-1]\le0.1<br>$$<br>$t\in [a,b]=[1,2]$</p>
+<p>Need $L$: $|\frac {\partial }{\partial y}(\frac 2{ty}+t^2e^t)|=|2/t|\le 2$<br>$$<br>\text {absolute error} \le \frac {hM}{2L}[e^{L(t_i-a)}-1]\le0.1<br>$$<br>$t\in [a,b]=[1,2]$</p>
 <p>Largest error bound when $t_i=2$<br>$$<br>h\le 0.00064<br>$$<br><br></p>
 <br>
 
@@ -2342,6 +2342,94 @@ initial $y(a) = \alpha $
 <p>We want the local truncation error to be small and typically what we found local truncation error take the form $O(h^p)$ </p>
 <p>With Euler’s Method $p=1$, $O(h)$</p>
 <p>我们希望build method with large $p$</p>
+<br>
+
+<br>
+
+<h2 id="Taylor-Methods-and-Runge-Kutta"><a href="#Taylor-Methods-and-Runge-Kutta" class="headerlink" title="Taylor Methods and Runge-Kutta"></a>Taylor Methods and Runge-Kutta</h2><p>已知:<br>$$<br>y’=f(t,y),\ \ \ a\le t\le b<br>$$</p>
+<p>$$<br>y(0)=\alpha<br>$$</p>
+<p>where $y(t)=C^{(n+1)}[a,b]$</p>
+<p>one approach is to expand the solution in terms of $n$th Taylor polynomial about $t_i$<br>$$<br>y(t_{i+1})=y(t_i)+hy’(t_i)+\frac {h^2}2y’’(t_i)+\cdots +\frac {h^n}{n!}y^{(n)(t_i)}+R<br>$$</p>
+<p>$R=\frac {h^{n+1}}{(n+1)!}y^{n+1}(\delta)$<br>$$<br>w_{i+1}=w_i+hf(t_i,w_i)+\frac {h^2}2f’’(t_i, w_i)+\frac {h^3}{3!}f’’’(t_i, w_i)+\cdots<br>$$<br>这就是Taylor Method of Order $n$<br>$$<br>w_0=\alpha<br>$$</p>
+<p>$$<br>w_{i+1}=w_i+hT^{(n)}(t_i,w_i), i=0,1,…N-1<br>$$</p>
+<p>Where $T^{(n)}(t_i, w_i) = f(t_i,w_i)+\frac h 2 f’(t_i, w_i)+\cdots+ \frac {h^{n-1}}{n!}f^{n-1}(t_i,w_i)$</p>
+<p>如果我们取消后边的term 只保留 $f(t_i,w_i)$, 那他就变成Euler’s Method. 也就是说 Euler’s Method 是 Order 1 的 Taylor Method</p>
+<br>
+
+<br>
+
+<p>Example: 使用 order 2 Taylor method approximate the solution for IVP<br>$$<br>y’=te^{3t}-2y,\ \ 0\le t\le 1<br>$$</p>
+<p>$$<br>y(0)=0,\ \ \ h=0.5<br>$$</p>
+<p>ans:<br>$$<br>f(t_i, w_i)=t_ie^{3t_i}-2w_i<br>$$</p>
+<p>$$<br>f’(t_i, w_i) = \frac {\partial f}{\partial t}+\frac {\partial f}{\partial w}\frac {dy}{dt}|_{t_i, w_i}<br>$$</p>
+<p>$$<br>=e^{3t}+3te^{3t}+(-2)(te^{3t}-2y)|_{t_i, w_i}<br>$$</p>
+<p>$$<br>=t_ie^{3t_i}+e^{3t_i}+4w_i<br>$$</p>
+<p>we have<br>$$<br>w_0=0<br>$$</p>
+<p>$$<br>w_1=w_0+h(t_0e^{3t_0}-2w_0)+\frac {h^2}2(t_0e^{3t_0}+e^{3t_0}+4w_0)=0.125<br>$$</p>
+<p>$$<br>w_2=w_1+h(t_1e^{3t_1}-2w_1)+\frac {h^2}2(t_1e^{3t_1}+e^{3t_1}+4w_1)\approx 2.02323897<br>$$</p>
+<p>以此类推, 如果我们希望 $t\in (t_{i-1}, t_i)$</p>
+<p>一种方法是使用 interpolation of sufficient accuracy</p>
+<p>假设 time stepping method had local truncation error order $O(h^p)$ then want interpolation error $O(h^p)$</p>
+<p>Cubic Hermit interpolation is particularly attractive.</p>
+<p>we have $w_i\approx y(t_i), f(t_i,w_i)\approx y’(t_i)$, Gives error $O(h^4)$</p>
+<p>如果使用 very high order time stepping method, 那么就需要用 high order interpolation</p>
+<br>
+
+<br>
+
+<h3 id="Local-trunction-error-for-Taylor’s-Method"><a href="#Local-trunction-error-for-Taylor’s-Method" class="headerlink" title="Local trunction error for Taylor’s Method"></a>Local trunction error for Taylor’s Method</h3><p>$$<br>y_{i+1}=y_i+hf(t_i, y_i)+\frac {h^2} 2f’(t_i, y_i)+\cdots+\frac {h^n}{n!}f^{n-1}(t_i, y_i)+\frac {h^{n+1}}{(n+1)!}f^{n}(\delta_i, y(\delta_i))<br>$$</p>
+<p>$y_i=y(t_i)$</p>
+<br>
+
+<p>根据local trunction error 写出formula<br>$$<br>\tilde l_{i+1}(h)=\frac {y_{i+1}-y_i}h - f(t_i, y_i)-\frac h2 f’(t_i, y_i)-\cdots -\frac {h^{n-1}} {n!}f^{(n-1)}(t_i, y_i)<br>$$</p>
+<p>$$<br>=\frac {h^n}{(n+1)!}f^{(n)}(\delta_i, y(\delta_i))<br>$$</p>
+<p>因此这个方法是$O(h^n)$</p>
+<br>
+
+<h2 id="Runge-Kutta-Method"><a href="#Runge-Kutta-Method" class="headerlink" title="Runge-Kutta Method"></a>Runge-Kutta Method</h2><p>Taylor method are seldom used in practice.</p>
+<p>因为它需要 computation and evaluation of derivatives of $f$</p>
+<p>Runge-Kutta Method 同样是高精度, 而且它不需要求导<br>$$<br>w_{n+1} = w_n+aK_1+bK_2<br>$$<br>$K_1, K_2$ 是function evaluation</p>
+<p>$K_1=hf(t_n,w_n)$</p>
+<p>$K_2=hf(t_n+\alpha h,w_n+\beta K_1)$</p>
+<p>rewrite:<br>$$<br>w_{n+1} = w_n+ahf(t_n,w_n)+bhf(t_n+\alpha h,w_n+\beta hf(t_n,w_n))<br>$$<br>local truncation error is:<br>$$<br>\tilde l_{n+1}(h)=\frac {y_{n+1}-y_n}{h}-af(t_n, y_n)-bf(t_n+\alpha h,w_n+\beta hf(t_n,w_n))<br>$$<br>Apply Taylor series:<br>$$<br>y_{n+1}=y_n+hf(t_n, y_n)+\frac {h^2}2f’(t_n, y_n)+O(h^3)<br>$$<br><br></p>
+<p>使用Taylor series with 2 variable<br>$$<br>f(t_n+\alpha h,w_n+\beta hf(t_n,w_n))<br>$$</p>
+<p>$$<br>=f(t_n,y_n)+f_t(t_n, y_n)\alpha h + f_y(t_n, y_n)f(t_n,y_n)\beta h +O(h^2)<br>$$</p>
+<p>化简<br>$$<br>\tilde l_{n+1}(h) = (1-a-b)f(t_n, y_n)+h(\frac 12 - \alpha b)f_t(t_n, y_n)+h(\frac 12 -\beta b)f_y(t_n, y_n)f(t_n, y_n)+O(h^2)<br>$$<br>如果我们希望local truncation error 是 $O(h^2)$</p>
+<p>那么就需要<br>$$<br>1-a-b=0<br>$$</p>
+<p>$$<br>1/2 -\alpha b=0<br>$$</p>
+<p>$$<br>1/2 -\beta b=0<br>$$</p>
+<p>4 unknow, 3 function, 所以 有 1 parameter family of solution.</p>
+<p>gives $O(h^2)$</p>
+<p>$a=0, b=1, \alpha=1/2, \beta=1/2$ Midpoint method</p>
+<p>$a=1/2, b=1/2, \alpha=1, \beta=1$ Modified Euler</p>
+<p>$a=1/4, b=3/4, \alpha = 2/3, \beta=2/3$ Hean’s method</p>
+<p>更高order的Runge-Kutta method的function更难解</p>
+<br>
+
+<p>常用的Forth order</p>
+<p><img src="/Blog/intro/macm316/forth_order.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<table>
+<thead>
+<tr>
+<th>evaluation per step</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>$5\le n\le 7$</th>
+<th>$8\le n\le 9$</th>
+<th>$n&gt;10$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best LTE</td>
+<td>$O(h^2)$</td>
+<td>$O(h^3)$</td>
+<td>$O(h^4)$</td>
+<td>$O(h^{n-1})$</td>
+<td>$O(h^{n-2})$</td>
+<td>$O(h^{n-3})$</td>
+</tr>
+</tbody></table>
 </1$>
             </div>
             <hr>
