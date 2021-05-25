@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>Principles of Compiler Design - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/imprinting2.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Friday, May 14th 2021, 10:28 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    927 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      4 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>笔记</p>
+<a id="more"></a>
+
+<h1 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h1><p>什么是Compiler?</p>
+<p>通常来说, Compiler 做的事情是: 把一个 language 转为另一个 language</p>
+<p>甚至包括 自然语言, 也就是说如果一个程序把自然语言转为 java 或 c++ 等编程语言, 我们也可以称之为compiler, </p>
+<p>更为准确的定义是: A program that converts from (a) a high-level general-purpose programming language to (b) a low-level machine or intermediate language.</p>
+<br>
+
+<p>一个典型的编译器体系结构</p>
+<p><img src="/Blog/intro/cmpt379/compiler.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/compiler_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>Token are the minimum units of meaning in the program</p>
+<br>
+
+<p>过程大概就是:</p>
+<p>获得字符-&gt; 将字符组成tokens -&gt; 分析语法(创建Parse Tree 或 Abstract Syntax Tree)</p>
+<p>通常创建的是Abstract Syntax Tree, 然而由于为Abstract Syntax Tree 添加规则比较难, 有的编译器会创建 Parse Tree</p>
+<p>之后解析语义</p>
+</blockquote>
+<p><img src="/Blog/intro/cmpt379/compiler_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/compiler_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/compiler_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Symbol Table 处理 program 中所有的 name</p>
+<br>
+
+<p><strong>The environment of a compiler</strong></p>
+<p>解释器(<strong>interpreter</strong>) 类似于编译器(compiler), 只不过它会直接执行程序而不是转换为目标代码, 使用解释器的程序会比使用编译器的慢</p>
+<p><strong>assembler</strong> 是一个 (broad-sense) compiler 把汇编语言转换为机器语言</p>
+<p><strong>linker</strong> 把 target-language 的一部分 和另一部分组合(二者compiled separately) These separately-compiled portions include libraries</p>
+<p><strong>loader</strong> 是一个程序, 它把target language program从文件读取到内存并执行它</p>
+<p>An <strong>integrated development</strong> environment (IDE)is typically a compiler, linker, loader,and an editor combined and working with each other. </p>
+<br>
+
+<p>Static linking 和 Dynamic linking</p>
+<p>When something happens while the compiler is running, we call it compile-time or <strong>static</strong>.</p>
+<p>When something happens while the program the compiler produced is running, we call it run-time or <strong>dynamic</strong></p>
+<p>There are -time terms for linking and loading, too: link-time and load-time</p>
+<p>For example, we may link a program together with all its parts and libraries right after the compiler finishes (often as part of the compiler) and this is called <strong>static linking</strong>.</p>
+<p>If we link the program together when loading it, it’s load-time linking</p>
+<p>If we link parts of the program together while the program is running, it’s <strong>dynamic linking</strong>.  This is accompanied by dynamic loading, which pulls in some parts of the program off of a long-term storage medium while the program is running.</p>
+<br>
+
+<br>
+
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><h3 id="Formal-language-Theory"><a href="#Formal-language-Theory" class="headerlink" title="Formal language Theory"></a>Formal language Theory</h3><p><strong>alphabet</strong> 是一个 set</p>
+<p>alphabet 中的每一个元素叫做 <strong>character</strong> 或 <strong>symbol</strong></p>
+<p>我们用$\sum$ 来表示alphabet</p>
+<ul>
+<li><p><code>Σ={0, 1}</code> </p>
+</li>
+<li><p><code>Σ={true, false}</code> </p>
+</li>
+<li><p><code>Σ={A, B, C, D}</code></p>
+</li>
+<li><p><code>Σ={@, !, ?}</code></p>
+</li>
+</ul>
+<p>ASCII code 和 UTF 是比较重要的 alphabet</p>
+<br>
+
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>定义: </p>
+<blockquote>
+<p><strong>String</strong>, 是从 alphabet 中使用0个或更多 symbols 组成的序列</p>
+<p>$\epsilon$ 表示 0 characters</p>
+</blockquote>
+<p>例如 如果 <code>{0, 1}</code> 是 alphabet <code>010111111</code> 是一个string <code>1111</code> 也是一个string</p>
+<br>
+
+<h3 id="Formal-Languages"><a href="#Formal-Languages" class="headerlink" title="Formal Languages"></a>Formal Languages</h3><p>定义:</p>
+<blockquote>
+<p> (formal) <strong>language</strong> 是 set of strings over some alphabet $\sum$ </p>
+</blockquote>
+<p>例如: <code>{ε,a,b, aa, ab, ba, bb}</code> is a language over the alphabet <code>{a,b}</code>  , <code>{ε,a, aa, aaa, ...}</code> 也是一个language, 不需要使用所有character</p>
+<br>
+
+<h3 id="Language-Formation"><a href="#Language-Formation" class="headerlink" title="Language Formation"></a>Language Formation</h3><p>只要给我们一种或两种language，我们就可以从它们形成其他language。</p>
+<p><img src="/Blog/intro/cmpt379/language.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h4 id="Union"><a href="#Union" class="headerlink" title="Union"></a>Union</h4><p>如果 $L_1, L_2$ 是 language 我们让 $L_1 \cup L_2$ 作为 set theory 中 union of $L_1, L_2$ (和集合论中的union一样)</p>
+<p>例如 $L_a\cup L_b =$ <code>{a, b}</code></p>
+<h4 id="Concatenation"><a href="#Concatenation" class="headerlink" title="Concatenation"></a>Concatenation</h4><p>如果$L_1, L2$ 是 languages, 我们让$L_1L_2$ 作为 set <code>{ab | a in L1, b in L2}</code></p>
+<p>例如 <code>L1 = {AB, CD}, L2 = {C, TGE}</code> 那么 <code>L1L2 = {ABC, ABTGE, CDC, CDTGE}</code></p>
+<ul>
+<li>$L_\epsilon L = LL_\epsilon = L$</li>
+<li>$L_1(L_2L_3) = (L_1L_2)L_3$</li>
+</ul>
+<p>但是</p>
+<ul>
+<li>$L_1L_2\ne L_2L_1$</li>
+</ul>
+<h4 id="Exponentiation"><a href="#Exponentiation" class="headerlink" title="Exponentiation"></a>Exponentiation</h4><p><img src="/Blog/intro/cmpt379/language_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h4 id="Kleene-Closure"><a href="#Kleene-Closure" class="headerlink" title="Kleene Closure"></a>Kleene Closure</h4><p><img src="/Blog/intro/cmpt379/language_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Regular-language-正则语言"><a href="#Regular-language-正则语言" class="headerlink" title="Regular language (正则语言)"></a>Regular language (正则语言)</h3><p>任何可以通过上述操作(Union concatenation, Kleene closure)得到的 language 叫做 regular language</p>
+<p>Regular language 有着规律性</p>
+<p>There is a more compact notation for (most) regular languages that is called <strong>regular expressions</strong></p>
+<br>
+
+<h3 id="正则表达式-1"><a href="#正则表达式-1" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>正则表达式</p>
+<ul>
+<li>$a+b = L_a\cup L_b$</li>
+<li>$ab = L_aL_b$</li>
+<li>$a^ * = L_a^ * $</li>
+</ul>
+<p>$a+bc^ * = a+(b(c^ * ))$</p>
+<p><img src="/Blog/intro/cmpt379/language_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>regular expression 通常使用 patterns 来匹配 例如</p>
+<ul>
+<li><code>abab</code> matches <code>a(b+c)ab</code></li>
+<li><code>abbb</code> matches <code>ab*</code></li>
+</ul>
+<br>
+
+<p>为了方便 我们可以添加一些新的notation, (就像语法糖)</p>
+<ul>
+<li><code>a? = (ε+a)</code></li>
+<li><code>a+ = aa*</code></li>
+<li><code>[abgmr] = (a+b+g+m+r)</code>   这个叫做 character class</li>
+<li><code>[a..z] = (a+b+c+..z)</code>, 类似还有 <code>[a..z], [a..zA..Z], [0..9A..F]</code></li>
+<li><code>~ 和 ^</code> 表示 “all the characters of $\sum$ are not in”, 例如 <code>[^a..z]</code> 代表匹配<code>[a..z]</code> 以外的字符</li>
+</ul>
+<p><img src="/Blog/intro/cmpt379/language_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/计算机底层/">计算机底层</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/编译原理/">编译原理</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2021/05/13/Database/">
+                        <span class="hidden-mobile">数据库</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Principles of Compiler Design&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

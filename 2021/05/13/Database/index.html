@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>数据库 - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/longyin.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Thursday, May 13th 2021, 12:12 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.5k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      8 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <p>数据库</p>
+<a id="more"></a>
+
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><p>Database Management System(<strong>DBMS</strong>)</p>
+<p><img src="/Blog/intro/database/database.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><strong>DBMS 的好处</strong></p>
+<p>所有对数据的访问都通过DBMS管理</p>
+<ul>
+<li>Design and implementation advantages<ul>
+<li>Logical data independence</li>
+<li>Physical data independence</li>
+<li>Reduced application development time</li>
+</ul>
+</li>
+<li>Use advantage<ul>
+<li>Efficient access</li>
+<li>Data integrity and security</li>
+<li>Concurrent access and concurrency control</li>
+<li>Crash recovery</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p><img src="/Blog/intro/database/database_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Data-Models"><a href="#Data-Models" class="headerlink" title="Data Models"></a>Data Models</h2><p>A database <strong>models</strong> a real-world enterprise</p>
+<p>A data model is a <strong>formal language</strong> for describing data</p>
+<ul>
+<li>A <strong>schema</strong> is a description of a <strong>particular collection of data</strong> using a particular data model</li>
+</ul>
+<p>最常用的 data model 是 <strong>relation data model</strong></p>
+<p>这个model最主要的就是 <strong>relation</strong>, 可以表示为一个<strong>table with rows and columns</strong></p>
+<p>Web database 和 Big Data databases 一般不使用 relation model</p>
+<br>
+
+<br>
+
+<h2 id="Levels-of-Abstraction"><a href="#Levels-of-Abstraction" class="headerlink" title="Levels of Abstraction"></a>Levels of Abstraction</h2><p>数据可以被表述为three levels of abstraction</p>
+<ol>
+<li>Physical Schema<ul>
+<li>The lowest level schema, which describes how data is stored and indexed</li>
+</ul>
+</li>
+<li>Conceptual(or logical) Schema<ul>
+<li>What (not how) data is stored, described in terms of data model.</li>
+</ul>
+</li>
+<li>External (or View) Schema<ul>
+<li>The highest level schema, describing how some users interact with the data. There can be multiple views</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E7%BA%A7%E6%A8%A1%E5%BC%8F/8143441?fr=aladdin" target="_blank" rel="noopener">数据库3模式</a></p>
+<h2 id="Data-independence"><a href="#Data-independence" class="headerlink" title="Data independence"></a>Data independence</h2><p>Physical data independence</p>
+<ul>
+<li>允许physical schema modified without rewriting application programs</li>
+<li>Usually to improve performance, like adding or removing an index or moving a file to a new disk</li>
+</ul>
+<br>
+
+<p>Logical data independence</p>
+<ul>
+<li>Shields user from changes in the logical schema </li>
+<li>Allows the logical schema to be modified without rewriting application programs, like adding an attribute to a relation</li>
+</ul>
+<br>
+
+<h2 id="Database-Language"><a href="#Database-Language" class="headerlink" title="Database Language"></a>Database Language</h2><p>Database language 允许一个创建, 修改, 请求 一个database </p>
+<p>Structured Query Language (SQL)</p>
+<p>SQL 有4 components:</p>
+<ul>
+<li><strong>Data Definition Language (DDL)</strong>, use to create and modify database schemas.</li>
+<li><strong>Data Manipulation Language(DML)</strong>, used to modify and query records.</li>
+<li><strong>Transaction Control Language (TCL) and Data Control Language(DCL)</strong></li>
+</ul>
+<br>
+
+<p>Data Definition Language</p>
+<p>DDL 可以 create 整个 Database, 允许 <strong>integrity constraints</strong> to be specified </p>
+<ul>
+<li>Domain constraints</li>
+<li>Referential integrity</li>
+<li>Assertions</li>
+<li>Authorization</li>
+</ul>
+<p>The DDL is also used to modify existing DB schema:</p>
+<ul>
+<li>Addition of new tables</li>
+<li>Deletion of tables</li>
+<li>Addition of attributes</li>
+</ul>
+<br>
+
+<p>Data Manipulation Language</p>
+<p>DML 允许 访问 或 修改 database 中的 data</p>
+<ul>
+<li>Retrieve information stored in the database</li>
+<li>Insert new information into database</li>
+<li>Delete information from the database</li>
+<li>Modify information stored in the database.</li>
+</ul>
+<br>
+
+<p>There are 2 basic types of DML:</p>
+<ol>
+<li><p>Procedural: users specify what data is required and how it should be retrieved.</p>
+</li>
+<li><p>Declarative (nonprocedural): user specify what data is required without specifying how it should be retrieved.</p>
+</li>
+</ol>
+<br>
+
+<br>
+
+<p>目前 relation model 是最流行的database model</p>
+<p>这有两个难点:</p>
+<ol>
+<li>面向对象<ul>
+<li>Object models do not match well to relational models</li>
+</ul>
+</li>
+<li>The rise of the <strong>web</strong> and <strong>Big Data</strong><ul>
+<li>Large amounts of distributed data</li>
+<li>Difficult to manage in a conventional relational database</li>
+</ul>
+</li>
+</ol>
+<br>
+
+<p>SQL or NoSQL</p>
+<p>SQL database 的 data model 是从Set Theory衍生过来的</p>
+<p>NoSQL database 使用不一样的data model</p>
+<ul>
+<li>with variable schema</li>
+</ul>
+<br>
+
+<h2 id="Database-Design"><a href="#Database-Design" class="headerlink" title="Database Design"></a>Database Design</h2><p>设计Database的目标:</p>
+<ul>
+<li>Produce a set of <strong>Tables</strong> that can store the data required by an <strong>Enterprise</strong></li>
+<li>Relational database tables represent <strong>Entities</strong> and <strong>Relationships</strong> between entities</li>
+<li>A database of students might include the entities student and course, and the relationship student <strong>takes</strong> course</li>
+</ul>
+<br>
+
+<p>Database often model <strong>large and complex enterprises</strong></p>
+<ul>
+<li>没有人可以理解所有需求</li>
+</ul>
+<p>Database 的设计者必须和user讨论requirements</p>
+<ul>
+<li>把 requirement 转换为 high level design</li>
+<li>和user确认design</li>
+<li>把 high level design 转换为 database schema</li>
+</ul>
+<blockquote>
+<p>Design Overview</p>
+<ul>
+<li>Requirement Analysis</li>
+<li>Conceptual Database Design</li>
+<li>Logical Database Design<ul>
+<li>Schema Refinement</li>
+</ul>
+</li>
+<li>Physical Database Design</li>
+<li>Security Design</li>
+</ul>
+</blockquote>
+<h3 id="Requirement-Analysis"><a href="#Requirement-Analysis" class="headerlink" title="Requirement Analysis"></a>Requirement Analysis</h3><p>database 是要model 真实世界的 enterprise</p>
+<ul>
+<li>What <strong>data</strong> is to be stored</li>
+<li>What <strong>application</strong> are required to work with the database?</li>
+<li>Which are the most frequent and most important <strong>operations</strong>?</li>
+</ul>
+<h3 id="Conceptual-Database-Design"><a href="#Conceptual-Database-Design" class="headerlink" title="Conceptual Database Design"></a>Conceptual Database Design</h3><p>Use a <strong>model</strong> to develop a high-level description</p>
+<p>Identify the <strong>entities</strong> and <strong>relationships</strong> (and information to be stored about them)</p>
+<p>Identify integrity constraints ( also known as business rules)</p>
+<p>Check with the client that the model is appropriate.</p>
+<ul>
+<li>Correct the model and repeat as necessary</li>
+</ul>
+<br>
+
+<h3 id="Logical-Database-Design"><a href="#Logical-Database-Design" class="headerlink" title="Logical Database Design"></a>Logical Database Design</h3><p>选择要使用的data model</p>
+<p>选择 DBMS</p>
+<ul>
+<li>这是指database management systemproduct to purchase or license</li>
+</ul>
+<p>把 conceptual schema 转换(映射)为 database schema of the chosen model</p>
+<br>
+
+<h3 id="Design-Notes"><a href="#Design-Notes" class="headerlink" title="Design Notes"></a>Design Notes</h3><p>designer 必须决定如何<strong>表达(represent)</strong> stuff bo be modeled in the database</p>
+<p>有两件事要避免:</p>
+<ol>
+<li>Redundancy : information should not be repeated</li>
+<li>Incompleteness: it should be possible to record all desired information</li>
+</ol>
+<br>
+
+<h3 id="Entity-Relationship-Model"><a href="#Entity-Relationship-Model" class="headerlink" title="Entity-Relationship Model"></a>Entity-Relationship Model</h3><p>ER Model has similarities to other modeling languages like <strong>UML</strong></p>
+<p>ER Model 主要的成分是:</p>
+<ul>
+<li>Entities</li>
+<li>Attributes</li>
+<li>Relationships</li>
+<li>Constraints</li>
+</ul>
+<br>
+
+<h3 id="Entity-Relationship-Diagram"><a href="#Entity-Relationship-Diagram" class="headerlink" title="Entity-Relationship Diagram"></a>Entity-Relationship Diagram</h3><p>ER Diagram show the structure of a database <strong>graphically</strong></p>
+<ul>
+<li>Simple symbols</li>
+</ul>
+<br>
+
+<p>例子:</p>
+<p>长方形代表entities, 菱形代表relaitonships, 椭圆代表 attributes</p>
+<p><img src="/Blog/intro/cmpt354/relationship.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Entities-and-Entity-Sets"><a href="#Entities-and-Entity-Sets" class="headerlink" title="Entities and Entity Sets"></a>Entities and Entity Sets</h3><p>An <strong>Entity</strong> is a <strong>distinguishable object</strong>, meaning it can be distinguished from other objects</p>
+<p>例如: 某个苹果手机</p>
+<p>Entities 可以是抽象的也可以是具体的</p>
+<p>Entity Set 就是 Entities 的集合</p>
+<p>例如: 所有中国的苹果手机</p>
+<p>Entity Sets need not be <strong>disjoint</strong>, 两个entitiy set 可以包含相同的entity</p>
+<br>
+
+<h3 id="Attribute"><a href="#Attribute" class="headerlink" title="Attribute"></a>Attribute</h3><p>一个 Entity 是由多个Attributes 描述的 </p>
+<blockquote>
+<p>属性就是对物质的观测, 如果一个东西无法被观测(没有属性), 那么它就不存在</p>
+</blockquote>
+<p>一些attribute是由别的attribute衍生来的</p>
+<p><img src="/Blog/intro/cmpt354/relationship_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>每个attribute都有Domain</p>
+<br>
+
+<h3 id="Composite-Attribute"><a href="#Composite-Attribute" class="headerlink" title="Composite Attribute"></a>Composite Attribute</h3><p>Composite Attribute are divided into sub-parts</p>
+<p>They group <strong>related attributes</strong> together</p>
+<p>Composite attributes should be replaced with their sub-parts, to make it easier to derive a set of tables from the ER diagram later</p>
+<br>
+
+<h3 id="Multivalued-Attributes"><a href="#Multivalued-Attributes" class="headerlink" title="Multivalued Attributes"></a>Multivalued Attributes</h3><p>Multi-valued attributes should be <strong>replaced with an entity set</strong> and a relationship created to represent the connection between the two sets</p>
+<p>There is sometimes <strong>no clear distinction between entities and attributes</strong></p>
+<br>
+
+<h3 id="Derived-Attributes"><a href="#Derived-Attributes" class="headerlink" title="Derived Attributes"></a>Derived Attributes</h3><p>可以由其他attribute 计算得到, 不需要存在数据库中</p>
+<p><img src="/Blog/intro/cmpt354/relationship_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h3><p>Difference between entities in an entity set are expressed in terms of their attributes</p>
+<p>两个entities 不能所有属性都相同(无法区别)</p>
+<p>keys应该是unique的</p>
+<h3 id="Super-Key"><a href="#Super-Key" class="headerlink" title="Super Key"></a>Super Key</h3><p>A superkey is any set of <strong>attributes whose values uniquely identify an entity</strong> in an entity set</p>
+<p>Entity sets <strong>can have multiple superkeys,</strong> and additional superkeys can be created by taking a key attribute and adding other attributes</p>
+<p>任何一个属性和一个super key组合成为的新的key也是一个super key(一定唯一)</p>
+<h3 id="Candidate-Key"><a href="#Candidate-Key" class="headerlink" title="Candidate Key"></a>Candidate Key</h3><p>A candidate key is <strong>minimal superkey</strong>, 就是说一个super key with no <strong>unnecessary attributes</strong></p>
+<ul>
+<li>That is not the same as the superkey with the fewest attributes</li>
+<li>A Person superkey of <code>{SIN, lastname}</code> doesn’t need the last name to uniquely identify people</li>
+</ul>
+<p>A relation can have <strong>more than one candidate key</strong></p>
+<br>
+
+<h3 id="Primary-Key"><a href="#Primary-Key" class="headerlink" title="Primary Key"></a>Primary Key</h3><p><img src="/Blog/intro/cmpt354/relationship_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>primary key 必须是 Candidate Key(minimal super key)</p>
+<p>primary key 的值应该永远不改变(或者说尽可能不改变)</p>
+<p>通常我们生成primary key</p>
+<br>
+
+<h3 id="Relationship-Sets"><a href="#Relationship-Sets" class="headerlink" title="Relationship Sets"></a>Relationship Sets</h3><p>A Relationship is an association between two or more entities</p>
+<p>A Relationship set is a set of relationships of the same type.</p>
+<p>Relationship sets may have Descriptive Attributes</p>
+<ul>
+<li>They can’t be part of the primary key, but they’re useful for <strong>properties that can’t be associated with either of the participating entity sets</strong></li>
+</ul>
+<br>
+
+<p>An n-ary relationship set R is an association between n entity sets <code>E1, ... En</code> where R is a subset of <code>{(e1,...en) | e1 in E1, ... en in En}</code></p>
+<p><strong>Binary</strong> relationships are the most common</p>
+<p>例如: relationship between two entities, which can even be the same entity</p>
+<p><img src="/Blog/intro/cmpt354/relationship_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/relationship_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Mapping-Cardinalities"><a href="#Mapping-Cardinalities" class="headerlink" title="Mapping Cardinalities"></a>Mapping Cardinalities</h3><p>假设有binary relationship R, between 2 entity sets A, B</p>
+<ul>
+<li><strong>Mapping Cardinalities</strong> specify <strong>how many entities of B can be associated with one entity in A</strong>, and vice-versa</li>
+<li>Alternatively, the number of relationships of set R that may be participated in by one entity in set A (or B)</li>
+<li>Those two statements are the same for binary relationships, but not ternary or greater ones</li>
+</ul>
+<p>A <strong>key constraint</strong> exists between A and R if A entities can be <strong>associated only with a signle B entity</strong></p>
+<br>
+
+<h3 id="One-to-One-Relationship"><a href="#One-to-One-Relationship" class="headerlink" title="One to One Relationship"></a>One to One Relationship</h3><p><img src="/Blog/intro/cmpt354/relationship_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="One-to-Many-Relationship"><a href="#One-to-Many-Relationship" class="headerlink" title="One to Many Relationship"></a>One to Many Relationship</h3><p><img src="/Blog/intro/cmpt354/relationship_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Many-to-One-Relationship"><a href="#Many-to-One-Relationship" class="headerlink" title="Many to One Relationship"></a>Many to One Relationship</h3><p><img src="/Blog/intro/cmpt354/relationship_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Many-to-Many-Relationship"><a href="#Many-to-Many-Relationship" class="headerlink" title="Many to Many Relationship"></a>Many to Many Relationship</h3><p><img src="/Blog/intro/cmpt354/relationship_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>When drawing an ER Diagram relationships should only be given descriptive attributes</p>
+<ul>
+<li>Tables representing relationship sets <strong>inherit hte primary key attributes</strong> of the participating entity sets</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/relationship_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Participation-Constraints"><a href="#Participation-Constraints" class="headerlink" title="Participation Constraints"></a>Participation Constraints</h3><p>Indicate that each entity in an entity set must be involved in at least one relationship</p>
+<p>Participation is said to be either <strong>total</strong>(there is a constraint) or <strong>partial</strong> (no constraint)</p>
+<p>total participation 用双线表示</p>
+<p><img src="/Blog/intro/cmpt354/relationship_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/relationship_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/relationship_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/算法与数据结构/">算法与数据结构</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/数据结构/">数据结构</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/Blog/2021/05/14/Principles-of-Compiler-Design/">
+                        <i class="fa fa-chevron-left"></i>
+                        <span class="hidden-mobile">Principles of Compiler Design</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2021/04/29/FFT/">
+                        <span class="hidden-mobile">FFT</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "数据库&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

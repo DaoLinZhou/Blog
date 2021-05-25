@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3k 字
+                    3.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      12 分钟
                   </span>
                 
 
@@ -451,8 +451,31 @@
 
 <br>
 
-
-
+<h2 id="快速计算二阶矩阵的特征值"><a href="#快速计算二阶矩阵的特征值" class="headerlink" title="快速计算二阶矩阵的特征值"></a>快速计算二阶矩阵的特征值</h2><blockquote>
+<p><a href="https://www.youtube.com/watch?v=e50Bj7jn9IQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=e50Bj7jn9IQ</a></p>
+</blockquote>
+<p>对于矩阵A, 有两个定理:</p>
+<ol>
+<li>$tr(A) = \lambda_1 + \lambda_2+\cdots$</li>
+<li>$det(A) = \lambda_1\cdot \lambda_2\cdots$</li>
+</ol>
+<p>如果矩阵A是二维矩阵, 那么:</p>
+<ol>
+<li>$tr(A) = \lambda_1 + \lambda_2$</li>
+<li>$det(A) = \lambda_1\cdot \lambda_2$</li>
+</ol>
+<p>假设两个特征值的均值是$m$</p>
+<p>$m=\frac12 tr(A)=\frac {\lambda_1 + \lambda_2}2$</p>
+<p>而$m$到$\lambda$的距离是$d$<br>$$<br>det(A)=(m+d)(m-d)<br>$$</p>
+<p>$$<br>det(A) = m^2-d^2<br>$$</p>
+<p>$$<br>d^2 = m^2-det(A)<br>$$</p>
+<p>$$<br>d = \pm \sqrt{m^2-det(A)}<br>$$</p>
+<p>因此<br>$$<br>\lambda_1 = m +\sqrt{m^2-det(A)}<br>$$</p>
+<p>$$<br>\lambda_2 = m -\sqrt{m^2-det(A)}<br>$$</p>
+<p>where $m = \frac 12 tr(A)$</p>
+<p>回头看一下使用普通方法计算的特征值的这两个系数</p>
+<p><img src="/Blog/intro/linear_al.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们就可以理解为什么$tr(A) = \lambda_1 + \lambda_2, det(A) = \lambda_1\cdot \lambda_2$</p>
 
             </div>
             <hr>
