@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Blog/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/Blog/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="Daolin">
+  <meta name="keywords" content>
+  <title>Data science - Daolin&#39;s Repository</title>
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/Blog/lib/prettify/github-v2.min.css">
+
+<link rel="stylesheet" href="/Blog/css/main.css">
+
+
+  <link defer rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Blog/">&nbsp;<strong>Daolin's Repository</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/Blog/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/Blog/intro/lulutiya3.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  Tuesday, May 25th 2021, 1:06 pm
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.2k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      6 分钟
+                  </span>
+                
+
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <a id="more"></a>
+
+
+
+<h1 id="Noise"><a href="#Noise" class="headerlink" title="Noise"></a>Noise</h1><pre><code class="python">if __name__ == &#39;__main__&#39;:
+    n = 200
+    x = np.linspace(-15, 15, n)
+
+    truth = x**2 + 20*np.sin(x)
+
+    sigma = 10
+    noise = np.random.normal(0, sigma, n)
+    measurements = truth + noise
+
+    plt.plot(x, measurements, &#39;b.&#39;)
+    plt.show()</code></pre>
+<p><img src="/Blog/intro/cmpt353/noise.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>而真实的值可能是这样</p>
+<p><img src="/Blog/intro/cmpt353/noise_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们怎么降噪?</p>
+<br>
+
+<h2 id="LOESS-Smoothing"><a href="#LOESS-Smoothing" class="headerlink" title="LOESS Smoothing"></a>LOESS Smoothing</h2><p><strong>LOESS</strong> or <strong>LOWESS</strong> smoothing (LOcally WEighted Scatterplot Smoothing) 是一种smooth curve的技术</p>
+<p>LOESS 的思想是这样</p>
+<ol>
+<li>Take a local neighbourhood of the data</li>
+<li>Fit a line (or higher-order polynomial) to that data, Pay more attention to the points in the middle of the neighbourhood(“weighting”)</li>
+<li>Declare that line to be the part of the curve for the middle of the neighbourhood</li>
+<li>Slide the window along, generating a curve as you go</li>
+</ol>
+<p><img src="/Blog/intro/cmpt353/loess.gif" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到fraction越大, curve越平滑</p>
+<p><img src="/Blog/intro/cmpt353/noise_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果我们有很多数据, LOESS 会有很好的效果, 反之如果数据量小, 那么他的效果会较差</p>
+<p><img src="/Blog/intro/cmpt353/noise_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">from statsmodels.nonparametric.smoothers_lowess import lowess
+filtered = lowess(measurements, input_range, frac=0.05)
+plt.plot(filtered[:, 0], filtered[:, 1], &#39;r-&#39;, linewidth=3)</code></pre>
+<br>
+
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from statsmodels.nonparametric.smoothers_lowess import lowess
+
+if __name__ == &#39;__main__&#39;:
+    n = 200
+    x = np.linspace(-15, 15, n)
+    truth = x**2 + 20*np.sin(x)
+
+    sigma = 10
+    noise = np.random.normal(0, sigma, n)
+    measurements = truth + noise
+
+    filtered = lowess(measurements, x, frac=0.5)
+
+    plt.plot(filtered[:, 0], filtered[:, 1], &#39;r-&#39;, linewidth=3)
+    plt.plot(x, measurements, &#39;b.&#39;)
+    plt.show()</code></pre>
+<p>当 <code>frac=0.5</code> 时</p>
+<p><img src="/Blog/intro/cmpt353/noise_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>当 <code>frac=0.15</code>时</p>
+<p><img src="/Blog/intro/cmpt353/noise_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>LOESS smoothing is easy to work with: only one parameter to get right. It’s better when it has lots of data to work with.</p>
+<p>But it’s about smoothing the curve, not exactly finding the true signal. Those are often similar, but not always perfectly identical.</p>
+</blockquote>
+<br>
+
+<br>
+
+<h2 id="Kalman-Filtering"><a href="#Kalman-Filtering" class="headerlink" title="Kalman Filtering"></a>Kalman Filtering</h2><p><strong>Kalman filtering</strong> is designed to let you express what you know. It predicts the <em>most likely value</em> for the truth given your assumptions</p>
+<p>我们可能想知道:</p>
+<ul>
+<li>How much error is expected in measurement</li>
+<li>How fast it changes.</li>
+<li>A prediction for the next value, given the current value.</li>
+<li>How much error you expect on that prediction</li>
+</ul>
+<p>概率分布</p>
+<p>distribution 有 mean(均值) 用 $\mu$ 表示</p>
+<p>有标准差(standard deviation) 用 $\sigma$ 表示</p>
+<p>我们假设noise是正态分布的, 我们希望$\mu$ 是 truth, $\sigma$ 描述how much noise we are getting</p>
+<p>两个变量的covariance(协方差) says something about how their values relate</p>
+<p>如果一个value related to the other, 那么 covariance 就非0. change in the same direction: positive covariance, opposite direction: negative covariance.</p>
+<br>
+
+<h3 id="Kalman-Operation"><a href="#Kalman-Operation" class="headerlink" title="Kalman Operation"></a>Kalman Operation</h3><p>Kalman filter works with two things : <strong>our observations(data)</strong> and <strong>our prediction of what we expect to happen (the prior)</strong></p>
+<p><img src="/Blog/intro/cmpt353/noise_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>假设在time step $k$, true state $\vec x_k$</p>
+<p>Kalman filtering asks us to predict the next state. We will call our estimate of the state $\hat x_k$</p>
+<p>问题就是: given (the filter’s best guess for) $\hat x_{k-1}$ what do you think $\hat x_k$ will be?</p>
+<p>假设我们有两个value: position 和 velocity. </p>
+<p><img src="/Blog/intro/cmpt353/noise_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>因为我们知道velocity 是什么, 所以我们可以预测新的position.</p>
+<p>我们猜测<br>$$<br>p_k = p_{k-1} + \Delta t\cdot v_{k-1}<br>$$</p>
+<p>$$<br>v_k=v_{k-1}<br>$$</p>
+<p><img src="/Blog/intro/cmpt353/noise_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Kalman-Variances"><a href="#Kalman-Variances" class="headerlink" title="Kalman Variances"></a>Kalman Variances</h3><p>我们还关心 how much do I trust the measurements(prediction)</p>
+<p><img src="/Blog/intro/cmpt353/noise_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对角线上的值是variance, 对角线之外的值是covariance</p>
+<p>我们设定covariance为0, 因为我们不认为两个error related to each other.</p>
+<p>这些值是我们自己设定的, 我们思考 how wrong do i expect this to be most of the times. 平方后就是variance</p>
+<p>我们需要这些矩阵, for both ovservations(measurements) often called $R$, and our predictions, often call $Q$</p>
+<p><img src="/Blog/intro/cmpt353/noise_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>假设这是我们的数据点</p>
+<pre><code class="python">n_samples = 25
+
+input_range = np.linspace(0, 2*np.pi, n_samples, dtype=np.float)
+observations = pd.DataFrame()
+observations[&#39;sin&#39;] = (np.sin(input_range)
+        + np.random.normal(0, 0.5, n_samples))
+observations[&#39;cos&#39;] = (np.cos(input_range)
+        + np.random.normal(0, 0.25, n_samples))</code></pre>
+<p><img src="/Blog/intro/cmpt353/noise_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>使用LOESS的结果</p>
+<p><img src="/Blog/intro/cmpt353/noise_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>使用Kalman Filtering</p>
+<pre><code class="python">from pykalman import KalmanFilter
+initial_value_guess = observations.iloc[0]
+observation_covariance = np.diag([0.5, 0.25]) ** 2
+
+kf = KalmanFilter(
+    initial_state_mean=initial_value_guess,
+    initial_state_covariance=observation_covariance,
+    observation_covariance=observation_covariance
+)
+pred_state, state_cov = kf.smooth(observations)</code></pre>
+<p><img src="/Blog/intro/cmpt353/noise_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到结果并不好</p>
+<blockquote>
+<p>But, we haven’t made any attempt to predict. We’re accepting the defaults (everything stays the same; variance of 1; covariance 0), which aren’t good for our problem</p>
+</blockquote>
+<p><img src="/Blog/intro/cmpt353/noise_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/noise_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">delta_t = np.pi * 2 / n_samples
+transition_matrix = [[1, delta_t], [-delta_t, 1]]
+
+transition_covariance = np.diag([0.2, 0.2]) ** 2
+kf = KalmanFilter(
+    initial_state_mean=initial_value_guess,
+    initial_state_covariance=observation_covariance,
+    observation_covariance=observation_covariance,
+    transition_covariance=transition_covariance,
+    transition_matrices=transition_matrix
+)
+pred_state, state_cov = kf.smooth(observations)</code></pre>
+<p><img src="/Blog/intro/cmpt353/noise_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>方差接近0并不真实</p>
+<p>在真实世界中, 配置好的Kalman惊人的好</p>
+<p><img src="/Blog/intro/cmpt353/noise_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<pre><code class="python">if __name__ == &#39;__main__&#39;:
+    n_samples = 25
+
+    input_range = np.linspace(0, 2 * np.pi, n_samples, dtype=np.float)
+    observations = pd.DataFrame()
+    observations[&#39;sin&#39;] = (np.sin(input_range)
+                           + np.random.normal(0, 0.5, n_samples))
+    observations[&#39;cos&#39;] = (np.cos(input_range)
+                           + np.random.normal(0, 0.25, n_samples))
+
+    initial_value_guess = observations.iloc[0]
+    observation_covariance = np.diag([0.5, 0.25]) ** 2
+
+    kf = KalmanFilter(
+        initial_state_mean=initial_value_guess,
+        initial_state_covariance=observation_covariance,
+        observation_covariance=observation_covariance
+    )
+    pred_state, state_cov = kf.smooth(observations)
+
+    plt.scatter(input_range, observations[&#39;sin&#39;])
+    plt.plot(input_range, pred_state[:, 0], &#39;r-&#39;)
+    plt.show()
+    plt.scatter(input_range, observations[&#39;cos&#39;])
+    plt.plot(input_range, pred_state[:, 1], &#39;r-&#39;)
+    plt.show()
+
+
+    delta_t = np.pi * 2 / n_samples
+    transition_matrix = [[1, delta_t], [-delta_t, 1]]
+
+    transition_covariance = np.diag([0.2, 0.2]) ** 2
+    kf = KalmanFilter(
+        initial_state_mean=initial_value_guess,
+        initial_state_covariance=observation_covariance,
+        observation_covariance=observation_covariance,
+        transition_covariance=transition_covariance,
+        transition_matrices=transition_matrix
+    )
+    pred_state, state_cov = kf.smooth(observations)
+
+    plt.scatter(input_range, observations[&#39;sin&#39;])
+    plt.plot(input_range, pred_state[:, 0], &#39;r-&#39;)
+    plt.show()
+    plt.scatter(input_range, observations[&#39;cos&#39;])
+    plt.plot(input_range, pred_state[:, 1], &#39;r-&#39;)
+    plt.show()</code></pre>
+<br>
+
+<h3 id="Kalman-Parameters"><a href="#Kalman-Parameters" class="headerlink" title="Kalman Parameters"></a>Kalman Parameters</h3><p>$F_k$,  <code>transition_matrix</code>  says what you <strong>predict</strong> the next value will be, base on the current values</p>
+<p>This is often a fairly bad prediction: 如果我们可以预测outcome 那我们还measuring干嘛, 尽管如此，我们尽我们所能，让它引导结果</p>
+<br>
+
+<p>$R$, <code>observation_covariance</code> matrix expresses what you think about the <em>error in the observations</em></p>
+<p>Lower values → less sensor error assumed → observations have more effect on the result → more noise.</p>
+<p>Higher values → ⋯ → less noise</p>
+<br>
+
+<p>$Q$, <code>transition_covariance</code> says what you think about the error in your prediction. Assuming the prediction is fairly smooth</p>
+<p>Lower values → less prediction error assumed → prediction has more effect on the result → less noise.</p>
+<p>Higher values → ⋯ → more noise.</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/categories/数据科学/">数据科学</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/python3/">python3</a>
+                    
+                      <a class="hover-with-bg" href="/Blog/tags/机器学习/">机器学习</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/Blog/2021/05/14/Principles-of-Compiler-Design/">
+                        <span class="hidden-mobile">Principles of Compiler Design</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="fa fa-chevron-right"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/Blog/js/main.js" ></script>
+
+
+  <script  src="/Blog/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var toc = $('#toc');
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+      var tocLimMax = 2 * boardTop + boardCtn.height();
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = boardCtn.css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/Blog/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Data science&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/Blog/js/local-search.js" ></script>
+  <script>
+    var path = "/Blog/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+      MathJax.Hub.Register.StartupHook("End Jax",function () {
+        var BROWSER = MathJax.Hub.Browser;
+        var jax = "HTML-CSS";
+        if (BROWSER.isMSIE && BROWSER.hasMathPlayer) jax = "NativeMML";
+        return MathJax.Hub.setRenderer(jax);
+      });
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script  src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

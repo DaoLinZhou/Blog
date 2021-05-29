@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    1.5k 字
+                    2.2k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      8 分钟
+                      11 分钟
                   </span>
                 
 
@@ -481,6 +481,102 @@
 <p><img src="/Blog/intro/cmpt354/relationship_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/relationship_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/relationship_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Weak-Entity-Sets"><a href="#Weak-Entity-Sets" class="headerlink" title="Weak Entity Sets"></a>Weak Entity Sets</h3><p>A <strong>Weak Entity</strong> cannot be identified by its attributes alone.</p>
+<ul>
+<li>A member of a weak entity set is identified by combining its <strong>partial key</strong> with the primary key of another entity set.</li>
+<li>The other entity set is referred to as the <strong>Owner Entity Set</strong></li>
+</ul>
+<p>Weak entity sets are permitted only when:</p>
+<ul>
+<li>The owner and the weak entity set participate in a <strong>one to many identifying relationship set</strong></li>
+<li>The weak entity set has <strong>total participation</strong> in the identifying relationship</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/weak_entity.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Class-Hierarchies"><a href="#Class-Hierarchies" class="headerlink" title="Class Hierarchies"></a>Class Hierarchies</h3><p>有时候把entity set中的 entity 划分为多个 Subclass 可能更有用</p>
+<p>类似于面向对象</p>
+<p>每个entity in a subclass 同样是superclass 中的一员</p>
+<p>subclass entities 继承 super class 的 attributes</p>
+<ul>
+<li>The subclass entity may also have <strong>additional attributes</strong></li>
+</ul>
+<p>Class hierarchies 可能有多层</p>
+<br>
+
+<p>subclass relationship 代表 “is a” 关系</p>
+<ul>
+<li><strong>Specialization</strong> is the process of identifying subsets with additional attributes from an existing entity set. (A specializes B)</li>
+<li><strong>Generalization</strong> is the process of identifying common characteristics (attributes) of entity sets, and creating new entity sets with those attributes (B generalizes A)</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/weak_entity_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Design-Constraints"><a href="#Design-Constraints" class="headerlink" title="Design Constraints"></a>Design Constraints</h3><p>The participation of entities in a subclass is defined in one of two ways:</p>
+<ul>
+<li>If participation is <strong>condition-defined</strong>, an entity is only a member of a subclass if it meets some condition,例如: 只有能挤奶的牛才叫奶牛( condition 就是能挤奶, subclass就是奶牛)</li>
+<li>If participation is <strong>user-defined</strong>, an entity is assigned to a subclass by the database user, 老板指定一些员工升职为项目manager</li>
+</ul>
+<h3 id="Overlap-Constraints"><a href="#Overlap-Constraints" class="headerlink" title="Overlap Constraints"></a>Overlap Constraints</h3><p>一个entity 可能属于多个subclass</p>
+<p>如果两个subclass 是 disjoint, 那么一个entity就不可能同时属于这两个subclass: 例如一个animal 不可能既是鸟又是鱼</p>
+<p>两个subclass也可能overlapping: 例如一个人既可以是顾客也可以是员工</p>
+<p>default, subclass 是 disjoint, 如果需要overlap, 则需要手动在ER diagram中指出</p>
+<h3 id="Coverage-Constraints"><a href="#Coverage-Constraints" class="headerlink" title="Coverage Constraints"></a>Coverage Constraints</h3><p>A <strong>coverage constraint</strong> indicates that each superclass entity <strong>must belong</strong> to a subclass</p>
+<ul>
+<li>This can be specified on an ER diagram by drawing a double line from the superclass to the triangle</li>
+<li>For example, 载具类有car 和 boat subclasses without <strong>coverage constraint</strong>, 因为可能有一些载具既不是car 也不是boat</li>
+<li>A Football Player class, on the other hand, might have full coverage for all of the different positions on the team (Quarterback, Running Back, Kicker, etc), since every player must also fulfill one of these roles.</li>
+</ul>
+<h3 id="Aggregation-Introduction"><a href="#Aggregation-Introduction" class="headerlink" title="Aggregation Introduction"></a>Aggregation Introduction</h3><p><img src="/Blog/intro/cmpt354/weak_entity_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以把ternary relationship 转为binary relationship</p>
+<p><img src="/Blog/intro/cmpt354/weak_entity_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/weak_entity_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/weak_entity_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>指出一个relationship set 参与另一个 relationship set. </p>
+<ul>
+<li>An abstraction that treats relationship sets as higher level entities, for the purpose of participation in other relationships.</li>
+</ul>
+<p>When should we use aggregation?</p>
+<ul>
+<li><p>When there is <strong>a relationship between an entity set and another relationship</strong>.</p>
+</li>
+<li><p>Aggregation is often used with <strong>non-binary relationships</strong></p>
+</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/weak_entity_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Entity-Relationship-Design-Principles"><a href="#Entity-Relationship-Design-Principles" class="headerlink" title="Entity Relationship Design Principles"></a>Entity Relationship Design Principles</h3><p><strong>Faithfulness</strong></p>
+<ul>
+<li><p>The design must be <strong>faithful to the specification</strong> and the enterprise that is being represented.</p>
+</li>
+<li><p>All the <strong>relevant aspects</strong> of the enterprise should be <strong>represented in the model.</strong></p>
+</li>
+</ul>
+<p><strong>Avoid Redundancy</strong></p>
+<ul>
+<li><strong>Redundant representations</strong> make the ER diagram <strong>harder to understand.</strong></li>
+<li>It <strong>wastes storage space in the database</strong>, and may lead to <strong>inconsistencies</strong>.</li>
+</ul>
+<p><strong>Simplicity</strong></p>
+<ul>
+<li>Use the <strong>fewest number of entities and relationships necessary</strong> to model the enterprise</li>
+<li>Where possible, <strong>use attributes instead</strong> of entity sets and relationships</li>
+</ul>
+<p><strong>Specify As Many Constraints As Possible</strong></p>
+<ul>
+<li>Ensure that <strong>all key constraints and participation constraints are specified</strong></li>
+<li>Some constraints simply <strong>won’t be able to be modeled</strong> in your diagram, and that’s okay</li>
+</ul>
+<br>
+
+<br>
+
+<p><img src="/Blog/intro/cmpt354/weak_entity_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
