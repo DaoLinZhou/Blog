@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.2k 字
+                    2.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      11 分钟
+                      14 分钟
                   </span>
                 
 
@@ -577,6 +577,110 @@
 <br>
 
 <p><img src="/Blog/intro/cmpt354/weak_entity_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Relation-Schema"><a href="#Relation-Schema" class="headerlink" title="Relation Schema"></a>Relation Schema</h2><p>例如我们有一个数据表, 记录学生</p>
+<p>学生有这些属性: 姓名, 年龄, 成绩</p>
+<p><code>(姓名, 年龄, 成绩)</code> 就是schema 而具体的数据 <code>(周xx, 20, 100)</code> 则是instance</p>
+<p>同时schema会指定属性的domain, 例如年龄不可为负数</p>
+<p><img src="/Blog/intro/cmpt354/table.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Integrity-Constraints"><a href="#Integrity-Constraints" class="headerlink" title="Integrity Constraints"></a>Integrity Constraints</h2><p>integrity Constraints 限制了数据库中能存储的数据(禁止无用数据, 例如两个sin一样的人)</p>
+<p>当定义Database Schema时, 需要指定integrity constraints</p>
+<p>A DBMS checks every update to ensure that it does not violate any integrity constraint</p>
+<br>
+
+<p>Types of Integrity Constraints:</p>
+<ol>
+<li><strong>Domain Constraints</strong><ul>
+<li>Specified when tables are created by selecting the type of the data (e.g. dob and DATETIME)</li>
+</ul>
+</li>
+<li><strong>Key Constraints</strong><ul>
+<li>指定primary key 以及其他 candidate key</li>
+</ul>
+</li>
+<li><strong>Foreign Key Constraints</strong><ul>
+<li>Referencing the primary key of other tables</li>
+</ul>
+</li>
+<li><strong>General Constraints</strong><ul>
+<li>anything else</li>
+</ul>
+</li>
+</ol>
+<br>
+
+<p>Primary Key 定义了unique set of attributes that will be used to identify a record in a table</p>
+<p>在一些情况下有明显的primary key (例如 SIN) 其他情况primary key 要被system自动生成</p>
+<p><img src="/Blog/intro/cmpt354/primary_key.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Foreign Keys</p>
+<p><img src="/Blog/intro/cmpt354/primary_key_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/primary_key_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>The <strong>attributes</strong> of the <strong>foreign key</strong> and the <strong>referenced primary key must</strong> be <strong>consistent</strong></p>
+<ul>
+<li>The same number of attributes with compatible attribute type, but the attribute names may be different</li>
+</ul>
+<p>A foreign key references the <strong>entire primary key</strong></p>
+<p>如果primary key 是 compound, 那么foreign key也必须是compound. not multiple single-attribute foreign keys</p>
+<p><img src="/Blog/intro/cmpt354/primary_key_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>General Constraints</p>
+<p>database 可能需要使用 primary key, foreign key, domain consraint 以外的 constraint</p>
+<p>例如: limiting domain values to subsets of their domain, like limiting grades to actual grades like A and not G, or other constraints involving multiple attributes</p>
+<p>SQL 支持两种 general constraints</p>
+<ol>
+<li><strong>Table constraints</strong>, associated with a single table</li>
+<li><strong>Assertions</strong>, which may involve several tables and are checked when any of these tables are modified</li>
+</ol>
+<br>
+
+<h2 id="Enforcing-Integrity-Constraints"><a href="#Enforcing-Integrity-Constraints" class="headerlink" title="Enforcing Integrity Constraints"></a>Enforcing Integrity Constraints</h2><p>当一个有constraint 的 table 被修改, constraints must be checked</p>
+<h3 id="Enforcing-Primary-Keys"><a href="#Enforcing-Primary-Keys" class="headerlink" title="Enforcing Primary Keys"></a>Enforcing Primary Keys</h3><p>一个primary key constraint 有2种violated(违反)的方法</p>
+<ol>
+<li>当update 或 insert 一个 record可能会导致primary key重复</li>
+<li>当update 或 insert 一个 record可能会导致primary key为null</li>
+</ol>
+<p>In either case, the transaction must be rejected</p>
+<h3 id="Enforcing-Foreign-Keys"><a href="#Enforcing-Foreign-Keys" class="headerlink" title="Enforcing Foreign Keys"></a>Enforcing Foreign Keys</h3><p><img src="/Blog/intro/cmpt354/primary_key_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/primary_key_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/primary_key_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/primary_key_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/primary_key_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Two distinct tuples in a relation instance cannot have identical values in all fields of a superkey, or if two entities have the same superkey values, they must have the same values for their other attributes</p>
+<p><img src="/Blog/intro/cmpt354/primary_key_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Generalizing-Superkeys"><a href="#Generalizing-Superkeys" class="headerlink" title="Generalizing Superkeys"></a>Generalizing Superkeys</h2><p><img src="/Blog/intro/cmpt354/primary_key_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/primary_key_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><img src="/Blog/intro/cmpt354/table_design_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -638,7 +742,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -665,7 +769,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -674,7 +778,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

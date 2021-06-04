@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    927 字
+                    2.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      4 分钟
+                      10 分钟
                   </span>
                 
 
@@ -292,6 +292,153 @@
 <li><code>~ 和 ^</code> 表示 “all the characters of $\sum$ are not in”, 例如 <code>[^a..z]</code> 代表匹配<code>[a..z]</code> 以外的字符</li>
 </ul>
 <p><img src="/Blog/intro/cmpt379/language_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Context-Free-Grammars"><a href="#Context-Free-Grammars" class="headerlink" title="Context-Free Grammars"></a>Context-Free Grammars</h2><p>$G=(N,T,S,P)$</p>
+<ul>
+<li><p>$N$ : Set of nonterminals 非终结符的集合 (often capital letters)</p>
+</li>
+<li><p>$T$: Set of terminals 终结符的集合 (often lower-case letters and symbols)</p>
+</li>
+<li><p>$S$: Start symbol (element of N)</p>
+</li>
+<li><p>$P$: Productions of the form, maps a variable to a string</p>
+<p>$A\to \alpha$ where $\alpha$ is a string on $N\cup T \cup \epsilon$</p>
+</li>
+</ul>
+<p>上述是context free grammars的数学定义, 这个form 叫做 BNF form of production (Backus-Naur Form)</p>
+<p>还有一种form叫做 EBNF (Extend BNF) form, $\alpha$ 可以是regular expression on $N\cup T \cup \epsilon$, 这只是一个缩写, 并不会改变 grammar</p>
+<br>
+
+<p>举个例子: 我们有这样的grammar</p>
+<p><img src="/Blog/intro/cmpt379/grammar.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>nonterminal 是左手边的 $E,T,F$</p>
+<p>terminals 是 <code>{+, *, (, ), c,i}</code></p>
+<p>start symbol 是 $E$, 左手边第一个元素</p>
+<p>这个grammar models an arithmetic expression;</p>
+<p>E 代表 expression, T 代表 term, F 代表factor, c代表constant, i代表 identifier</p>
+<br>
+
+<p>也可以写成这样</p>
+<p><img src="/Blog/intro/cmpt379/grammar_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>也可以写成这样</p>
+<p><img src="/Blog/intro/cmpt379/grammar_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>where the vertical bar is read as “or” (as in regular expressions).</p>
+<br>
+
+<br>
+
+<h2 id="Derivations-and-Parse-Trees"><a href="#Derivations-and-Parse-Trees" class="headerlink" title="Derivations and Parse Trees"></a>Derivations and Parse Trees</h2><p>production $A \to \alpha$ is called <strong>a production for A</strong></p>
+<p><strong>derivation</strong> 在 grammar 中 starts with $\alpha_0$ being the start symbol, and in each step $k$, it derives $\alpha_k$ from $\alpha_{k-1}$ by finding a nonterminal in $\alpha_{k-1}$ and replacing it with RHS of a production for that noterminal. The derivation halts if at some step k there are no nonterminals remaining in $\alpha_{k-1}$</p>
+<p><img src="/Blog/intro/cmpt379/grammar_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>The last string in a terminating derivation is called a <strong>sentence</strong> or a <strong>word</strong> in the language of the grammar</p>
+<p>在上面例子中, $i+c\cdot i+c\cdot c$ is a word in the language of our grammar. it is a valid arthmetic expression</p>
+<br>
+
+<p>The <strong>language of a grammar</strong> is all possible sentences that you can derive from the grammar. In most grammars we will be interested in, there are an infinite number of different derivations and therefore the language of the grammar has an infinite number of members.</p>
+<p>A <strong>parse tree</strong> of a derivation is the tree one gets by placing the RHS of the production used as a step in the derivation below the LHS and as children of it. The parse tree corresponding to the previous derivation is:</p>
+<p><img src="/Blog/intro/cmpt379/grammar_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Different derivations can lead to the same parse tree, but different parse trees must lead to different derivations.</p>
+<br>
+
+<h2 id="Parsing"><a href="#Parsing" class="headerlink" title="Parsing"></a>Parsing</h2><p>parser 的工作就是把 input stream(of tokens) 转换为 Parse tree</p>
+<p>Language 需要被设计成可以快速实现这个任务</p>
+<p>例如: 在许多啊language中, 每种 statement 都有各自的起始keyword</p>
+<p><img src="/Blog/intro/cmpt379/grammar_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这允许parser 通过 检查当前 token 来决定 which alternative to use </p>
+<p>Parsing becomes more difficult if two alternatives for a nonterminal start with the same token.</p>
+<br>
+
+<p><img src="/Blog/intro/cmpt379/grammar_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>在上面的例子中, 有2 different alternatives for $E$ that starts with same symbol</p>
+<p>(we also have 2 alternatives for $F$ that has same symbol)</p>
+<p>我们可以用一种叫 <strong>left-factoring</strong>的方法解决这个问题</p>
+<p><img src="/Blog/intro/cmpt379/grammar_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时这个grammar 就是 <strong>predictive</strong>, 当我们parse 一个sentence, 我们总是可以知道 which production to take</p>
+<br>
+
+<p>另一个例子: terminals 是加粗字</p>
+<p><img src="/Blog/intro/cmpt379/grammar_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个不是 left-factored</p>
+<p>因为当我们解析到do时, 我们不知道这是一个doStatement 还是一个doStatementVariant</p>
+<p>因此我们可以对它进行left factor</p>
+<p><img src="/Blog/intro/cmpt379/grammar_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Predictive-Parsing-Example"><a href="#Predictive-Parsing-Example" class="headerlink" title="Predictive Parsing Example"></a>Predictive Parsing Example</h2><p><img src="/Blog/intro/cmpt379/grammar_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>假设我们有sentence $3+4*p$</p>
+<p>parser starts with start symbol $E$</p>
+<p>current Token 是 3, 是 instance of <strong>c</strong>, 只有一种 production 符合</p>
+<p>$E \to TY$</p>
+<p>First nonterminal in current string is $T$, current Token 没变, 还是 3, <strong>c</strong>, production依然只有一种</p>
+<p>$TY\to FZY$</p>
+<p>First nonterminal in the current string is $F$, current token 还是 <strong>c</strong>.</p>
+<p>F 有3种 alternatives production $\epsilon, c,i$ 这里和 $c$ 匹配</p>
+<p>$FZY\to cZY$</p>
+<p>这次匹配消耗了当前Token, token移到下一位, 当前token是 $+$</p>
+<p>此时first nonterminal in string is $Z$, 而 non nonempty alternative for $Z$ starts with $+$, 所以我们只能选择 $\epsilon$</p>
+<p>$cZY\to cY = c\epsilon Y$</p>
+<p>此时first nontermianl is $Y$, current token 是 $+$ 匹配得到</p>
+<p>$cY \to c+E$</p>
+<p>匹配消耗token, 当前 token 是 4, instance of <strong>c</strong>, first nonterminal 是 E</p>
+<p>$c+E\to c+TY\to c+FZY$</p>
+<p>current token 是 c</p>
+<p>$c+FZY\to c+cZY$</p>
+<p>current token 是 $*$, 匹配 Z</p>
+<p>$c+cZY\to c+c*TY$</p>
+<p>current token 是 p, instant of $i$ </p>
+<p>$c+c * TY \to c + c * FZY \to c+c * iZY$</p>
+<p>We advance the current tokento end-of-input, $Z$ 匹配 $\epsilon$</p>
+<p>$c+c * iZY\to c+c * iY$</p>
+<p>同理$Y$ 匹配 $\epsilon$</p>
+<p>$c+c * iY\to c+c * i$</p>
+<br>
+
+<h2 id="Making-a-Predictive-Grammar"><a href="#Making-a-Predictive-Grammar" class="headerlink" title="Making a Predictive Grammar"></a>Making a Predictive Grammar</h2><p>一个predictive grammar 有两个性质, 我们假设grammar is in BNF</p>
+<ol>
+<li><p>No two alternatives for any production can possibly start with the same terminal (If this occur, the <strong>left-factor</strong> the grammar)</p>
+</li>
+<li><p>There is no <strong>left-recursion</strong> This is a situation where some </p>
+<p>$A\alpha \to …\to A\beta$</p>
+<p>when always expanding the leftmost nonterminal</p>
+</li>
+</ol>
+<p>例如 $E\to E+E$ 是一个single production that has <strong>left recursion</strong></p>
+<p>这个叫做 direct left recursion</p>
+<p>另一例子: indirect left recursion</p>
+<p>$E\to T * * E$ </p>
+<p>$T\to E+E$</p>
+<p>因为:</p>
+<p><img src="/Blog/intro/cmpt379/grammar_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h3 id="Removing-direct-left-recursion"><a href="#Removing-direct-left-recursion" class="headerlink" title="Removing direct left-recursion"></a>Removing direct left-recursion</h3><p>为了移除 left recursion, 把 所有production写成two(left-factored) productions of the form:<br>$$<br>A\to A \alpha<br>$$</p>
+<p>$$<br>A\to \beta<br>$$</p>
+<p>$\alpha ,\beta$ 可以是正则表达式</p>
+<p>明显A will derive a bunch of $\alpha$’s at the end of this string, 而$\beta$ 在开头, 所以在正则表达式中 $A $ derives $\beta \alpha *$</p>
+<p>我们可以写作BNF</p>
+<p>$A\to \beta A’$</p>
+<p>$A’\to \alpha A’$</p>
+<p>$A’\to \epsilon$</p>
+<p><img src="/Blog/intro/cmpt379/grammar_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>first iteration eliminates direct left-recursion from $A_1$</p>
+<p>second iteration first replace any $A_2 \to A_1$,  $\gamma$ productions and then eliminates direct left-recursion from $A_2$</p>
+<p>此时 $A_1, A_2$就没有direct left recursion, and $A_2$ has no production starting with $A_1$</p>
+<p>Thrid iteration of the i loop replace $A_3\to A_1 \gamma$ productions(could introduct $A_3\to A_2 \gamma$ productions) then replaces $A_3\to A_2$ (can’t introduce any $A_3\to A_1\gamma$) and then eliminate left recursion from $A_3$ Now $A_3$ has no direct left recursion and no production starting with $A_1$ or $A_2$</p>
+<p><img src="/Blog/intro/cmpt379/grammar_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/grammar_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>最重要的就是这个式子</p>
+<p><img src="/Blog/intro/cmpt379/grammar_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -353,7 +500,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -380,7 +527,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -389,7 +536,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
