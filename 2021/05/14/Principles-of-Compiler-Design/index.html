@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.1k 字
+                    2.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      10 分钟
+                      14 分钟
                   </span>
                 
 
@@ -439,6 +439,103 @@
 <p><img src="/Blog/intro/cmpt379/grammar_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>最重要的就是这个式子</p>
 <p><img src="/Blog/intro/cmpt379/grammar_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<br>
+
+<h2 id="Deterministic-Finite-Automaton-DFA"><a href="#Deterministic-Finite-Automaton-DFA" class="headerlink" title="Deterministic Finite Automaton (DFA)"></a>Deterministic Finite Automaton (DFA)</h2><p><img src="/Blog/intro/cmpt379/dfa.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>DFAs are specified by a transition diagrams</p>
+<p>每个transition 由 $\delta(q, a)=q’$ 表示</p>
+<p>例如下图中 $\delta(q_1, b)=q_2$</p>
+<p>final state 是 double circle</p>
+<p><img src="/Blog/intro/cmpt379/dfa_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="dead-state"><a href="#dead-state" class="headerlink" title="dead state"></a>dead state</h3><p>当 $\delta(q_d, a)=q_d$ for all elements $a$ of the alphabet, $q_d$就是一个dead state</p>
+<p>通常dead state 不会画在transition  diagram中, 因此上面的例子也可以画成这样</p>
+<p><img src="/Blog/intro/cmpt379/dfa_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Accept-a-String"><a href="#Accept-a-String" class="headerlink" title="Accept a String"></a>Accept a String</h3><p>可以给 DFA 一个 String 作为 input, 然后 accept 或 reject it.</p>
+<p><img src="/Blog/intro/cmpt379/dfa_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>machine 从 $q_0$ 开始</p>
+<p>在 step k, machine 读取第 k 个 input char c, 并且进行transition $\delta(q,c)$</p>
+<p>当没有输入时, machine停止</p>
+<p>如果在停止时machine处在 final state, 那么就accepts string, 反之 reject string</p>
+<br>
+
+<p>The language accepted by a DFA 就是所有 strings accepted by DFA</p>
+<br>
+
+<p>如果用正则表达这个DFA, 可以写成 <code>ab+</code></p>
+<p><img src="/Blog/intro/cmpt379/dfa_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>如果用正则表达这个DFA, 可以写成 <code>(+|-)?[0..9]+(.[0..9]+)?</code></p>
+<p><img src="/Blog/intro/cmpt379/dfa_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Nondeterministic-Finite-Automaton-NFA"><a href="#Nondeterministic-Finite-Automaton-NFA" class="headerlink" title="Nondeterministic Finite Automaton(NFA)"></a>Nondeterministic Finite Automaton(NFA)</h2><p><img src="/Blog/intro/cmpt379/dfa_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>NFA 和 DFA 类似, 但是</p>
+<ul>
+<li>同一个input 字符可以有多个output arrow</li>
+<li>$\epsilon$ 也看作是输入, 且可以在任何时候进行</li>
+<li>machine accepts if there exists a path labelled with the input(and epsilons)</li>
+</ul>
+<p><img src="/Blog/intro/cmpt379/dfa_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Converting-an-NFA-to-a-DFA-Subset-Construction"><a href="#Converting-an-NFA-to-a-DFA-Subset-Construction" class="headerlink" title="Converting an NFA to a DFA (Subset Construction)"></a>Converting an NFA to a DFA (Subset Construction)</h3><p>我们可以把一个 NFA 转为 DFA</p>
+<ul>
+<li>alphabet 不变</li>
+<li>DFA的 states D 是 NFA 中 N 的 subset</li>
+<li>DFA start state $d_0$ corresponds to (“is”) the subset of N consisting of just $n_0$ and what you can reach from $n_0$ on $\epsilon$ transitions</li>
+<li>The final states $F_D$ are those subsets of N that contain at least one final state of $F_N$</li>
+<li>The transition function is the tricky part</li>
+</ul>
+<p><img src="/Blog/intro/cmpt379/dfa_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们可以construct a state for every subset of N, 并计算transition for every character from every state, 但这是 $O(|N|2^{|N|}|\sum|)$ information, 太过巨大</p>
+<p>在实践中, 较少的subsets correspond to states that the DFA can reach from the start state, 所以 我们可以take the approach of starting with the DFA start state and only <strong>expanding</strong> states corresponding to subsets that we reach.</p>
+<p>Expanding is computing the transition function for that state on each input symbol.</p>
+<p><img src="/Blog/intro/cmpt379/dfa_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Example:</p>
+<p><img src="/Blog/intro/cmpt379/dfa_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Constructing-an-NFA-from-a-regular-expression"><a href="#Constructing-an-NFA-from-a-regular-expression" class="headerlink" title="Constructing an NFA from a regular expression"></a>Constructing an NFA from a regular expression</h3><p>Thompson’s Construction</p>
+<p><img src="/Blog/intro/cmpt379/dfa_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>此时我们就会把正则转为 NFA, 也会把 NFA 转为 DFA</p>
+<p>而DFA很好实现, 2D array list listing a next state for a given state and input symbol.</p>
+<p>Givena regular expression, one can construct thistransition table for an equivalent minimum-state DFA; this is sometimes called <strong>compiling</strong> the regular expression</p>
+<p>大部分处理正则的lib 都使用这种方法来快速的handle searching for instances of the regular expression</p>
+<p>It is also the basis for automatic lexical analyzer generators; the programmer supplies the regular expressions for different tokens, and the generator combines them into a single big NFA and converts that to a minimum-state DFA. Then scanning can be done with one table-lookup per input character.</p>
+<br>
+
+<p>DFAs can recognize any language that NFAs can.  </p>
+<p>反过来也一样.</p>
+<p>DFA 就是 NFA, 它能实现NFA能实现的事情, 不能实现NFA不能实现的事情</p>
+<p>NFA 可以recognize 所有正则表达式, 反过来也一样</p>
+<p>也就是说NFAs, DFAs, and regular expressions 这三个东西本质是一样的. 能力是等价的</p>
+<br>
+
+<h3 id="Kleene’s-Construction"><a href="#Kleene’s-Construction" class="headerlink" title="Kleene’s Construction"></a>Kleene’s Construction</h3><p>证明: 所有 NFA 都可以表示为正则表达式</p>
+<p><img src="/Blog/intro/cmpt379/dfa_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/dfa_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Multiple final states are handled by “or”ing together the regular expressions for the individual final states.</p>
 
             </div>
             <hr>
@@ -500,7 +597,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -527,7 +624,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -536,7 +633,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

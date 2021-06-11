@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.7k 字
+                    3.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      14 分钟
+                      16 分钟
                   </span>
                 
 
@@ -680,7 +680,93 @@
 <p><img src="/Blog/intro/cmpt354/table_design_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/table_design_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/table_design_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/table_design_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/table_design_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Relational-Query-Languages"><a href="#Relational-Query-Languages" class="headerlink" title="Relational Query Languages"></a>Relational Query Languages</h2><p><strong>Query Language</strong> 允许 <strong>manipulation</strong> and <strong>retrieval</strong> of data from a database</p>
+<p>Query Language 不是 general-purpose programming language</p>
+<br>
+
+<p>Two <strong>mathematical query languages</strong> form the basis for SQL(and other query languages):</p>
+<ol>
+<li><strong>Relational Algebra</strong>: a procedural query language that is relatively close to SQL</li>
+<li><strong>Relational Calculus</strong>: a non-procedural language</li>
+</ol>
+<br>
+
+<h3 id="Procedural-vs-Non-Procedural"><a href="#Procedural-vs-Non-Procedural" class="headerlink" title="Procedural vs. Non-Procedural"></a>Procedural vs. Non-Procedural</h3><p><strong>Procedural query</strong> consists of a series of operations which describe a <strong>step by step process for calculating the answer</strong>.</p>
+<p>告诉某件事情要怎么一步一步做来得到结果</p>
+<p>例如: 左转, 直行50m, 右转…</p>
+<p><strong>Non-procedural (or declarative) query</strong> describes what <strong>output is desired</strong>, and not how to compute it.</p>
+<p>例如: 前往中心大街</p>
+<br>
+
+<h3 id="Result-of-a-Query"><a href="#Result-of-a-Query" class="headerlink" title="Result of a Query"></a>Result of a Query</h3><p>Query 作用在一个 relation instance, 得到的结果也是一个relation instance</p>
+<p>The <strong>schema</strong> of the result relation 取决于 input relation and the query</p>
+<p>由于 result 是一个relation instance 所以 这个结果也可以作为另一个query的input<br>$$<br>?(x)=y, ?(y)=z ,\cdots<br>$$<br><br></p>
+<h3 id="Referring-to-Fields"><a href="#Referring-to-Fields" class="headerlink" title="Referring to Fields"></a>Referring to Fields</h3><p>Fields in an instance can be referred to either by <strong>position</strong> (例如 column 1) or by <strong>name</strong></p>
+<ul>
+<li><strong>Position notation</strong> is easier for <strong>formal definitions</strong></li>
+<li>Using field <strong>names</strong> make queries <strong>easier to read</strong></li>
+</ul>
+<p>The <strong>schema</strong> of the result is <strong>inherited</strong> from the <strong>input relations</strong></p>
+<br>
+
+<h3 id="Selection"><a href="#Selection" class="headerlink" title="Selection"></a>Selection</h3><p>The <strong>Selection</strong> operator, $\sigma$ specifies the <strong>rows</strong> to be retained from the input relation.</p>
+<p>A selection has the form $\sigma_{\text{condition}}(\text{relation})$ where <strong>condition</strong> is a Boolean expression</p>
+<ul>
+<li>Terms in the condition are <strong>comparisons between two fields</strong>(or a field and a constant)</li>
+<li>Using one of the <strong>comparison operators</strong>: <code>&lt;, &lt;=, ==, !=, &gt;= ,&gt;</code></li>
+<li>Terms may be <strong>connected</strong> by <code>^</code> (and) or <code>v</code> (or)</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/query.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h3><p>Projection operator $\pi$ 指定 <strong>columns to be retained</strong> from the input relation</p>
+<p>A selection has the form: $\pi_{\text{columns}}(\text{relation})$</p>
+<ul>
+<li>Where columns is <strong>comma separated list</strong> of column names</li>
+<li>The list contains the <strong>names of the columns to be retained</strong> in the result relation</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/query_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>Selection 和 Projection <strong>eliminated duplicates</strong>, 由于relations 都是sets</p>
+<p>在SQL 中, duplicate elimination is expensive, 所以 it’s <strong>only done when explicitly requested</strong></p>
+<p>Both operations require one input relation</p>
+<p>Selection 的 output 的 schema 和 input relation 的 schema 一样</p>
+<p>Projection 的 output 的 schema 仅仅包含projection list 中的那些属性</p>
+<p><img src="/Blog/intro/cmpt354/query_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/query_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -742,7 +828,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -769,7 +855,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -778,7 +864,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
