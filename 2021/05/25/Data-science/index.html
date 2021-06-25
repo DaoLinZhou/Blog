@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.5k 字
+                    3.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      12 分钟
+                      14 分钟
                   </span>
                 
 
@@ -535,6 +535,73 @@ pred_state, state_cov = kf.smooth(observations)</code></pre>
 <br>
 
 <p>Kalman filter 还有其他参数 例如 gain ($K$) and control inputs $B_k$</p>
+<br>
+
+<br>
+
+<h2 id="Mann–Whitney-U-test"><a href="#Mann–Whitney-U-test" class="headerlink" title="Mann–Whitney U-test"></a>Mann–Whitney U-test</h2><p>Nonparametric tests </p>
+<p>如果我们不知道数据的distribution 并且我们无法使用transform 来让数据normal, 那么就可以使用这个test</p>
+<p>这个test的作用是: decide that samples from one group are larger/smaller than another, 它假设: </p>
+<ul>
+<li>Observations are independent.</li>
+<li>Values are <strong>ordinal</strong>: can be sorted.</li>
+</ul>
+<p><img src="/Blog/intro/cmpt353/utest.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h2><p>贝叶斯是解决分类问题</p>
+<p>假设我们有input $x=[x_1\cdots x_n]$ 以及可能的output classes $C_k$ 我们可以计算出probability of each category is<br>$$<br>P(C_k|x_1,\cdots x_m)<br>$$<br>就是说在observation $x_1…x_m$ 的情况下 $C_k$ 为真的可能性</p>
+<p>当我们得到所有的 $P(C_k|x_1,\cdots x_m)$ 后, 我们就可以找到可能性最大的category, 并且predict it</p>
+<p>进行<strong>极大似然估计</strong>(maximum likelihood estimation)</p>
+<br>
+
+<p>贝叶斯定理:<br>$$<br>P(A|B)=P(B|A)\frac {P(A)}{P(B)}<br>$$<br>通过一些计算, 得到<br>$$<br>P(C_k|x_1,…x_m)=\frac 1 Z P(C_k)\prod_{i=1}^mP(x_i|C_k)<br>$$<br>$Z$ 是一个 positive constant, We choose the prediction $k$ that maximizes this.</p>
+<br>
+
+<p>The hidden algebra 假设 $P(x_i|C_k),P(x_j|C_k)$ independent</p>
+<blockquote>
+<p>That’s the “naïve” part of the “naïve Bayes classifier”: we are assuming the input features are not related to each other</p>
+</blockquote>
+<br>
+
+<p>假设我们有这样的数据</p>
+<p><img src="/Blog/intro/cmpt353/observations.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们看each axis/feature and ask about the distribution of each category (we take these as samples and look at the sample distribution)</p>
+<p>我们假设 normal distributions 并且计算 $\bar x$ and $s$ to estimate $\mu$ and $\sigma$. 这样就得到 $P(x_i|C_k)$ for each category.</p>
+<p><img src="/Blog/intro/cmpt353/observations_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>这里有一个问题, 我们怎么知道 $P(C_k)$ </p>
+<p>一种方法是看training data, 假设training data 有 95% 的数据在 $C_1$, 那么$P(C_1)=0.95$ , 这也是默认情况下GaussianNB的方法</p>
+<p>但是如果我们事先知道这个概率, 我们可以指定这个 <em>prior</em> :what is our belief in the likelihood of each category before we start looking at predictions</p>
+<p><img src="/Blog/intro/cmpt353/observations_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Bayesian-Failures"><a href="#Bayesian-Failures" class="headerlink" title="Bayesian Failures"></a>Bayesian Failures</h3><p>我们的假设: input independent, 并且我们可以将它们看作normal distributed</p>
+<p>如果不符合这些情况, 那么我们的预测会得到bad prediction</p>
+<p>例如这种情况</p>
+<p><img src="/Blog/intro/cmpt353/observations_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>此时就只能使用其他的classifier了</p>
+<p><img src="/Blog/intro/cmpt353/observations_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/observations_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<ol>
+<li>You can’t just blindly throw an ML tool at data and expect magic.</li>
+<li>Knowing what’s happening in your data matters.</li>
+<li>Understanding what the model assumes and how it works will help you use it effectively.</li>
+</ol>
+</blockquote>
 
             </div>
             <hr>
@@ -592,7 +659,7 @@ pred_state, state_cov = kf.smooth(observations)</code></pre>
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -619,7 +686,7 @@ pred_state, state_cov = kf.smooth(observations)</code></pre>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -628,7 +695,7 @@ pred_state, state_cov = kf.smooth(observations)</code></pre>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

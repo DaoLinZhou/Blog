@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    2.8k 字
+                    3.8k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      14 分钟
+                      18 分钟
                   </span>
                 
 
@@ -536,6 +536,132 @@
 <p><img src="/Blog/intro/cmpt379/dfa_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/dfa_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>Multiple final states are handled by “or”ing together the regular expressions for the individual final states.</p>
+<br>
+
+<h2 id="Automatic-LEXICAL-ANALYSIS"><a href="#Automatic-LEXICAL-ANALYSIS" class="headerlink" title="Automatic LEXICAL ANALYSIS"></a>Automatic LEXICAL ANALYSIS</h2><p>有许多lexical analyzer generators: lex, flex, ANTLR …</p>
+<p>他们接收一个regular expressions 的集合, 以及一些specification of what to do when each regular expression is recognized</p>
+<p>Some generators allow free-form code to express what to do, while others restrictspecification, such as allowing only the token type to be specified.</p>
+<br>
+
+<h3 id="Token-Types"><a href="#Token-Types" class="headerlink" title="Token Types"></a>Token Types</h3><p>一种方法是使用compiler language</p>
+<p><img src="/Blog/intro/cmpt379/token_types.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>另一种方法是使用 int 或者 enum</p>
+<p><img src="/Blog/intro/cmpt379/token_types_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>install 会 把 lexeme install 到 symbol table</p>
+<p><img src="/Blog/intro/cmpt379/token_types_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>x轴是character, y轴是state</p>
+<p><img src="/Blog/intro/cmpt379/token_types_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>然而让每个character都有一个state, 那么table就会太大了, 例如: 对于我们来说, 读取一个0, 或读取一个9都是读取一个数字. 所以我们可以设计一个Character Categories.</p>
+<p><img src="/Blog/intro/cmpt379/token_types_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这样可以大幅度缩小table的大小</p>
+<br>
+
+<h3 id="Direct-Coded-Scanner"><a href="#Direct-Coded-Scanner" class="headerlink" title="Direct-Coded Scanner"></a>Direct-Coded Scanner</h3><p>另一种自动扫描的方法是 <strong>direct-coded scanner</strong></p>
+<p>Direct-coded scanners can do away with the table lookup costs by having separate sections of code for each state and if statements to control transitions (jumps between these separate sections of code)</p>
+<p><img src="/Blog/intro/cmpt379/token_types_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Hand-Code-Scanner"><a href="#Hand-Code-Scanner" class="headerlink" title="Hand-Code Scanner"></a>Hand-Code Scanner</h3><blockquote>
+<p>project中用到就是这种</p>
+</blockquote>
+<p>尽管有 lexical analyzer generators 但是 大部分compiler依然使用hand-code scanner</p>
+<p>和direct coded 一样, hand-code scanner 没有查找表的消耗</p>
+<p>Hand-coded scanners can also reduce the overhead of the interface between the scanner and the rest of the compiler (input handler and parser).  This includes things like <strong>input rollback</strong>, <strong>handling input buffering</strong>, and <strong>producing token lexemes and values.</strong></p>
+<br>
+
+<p>处理keyword</p>
+<ul>
+<li>通常使用正则表达式</li>
+<li>另一种方法是把keyword和identifiers一起扫描, 把结果和所有keywrod对照一下,来判断</li>
+</ul>
+<br>
+
+<h3 id="最小化DFA"><a href="#最小化DFA" class="headerlink" title="最小化DFA"></a>最小化DFA</h3><p>DFA从NFA得来, may have more states than is necesssary.</p>
+<p>minimizing a DFA 意味着我们找到等价DFA that has a minimum number of states</p>
+<p>有两个主流算法: Hopcroft 和 Brzozowski</p>
+<p>我们主要讨论Hopcroft </p>
+<p><img src="/Blog/intro/cmpt379/token_types_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>为了minimizeDFA, partitions 应该尽可能大</p>
+<p>To construct such partitions, the algorithm starts with a rough partition that does not have behavioural equivalence.  This initial partition has two sets, the final states and the nonfinal states.</p>
+<p>It then iteratively refines the partition until behavioural equivalence is satisfied</p>
+<p><img src="/Blog/intro/cmpt379/token_types_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/token_types_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><a href="https://zh.wikipedia.org/wiki/%E7%A1%AE%E5%AE%9A%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA%E6%9C%80%E5%B0%8F%E5%8C%96" target="_blank" rel="noopener">确定有限状态自动机最小化</a></p>
+<br>
+
+<br>
+
+<h2 id="Top-Down-Parsing"><a href="#Top-Down-Parsing" class="headerlink" title="Top-Down Parsing"></a>Top-Down Parsing</h2><h3 id="Analyzing-a-Grammar"><a href="#Analyzing-a-Grammar" class="headerlink" title="Analyzing a Grammar"></a>Analyzing a Grammar</h3><p>假设我们有Gramma $G$ with productions $P$, 我们希望知道是否有一种方法能自动parse $G$</p>
+<p>假设我们使用gramma:</p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>对于任何gramma symbol $B$(terminal, nonterminal, $\epsilon$, or <code>&lt;eof&gt;</code>) 我们可以定义 $\text{FIRST(B)}$ 作为 set of terminals, that can appear as the first word in a string derived from $B$</p>
+<p>如果 B是 terminal, $\epsilon$, or <code>&lt;eof&gt;</code>, 那么 $\text{FIRST(B)=B}$</p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>可以看到: E 必须以T开头, T必须以F开头, F必须以$i,c,($ 开头, 所以 $\text{FIRST(E)}=i, c, ($</p>
+<p>其他同理</p>
+<br>
+
+<p>对于任意grammar symbol string $S=B_1B_2B_3…B_k$ 我们定义 $\text{FIRST(s)}$ 作为set of terminals that can appear as the first word in a string derived from $s$. 它是 FIRST sets $B_1B_2..B_n$ 的union, where $B_n$ 是first symbol whose FIRST set does not contain $\epsilon$</p>
+<p>$\epsilon$ in $FIRST(s)$ iff it is in $FIRST(B_i)$ for all $i=1$ to $k$</p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>对于任何nonterminal $N$, 我们可以定义 $\text{FOLLOW(N)}$ 作为set of terminals that can appear to the immediate right of a string derived from $N$</p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><strong>predictive grammar</strong> 中, 如果有两个 productions $A\to \beta_1, A\to \beta_2$, 那么 $\text{FIRST}^+(A\to \beta_1),\text{FIRST}^+(A\to \beta_2)$ 应该是disjoint</p>
+<p>这种情况 $FIRST^+$ sets completely encode the decisions needed for parsing. 我们能express them in a table called a <strong>LL(1) parsing table</strong> (1)代表看1 token ahead</p>
+<p>First we must number our (BNF) productions</p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/a_gramma_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Bottom-Up-Parsing"><a href="#Bottom-Up-Parsing" class="headerlink" title="Bottom-Up Parsing"></a>Bottom-Up Parsing</h2><p><img src="/Blog/intro/cmpt379/a_gramma_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Shifting-in-Bottom-Up"><a href="#Shifting-in-Bottom-Up" class="headerlink" title="Shifting in Bottom-Up"></a>Shifting in Bottom-Up</h3><p><img src="/Blog/intro/cmpt379/shift_bu.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>向右横向扩展, 将input放入stack中就是shift</p>
+<br>
+
+<h3 id="Reducing-in-Bottom-Up"><a href="#Reducing-in-Bottom-Up" class="headerlink" title="Reducing in Bottom-Up"></a>Reducing in Bottom-Up</h3><p>此时我们可以把stack中上三个作为child node, 将它们组合成一个parent node, 再放入stack 中</p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<p>Bottom-Up parsing starts  with the input and works towards a parse tree that is rooted at the start symbol. The derivation:<br>$$<br>S\to \gamma_1 \to \gamma_2 \to \cdots\to \gamma_n<br>$$<br>does the opposite. It starts at the start symbol and derives the input. 因此 bottom-up parsing discovers the derivation <strong>backward</strong></p>
+<p>A <strong>handle</strong> is a pair of a production and a stack location, 例如 $&lt;A\to \beta, k&gt;$. 如果 bottom-up parsing finds a handle, then it will <strong>reduce</strong> by removing $\beta$ from the stack at $k$ and replacing it with $A$. Finding handles efficiently is the key to bottom-up parsing</p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Parentheses-Grammar"><a href="#Parentheses-Grammar" class="headerlink" title="Parentheses Grammar"></a>Parentheses Grammar</h3><p><img src="/Blog/intro/cmpt379/shift_bu_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Parsing-Conflicts"><a href="#Parsing-Conflicts" class="headerlink" title="Parsing Conflicts"></a>Parsing Conflicts</h3><p><img src="/Blog/intro/cmpt379/shift_bu_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/shift_bu_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -597,7 +723,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -624,7 +750,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -633,7 +759,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
