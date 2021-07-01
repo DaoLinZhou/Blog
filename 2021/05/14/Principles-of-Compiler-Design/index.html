@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.8k 字
+                    4.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      18 分钟
+                      23 分钟
                   </span>
                 
 
@@ -662,6 +662,49 @@
 <p><img src="/Blog/intro/cmpt379/shift_bu_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <h3 id="Parsing-Conflicts"><a href="#Parsing-Conflicts" class="headerlink" title="Parsing Conflicts"></a>Parsing Conflicts</h3><p><img src="/Blog/intro/cmpt379/shift_bu_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/shift_bu_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_44225182/article/details/105554383" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44225182/article/details/105554383</a></p>
+</blockquote>
+<br>
+
+<h2 id="Attibuted-Grammars"><a href="#Attibuted-Grammars" class="headerlink" title="Attibuted Grammars"></a>Attibuted Grammars</h2><p>attributed grammar (or <strong>attribute grammar</strong>) 遵循一些 <strong>rules</strong> for each production</p>
+<p>每个 rule 都 defines an attribute of a grammar symbol in the production, often in terms of other attributes of grammar symbols in the production.</p>
+<p><img src="/Blog/intro/cmpt379/rule.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>If a rule gives a grammar symbol an attribute, then each instance of that grammar symbol in the parse tree gets its own instance of that attribute.  In the above grammar, all E’s would get anattribute  <strong>type</strong> and an attribute <strong>isConstant</strong>.</p>
+<p><img src="/Blog/intro/cmpt379/rule_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>v: variable</p>
+<p>ic: integer constant</p>
+<p>fc: floating constant</p>
+</blockquote>
+<p>$ic+(v+fc)$ 可以表达为</p>
+<p><img src="/Blog/intro/cmpt379/rule_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>An attributed grammar is called <strong>L-attributed</strong> if every attribute at a node is computable if one knows the value of all the attributes of the node’s children and all the attributes of the node’s <strong>left</strong> siblings.  The class of L-attributed grammars contains the class of S-attributed grammars.</p>
+<p><img src="/Blog/intro/cmpt379/rule_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>With an L-attributed grammar, one can evaluate the attributes in a straightforward left-to-right depth first search.</p>
+<p>If a grammar is not L-attributed, then the compiler must determine the evaluation ordering in another way; at worst it needs to do a topological sort on the attribute digraph</p>
+<br>
+
+<p>The book talks about <strong>ad-hoc syntax-directed translation</strong>.</p>
+<p>Syntax-directed translation is translation based on the grammar.  Attributed grammars as thus syntax-directed translation but they are systematic rather than ad-hoc.</p>
+<p>The Visitor mechanism in our compiler is based on a visit routine for each type of node in the AST, which is essentially each grammar symbol.  It is therefore syntax-directed translation.  It is ad-hoc, though it is very similar to (and can be based on) attributed grammars. It is not restricted to L-attributed grammars, though: it can pass information down the tree if necessary.  It also uses some nonlocal information, in the form of symbol tables located at nodes elsewhere in the tree.</p>
+<p>In semanticanalysis, most of our attributes are types that flow up the tree (S-attributed).   However, there is some more general flow going on when declaring variables: the type information must go from a right child to a left child. </p>
+<p>Attributed grammars have been used to try to automate semantic analysis.   If they permit some function calls, such as to store and retrieve symbol table values, they can completely describe most semanticanalysis.   Oftentimes, though, semantic analysis in broken down into several subphases, and attributed grammars used for some but not all phases.</p>
+<p>Attributed grammars can also be used for intermediate code generation.  The main approach is to have an attribute called “code” for most nodes in the parse tree.   Does this sound familiar?   In our project, we attach the code attribute to nodes by using a hash table with nodes as keys.</p>
+<p>The promise of automatic semantic analysis and intermediate code generation via attributed grammars has generated a wide variety of research and different schemes for evaluating attributed grammars have been proposed.   These can be grouped into three major categories:</p>
+<p><strong>Dynamic Methods</strong>: Use the structure of a particular attributed parse tree to determine the evaluation order.  One can, for instance, keep a worklist of attributes (or more properly, attributes at a particular parse tree node) to be evaluated, placing a particular attribute into the worklist as soon as all of its predecessors are evaluated.   This entails checking all successors of a just-evaluated attribute to see if they are ready to enter the worklist.  A related scheme is to build the entire attribute dependence graph and topologically sort it, using the topological order to evaluate attributes.</p>
+<p><strong>Oblivious Methods</strong>:   Here the order of evaluation is independent of the attribute grammar and the parse tree. Examples include repeated left-to-right passes, repeated right-to-left passes, and alternating passes.  In each pass, the evaluator evaluates any attributes that are ready.  These are typically simple and easy to implement, but are not the most efficient.</p>
+<p><strong>Rule-based Methods</strong>:These do a static analysis of the attribute grammar to construct rules about an evaluation order, then use the parse tree to guide application of the rules.  An example rule might be “visit the second child of a declaration node to compute its type before visiting the first child to set its type.”  The rule tells you an order for computing attributes, and the parse tree having a declaration node guides you to use that rule at that place</p>
+<p><img src="/Blog/intro/cmpt379/rule_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/rule_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
