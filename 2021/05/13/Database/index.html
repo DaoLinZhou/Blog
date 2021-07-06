@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.2k 字
+                    3.5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      16 分钟
+                      18 分钟
                   </span>
                 
 
@@ -815,6 +815,60 @@
 <p><img src="/Blog/intro/cmpt354/sql_syntax_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/sql_syntax_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/sql_syntax_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Set-Operations"><a href="#Set-Operations" class="headerlink" title="Set Operations"></a>Set Operations</h3><p>SQL 支持 union, intersection, and set difference operations</p>
+<ul>
+<li><strong>UNION</strong>, <strong>INTERSECT</strong>, and <strong>EXCEPT</strong>. EXCEPT 有时也被叫做 MINUS</li>
+<li>这些操作必须再 union compatible tables 上执行</li>
+</ul>
+<p>尽管这些操作在SQL 标准中支持, 但是具体实现可能不同</p>
+<p>EXCEPT may not be implemented, like MySQL, but can be emulated with JOINs.</p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>和其他sql命令不同</p>
+<p>UNION, INTERSECT, and EXCEPT 会默认去重, 除非使用 keyword <strong>ALL</strong></p>
+<p>如果使用 ALL, 假设有m copies of a row in the upper query and n copies in the lower:</p>
+<ul>
+<li>UNION returns $m+n$ copies</li>
+<li>INTERSECT returns $min(m,n)$ copies</li>
+<li>EXCEPT returns $m-n$ copies</li>
+</ul>
+<p>通常不使用ALL</p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_30.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Join"><a href="#Join" class="headerlink" title="Join"></a>Join</h3><p>SQL allows tables to be <strong>joined in the FROM clause</strong></p>
+<p>SQL joins implement <strong>relational algebra joins.</strong></p>
+<p><strong>Natural joins</strong> and <strong>theta joins</strong> are implemented by combining <strong>join types and conditions</strong></p>
+<p>SQL also allows <strong>outer joins</strong> which <strong>retain records</strong> of one or both tables that do not match the condition</p>
+<p>Exact syntax and implementation of joins for a DBMS <strong>may differ from the SQL standard</strong></p>
+<h4 id="Join-Types"><a href="#Join-Types" class="headerlink" title="Join Types"></a>Join Types</h4><p><strong>INNER</strong>: only includes records where attributes from both tables meet the join condition</p>
+<p><strong>LEFT OUTER</strong> : includes records from the left table that do not meet the join condition</p>
+<p><strong>RIGHT OUTER</strong>: includes records from the right table that do not meet the join condition</p>
+<p><strong>FULL OUTER</strong> : includes records from both tables that do not meet the join condition</p>
+<br>
+
+<h4 id="Join-Conditions"><a href="#Join-Conditions" class="headerlink" title="Join Conditions"></a>Join Conditions</h4><p><strong>NATURAL</strong>: equality on all attributes in common</p>
+<p><strong>USING</strong> $(A_1…,A_n)$: equality on all the attributes in the attribute list</p>
+<p>*<em>ON(condition) *</em> join using condition</p>
+<blockquote>
+<p>If no condition is specified for an inner join, the <strong>Cartesian product</strong> is returned</p>
+<p>A condition must be specified for an outer join</p>
+</blockquote>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_31.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_32.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_33.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/sql_syntax_34.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

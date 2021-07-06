@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.5k 字
+                    5.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      23 分钟
+                      31 分钟
                   </span>
                 
 
@@ -705,6 +705,132 @@
 <p><img src="/Blog/intro/cmpt379/rule_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/rule_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/rule_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Intermediate-Representations"><a href="#Intermediate-Representations" class="headerlink" title="Intermediate Representations"></a>Intermediate Representations</h2><p><img src="/Blog/intro/cmpt379/ir.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Compilers use  the intermediate  representation  (IR) as the reference  form of the input program for the later phases.  (The original source  is never consulted.)   </p>
+<p>The properties  of the IR have a direct effect on what the compiler  can do with the code.</p>
+<p>compilation 大部分阶段都使用IR, 有些还使用不止一次</p>
+<h3 id="角度1"><a href="#角度1" class="headerlink" title="角度1"></a>角度1</h3><p>intermediate  representation 可以是:</p>
+<ul>
+<li>graphical</li>
+<li>linear</li>
+<li>hybrid</li>
+</ul>
+<p><strong>Graphical IRs</strong> 用 graph 的形式对 program 进行 encode, 例如decorated  AST, expression DAGs</p>
+<p><strong>Linear IRs</strong> 以 linear sequence of instructions 的形式对 program 进行 encode </p>
+<p><strong>Hybrid IRs</strong>: Graphical 和 Linear 的混合, 将program的一部分以graph的形式 encode , 一部分以 linear instruction 的形式 encode  </p>
+<br>
+
+<h3 id="角度2"><a href="#角度2" class="headerlink" title="角度2"></a>角度2</h3><p>另一个角度来对IR进行分类是使用abstraction level</p>
+<p><strong>high-level IR</strong> represents  concepts  as abstractions,  generally close  to the input language</p>
+<p><strong>low-level IR</strong> represents  operations  concretely, generally close to the machine  level</p>
+<p>例如, 如果我们有一个array $B[][]$ 4 byte elements and subelements, 并且both subscripts running from 1 to 10, 我们想表示 $B[i][j]$</p>
+<p>high-level IR</p>
+<p><img src="/Blog/intro/cmpt379/ir_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>low-level IR</p>
+<p><img src="/Blog/intro/cmpt379/ir_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<blockquote>
+<p>这里是简化版的code, 没有 array 的 header 以及 bound check</p>
+</blockquote>
+<p>high-level linear representation:</p>
+<p><img src="/Blog/intro/cmpt379/ir_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>low-level tree IR</p>
+<p><img src="/Blog/intro/cmpt379/ir_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>有些任务适合在high-level IR中完成, 有些适合在low-level IR中完成.</p>
+<p>通常 compiler 会执行所有high-level tasks on high-level IR, 之后<strong>lower</strong> the IR to low-level to do low-level tasks</p>
+<br>
+
+<p>high-level task 例子: <strong>alias analysis</strong></p>
+<p>determining 两个 variable 是否指向同一个内存地址</p>
+<p>low-level task 例子: <strong>loop-invariant expressions</strong></p>
+<p>那些在 loop 中的值不改变的 expression</p>
+<br>
+
+<h3 id="角度3"><a href="#角度3" class="headerlink" title="角度3"></a>角度3</h3><p>另一个看待不同IR的角度: naming of values, 有些 IR 会 reuse names, 有些不会</p>
+<p><img src="/Blog/intro/cmpt379/ir_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>右边的code使用更少的临时变量, 但是如果右边的code要再次访问 $2\times b$ 那么他就要重新计算一次</p>
+<br>
+
+<h3 id="Graphical-IRs"><a href="#Graphical-IRs" class="headerlink" title="Graphical IRs"></a>Graphical IRs</h3><p>ASTs: 可以是high-level, 也可以是low-level. revealing addressing  and other calculations</p>
+<p>Expression DAGs. 例如expression $2a+2ab$ 可以是</p>
+<p><img src="/Blog/intro/cmpt379/ir_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p><strong>Control-flow graphs</strong>, graphical representation of possible paths of control flow at run time.  A graph of which statements  can follow each statement</p>
+<p><img src="/Blog/intro/cmpt379/ir_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><strong>Call graphs</strong>, A graph of which subroutines call which other subroutines</p>
+<p><strong>Dependence graphs</strong>, A graph of which statements depend on values created by each statement</p>
+<p><img src="/Blog/intro/cmpt379/ir_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Linear-IRs"><a href="#Linear-IRs" class="headerlink" title="Linear IRs"></a>Linear IRs</h3><p>compiler 中 resemble  the assembly code  for an abstract machine 就是用 Linear IRs</p>
+<p>线性IRS必须能够将控制的控制转移到另一个部分。</p>
+<p>通常它models the implementation of control flow on the target machine: conditional branches and jumps</p>
+<p>Linear IRs 可以通过 number of operands/addresses specified  in any one instruction 来分类</p>
+<ul>
+<li><strong>One-address code:</strong> 这个model the behaviour of accumulator or stack machines. result code 比较紧凑, Java, Smalltalk and Scala 都会compile to one-address code</li>
+<li>*<em>Two-address code: *</em>These  model  a machine with destructive  operations (operations  take two operands  and write the result over one of them).  今日已经不再有用, 不再流行</li>
+<li><strong>Three-address code:</strong> These  model  a machine where most operations  take two operands  and produce  a result.   The resulting code  resembles code  for a RISC machine.  Very popular</li>
+</ul>
+<br>
+
+<h3 id="Three-address-code"><a href="#Three-address-code" class="headerlink" title="Three-address code"></a>Three-address code</h3><p>在 Three-address code (3AC) 中, 大部分 operators 有着这样的 form<br>$$<br>\text{i=j op k}<br>$$<br>with operator <strong>op</strong>, two operands $j$ and $k$, and result $i$</p>
+<p>一些运算可能会需要fewer operands, 例如 load, jump</p>
+<p>3AC is reasonably compact, most operations  consist of four elements:  an opcode  and three names. A recorp that stores this information is often called a <strong>quadruple</strong></p>
+<p>opcode 和 names 通常是从limit set中抽取的, opcodes generally require one or two bytes. Names are typically represented by integers or table indices; 4 bytes is generally enough for one. 所以 3AC can generally be represented in about 14 bytes/instruction</p>
+<p>Several  methods  of collecting <strong>quadruples</strong>  together to form code have been  used: arrays,  arrays of pointers,  and linked lists</p>
+<br>
+
+<h3 id="Basic-Blocks"><a href="#Basic-Blocks" class="headerlink" title="Basic Blocks"></a>Basic Blocks</h3><p>Basic Block 是一个 maximal set of consecutive linear(say, 3AC) instructions that must be executed together.</p>
+<p>A basic block starts with a <strong>leader</strong> that is either the first instruction in a subroutine, a labelled instruction(which can be the target of a jump or branch), or the statement after a branch. A basic block ends at the first branch, jump, or subroutine call, return or other leader after its leader</p>
+<p><img src="/Blog/intro/cmpt379/ir_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/ir_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/ir_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>CFG 是一种常见的 <strong>hybrid IR</strong></p>
+<p><img src="/Blog/intro/cmpt379/ir_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/ir_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Optimizations"><a href="#Optimizations" class="headerlink" title="Optimizations"></a>Optimizations</h3><p>Optimizations done on a single basic block is called <strong>local</strong> optimizations</p>
+<p>Optimizations done on a single procedure is called <strong>global</strong> optimizations</p>
+<p>Optimizations done on a bigge scale are called <strong>interprocedural</strong> optimizations</p>
+<p>Some author separate out <strong>interprocedural</strong> optimizations as those done between files, other group these with interprocedural</p>
+<br>
+
+<h3 id="Using-expression-DAGs-for-local-optimization"><a href="#Using-expression-DAGs-for-local-optimization" class="headerlink" title="Using expression DAGs for local optimization"></a>Using expression DAGs for local optimization</h3><p>First we must construct  a DAG from a basic block.</p>
+<p>对于每个instruction:</p>
+<ol>
+<li>create node for each argument if the node does not already exist</li>
+<li>create node for operation on arguments if a node with the same operation and arguments does not already exist.  Connect this new node to its arguments</li>
+<li>If a new node was created in (2), then call it by the result name. If not, add the result name to the existing node.If another node with the same name exists, deprecate that node so that the new one is henceforth used</li>
+</ol>
+<p><img src="/Blog/intro/cmpt379/ir_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/ir_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/ir_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/ir_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Static-Single-Assignment-form"><a href="#Static-Single-Assignment-form" class="headerlink" title="Static Single-Assignment form"></a>Static Single-Assignment form</h3><p>Static Single-Assignment (SSA) is a naming and encoding discipline that encodes information about the flow of control and flow of data</p>
+<p>In SSA, a name is only assigned to at one point in the code; each name is defined by one operation</p>
+<p>Each use of a vaiable therefore, through the name, encodes some information about where the variable was defined. To reconcile this discipline with the effects of control flow, SSA form contains special operations, called $\phi$ functions, at points where control-flow paths meet.</p>
+<p><img src="/Blog/intro/cmpt379/ir_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$x_1 = \phi (x_0, x_2)$ 代表: 把$x_0, x_2$ 中, 后赋值的一个的值赋值给$x_1$, 例如最开始是$x_0$ 被赋值, 所以第一次执行时 $x_1=x_0$, 然而第二次执行时, 是$x_2$ 后被赋值, 所以$x_1=x_2$  </p>
+<p>A φ-function selects  whichever  of its arguments  was last assigned to.  In the code  above,  the first φ-function selects  $x0$ the first time it is executed,  and it selects $x2$ each time after that</p>
+<p>The convention  is that all φ-functions  at the beginning of a basic block execute concurrently. First they evaluate their arguments,  then they define their result names.   This convention  allows compilers  to ignore the ordering of φ-functions, which is helpful in converting  SSA back to executable  code.</p>
+<p>SSA φ-functions are not of fixed arity.  If five control flow paths converge  at one point, one may find a five-argument φ-function there.  They don’t naturally fit into 3AC data structures.</p>
+<br>
+
+<h3 id="Building-Maximal-SSA-form-code"><a href="#Building-Maximal-SSA-form-code" class="headerlink" title="Building Maximal SSA form code"></a>Building Maximal SSA form code</h3><p>2 个步骤</p>
+<ol>
+<li>insert $\phi$ functions. At the start of each basic block with multiple predecessors, insert a $\phi$ function such as $y=\phi(y, y)$ for each name y that the code either defines or uses in the current procedure. This rule inserts a $\phi$ function in every case where one is needed, but aslo inserts many extraneous $\phi$ functions</li>
+<li>rename: 当function 插入完毕, each definition of a variable can be given its own subscript. $\phi$ functions are definitions. Then at each line of code, we determine which definition of each of its arguments reaches that line, and rename the arguments</li>
+</ol>
+<p><img src="/Blog/intro/cmpt379/ir_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
