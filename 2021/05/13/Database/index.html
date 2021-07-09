@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.5k 字
+                    4.1k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      18 分钟
+                      22 分钟
                   </span>
                 
 
@@ -869,6 +869,141 @@
 <p><img src="/Blog/intro/cmpt354/sql_syntax_32.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/sql_syntax_33.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/sql_syntax_34.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Nested-Queries"><a href="#Nested-Queries" class="headerlink" title="Nested Queries"></a>Nested Queries</h2><p>嵌套queries, 就是 一个query 里嵌套另一个sub-query</p>
+<p>subquery 可以在:</p>
+<ul>
+<li>in the <strong>FROM</strong> clause</li>
+<li>in the <strong>WHERE</strong> clause</li>
+<li>in the <strong>HAVING</strong> clause</li>
+</ul>
+<p>Sub-queries referred to in the WHERE clause are <strong>often used in additional set operations</strong></p>
+<p>可以多层嵌套</p>
+<br>
+
+<h2 id="Additional-Set-Operations"><a href="#Additional-Set-Operations" class="headerlink" title="Additional Set Operations"></a>Additional Set Operations</h2><ul>
+<li>IN</li>
+<li>NOT IN</li>
+<li>EXISTS</li>
+<li>NOT EXISTS</li>
+<li>UNIQUE</li>
+<li>ANY</li>
+<li>ALL</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/set_op.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Uncorrelated-Queries"><a href="#Uncorrelated-Queries" class="headerlink" title="Uncorrelated Queries"></a>Uncorrelated Queries</h3><p>上面的这个query 包含的uncorrelated or independent sub-query</p>
+<ul>
+<li>The sub-query <strong>does not contain references to attributes of the outer query</strong></li>
+</ul>
+<p>independent sub-query 可以 evaluated <strong>before evaluation of the outer query</strong>  and needs to be <strong>evaluated only once</strong></p>
+<ul>
+<li>The sub-query result can be checked for each row of the outer query</li>
+<li>The <strong>cost</strong> is the cost for performing the sub-query (once) and the cost of scanning the outer relation</li>
+</ul>
+<br>
+
+<p><img src="/Blog/intro/cmpt354/set_op_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Correlated-Queries"><a href="#Correlated-Queries" class="headerlink" title="Correlated Queries"></a>Correlated Queries</h3><p>The previous query contained a <strong>correlated sub-query</strong>, with <strong>reference to attributes of the outer query</strong></p>
+<ul>
+<li><code>WHERE C.customerID= O.customerID</code></li>
+<li>This is evaluated once for each row in the outer query</li>
+</ul>
+<p>通常是比较费时的</p>
+<br>
+
+<h3 id="Division-using-NOT-EXISTS"><a href="#Division-using-NOT-EXISTS" class="headerlink" title="Division using NOT EXISTS"></a>Division using NOT EXISTS</h3><p>Find the names and customerIDs of customers who have an account in <strong>all branches</strong>.</p>
+<ul>
+<li>This is an example of a query that would use division, however, <strong>division is often not implemented in SQL</strong></li>
+<li>You can still compute it using NOT EXISTS or EXCEPT</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/set_op_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="UNIQUE-and-NOT-UNIQUE"><a href="#UNIQUE-and-NOT-UNIQUE" class="headerlink" title="UNIQUE and NOT UNIQUE"></a>UNIQUE and NOT UNIQUE</h2><p>The UNIQUE operator tests to see if there are no duplicate records in a query</p>
+<ul>
+<li>UNIQUE returns TRUE if no row appears twice in the answer to the sub-query.</li>
+<li>Two rows are equal if, for each attribute, the attribute values in one row equal the values in the second</li>
+<li>Also, if the sub-query contains only one row or is empty, UNIQUE returns true</li>
+</ul>
+<p>NOT UNIQUE tests to see if there are at least two identical rows in the sub-query</p>
+<p><img src="/Blog/intro/cmpt354/set_op_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h2 id="Grouping-Aggregations"><a href="#Grouping-Aggregations" class="headerlink" title="Grouping Aggregations"></a>Grouping Aggregations</h2><p>Consider a query to find out how many accounts there are in each branch</p>
+<ul>
+<li>This requires that there are multiple counts, one for each branch</li>
+<li>In other words a series of aggregations, based on the value of the branch name</li>
+<li>Given the syntax shown so far this is not possible to achieve in one query</li>
+<li>But it is possible using the GROUP BY clause</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/set_op_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Order Of Evaluation</p>
+<p>1.<strong>Create the Cartesian product</strong> of the tables in the <strong>FROM</strong> clause.</p>
+<p>2.<strong>Remove rows</strong> not meeting the <strong>WHERE</strong> condition.</p>
+<p>3.<strong>Remove columns</strong> not in the <strong>SELECT</strong> clause.</p>
+<p>4.<strong>Sort records into groups</strong> by the <strong>GROUP BY</strong> clause.</p>
+<p>5.<strong>Remove groups</strong> not meeting the <strong>HAVING</strong> clause.</p>
+<p>6.Create <strong>one row</strong> for each <strong>group</strong>.</p>
+<p>7.<strong>Eliminate duplicates</strong> if <strong>DISTINCT</strong> is specified</p>
+<br>
+
+<br>
+
+<h2 id="Price-Queries"><a href="#Price-Queries" class="headerlink" title="Price Queries"></a>Price Queries</h2><p><img src="/Blog/intro/cmpt354/set_op_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_18.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_20.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_21.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_22.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_23.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Applying-Other-Operations"><a href="#Applying-Other-Operations" class="headerlink" title="Applying Other Operations"></a>Applying Other Operations</h3><ul>
+<li>Apply other operations as Customer-Owns-Account (COA) records are computed, instead of writing out the entire COA relation and then reading it in again</li>
+<li>The selection and projection therefore do not require any additional disk reads or writes, since they are applied on the fly</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/set_op_24.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_25.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Equivalent-Query-Changes"><a href="#Equivalent-Query-Changes" class="headerlink" title="Equivalent Query Changes"></a>Equivalent Query Changes</h3><p>The new query makes two major changes:</p>
+<ul>
+<li><p>The selections and some preliminary projections occur before any relations are joined.</p>
+</li>
+<li><p>The Cartesian products are replaced with joins</p>
+</li>
+</ul>
+<p>Otherwise, the two are equivalent, computing the same result in different ways.</p>
+<ul>
+<li>The order in which the operations are performed, however, is very different</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/set_op_26.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_27.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Customer-Sub-Query-Cost"><a href="#Customer-Sub-Query-Cost" class="headerlink" title="Customer Sub-Query Cost"></a>Customer Sub-Query Cost</h3><p>We can follow a similar process for the Customer sub-query.</p>
+<ul>
+<li>At worst, the cost of the query is 10,000 blocks</li>
+</ul>
+<p>The size of the result depends on the size of each record and the number of Bobs.</p>
+<ul>
+<li>The first name condition is very selective, so let’s assume that just 0.01% of first names are Bobs.</li>
+<li>10 records on 1 disk block.</li>
+</ul>
+<h3 id="Estimated-Total-Cost"><a href="#Estimated-Total-Cost" class="headerlink" title="Estimated Total Cost"></a>Estimated Total Cost</h3><p>The estimated total cost of the new query is roughly equal to the sum of the table sizes.</p>
+<ul>
+<li>Account was scanned to perform a sub-query.</li>
+<li>Customer was scanned for its sub-query.</li>
+<li>At worst, the first join requires reading Owns once.</li>
+<li>Then joining the relatively small result of that join to Account</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/set_op_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/set_op_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -930,7 +1065,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -957,7 +1092,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -966,7 +1101,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

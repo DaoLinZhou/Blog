@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">Home</a>
+            <a class="nav-link" href="/Blog/">首页</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">Archives</a>
+            <a class="nav-link" href="/Blog/archives/">归档</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">Categories</a>
+            <a class="nav-link" href="/Blog/categories/">分类</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">Tags</a>
+            <a class="nav-link" href="/Blog/tags/">标签</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">About</a>
+            <a class="nav-link" href="/Blog/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.9k 字
+                    6.6k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      31 分钟
+                      34 分钟
                   </span>
                 
 
@@ -831,6 +831,70 @@
 <li>rename: 当function 插入完毕, each definition of a variable can be given its own subscript. $\phi$ functions are definitions. Then at each line of code, we determine which definition of each of its arguments reaches that line, and rename the arguments</li>
 </ol>
 <p><img src="/Blog/intro/cmpt379/ir_19.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Symbol-Tables"><a href="#Symbol-Tables" class="headerlink" title="Symbol Tables"></a>Symbol Tables</h2><h3 id="Symbols"><a href="#Symbols" class="headerlink" title="Symbols"></a>Symbols</h3><p>Compilers encounter many types of <strong>symbols</strong> or <strong>names</strong></p>
+<ul>
+<li>Variables, defined constants, procedures, labels, filenames, object classes, etc…</li>
+</ul>
+<p>每一种 type of symbol 都有一些相关信息需要 compiler 收集</p>
+<p>例如: variables need an associated data type, storage class, static nesting level, procedure name, etc. Procedures 需要 types of arguments 以及 return values.</p>
+<h3 id="Symbol-information"><a href="#Symbol-information" class="headerlink" title="Symbol information"></a>Symbol information</h3><p>这些 information 可能会 incorporated(合并) 到 intermediate representation 或者 可能被 derived(and re-derived) when needed</p>
+<p>例如, 可以在对应于变量声明的AST节点中存储关于变量的信息</p>
+<p>在AST中存储信息是简单可靠的, 但是 it can take a long time to navigate an AST to find a variable declaration for instance</p>
+<br>
+
+<h3 id="Symbol-Tables-1"><a href="#Symbol-Tables-1" class="headerlink" title="Symbol Tables"></a>Symbol Tables</h3><p>另一种方法是使用 Symbol Tables: a table that collects associated information for one or more types of names.</p>
+<p>Symbol Table 可以是 <strong>centralized</strong> or <strong>distributed.</strong></p>
+<p>A <strong>centralized symbol table</strong> is one table for the whole unit being compiled, (一张table)</p>
+<p>A <strong>distributed symbol table</strong> involves different tables being distributed around the AST, typically in nodes associated with <strong>scopes</strong> (多张table)</p>
+<p><strong>Scopes</strong> are program areas, typically lexically defined, in which some variables are active and outside of which they are inactive</p>
+<br>
+
+<h3 id="Lexical-Static-Scoping"><a href="#Lexical-Static-Scoping" class="headerlink" title="Lexical (Static) Scoping"></a>Lexical (Static) Scoping</h3><p>Lexical scoping 是最常见的 scoping discipline(规定), 也叫做 static scoping 因为我们可以在 compile time 就确定what name that variable refers to.</p>
+<p>General Idea 是 given scope, each name refers to its <strong>lexically closest</strong> declaration</p>
+<p>如果 $s$ 在当前scope 被使用, it refers to the $s$ declared in the current scope, if one exists. If not, it refers to the declaration of s that occurs in the closest enclosing scope.</p>
+<p><img src="/Blog/intro/cmpt379/scope.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>scope 3 寻找 type 这个变量, 没找到, 所以向上去scope 2 找, 再去scope 1 找</p>
+<p><img src="/Blog/intro/cmpt379/scope_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/scope_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>为什么使用 symbol table</p>
+<p>Symbol Table(centralized or distributed) avoids searching the IR for declarations</p>
+<p><strong>Localize information</strong> from potentially disparate portions of the program</p>
+<p>使得information easier and efficiently available</p>
+<blockquote>
+<p>通常 Distributed tables 整体会 referred to as <strong>the</strong> symbol table</p>
+</blockquote>
+<br>
+
+<h3 id="Building-a-Symbol-Table"><a href="#Building-a-Symbol-Table" class="headerlink" title="Building a Symbol Table"></a>Building a Symbol Table</h3><p>通常 Symbol Table 使用 Hash Table 实现</p>
+<p>而 symbol table 一般的接口:</p>
+<ul>
+<li><code>lookUp(name)</code> : returns the record associated with the name</li>
+<li><code>install(name, record)</code> : stores the record at the location for <em>name</em> in the table</li>
+</ul>
+<p>如果 loopUp 寻找 record 失败, 那么通常是程序有error, 例如: variable used before defined error</p>
+<p>在更复杂的system中, names can be declared after use (like functions in java), a partial record can be installed at first use ad verified at declaration. Alternatively, multiple passes over the input are performed.</p>
+<p>就是说建立一个special passes, 当第一次访问 semantic analyzer它只寻找function names, 并将它们install 到 symbol table 中 with their arguments and types</p>
+<p>之后process file, 当看见fuction call时, 我们就知道它是function call, 因为它已经在 symbol table 中</p>
+<br>
+
+<h3 id="Handling-Nested-Lexical-Scopes"><a href="#Handling-Nested-Lexical-Scopes" class="headerlink" title="Handling Nested Lexical Scopes"></a>Handling Nested Lexical Scopes</h3><p>每当进入scope 时创建一个新的symbol table</p>
+<p>这步操作可以在 parser 中 或 semantic analyzer 中进行操作, It is cleaner to have it in the semantic analyzer.</p>
+<p>一个table 可以 optionally have a link (pointer) to its parent scope’s symbol table. 这样我们就可以避免遍历整个AST 但是维护pointer有消耗</p>
+<p>大部分AST node with children nodes have a scope associated with them, except for expression/operator nodes</p>
+<ul>
+<li>Operator nodes overwhelmingly occur near the node that causes a symbol-table loopup, so they must be navigated in either scheme</li>
+<li>Non-operator nodes tend to have their parent symbol table in their parent or grandparent node, so the link seems redundant</li>
+</ul>
+<p><img src="/Blog/intro/cmpt379/scope_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/scope_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/scope_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/scope_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -892,7 +956,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
   <div id="tocbot"></div>
 </div>
 
@@ -919,7 +983,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -928,7 +992,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
