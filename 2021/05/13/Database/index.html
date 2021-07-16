@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    4.1k 字
+                    5.7k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      22 分钟
+                      31 分钟
                   </span>
                 
 
@@ -1004,6 +1004,255 @@
 </ul>
 <p><img src="/Blog/intro/cmpt354/set_op_28.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/set_op_29.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Normal-Form"><a href="#Normal-Form" class="headerlink" title="Normal Form"></a>Normal Form</h2><h3 id="Desirable-DB-Qualities"><a href="#Desirable-DB-Qualities" class="headerlink" title="Desirable DB Qualities"></a>Desirable DB Qualities</h3><ul>
+<li><p>Minimal repetition of data</p>
+<ul>
+<li>避免inefficiency in space usage and data processing, as well as potential loss of data integrity caused by data inconsistencies.</li>
+<li>不使用foreign keys 来连接表</li>
+</ul>
+</li>
+<li><p>Lossless joins</p>
+<ul>
+<li>确保当两个table are joined, the appropriate data(and only that data) is returned.</li>
+</ul>
+</li>
+</ul>
+<p>例子:</p>
+<p><img src="/Blog/intro/cmpt354/normalize.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Record data about accounts and who owns them.</p>
+<p>A customer can own multiple accounts and accounts can be owned by multiple customers</p>
+<ul>
+<li>Account = [customerID, accNumber, balance, type]</li>
+</ul>
+<p>There are multiple rows for each account, making the table <strong>larger than it would be if account data was stored separately.</strong></p>
+<p>What happens if we want to add 10% to the balance of account owned by customer 13?</p>
+<p>其余的两个row不会受到影响, 但是他们也应该增长, 因为这三个是same account</p>
+<p><img src="/Blog/intro/cmpt354/normalize_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Decompose就是将大table拆分为多个小table</p>
+<p><img src="/Blog/intro/cmpt354/normalize_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="如何得到理想的Database-Characteristics"><a href="#如何得到理想的Database-Characteristics" class="headerlink" title="如何得到理想的Database Characteristics"></a>如何得到理想的Database Characteristics</h3><p>一种方法是create an <strong>ERD</strong> that 严格遵循rules, 之后 把它转成relational database schema</p>
+<ul>
+<li>No composite attribute</li>
+<li>No set-valued attribute</li>
+<li>Relationship sets may only have descriptive attributes</li>
+</ul>
+<p>Another way is to perform a <strong>decomposition</strong> of the information required for the database</p>
+<ul>
+<li>确保 resulting tables satisfy one or more <strong>Normal Forms</strong></li>
+</ul>
+<p>Normal Form:</p>
+<p>In a nutshell, a <strong>Normal Form</strong> (developed alongside the original relational model) is a <strong>property a relation</strong> (table) in a relational database possesses if it meets particular rules, which in turn <strong>ensures certain qualities</strong></p>
+<p>有很多不同的 Normal Forms 每个都有different requirements and benfits</p>
+<p>This process of organizing a bunch of random data attributes in line with a Normal Form is called Database Normalization.</p>
+<br>
+
+<p>例子: Developing a Database for a Department’s Assets</p>
+<p>假设我们要developing 一个 small database to  record information about the use of a <strong>capital assets</strong> by <strong>departments</strong> of a company.</p>
+<ul>
+<li><p>The company has <strong>multiple departments</strong>, each of which can <strong>process multiple assets</strong></p>
+</li>
+<li><p><strong>Each asset</strong> may also be <strong>shared</strong> between <strong>multiple departments</strong>, and we might like to track how much each department is using each asset.</p>
+</li>
+</ul>
+<p>Outlining the Attributes</p>
+<ul>
+<li>每个 <strong>department</strong> has a <strong>unique name</strong>, as well as a <strong>manager</strong> with a <strong>SIN, phone extension</strong>, and <strong>name</strong> of their own.</li>
+<li>每个 asset 有一个 name 和一个 unique number 以及 purchase cost, date of purchase, type, Capital Cost Allowance class and depreciation rate.</li>
+</ul>
+<p>An asset’s <strong>depreciation</strong> rate and <strong>CCA</strong> are <strong>based on its type</strong></p>
+<br>
+
+<p>Outlining the attribute</p>
+<p>每个 <strong>department</strong> 有 <strong>unique name</strong>, as well as a <strong>manager</strong> with a <strong>SIN, phone extension</strong>, and <strong>name</strong> of their own.</p>
+<p><img src="/Blog/intro/cmpt354/normalize_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="First-Normal-Form"><a href="#First-Normal-Form" class="headerlink" title="First Normal Form"></a>First Normal Form</h3><p>在一张表中维护所有的数据, 但是<strong>remove repeating groups</strong></p>
+<ul>
+<li>Add rows for the repeated groups</li>
+<li>The table now has a <strong>compound primary key</strong>(e.g. department, assetNumber)</li>
+<li>This result in <strong>fixed-length records</strong><ul>
+<li>This <strong>reduces disk fragmentation</strong> and is compliant with the relational model which is required for most DBMS’s</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/normalize_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们在这里能用1NF吗?</p>
+<p>考虑下面schema:</p>
+<p>Department = [<u>departemntName</u>, <u>assetNumber</u>, managerSIN, managerName, ManagerPhone, assetName, cost, purchaseDate, type, depreciation, cca, usage]</p>
+<p>The  table’s compound key means 每一行都代表一个instance of a department owning a particular asset</p>
+<p>每添加一个asset, 我们都需要重新 fill 所有 department information</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点:"></a>缺点:</h4><p>Introduces redundancy</p>
+<ul>
+<li>Much of the data needs to be repeated. For example, all of the department data (like the manager’s name) would need to be repeatedfor each asset that a department owns</li>
+</ul>
+<p>This leads to <strong>Anomalies</strong></p>
+<ul>
+<li>Insert Anomalies</li>
+<li>Delete Anomalies</li>
+<li>Update Anomalies</li>
+</ul>
+<h4 id="Anomalies-Explored"><a href="#Anomalies-Explored" class="headerlink" title="Anomalies Explored"></a>Anomalies Explored</h4><ul>
+<li>Insert Anomalies<ul>
+<li>A <strong>department cannot be inserted</strong> if it doesn’t have <strong>at least one asset</strong>, because of the compound primary key.</li>
+</ul>
+</li>
+<li>Delete Anomalies<ul>
+<li><strong>Deleting the last asset</strong> of a department also <strong>deletes the department</strong></li>
+</ul>
+</li>
+<li>Update Anomalies<ul>
+<li><strong>Many records may have to be changed</strong> to change the value of <strong>one attribute</strong>, such as a change to the department manager’s phone number requiring every asset’s record to be updated</li>
+</ul>
+</li>
+</ul>
+<h3 id="Second-Normal-Form"><a href="#Second-Normal-Form" class="headerlink" title="Second Normal Form"></a>Second Normal Form</h3><p>1NF中 there are <strong>non-key attributes</strong> that depend on only <strong>part of the compound key.</strong></p>
+<p>remove those Partial-Key Dependencies.</p>
+<p>如果一组attributes only depends on <strong>part of</strong> the key, separate the attributes into a new table.</p>
+<p>In each table, each non=key attribute should be dependent only on the entire primary key.</p>
+<p>This result in a <strong>Second Normal Form decomposition</strong></p>
+<p><img src="/Blog/intro/cmpt354/normalize_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>可以使用2NF吗?</p>
+<p><img src="/Blog/intro/cmpt354/normalize_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>这个确实可行, 但是如果所有assets of the <strong>same type</strong> are supposed to have the <strong>same depreciation rate and CCA?</strong></p>
+<br>
+
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点:"></a>缺点:</h4><p>2NF 只考虑 partial key dependencies, 忽略了 non-key dependencies</p>
+<p>因此 2NF 同样遇到了和 1NF 一样的问题:</p>
+<ul>
+<li>Redundancy</li>
+<li>Insert, delete and update anomalies<ul>
+<li>For example, CCA rate and depreciation depend on asset type, but the type is not part of a primary key</li>
+</ul>
+</li>
+</ul>
+<h3 id="Third-Normal-Form"><a href="#Third-Normal-Form" class="headerlink" title="Third Normal Form"></a>Third Normal Form</h3><p>移除所有 non-key dependencies</p>
+<ul>
+<li>Remove the attributes with a non-key dependency from the table</li>
+<li><strong>Create a new table</strong> containing those attributes and the attribute(s) that they depend on, the latter being the <strong>primary key</strong> of the new table</li>
+</ul>
+<p>Third Normal Form decomposition:</p>
+<ul>
+<li>All records are <strong>fixed-length</strong></li>
+<li>There are <strong>no delete, insert, or update anomalies</strong></li>
+<li>There is <strong>very little redundancy</strong></li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/normalize_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h2><p>superkey 是一组attribute that <strong>uniquely identifies a record</strong></p>
+<ul>
+<li>Let R be the relation schema, subset $K$ of $R$ is a superkey if:<ul>
+<li>For all pairs $t_1$ and $t_2$ in R,  $t_1\ne t_2, t_1[K]\ne t_2[K]$</li>
+</ul>
+</li>
+</ul>
+<p>和Key不同, 一个 <strong>functional dependency</strong> is a <strong>constraint</strong> on any set of attributes</p>
+<ul>
+<li>Functional dependencies can assist us in <strong>achieving a desirable decomposition</strong></li>
+</ul>
+<br>
+
+<h3 id="Decomposition-Goals"><a href="#Decomposition-Goals" class="headerlink" title="Decomposition Goals:"></a>Decomposition Goals:</h3><ol>
+<li><strong>Lossless Join</strong><ul>
+<li>The decomposition should not result in a lossy join if <strong>tables</strong> are <strong>re-combined</strong></li>
+<li>A lossy join is a join where the resulting table <strong>includes data that should not exist.</strong></li>
+</ul>
+</li>
+<li><strong>Dependency Preservation</strong><ul>
+<li>If a set of attributes depends on an attribute, that dependency should be <strong>maintained in one table</strong>, to avoid having to join tables to test whether the data is correct</li>
+</ul>
+</li>
+<li><strong>No Redundancy</strong><ul>
+<li>A decomposition should contain a minimum amount of redundancy</li>
+<li>This goal is <strong>less important</strong> than the <strong>preceding two goals</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="Functional-Dependencies"><a href="#Functional-Dependencies" class="headerlink" title="Functional Dependencies"></a>Functional Dependencies</h3><p>A <strong>Functional Dependency</strong> is an <strong>integrity constraint(完整性约束)</strong> that <strong>generalizes</strong> the idea of a <strong>key</strong>.</p>
+<ul>
+<li>If $R$ is a relation and $X$ and $Y$ are sets of attributes of $R$, then an instance $r$ of $R$ satisfies the FD $X\to Y$ if<ul>
+<li>For all tuples $t_1, t_2$ in r if $t_1.X=t_2.X$ then $t_1.Y=t_2.Y$</li>
+<li>例如: $\text{type} \to cca$ depreciation, which states that cca and depreciation must be the same for any two assets that have the same type</li>
+</ul>
+</li>
+</ul>
+<p>A functional dependency is a statement about <strong>all possible legal instances of a relation</strong></p>
+<h3 id="Terminology"><a href="#Terminology" class="headerlink" title="Terminology"></a>Terminology</h3><p>We can <strong>test relations</strong> to see if they are <strong>legal</strong> under a given set of functional dependencies</p>
+<ul>
+<li>如果一个relationship R is legal under a set of functional dependencies F, then <strong>R satisfies F</strong></li>
+</ul>
+<p>To specify constraints on a set of legal relations:</p>
+<ul>
+<li>If a schema, R, is to be constrained so that it satisfies a set of FDs, F, then <strong>F holds on R</strong></li>
+</ul>
+<h3 id="FD-Example"><a href="#FD-Example" class="headerlink" title="FD Example:"></a>FD Example:</h3><p><img src="/Blog/intro/cmpt354/fd.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="FDs-and-Keys"><a href="#FDs-and-Keys" class="headerlink" title="FDs and Keys"></a>FDs and Keys</h3><p>primary key constraint 是一种FD的特例</p>
+<p>如果有FD: $X\to Y$ on R and $Y$ is the set of all attributes of R, <strong>then X is a superkey</strong></p>
+<ul>
+<li>X 可能不是candidate key(or a primary key)</li>
+<li>The definition of FD <strong>does not require</strong> that the set of attributes is <strong>minimal</strong></li>
+</ul>
+<h3 id="Reasoning-about-FDs"><a href="#Reasoning-about-FDs" class="headerlink" title="Reasoning about FDs"></a>Reasoning about FDs</h3><p>A set of FDs, F, can be identified for a relation by enquiring about the problem domain</p>
+<ul>
+<li>in other words, talk to your client</li>
+</ul>
+<p>Given a set of FDs, <strong>additional FDs can usually be identified</strong></p>
+<ul>
+<li>we say the additional FDs are <strong>implied by F</strong></li>
+</ul>
+<p>The <strong>set of all FDs implied by F</strong> is called the <strong>closure of F</strong>, denoted $F*$</p>
+<ul>
+<li>$F*$ can be calculate by repeatedly applying Armstrong’s Axiom’s to F.</li>
+</ul>
+<h3 id="Calculating-Closure-and-Cover"><a href="#Calculating-Closure-and-Cover" class="headerlink" title="Calculating Closure and Cover"></a>Calculating Closure and Cover</h3><p>A set of functional dependencies, F, can imply further FDs</p>
+<ul>
+<li>The set of all FDs implied by F is know as closure of $F$, or $F*$</li>
+<li>The minimal set of FDs from which F* can be calculated is know as the <strong>canonical cover</strong></li>
+</ul>
+<p>We can use axioms, or rules of inference, to reason about FDs</p>
+<ul>
+<li>Known as Armstrong’s Axioms</li>
+</ul>
+<h3 id="Armstrong’s-Axioms"><a href="#Armstrong’s-Axioms" class="headerlink" title="Armstrong’s Axioms"></a>Armstrong’s Axioms</h3><ul>
+<li>Reflexivity<ul>
+<li>IF $Y \subseteq X$ then $X\to Y$ (如果Y是X是子集) </li>
+</ul>
+</li>
+<li>Augmentation<ul>
+<li>If $X\to Y$ then $XZ\to YZ$ for any $Z$</li>
+<li>Note that $Z\to Z$<ul>
+<li>A functional dependency $X \to Y$ is referred to as trivial when $Y\subseteq X$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Transitivity<ul>
+<li>If $X\to Y$ and $Y\to Z$ then $X\to Z$</li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/fd_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -1065,7 +1314,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -1092,7 +1341,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1101,7 +1350,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

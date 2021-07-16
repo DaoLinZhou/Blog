@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    3.5k 字
+                    5k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      17 分钟
+                      25 分钟
                   </span>
                 
 
@@ -702,6 +702,189 @@ if __name__ == &#39;__main__&#39;:
 <p><img src="/Blog/intro/cmpt353/spark_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt353/spark_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p>spark 由于是分布式的, 所以最好不要写loop, 因为loop只能访问本地的内容, 无法访问其他机器的文件</p>
+<br>
+
+<p>通常在使用spark时, 由于数据量很大, 所以如果把所有数据放在一个文件中并不是一个好的选择</p>
+<p>spark可以读取文件夹</p>
+<p>读取cities文件夹下csv文件</p>
+<pre><code class="python">data = spark.read.csv(&#39;cities&#39;)
+
+# 指定每一列的名称以及数据类型
+data = spark.read.csv(&#39;cities&#39;, schema=&#39;city string, population int, area float&#39;)</code></pre>
+<br>
+
+<p>spark 的 dataFrame 是 partitioned</p>
+<p>subsets of rows are handled separately by different processes/threads. Each piece can (hopefully) be operated on in paralled</p>
+<p>If operations can truly be done in parallel without much coordination, $n$ processes can do the work almost n times faster</p>
+<p>因此, 当处理input/output时, 每个 thread/process/core/executor 都会reading individual input files, 当writing是, 它们也会write in paralled</p>
+<p>所以 each partition was written as a separate file in the output directory</p>
+<p><img src="/Blog/intro/cmpt353/spark_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>查看output</p>
+<pre><code class="bash">cat output/part-*.csv | less
+cat output/part-*.csv.gz | zless</code></pre>
+<p>The Hadoop infrastructure is what runs our cluster. Review:</p>
+<ul>
+<li>YARN: manages compute jobs on the cluster. Responsible for getting computation done.</li>
+<li>HDFS: Hadoop Distributed File System, for storing data on the cluster’s nodes.</li>
+</ul>
+<p>We’ll be using YARN to run Spark jobs on the cluster, and HDFS for input and output.</p>
+<p><img src="/Blog/intro/cmpt353/spark_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="HDFS-Command"><a href="#HDFS-Command" class="headerlink" title="HDFS Command"></a>HDFS Command</h2><pre><code class="bash">hdfs dfs -ls # list files in your HDFS home
+hdfs dfs -ls /folder  # list files in folder
+hdfs dfs -copyFromLocal data # copy file/directory to HDFS
+hdfs dfs -copyToLocal output # copy file/directory to gateway
+hdfs dfs -cat output/part* | less  # show output files
+hdfs dfs -cat output/part* | zless  # show compressed output</code></pre>
+<p>What HDFS is actually doing:</p>
+<ul>
+<li>Storing files on the $n$ worker nodes</li>
+<li>… split in to blocks (e.g. 128 MB)</li>
+<li>… with each block replicated in a couple of places(by default 3)</li>
+<li>Making them avilable to our computer jobs when needed</li>
+</ul>
+<p><img src="/Blog/intro/cmpt353/spark_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="YARN"><a href="#YARN" class="headerlink" title="YARN"></a>YARN</h2><p>YARN 的 责任就是是的compute work 结束: manage the CPU and memory resources</p>
+<p>当你在集群中start 一个job, it’s a request to YARN to give you the resources you need</p>
+<p>i.e. the <code>spark-submit</code> command is the way we generally interact with YARN</p>
+<blockquote>
+<p>It’s easier to move the compute work to the data than to move the data.</p>
+</blockquote>
+<p>YARN试图从HDFS上可以找到数据的节点访问数据。</p>
+<p><img src="/Blog/intro/cmpt353/spark_12.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/spark_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="How-Spark-Calculates"><a href="#How-Spark-Calculates" class="headerlink" title="How Spark Calculates"></a>How Spark Calculates</h2><p>一些术语(terminology)</p>
+<p>我们写的spark程序叫做 driver, 如果我们print 或者 create variables 或者do general python things: that is the driver process</p>
+<p>Spark DataFrame 中的 data 被 一个或多个 <strong>executor</strong> processes (or threads) They take instructions from the driver about what to do with the DataFrames: perform the calculations, write the output, etc.</p>
+<p>当在本地执行时, 会在一个进程中执行, 进程 capable of n concurrent threads one driver and $n$ executor threads</p>
+<p>On the cluster, the driver runs on the gateway , YARN starts executors on the cluster nodes.</p>
+<p>在 DataFrame (or RDD) 的任何 operation is done by having executors do work on its partitions</p>
+<p>并行性由数据的分区方式来控制。</p>
+<br>
+
+<p>例如</p>
+<p>If we have 1000 executors and 2 partitions in a DataFrame, 998 executors will be sitting idle.</p>
+<p>如果有 2 个executors , 两个 partitions, both will be used, 但是 如果一个partition明显大与另一个, one executor will finish first and then sit idle </p>
+<p>The “right” number of partitions depends on the <strong>task</strong> and <strong>size</strong> of the DataFrame.</p>
+<h2 id="Controlling-Partitions"><a href="#Controlling-Partitions" class="headerlink" title="Controlling Partitions"></a>Controlling Partitions</h2><p>我们需要对Dataframe中的分区控制。</p>
+<p>然而通常更简单的做法是把input file <a href="https://linux.die.net/man/1/split" target="_blank" rel="noopener">split</a> 成合理的小文件之后放入HDFS</p>
+<p>There are a few operations where you can explicitly ask for a number of partitions:</p>
+<p><img src="/Blog/intro/cmpt353/partitions_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/partitions_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果partitions太多, 可以用 <code>.coalesce(n)</code> 来 concatenate 其中一部分</p>
+<p>这个function可能不会像你期望那样工作, 但是它确实减少partitions</p>
+<p><img src="/Blog/intro/cmpt353/partitions_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>groupBy</p>
+<p><img src="/Blog/intro/cmpt353/partitions_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>如果需要 partition rearranged 那么可以用 <code>repartition(n)</code></p>
+<pre><code class="py">print(partition_sizes(lumpy_df.coalesce(4)))
+print(partition_sizes(lumpy_df.repartition(4)))
+# output
+# [0, 220, 450, 0]
+# [168, 167, 167, 168]</code></pre>
+<p><img src="/Blog/intro/cmpt353/partitions_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Shuffle-Operations"><a href="#Shuffle-Operations" class="headerlink" title="Shuffle Operations"></a>Shuffle Operations</h2><p><img src="/Blog/intro/cmpt353/partitions_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt353/partitions_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>分区存在不同的物理机器上, 由网络连接他们</p>
+<p>如果欧美要repartition Dataframe, 就需要exchange over the network, 如果Dataframe 较大的话会很慢</p>
+<p>Any Spark operation that rearranges data among partitions is a shuffle operation. Obviously <code>.repartition()</code> is one.</p>
+<p><code>sort(), groupBy()</code> 也都是</p>
+<h2 id="Grouping-Data"><a href="#Grouping-Data" class="headerlink" title="Grouping Data"></a>Grouping Data</h2><p>groupBy 的作用是: you take all rows with the given columns the same, and do some aggregation over those values.</p>
+<pre><code class="python">int_range = spark.range(10000, numPartitions=6)
+values = int_range.select(
+    (int_range[&#39;id&#39;] % 3).alias(&#39;mod&#39;),
+    (functions.length(int_range[&#39;id&#39;].astype(types.StringType()))).alias(&#39;num_digits&#39;),
+    int_range[&#39;id&#39;],
+    functions.sin(int_range[&#39;id&#39;]).alias(&#39;sin&#39;)
+)
+values.show(6)
+
++---+----------+---+-------------------+
+|mod|num_digits| id|                sin|
++---+----------+---+-------------------+
+|  0|         1|  0|                0.0|
+|  1|         1|  1| 0.8414709848078965|
+|  2|         1|  2| 0.9092974268256817|
+|  0|         1|  3| 0.1411200080598672|
+|  1|         1|  4|-0.7568024953079282|
+|  2|         1|  5|-0.9589242746631385|
++---+----------+---+-------------------+
+only showing top 6 rows</code></pre>
+<pre><code class="python">groups = values.groupBy(&#39;mod&#39;) # a GroupedData obj, not a DF
+result = groups.agg({&#39;id&#39;: &#39;count&#39;, &#39;sin&#39;: &#39;sum&#39;})
+result = groups.agg(functions.count(values[&#39;id&#39;]),
+                    functions.sum(values[&#39;sin&#39;]))
+result.show() # results are the same from either of the above.
++---+---------+------------------+
+|mod|count(id)|          sum(sin)|
++---+---------+------------------+
+|  0|     3334|0.3808604635953807|
+|  1|     3333|0.6264613886425877|
+|  2|     3333|0.9321835584427463|
++---+---------+------------------+</code></pre>
+<pre><code class="python">groups = values.groupBy(&#39;mod&#39;, &#39;num_digits&#39;)
+result = groups.agg(functions.avg(values[&#39;id&#39;]),
+                    functions.max(values[&#39;sin&#39;]))
+result.sort(&#39;mod&#39;, &#39;num_digits&#39;).show()
++---+----------+-------+------------------+
+|mod|num_digits|avg(id)|          max(sin)|
++---+----------+-------+------------------+
+|  0|         1|    4.5|0.4121184852417566|
+|  0|         2|   55.5|0.9999118601072672|
+|  0|         3|  550.5| 0.999990471552965|
+|  0|         4| 5500.5|0.9999933680737474|
+|  1|         1|    4.0|0.8414709848078965|
+|  1|         2|   53.5|0.9928726480845371|
+|  1|         3|  548.5|0.9999122598719259|
+|  1|         4| 5498.5|0.9999931466878679|
+|  2|         1|    5.0|0.9893582466233818|
+|  2|         2|   54.5|0.9995201585807313|
+|  2|         3|  549.5|0.9999110578521441|
+|  2|         4| 5499.5|0.9999935858249229|
++---+----------+-------+------------------+</code></pre>
+<h2 id="Execution-Plans"><a href="#Execution-Plans" class="headerlink" title="Execution Plans"></a>Execution Plans</h2><p>Grouping is a shuffle operation, but not as bad as some. To see why, we can ask for the execution plan Spark has for a DataFrame:</p>
+<pre><code class="python">result.explain()
+
+== Physical Plan ==
+*(2) HashAggregate(keys=[mod#90L, num_digits#91], functions=[avg(id#88L), max(sin#92)])
++- Exchange hashpartitioning(mod#90L, num_digits#91, 200)
+   +- *(1) HashAggregate(keys=[mod#90L, num_digits#91], functions=[partial_avg(id#88L), partial_max(sin#92)])
+      +- *(1) Project [(id#88L % 3) AS mod#90L, length(cast(id#88L as string)) AS num_digits#91, id#88L, SIN(cast(id#88L as double)) AS sin#92]
+         +- *(1) Range (0, 10000, step=1, splits=6)</code></pre>
+<blockquote>
+<p>Read from the bottom-up. The plan is also visible in the Spark web frontend SQL tab while a job is running</p>
+</blockquote>
+<p>What we did to create the <code>result</code> DataFrame: <code>range</code>; <code>.select(…)</code>; <code>.groupBy(&#39;mod&#39;,&#39;num_digits&#39;)</code>; <code>.agg(avg, max)</code>.</p>
+<p>Even though that happened across several DataFrame objects in my code, it all became the plan for computing <code>result</code>.</p>
+<p>The relevant part for the <code>.groupBy()</code> and <code>.agg()</code>:</p>
+<p>It starts by doing <code>partial_avg</code> and <code>partial_max</code>, which are the per-partition aggregations. <em>Then</em> it exchanges (shuffles) and finishes the <code>avg</code> and <code>max</code>.</p>
+<p>Result: if we started with billions of rows, but grouped by 10 unique values, then only 10 rows from each partition have to be shuffled.</p>
+<p>That’s a lot better than the shuffle from a <code>.sort()</code> or <code>.repartition()</code>. Spark has been clever on our behalf.</p>
+<p>Compare the plans for a <code>.repartition()</code> or <code>.sort()</code>:</p>
+<pre><code class="python">values.repartition(100).explain()
+values.sort(&#39;sin&#39;).explain()
+
+
+== Physical Plan ==
+Exchange RoundRobinPartitioning(100)
++- *(1) Project [(id#88L % 3) AS mod#90L, length(cast(id#88L as string)) AS num_digits#91, id#88L, SIN(cast(id#88L as double)) AS sin#92]
+   +- *(1) Range (0, 10000, step=1, splits=6)
+== Physical Plan ==
+*(2) Sort [sin#92 ASC NULLS FIRST], true, 0
++- Exchange rangepartitioning(sin#92 ASC NULLS FIRST, 200)
+   +- *(1) Project [(id#88L % 3) AS mod#90L, length(cast(id#88L as string)) AS num_digits#91, id#88L, SIN(cast(id#88L as double)) AS sin#92]
+      +- *(1) Range (0, 10000, step=1, splits=6)</code></pre>
 
             </div>
             <hr>
@@ -759,7 +942,7 @@ if __name__ == &#39;__main__&#39;:
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -786,7 +969,7 @@ if __name__ == &#39;__main__&#39;:
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -795,7 +978,7 @@ if __name__ == &#39;__main__&#39;:
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

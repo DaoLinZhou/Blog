@@ -61,7 +61,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/">首页</a>
+            <a class="nav-link" href="/Blog/">Home</a>
           </li>
         
           
@@ -69,7 +69,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/archives/">归档</a>
+            <a class="nav-link" href="/Blog/archives/">Archives</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/categories/">分类</a>
+            <a class="nav-link" href="/Blog/categories/">Categories</a>
           </li>
         
           
@@ -85,7 +85,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/tags/">标签</a>
+            <a class="nav-link" href="/Blog/tags/">Tags</a>
           </li>
         
           
@@ -93,7 +93,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/Blog/about/">关于</a>
+            <a class="nav-link" href="/Blog/about/">About</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    6.6k 字
+                    7.9k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      34 分钟
+                      41 分钟
                   </span>
                 
 
@@ -895,6 +895,109 @@
 <p><img src="/Blog/intro/cmpt379/scope_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/scope_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/scope_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Procedures"><a href="#Procedures" class="headerlink" title="Procedures"></a>Procedures</h2><p>procedures 是现代编程语言的核心抽象( central abstraction )</p>
+<p>They create a <strong>controlled execution environment</strong> for a piece of code</p>
+<p>They have their own <strong>private named storage</strong></p>
+<p>They provide <strong>interfaces</strong> between system components</p>
+<p>They are the basic <strong>unit of work</strong> for most compiler. They allow <strong>separate compilation</strong></p>
+<br>
+
+<p>Procedural language 支持 abstraction for procedure calls</p>
+<p>每种语言都有一个标准机制来调用procedure, 并且将一组arguments/parameters 映射(mapping) 到 callee(被调用者)的 name space 中</p>
+<p>提供了将控制权返回给调用者并在调用后立即继续执行的规定</p>
+<p>大部分language 允许 procedure to return a value or values to the caller. 这种 procedure 叫做 <strong>function</strong></p>
+<p>Standard <strong>linkage conventions</strong> or <strong>calling sequences</strong> 允许code written and compiled at different time to be used together.</p>
+<br>
+
+<h3 id="Name-Spaces"><a href="#Name-Spaces" class="headerlink" title="Name Spaces"></a>Name Spaces</h3><p>在大部分language中, 每个procedure 都会创建一个new and protected <strong>name space</strong> or <strong>scope</strong></p>
+<p>这允许 programmer 声明 new names without concern for the surrounding context</p>
+<p>在procedure中, these local declarations take precedence over other earlier declarations for the same names (这些局部声明优先于其他先前的同名声明)</p>
+<p>A procedure’s prarmeters allow the programmer to map values and variables from the caller into the callee’s name space</p>
+<br>
+
+<p>这样separate name space 允许 一个 procedure to function consistently when called from different contexts</p>
+<p>At runtime, execution a call instantiates the callee’s name space</p>
+<p>The call must create or <strong>allocate</strong> storage for the object declared by the callee.</p>
+<p>这个alloc应该是自动进行并且高效的</p>
+<br>
+
+<h3 id="External-Interface"><a href="#External-Interface" class="headerlink" title="External Interface"></a>External Interface</h3><p>Procedures 定义了一个 <strong>critical interfaces</strong> among the parts of large software system</p>
+<p>The linkage conventions/calling sequences define rules that:</p>
+<ul>
+<li>map names to locations</li>
+<li>preserve the caller’s runtime enivronment</li>
+<li>create the callee’s runtime environment and transfer control between caller and callee</li>
+</ul>
+<p>Linkage conventions allow the development and use of libraries</p>
+<p>Without them, programmers and compilers would both need more detailed knowledge about the callee of each procedure call.</p>
+<p>(当调用一个函数时, 我们只需要知道文件头即可)</p>
+<h3 id="Procedure-Calls"><a href="#Procedure-Calls" class="headerlink" title="Procedure Calls"></a>Procedure Calls</h3><p><img src="/Blog/intro/cmpt379/procedure.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<ul>
+<li>In procedural languages, a procedure call transfers control from the call site in the caller to the start of the callee</li>
+<li>当从callee退出时, control returns to the point that immediately follows the call site.</li>
+<li>如果callee 调用其他procedures, they return control in the same way.</li>
+<li>这种<strong>后进先出</strong>的行为时 LIFO behaviour, 所以可以使用stack来对其进行建模</li>
+</ul>
+<br>
+
+<h3 id="Beyond-Simple-Procedural-Languages"><a href="#Beyond-Simple-Procedural-Languages" class="headerlink" title="Beyond Simple Procedural Languages"></a>Beyond Simple Procedural Languages</h3><p>在面向对象的编程语言中, procedure calls and returns are mainly the same as procedural language. There are difference in the mechanism(机制) to <strong>name the callee</strong> and <strong>locate it</strong> at runtime</p>
+<p>一些编程语言中(scheme e.g.) allow a program to encapsulate(封装) a procedure and its runtime environment into a <strong>closure</strong>. This allows for later execution of the procedure. A stack is inadequate(不足) for the <strong>activation records/frames</strong> in these languages.</p>
+<p>Similar issues arise(出现) when a reference to a local variable can outlive a procedure’s activation (例如 return local variable)</p>
+<br>
+
+<h2 id="Activation-Records-Frames"><a href="#Activation-Records-Frames" class="headerlink" title="Activation Records (Frames)"></a>Activation Records (Frames)</h2><p>compiler 需要 location 来存储 variables defined in the scope</p>
+<p>For procedures and their simple subscopes, this location is provided by an <strong>activation record</strong> or <strong>frame</strong>.</p>
+<p>每个正在执行的 instance of a procedure 可以获得一个 activation record, 所以递归的 procedures 可能有 several activation records at any one time.</p>
+<p>Also included in an activation record are the <strong>procedure’s parameters</strong> and <strong>bookkeeping information</strong> associated with the procedure call.</p>
+<p><img src="/Blog/intro/cmpt379/procedure_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>fp 上面的内容是caller 知道的, fp下面的内容是callee知道的</p>
+<p><img src="/Blog/intro/cmpt379/procedure_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/procedure_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h2 id="Object-oriented-Languages"><a href="#Object-oriented-Languages" class="headerlink" title="Object-oriented Languages"></a>Object-oriented Languages</h2><p>A scope in a Object-oriented language (OOL) can inherit names from multiple hierarchies</p>
+<ul>
+<li>As in procedural languages, they inherit from <strong>lexically containing</strong> scopes</li>
+<li>They also inherit from their <strong>class’s scope</strong>, and its <strong>superclass’s scope</strong>, its <strong>superclass’s superclass’s scope</strong>, etc</li>
+<li>In languages with <strong>multiple inheritance</strong>, like C++, they can inherit from multiple superclass hierarchies</li>
+</ul>
+<p><img src="/Blog/intro/cmpt379/procedure_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>compiler 必须 keep <strong>symbol tables</strong> for any class-level scopes that may be used in the code being compiled</p>
+<p>This includes symbol tables for qualified references –any code that uses for instance</p>
+<p><code>r = color.getRed();</code></p>
+<p>where color is of type Color, must be aware of the symbol table for Color</p>
+<p>Many languages require the programmer to specify which symbol tables are active by <strong>importing</strong> them (例如java)</p>
+<br>
+
+<h2 id="Runtime-support-for-OOLs"><a href="#Runtime-support-for-OOLs" class="headerlink" title="Runtime support for OOLs"></a>Runtime support for OOLs</h2><p>Objects 需要存储他们的 instance variables, 由于 object lifetimes are not neccessarily tied to any procedure’s lifetime, they cannot be stored on a frame. rather, they are stored in an <strong>Object Record(OR)</strong> on the <strong>heap</strong>.</p>
+<p>The OR typically includes some system-related information, most commonly a pointer to information about its <strong>class</strong>.</p>
+<p>In some languages, classes are <strong>first-class</strong> meaning they are objects in their own right, having an OR and the ability to change at runtime</p>
+<br>
+
+<h2 id="Lambda-Lifting"><a href="#Lambda-Lifting" class="headerlink" title="Lambda Lifting"></a>Lambda Lifting</h2><p>Typically a call to an object’s methods look something like:</p>
+<pre><code>Shape myShape()
+...
+myShape.twist(arg1, arg2, arg3...)</code></pre><p>Compilers translate this call to something like this:</p>
+<pre><code>-Shape-twist(myShape, arg1, arg2, arg3...)</code></pre><p>简单来说就是把mamber function 当作普通的function, 只不过在传参的时候, 第一个参数会默认传this/self</p>
+<p>Generically, this object is know as the <strong>receiver</strong></p>
+<p><img src="/Blog/intro/cmpt379/procedure_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>调用时传入的叫 actuals parameter</p>
+<p>function内部接收的叫 formal parameter</p>
+<br>
+
+<h2 id="Call-by-Value"><a href="#Call-by-Value" class="headerlink" title="Call by Value"></a>Call by Value</h2><p>Call by Value, is a parameter-binding convention where the caller evaluates the actuals and passes their values to the callee. </p>
+<p>简单来说, 就是 pass by value, callee中对参数的更改无法在caller中看到</p>
+<h2 id="Call-by-Name"><a href="#Call-by-Name" class="headerlink" title="Call by Name"></a>Call by Name</h2><p>Call by Name, is a parameter-binding convention where a reference to a formal parameter in the callee behaves exactly as if the actual parameter had been textually substituted in its place, with appropriate renaming</p>
+<p>就像C的<code>#define</code> 一样 使用文本替换的方式  but was the natural parameter-binding in Algol 60</p>
+<p>Call by Name is difficult to implement and difficult to comprehend, and it has fallen into disfavour</p>
+<h2 id="Call-by-Reference"><a href="#Call-by-Reference" class="headerlink" title="Call by Reference"></a>Call by Reference</h2><p>如果actual parameter是variable, 那么就把actual address 传入,</p>
+<p>如果callee 更改parameter, caller会看到</p>
+<p>如果actual parameter是expression, caller会evaluates the expression, 存储结果 in its own frame, and passes a pointer to that result</p>
+<p>Inside the callee, each reference to a call-by-reference formal parameter needs an extra level of indirection.  Any redefinition of a reference formal is reflected in the actual.  Also, any reference formal might end up bound to a variable that is accessible by another name inside the callee.  When this happens, the names are called aliases.  Aliasing can create counterintuitive behaviour</p>
+<p><img src="/Blog/intro/cmpt379/procedure_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/procedure_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
@@ -956,7 +1059,7 @@
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc-start"></div>
 <div id="toc">
-  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
   <div id="tocbot"></div>
 </div>
 
@@ -983,7 +1086,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -992,7 +1095,7 @@
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
