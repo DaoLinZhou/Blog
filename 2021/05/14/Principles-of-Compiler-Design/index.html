@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    7.9k 字
+                    10.3k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      41 分钟
+                      54 分钟
                   </span>
                 
 
@@ -971,12 +971,12 @@
 <p>Many languages require the programmer to specify which symbol tables are active by <strong>importing</strong> them (例如java)</p>
 <br>
 
-<h2 id="Runtime-support-for-OOLs"><a href="#Runtime-support-for-OOLs" class="headerlink" title="Runtime support for OOLs"></a>Runtime support for OOLs</h2><p>Objects 需要存储他们的 instance variables, 由于 object lifetimes are not neccessarily tied to any procedure’s lifetime, they cannot be stored on a frame. rather, they are stored in an <strong>Object Record(OR)</strong> on the <strong>heap</strong>.</p>
+<h3 id="Runtime-support-for-OOLs"><a href="#Runtime-support-for-OOLs" class="headerlink" title="Runtime support for OOLs"></a>Runtime support for OOLs</h3><p>Objects 需要存储他们的 instance variables, 由于 object lifetimes are not neccessarily tied to any procedure’s lifetime, they cannot be stored on a frame. rather, they are stored in an <strong>Object Record(OR)</strong> on the <strong>heap</strong>.</p>
 <p>The OR typically includes some system-related information, most commonly a pointer to information about its <strong>class</strong>.</p>
 <p>In some languages, classes are <strong>first-class</strong> meaning they are objects in their own right, having an OR and the ability to change at runtime</p>
 <br>
 
-<h2 id="Lambda-Lifting"><a href="#Lambda-Lifting" class="headerlink" title="Lambda Lifting"></a>Lambda Lifting</h2><p>Typically a call to an object’s methods look something like:</p>
+<h3 id="Lambda-Lifting"><a href="#Lambda-Lifting" class="headerlink" title="Lambda Lifting"></a>Lambda Lifting</h3><p>Typically a call to an object’s methods look something like:</p>
 <pre><code>Shape myShape()
 ...
 myShape.twist(arg1, arg2, arg3...)</code></pre><p>Compilers translate this call to something like this:</p>
@@ -987,17 +987,227 @@ myShape.twist(arg1, arg2, arg3...)</code></pre><p>Compilers translate this call 
 <p>function内部接收的叫 formal parameter</p>
 <br>
 
-<h2 id="Call-by-Value"><a href="#Call-by-Value" class="headerlink" title="Call by Value"></a>Call by Value</h2><p>Call by Value, is a parameter-binding convention where the caller evaluates the actuals and passes their values to the callee. </p>
+<h3 id="Call-by-Value"><a href="#Call-by-Value" class="headerlink" title="Call by Value"></a>Call by Value</h3><p>Call by Value, is a parameter-binding convention where the caller evaluates the actuals and passes their values to the callee. </p>
 <p>简单来说, 就是 pass by value, callee中对参数的更改无法在caller中看到</p>
-<h2 id="Call-by-Name"><a href="#Call-by-Name" class="headerlink" title="Call by Name"></a>Call by Name</h2><p>Call by Name, is a parameter-binding convention where a reference to a formal parameter in the callee behaves exactly as if the actual parameter had been textually substituted in its place, with appropriate renaming</p>
+<h3 id="Call-by-Name"><a href="#Call-by-Name" class="headerlink" title="Call by Name"></a>Call by Name</h3><p>Call by Name, is a parameter-binding convention where a reference to a formal parameter in the callee behaves exactly as if the actual parameter had been textually substituted in its place, with appropriate renaming</p>
 <p>就像C的<code>#define</code> 一样 使用文本替换的方式  but was the natural parameter-binding in Algol 60</p>
 <p>Call by Name is difficult to implement and difficult to comprehend, and it has fallen into disfavour</p>
-<h2 id="Call-by-Reference"><a href="#Call-by-Reference" class="headerlink" title="Call by Reference"></a>Call by Reference</h2><p>如果actual parameter是variable, 那么就把actual address 传入,</p>
+<h3 id="Call-by-Reference"><a href="#Call-by-Reference" class="headerlink" title="Call by Reference"></a>Call by Reference</h3><p>如果actual parameter是variable, 那么就把actual address 传入,</p>
 <p>如果callee 更改parameter, caller会看到</p>
 <p>如果actual parameter是expression, caller会evaluates the expression, 存储结果 in its own frame, and passes a pointer to that result</p>
 <p>Inside the callee, each reference to a call-by-reference formal parameter needs an extra level of indirection.  Any redefinition of a reference formal is reflected in the actual.  Also, any reference formal might end up bound to a variable that is accessible by another name inside the callee.  When this happens, the names are called aliases.  Aliasing can create counterintuitive behaviour</p>
 <p><img src="/Blog/intro/cmpt379/procedure_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt379/procedure_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Run-Time-Environments"><a href="#Run-Time-Environments" class="headerlink" title="Run-Time Environments"></a>Run-Time Environments</h2><h3 id="Language-Feature-Support"><a href="#Language-Feature-Support" class="headerlink" title="Language Feature Support"></a>Language Feature Support</h3><p>大部分 language 有一些 features , which require some sort of support at run-time</p>
+<p>这种 support 一般是对 language 以及 compiler implementation, 但一般不是对 compiled 过的 program</p>
+<p>一些Example features: <strong>objects</strong>, <strong>interoperability</strong> with other languages, <strong>closures</strong>, dynamic <strong>name spaces</strong>, <strong>co-routines</strong> and other parallelism, an interface with the operating system, and <strong>memory management</strong></p>
+<h3 id="Support-for-Objects"><a href="#Support-for-Objects" class="headerlink" title="Support for Objects"></a>Support for Objects</h3><p><img src="/Blog/intro/cmpt379/support_obj.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们有两个class: Point, Color Point</p>
+<p>每个structure有: class, methods, super class, instance methods</p>
+<p>method 和 instance methods are vectors of methods</p>
+<p>instance methods 是 member function, 只有 instance 可以调用</p>
+<p>method 是 static function</p>
+<p>这ColorPoint和Point都是class, class 指向”class” (java中叫做Object, 一些编程语言中没有名字) </p>
+<p>我们这里是把class的定义当作Object (java中的类的类型)</p>
+<p>如果 user 允许这样操作, 那就是说允许有 first class classes</p>
+<p>class itself are first class objects</p>
+<br>
+
+<p>之后我们创建了3个实例: simplePoint, rightCorner, leftCorner</p>
+<p>继承类的实例的x,y的offset 不能改变, 例如x的 offset 是 8, y 的 offset 是 12(假设一个block占 4 bytes)</p>
+<br>
+
+<p>在c++中如果声明function时不是virtual, 当我们 call 一个point variable 的 function, 会走向 Point class 的 instance methods. 这种调用可以compile statically(更快)</p>
+<p>如果定义virtual, 一个instance of Point 可以是 Point 或 Color Point, 当调用 move 时, 会 follow the object that you looking at. 此时会走到 ColorPoint 的instance methods table(如果object时 ColorPoint的实例的话)</p>
+<br>
+
+<p><img src="/Blog/intro/cmpt379/support_obj.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>有些语言(例如: java) 可以在初始化时定制(customize) 类, 例如往instance中添加一些新的method. 举个例子 在我初始化ColorPoint时, 我同时添加一个<code>doSomething()</code> 方法, 这个method在原本的定义中是没有的</p>
+<p>一种方法是为这个instance新建一个 instance method table, 把这个方法添加上去</p>
+<p>还有一种方法是创建一个临时class(class table), 相当于匿名类</p>
+<br>
+
+<h3 id="Static-Members-for-Objects"><a href="#Static-Members-for-Objects" class="headerlink" title="Static Members for Objects"></a>Static Members for Objects</h3><p><img src="/Blog/intro/cmpt379/support_obj_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>Static members (fields and methods) can be added to the class object.  This includes constructors</p>
+<br>
+
+<h3 id="Class-level-methods"><a href="#Class-level-methods" class="headerlink" title="Class-level methods"></a>Class-level methods</h3><p>Some languages have methods that apply to any class. java 中的反射(Reflection) 就是一个例子( java 中 hashCode, toString, clone…)</p>
+<p><img src="/Blog/intro/cmpt379/support_obj_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Interoperability"><a href="#Interoperability" class="headerlink" title="Interoperability"></a>Interoperability</h3><p>Many languages allow for <strong>interoperability</strong> between that language and other languages</p>
+<p>例如: Java Native Interface (JNI) 和 .NET fromework</p>
+<p>Interoperability concerns can be broadly classified as:</p>
+<ul>
+<li>data layout</li>
+<li>procedure calling (e.g. using standardized linkages)</li>
+<li>run-time support for the other language(e.g. memory management, operating system interface)</li>
+</ul>
+<br>
+
+<h3 id="Operating-System-Interface"><a href="#Operating-System-Interface" class="headerlink" title="Operating System Interface"></a>Operating System Interface</h3><p>几乎所有的 program 都需要 interact with operating system</p>
+<p>包括: reading input, writing output, opening, reading, writing, and closing files or sockets, get fresh pages of memory, changing process priority, spawning or ending processes, throwing hardware-related exceptions. etc…</p>
+<p>每个操作系统都有不同的 interfaces to connect to, 所以 这部分通常使用 compiler-to-operating-system basis</p>
+<br>
+
+<p>Code that interfaces between a language and an operating system is often incorporated as a <strong>library</strong> and/or as a collection of <strong>standard objects</strong></p>
+<p>例如: C 使用 <strong>standard C runtime library</strong>(-libcrt) and java has <strong>System object</strong> and its subobject (like System.out)</p>
+<p>The compiler often must make provision for these libraries or objects, because they use features that are generally not available in the source language. They may, for instance us <strong>traps(hardware)</strong></p>
+<br>
+
+<h3 id="Memory-Management"><a href="#Memory-Management" class="headerlink" title="Memory Management"></a>Memory Management</h3><p><strong>Programs</strong> in modern language have varying needs in terms of managing the memory space.</p>
+<p>Typically, the <strong>language, compiler, and operating system</strong> run some sort of memory management in the background</p>
+<p><strong>Data layout</strong> is one area where the program still sometimes makes a difference. A C struct or array specifies the layout of the data in memory</p>
+<p>In other language, for instance C#, struct or object records can change the order of their fields.</p>
+<br>
+
+<h3 id="Frame-Stack-Maintenance"><a href="#Frame-Stack-Maintenance" class="headerlink" title="Frame Stack Maintenance"></a>Frame Stack Maintenance</h3><p>The <strong>heap</strong> and the <strong>frame stack</strong> are two places where the language and compiler do most of the management work.</p>
+<p>For the <strong>frame stack</strong> , the compiler needs to insert standardized linkages that create and destroy the frames on the stack, and have other conventions(arount argument passing for instance) incorporated into the code.</p>
+<p>The compiler also needs to generate and maintain a <strong>display</strong> if that is a feature</p>
+<br>
+
+<h3 id="Heap-Maintenance"><a href="#Heap-Maintenance" class="headerlink" title="Heap Maintenance"></a>Heap Maintenance</h3><p>For the <strong>heap</strong>, the amount of work the compiler must to varies.</p>
+<p>Many languages support <strong>explicit memory allocation</strong></p>
+<p>Many languages have <strong>implicit memory allocation</strong> that happens when an object is created.</p>
+<p>Those that do must maintain a <strong>list</strong> of <strong>free blocks</strong> - blocks of memory that the program isn’t currently using</p>
+<h3 id="Allocation-Deallocation"><a href="#Allocation-Deallocation" class="headerlink" title="Allocation/Deallocation"></a>Allocation/Deallocation</h3><p><img src="/Blog/intro/cmpt379/support_obj_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/support_obj_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/support_obj_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<p>什么使用Deallocated 一个bolck?</p>
+<ul>
+<li><p>Frames are easy –they are deallocated when the procedure ends.</p>
+</li>
+<li><p>Heap memory is more complex.   There are two main approaches:</p>
+<ul>
+<li><strong>Explicit Deallocation</strong>: programmer 告诉 heap manager free 一个block 例如 C++ 中的<code>delete</code></li>
+<li><strong>Implicit Deallocation</strong>: heap manager 会自动检测, 它会维护一个reference count, 就是引用计数, 即有多少个变量在指向这个block, 如果计数为0, 说明没有指向这块block的引用, 也就说明无法访问这个block了, 所以此时会free block, 叫做 垃圾回收(garbage collection)</li>
+</ul>
+</li>
+</ul>
+<p>Explicit deallocation 更快, 但是程序员就要有更多的责任(burden), 而在复杂的系统中, it is often hard to tell when a block of memory is no longer needed. It allows for entire classes of bugs that implicit deallocation prevents.</p>
+<h3 id="Reference-Count"><a href="#Reference-Count" class="headerlink" title="Reference Count"></a>Reference Count</h3><p>在reference counting, 每个memory blcok 维护一个count of how many references(pointer) there are to that block</p>
+<p>When ever a pointer is changed, the block the pointer was pointing at has its count <strong>decreased</strong>, and the block the pointer will now point to has its count <strong>increased</strong>.</p>
+<p>Counts are <strong>decreased</strong> when pointers go <strong>out of scope</strong> also</p>
+<p>当一个block的 count 到达0 时, 那么在一些恰当的时机 (appropriate time) (例如 the end of the statement causing the count to go to zero) the block is deallocated</p>
+<p>例如在一个statement中间count 为0 ,但有可能在statement的结尾会再赋值给遍历, 所以最好在statement结束时计算count并判断是否free</p>
+<p>Circularly linked structures(循环引用结构) could become a problem</p>
+<br>
+
+<h3 id="Garbage-Collection"><a href="#Garbage-Collection" class="headerlink" title="Garbage Collection"></a>Garbage Collection</h3><p>在 garbage collection, heap manager 定期(periodically)  (either at fixed intervals or when memory is needed) 扫描 memory 寻找 <strong>unused blocks</strong></p>
+<p>如果有太多memory 要search, 可能会导致 program 长时间停止</p>
+<p>Some systems do partial scans at more frequent intervals so there are less noticeable pauses</p>
+<p>The”mark and sweep” method is the most popular.</p>
+<br>
+
+<h3 id="Mark-and-Sweep"><a href="#Mark-and-Sweep" class="headerlink" title="Mark and Sweep"></a>Mark and Sweep</h3><p>In mark and sweep, the heap manager follows all pointers in the program to find all the used blocks</p>
+<ul>
+<li>marks every block in memory as unused.</li>
+<li>starts with static memory:<ul>
+<li>对所有pointer, 他们point的bolck会被标记为used</li>
+<li>used blocks are searched for pointers, and the blocks those pointers point at are marked as used (recursively)</li>
+</ul>
+</li>
+<li>continues with the frames in the frame stack<ul>
+<li>again, every pointer has its block recursively marked as used.</li>
+</ul>
+</li>
+<li>visits every block in memory, collecting those that are marked unused into a freelist</li>
+</ul>
+<p>This relies on knowing or detecting where the pointers are in every type of block and frame, and in static memory</p>
+<br>
+
+<h2 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h2><p>如果我们想要优化代码, 有两个主要问题: safety 和 profitability</p>
+<h3 id="Optimization-and-Safety"><a href="#Optimization-and-Safety" class="headerlink" title="Optimization and Safety"></a>Optimization and Safety</h3><p>Safety 是指 program behaves the same <strong>with or without</strong> the optimization</p>
+<p>The compiler(or compiler writer) must have some way of <strong>proving</strong> that is the case</p>
+<ul>
+<li><strong>Observational Equivalence</strong> is the notion that two expressions are equivalent if, <strong>in every possible context</strong>, they either both produce the same result or both run forever</li>
+<li>The safety required of compilers is <strong>looser</strong>; here we are allowed to substitute expression if, <strong>in the program context,</strong> they either both produce the same result or both run forever.</li>
+</ul>
+<br>
+
+<h3 id="Optimization-and-Profitability"><a href="#Optimization-and-Profitability" class="headerlink" title="Optimization and Profitability"></a>Optimization and Profitability</h3><p>Profitability 意味着 我们期望 optimization 会提高性能</p>
+<p>大部分情况 Profitability 不好测量</p>
+<p>一些program transformations encounter <strong>risk to profitability</strong> in the form of more register use, fewer cache hits, or less <strong>opportunity for future optimization</strong>, for example.</p>
+<br>
+
+<h3 id="Scope-of-Optimizations"><a href="#Scope-of-Optimizations" class="headerlink" title="Scope of Optimizations"></a>Scope of Optimizations</h3><ul>
+<li><strong>Local methods</strong>: within a single <strong>basic block</strong> (之前笔记介绍过basic block)</li>
+<li><strong>Regional methods</strong>: bigger than a single basic block but smaller than a full procedure</li>
+<li><strong>Global methods</strong>: an entire procedure as context</li>
+<li><strong>Interprocedural methods</strong>: the entire program as context.</li>
+</ul>
+<blockquote>
+<p>superlocal, modular, supermodular…</p>
+</blockquote>
+<br>
+
+<h3 id="Local-Optimization"><a href="#Local-Optimization" class="headerlink" title="Local Optimization"></a>Local Optimization</h3><p>这是一个 compiler 可以使用的最简单的 transformations, The simple execution model of a basic block leads to reasonably precise analysis support of optimization</p>
+<p><img src="/Blog/intro/cmpt379/optimization.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>basic block 中的一个 expression 是 redundant(多余的) iff it has been previously computed in $B$ and no intervening operation redefines one of its constituent arguments.</p>
+<p><img src="/Blog/intro/cmpt379/optimization_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>我们把第二个 $a-d$ 转换为 $b$</p>
+<p>一种等价的策略是, 将后续的 $ d$ 转为 $b$ , 但这需要计算$b$是否被 redefined before some use of $d$</p>
+<p>It is <strong>simpler</strong> to have the optimizer insert the copy and let a <strong>later pass</strong> determine which copy operations are necessary and which can be eliminated</p>
+<p>把多于的evaluations 用 copies 来 replace 通常是 profitable, but encounters some <strong>risk</strong> by increasing the lifetimes of some variables, which increases <strong>register pressure</strong></p>
+<p><img src="/Blog/intro/cmpt379/optimization_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Local-Value-Numbering"><a href="#Local-Value-Numbering" class="headerlink" title="Local Value Numbering"></a>Local Value Numbering</h3><p>LVN associates a number with each distinct value computed.</p>
+<p>Works on a basic block.  The block has n operations:<br>$$<br>T_i=L_iOp_iR_i<br>$$<br>$T, L, R$ 是variable, $Op$ 是 operation</p>
+<p>$Op_i, R_i$ 可能为空</p>
+<p>初始化一个 <code>counter=0</code>, which is the next value number to assign. Increments the counter whenever a new value number is assigned</p>
+<p>维护一个 HashTable $H$ , which has keys $L_i$ or $(Op_i, H(L_i), H(R_i))$ and entries that are value numbers.</p>
+<p>维护一个 array $Name$ in which $Name[i]$ is the name of variable with value number $i$</p>
+<p>To get the value number of a variable $V$, first look in the hash table to see if the variable is there. If so, the value number is $H(V)$. If not, assign a new value nuber to $V$ and put it in $H()$ and $Name[]$</p>
+<p><img src="/Blog/intro/cmpt379/optimization_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>$d^4=a^2-d^3=b^4$</p>
+<br>
+
+<h3 id="Extending-LVM"><a href="#Extending-LVM" class="headerlink" title="Extending LVM"></a>Extending LVM</h3><ul>
+<li><strong>Commutative operations</strong>, Commutative operations that differ in only in the order of their operands, such as $a<em>b$ and $b</em>a$, should receive the same value number. This can be done by sorting the operands before hashing.</li>
+<li><strong>Constant folding</strong>. If all operands have know constant values, perform the operation and fold the answer directly into the code, rather than doing the hashtable lookup. Must keep infomation about which values are constant(and what their values are)</li>
+<li><strong>Algebraic identities</strong>. LVN Can apply algebraic identities to simplify the code. For example, $x+0$ and $x$ should get the same value number. Unfortunately, special-case code is required for each identity. Too many identities can cause a slowdown, so organize them into operator-specific decision trees. Some identities that can be handled this way:</li>
+</ul>
+<p><img src="/Blog/intro/cmpt379/optimization_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/optimization_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Indirect-Assignments"><a href="#Indirect-Assignments" class="headerlink" title="Indirect Assignments"></a>Indirect Assignments</h3><p><strong>indirect assignments</strong> cause problems for analysis. Indirect assignments include assignment through a pointer, such as <code>*p=0</code> and assignment to an unknow array element, such as <code>a(i, j)=0</code></p>
+<p>Without specific knowledge of the memory locations to which $p$ can refer, the compiler must treat <code>*p=0</code> as if it modifies every variable. Similarly, an unknown $i$ and $j$ in <code>a(i, j)= 0</code> means the compiler must treat every value in the entire array as changed.</p>
+<p>Compilers invest a lot of energy in narrowing the scope of indirect references so that other optimizations such as LVM are effective.</p>
+<p><img src="/Blog/intro/cmpt379/optimization_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<h3 id="Superlocal-Value-Numbering-SVN"><a href="#Superlocal-Value-Numbering-SVN" class="headerlink" title="Superlocal Value Numbering (SVN)"></a>Superlocal Value Numbering (SVN)</h3><p><img src="/Blog/intro/cmpt379/optimization_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p>为了让SVN 更高效, compiler must reuse the results of blocks that occur as prefixes on multiple paths through the EBB, There are several ways to do this, some more efficient than others</p>
+<p><strong>Lexically scoped hash tables</strong> are a natural fit. These hash table have extra operations of <code>enterScope()</code> and <code>leaveScope()</code> when a <code>leaveScope()</code> is executed, all entries that entered the table since the last <code>enterScope()</code> are removed</p>
+<p><img src="/Blog/intro/cmpt379/optimization_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<h3 id="Loop-Unrolling"><a href="#Loop-Unrolling" class="headerlink" title="Loop Unrolling"></a>Loop Unrolling</h3><p>Loop Unrolling has <strong>dirct</strong> and <strong>indirct</strong> benefits</p>
+<p>The <strong>direct benefits</strong> are that the number of operations required to complete the loop is reduced. The control-flow changes reduce the number of test-and-branch sequences. Variable reuse can be created, reducing memory traffic.</p>
+<p>As a <strong>risk</strong>, though, unrolling increases program size. If this causes the loop to overflow the instruction cache, it can cause serious degradation.</p>
+<p><strong>Indirect benefits</strong> are a result of having more instructions in the body of the loop. They include:</p>
+<ul>
+<li>Better instruction scheduling.</li>
+<li>Better sceduling of memory accesses.</li>
+<li>Cros-iteration redundancies that can be eliminated</li>
+<li>Can change register allocation(for good or bad)</li>
+</ul>
+<br>
+
+<h3 id="Global-Optimization"><a href="#Global-Optimization" class="headerlink" title="Global Optimization"></a>Global Optimization</h3><p>Global optimizations operate on an entire procedure. </p>
+<p>Typically global optimizations have an analysis phase followed by a code modification phase</p>
+<p><strong>Live variable analysis</strong>.  A variable $v$ is <strong>live</strong> at point $p$ if and only if there exists a path in the CFG from $p$ to a <strong>use</strong> of $v$ along which $v$ is not redefined</p>
+<p>We will compute, for each basic block $b$ in the procedurem a set <code>LiveOut(b)</code> that contains all the variables that are live on exit from b.</p>
+<p>Computing <strong>LiveOut</strong> is an example of <strong>global dataflow analysis</strong>, a family of techniques for static reasoning about the flow of dynamic values.</p>
+<p><img src="/Blog/intro/cmpt379/optimization_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/optimization_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt379/optimization_11.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>

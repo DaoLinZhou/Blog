@@ -130,7 +130,7 @@
                   
                   <span class="post-meta">
                     <i class="far fa-chart-bar"></i>
-                    5.7k 字
+                    6k 字
                   </span>
                 
 
@@ -138,7 +138,7 @@
                   
                   <span class="post-meta">
                       <i class="far fa-clock"></i>
-                      31 分钟
+                      33 分钟
                   </span>
                 
 
@@ -1253,6 +1253,76 @@
 <p><img src="/Blog/intro/cmpt354/fd_13.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/fd_14.PNG" srcset="/Blog/img/loading.gif" alt></p>
 <p><img src="/Blog/intro/cmpt354/fd_15.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_16.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/fd_17.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<br>
+
+<br>
+
+<h2 id="Decomposition"><a href="#Decomposition" class="headerlink" title="Decomposition"></a>Decomposition</h2><h3 id="Boyce-Codd-Normal-Form"><a href="#Boyce-Codd-Normal-Form" class="headerlink" title="Boyce Codd Normal Form"></a>Boyce Codd Normal Form</h3><p><strong>BCNF</strong> is a desirable normal form that can be found by <strong>identifying functional dependencies</strong></p>
+<ul>
+<li>BCNF <strong>eliminates all redundancy</strong> that can be discovered by studying a set of FDs, although BCNF <strong>ignores multi-valued dependencies</strong></li>
+<li>Generally, <strong>BCNF is preferable to 3NF</strong></li>
+</ul>
+<p><strong>3NF allow some redundancy</strong></p>
+<br>
+
+<h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>Boyce-Codd Normal Form is <strong>defined</strong> in terms of <strong>functional dependencies</strong></p>
+<p>A relational schema, $R$ is in BCNF with respect to a set of FDs F if</p>
+<p>for all FDs in $F*$ of the form $X \to Y$  where $X\subseteq R, Y\subseteq R$</p>
+<ul>
+<li>at least one of the following holds:<ol>
+<li>$X\to Y$ is trivial (i.e. $Y\subseteq X$ or $[name] \to [name]$)</li>
+<li>X is a super key for $R$</li>
+</ol>
+</li>
+</ul>
+<h3 id="Third-Normal-Form-Definition"><a href="#Third-Normal-Form-Definition" class="headerlink" title="Third Normal Form Definition"></a>Third Normal Form Definition</h3><p>A relational schema, $R$, is in 3NF with respect to a <strong>set of FDs</strong>, $F$, if:</p>
+<ul>
+<li>For all FDs in $F*$ of the form $X\to Y$ where $X\subseteq R$ and $Y \subseteq R$</li>
+<li>At least one of the following holds:<ol>
+<li>$X\to Y$ is trivial (e.g. $Y\subseteq X$)</li>
+<li>X is a superkey for R</li>
+<li>$(Y-X)$ is contained in a <strong>candidate key for R</strong></li>
+</ol>
+</li>
+</ul>
+<br>
+
+<p>3NF 和 BCNF 唯一的区别就是最后一个condiiton</p>
+<br>
+
+<h3 id="BCNF-Description"><a href="#BCNF-Description" class="headerlink" title="BCNF Description"></a>BCNF Description</h3><p>In a <strong>BCNF decompposition</strong>, the only FDs are those where <strong>the key of the table determines attributes</strong>(except for trival dependencies)</p>
+<p>Each <strong>table</strong> represents either an entity set or a relationship set identified by the key and described by the <strong>remaining attributes</strong></p>
+<p>A <strong>database design</strong> is in <strong>BCNF</strong> if <strong>each table schema</strong> is in <strong>BCNF</strong></p>
+<br>
+
+<p>Assume that there is some schema $R$ and a non-trivial dependency $X \to Y$ which causes a violation of BCNF</p>
+<ul>
+<li>This is because $X$ is not a key for the entire table (R)</li>
+</ul>
+<p>R should be decomposed into $(X \cup Y)$ and $(R-(Y-X))$</p>
+<p>e.g.: <code>Asset = {assetNumber, assetName, cost, purchaseDate, type, depreciation, cca}</code></p>
+<p>where <code>(type -&gt; type, cca, depreciation)</code></p>
+<p>Decompose Asset into:</p>
+<ul>
+<li><code>[type, cca, depreciation]</code> and</li>
+<li><code>[Asset- (type, cca, depreciation - type)]</code><ul>
+<li>i.e. <code>[assetNumber, assetName, cost, purchaseDate, type]</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/Blog/intro/cmpt354/bcnf.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_1.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_2.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_3.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_4.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_5.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_6.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_7.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_8.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_9.PNG" srcset="/Blog/img/loading.gif" alt></p>
+<p><img src="/Blog/intro/cmpt354/bcnf_10.PNG" srcset="/Blog/img/loading.gif" alt></p>
 
             </div>
             <hr>
